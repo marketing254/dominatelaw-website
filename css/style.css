@@ -1,0 +1,116 @@
+/* ── Dominate Law — Blog Article Stylesheet ── */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,sans-serif;color:#2A1200;background:#fff;overflow-x:hidden;line-height:1.7}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+ul,ol{padding-left:1.4em}
+
+/* ── TOKENS ── */
+:root{
+  --brown:#60270F;--brown2:#7A3515;--brown3:#3A0D00;
+  --gold:#C49A0A;--gold2:#9E7C08;--gold3:#E8C44A;
+  --cream:#FBF7F4;--cream2:#F0E8E0;--warm:#2A1200;
+  --muted:#6b5040;--border:#e8ddd6;--max:1280px;
+  --navy:#3A0D00;--gold-pale:rgba(196,154,10,.07);
+}
+
+/* ── PROGRESS BAR ── */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#C49A0A,#E8C44A);z-index:9999;transition:width .08s linear}
+
+/* ── LAYOUT ── */
+.container{width:100%;max-width:900px;margin:0 auto;padding:0 28px}
+
+/* ── SITE NAV ── */
+.site-nav{position:sticky;top:0;z-index:800;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0}
+.nav-inner{display:flex;align-items:center;gap:12px;height:62px;max-width:1200px;margin:0 auto;padding:0 28px}
+.nav-logo{display:flex;align-items:center;gap:10px;margin-right:auto;flex-shrink:0;text-decoration:none}
+.nav-logo-mark{width:34px;height:34px;background:var(--brown);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.82rem;color:var(--gold3);flex-shrink:0}
+.nav-logo-text strong{display:block;font-size:.85rem;color:var(--warm);font-weight:700}
+.nav-logo-text em{font-size:.64rem;color:var(--muted);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{padding:6px 10px;border-radius:5px;font-size:.78rem;font-weight:500;color:var(--muted);transition:all .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--brown);background:var(--cream)}
+.nav-cta{background:var(--brown);color:#fff!important;padding:8px 16px!important;border-radius:5px!important;font-weight:700!important;font-size:.78rem!important;transition:background .2s!important}
+.nav-cta:hover{background:var(--brown3)!important}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;padding:8px;border:none;background:none;cursor:pointer;margin-left:8px}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--brown);border-radius:2px;transition:all .3s}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ── MOBILE MENU ── */
+.mobile-menu{display:none;position:fixed;top:62px;left:0;right:0;bottom:0;background:#fff;z-index:799;padding:20px 28px 40px;overflow-y:auto;flex-direction:column;gap:4px;border-top:1px solid var(--border)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{padding:12px 16px;border-radius:6px;font-size:.9rem;font-weight:500;color:var(--warm);transition:background .15s}
+.mobile-menu a:hover{background:var(--cream);color:var(--brown)}
+.mobile-menu .btn-primary{margin-top:12px;text-align:center;padding:13px 20px;background:var(--brown);color:#fff;border-radius:6px;font-weight:700;font-size:.88rem}
+
+/* ── BLOG POST HERO ── */
+.blog-post-hero{background:var(--brown3);padding:56px 0 48px;position:relative;overflow:hidden}
+.blog-post-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1600&q=40') center/cover no-repeat;opacity:.05;pointer-events:none}
+.blog-post-hero .container{position:relative;z-index:2}
+.breadcrumb{font-size:.74rem;color:rgba(255,255,255,.35);margin-bottom:16px}
+.breadcrumb a{color:rgba(255,255,255,.35);transition:color .2s}
+.breadcrumb a:hover{color:var(--gold3)}
+.label{display:inline-flex;align-items:center;gap:8px;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold3);margin-bottom:12px}
+.label::before{content:'';display:inline-block;width:20px;height:2px;background:var(--gold3)}
+.blog-post-hero h1{font-family:'Merriweather',serif;font-size:clamp(1.7rem,4vw,2.6rem);font-weight:900;color:#fff;line-height:1.2;margin:10px 0 16px;max-width:780px}
+.blog-post-meta{display:flex;gap:20px;flex-wrap:wrap;font-size:.78rem;color:rgba(255,255,255,.45);margin-top:16px}
+
+/* ── BLOG POST BODY ── */
+.blog-post-body{max-width:780px;margin:0 auto;padding:56px 28px 80px}
+.blog-post-body p{font-size:.95rem;color:#3a2010;line-height:1.85;margin-bottom:20px}
+.blog-post-body h2{font-family:'Merriweather',serif;font-size:clamp(1.2rem,2.5vw,1.65rem);font-weight:900;color:var(--brown3);margin:44px 0 14px;line-height:1.3}
+.blog-post-body h3{font-family:'Merriweather',serif;font-size:1.1rem;font-weight:700;color:var(--brown);margin:28px 0 10px;line-height:1.35}
+.blog-post-body ul,.blog-post-body ol{margin:0 0 20px 1.4em}
+.blog-post-body li{font-size:.94rem;color:#3a2010;line-height:1.8;margin-bottom:8px}
+.blog-post-body blockquote{border-left:4px solid var(--gold);background:var(--cream);padding:20px 24px;margin:28px 0;border-radius:0 10px 10px 0;font-style:italic;font-size:.95rem;color:var(--brown3);line-height:1.7}
+.blog-post-body strong{color:var(--brown3);font-weight:700}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:6px;font-weight:700;font-size:.85rem;letter-spacing:.02em;transition:all .2s;cursor:pointer;border:2px solid transparent}
+.btn-primary{background:var(--brown);color:#fff}
+.btn-primary:hover{background:var(--brown3);transform:translateY(-2px);box-shadow:0 8px 20px rgba(58,13,0,.25)}
+.btn-sm{padding:8px 16px;font-size:.78rem}
+.btn-full{width:100%;justify-content:center}
+.mt-16{margin-top:16px}
+
+/* ── SITE FOOTER ── */
+.site-footer{background:var(--brown3);color:#fff;padding:48px 0 0}
+.site-footer .container{max-width:1200px}
+.footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08)}
+.footer-brand p{font-size:.82rem;color:rgba(255,255,255,.45);line-height:1.75;margin-top:12px}
+.footer-logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:14px}
+.footer-logo-mark{width:34px;height:34px;background:var(--brown);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.82rem;color:var(--gold3);flex-shrink:0}
+.footer-logo-text strong{display:block;font-size:.85rem;color:rgba(255,255,255,.8);font-weight:700}
+.footer-logo-text em{font-size:.64rem;color:rgba(255,255,255,.3);font-style:normal}
+.social-links{display:flex;gap:8px;margin-top:16px}
+.social-link{width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.74rem;color:rgba(255,255,255,.4);text-decoration:none;transition:all .2s}
+.social-link:hover{background:var(--gold);color:#fff}
+.footer-col h5{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:14px}
+.footer-links{display:flex;flex-direction:column;gap:8px}
+.footer-links a{font-size:.8rem;color:rgba(255,255,255,.45);transition:color .2s}
+.footer-links a:hover{color:var(--gold3)}
+.footer-bottom{padding:20px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.74rem;color:rgba(255,255,255,.3)}
+.footer-bottom-links{display:flex;gap:18px}
+.footer-bottom-links a{color:rgba(255,255,255,.22);transition:color .2s}
+.footer-bottom-links a:hover{color:rgba(255,255,255,.5)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+  .blog-post-hero{padding:40px 0 36px}
+  .blog-post-body{padding:40px 20px 60px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+}
+@media(max-width:480px){
+  .blog-post-hero h1{font-size:1.5rem}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

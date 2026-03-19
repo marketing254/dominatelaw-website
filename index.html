@@ -1,0 +1,2056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Dominate Law is the complete growth platform for ambitious attorneys — free legal calculators, marketing tools, expert webinars, a peer community, and a weekly podcast. Trusted by 2,400+ law firms.">
+<title>Law Firm Marketing Resources, Tools & Community | Dominate Law</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1a0800;
+  background: #fff;
+  overflow-x: hidden;
+  cursor: none;
+}
+@media (hover: none) { body { cursor: auto; } }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { border: none; background: none; cursor: none; font: inherit; }
+
+/* ═══════════════════════════════════════════════════════════════
+   BRAND TOKENS
+═══════════════════════════════════════════════════════════════ */
+:root {
+  --brown : #60270F;
+  --brown2: #7A3515;
+  --brown3: #3A0D00;
+  --gold  : #C49A0A;
+  --gold2 : #9E7C08;
+  --gold3 : #E8C44A;
+  --cream : #FBF7F4;
+  --cream2: #F0E8E0;
+  --warm  : #2A1200;
+  --muted : #6b5040;
+  --border: #e8ddd6;
+  --max   : 1280px;
+  --ease  : cubic-bezier(.4, 0, .2, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CUSTOM CURSOR — Scales of Justice ⚖
+═══════════════════════════════════════════════════════════════ */
+#cur-ico {
+  position: fixed; width: 28px; height: 28px;
+  pointer-events: none; z-index: 99999;
+  transform: translate(-14px, -14px);
+  transition: transform .2s ease, filter .2s ease;
+  filter: drop-shadow(0 2px 6px rgba(58,13,0,.3));
+  will-change: left, top, transform;
+}
+#cur-ico svg { width: 100%; height: 100%; display: block; }
+#cur-ico.hover {
+  transform: translate(-14px, -14px) rotate(18deg) scale(1.3);
+  filter: drop-shadow(0 4px 14px rgba(196,154,10,.55));
+}
+#cur-ring {
+  position: fixed; width: 50px; height: 50px;
+  border: 1.5px solid rgba(196,154,10,.35); border-radius: 50%;
+  pointer-events: none; z-index: 99998;
+  transform: translate(-25px, -25px);
+  transition: width .2s ease, height .2s ease, transform .2s ease, border-color .2s;
+  will-change: left, top;
+}
+#cur-ring.hover {
+  width: 66px; height: 66px;
+  transform: translate(-33px, -33px);
+  border-color: rgba(196,154,10,.6);
+}
+/* Click ripple */
+@keyframes ripple-out { to { transform: translate(-50%,-50%) scale(6); opacity: 0; } }
+.cur-ripple {
+  position: fixed; width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid var(--gold); pointer-events: none; z-index: 99990;
+  transform: translate(-50%,-50%) scale(1);
+  animation: ripple-out .55s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════════════════════════════ */
+#progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0;
+  background: linear-gradient(90deg, var(--gold), var(--gold3));
+  z-index: 9999; transition: width .08s linear;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════════════════════ */
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 40px; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 30px; border-radius: 4px;
+  font-weight: 700; font-size: .92rem; letter-spacing: .02em;
+  transition: all .25s var(--ease); cursor: none;
+  border: 2px solid transparent; white-space: nowrap;
+}
+.btn-lg { padding: 17px 38px; font-size: 1rem; }
+.btn-brown { background: var(--brown); color: #fff; }
+.btn-brown:hover { background: var(--brown3); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(96,39,15,.35); }
+.btn-gold { background: var(--gold); color: #fff; }
+.btn-gold:hover { background: var(--gold2); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(196,154,10,.4); }
+.btn-outline-w { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); }
+.btn-outline-w:hover { background: rgba(255,255,255,.1); border-color: #fff; transform: translateY(-2px); }
+.btn-outline-b { background: transparent; color: var(--brown); border-color: var(--brown); }
+.btn-outline-b:hover { background: var(--brown); color: #fff; transform: translateY(-2px); }
+.lbl {
+  font-size: .7rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 14px;
+}
+.lbl-w { color: rgba(255,255,255,.55); }
+.h2 {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 900; line-height: 1.18; color: var(--brown);
+}
+.h2-w { color: #fff; }
+.p-lead { font-size: 1.05rem; color: var(--muted); line-height: 1.82; max-width: 540px; }
+.p-lead-w { color: rgba(255,255,255,.65); }
+.sec { padding: 100px 0; }
+
+/* ═══════════════════════════════════════════════════════════════
+   ANNOUNCE
+═══════════════════════════════════════════════════════════════ */
+.announce {
+  background: var(--brown3); text-align: center;
+  padding: 11px 0; font-size: .78rem; color: rgba(255,255,255,.7);
+}
+.announce strong { color: var(--gold3); }
+.announce a { color: var(--gold3); text-decoration: underline; font-weight: 700; }
+.a-pulse { display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--gold3); margin-right: 8px; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+
+/* ═══════════════════════════════════════════════════════════════
+   NAV — Full Mega-Menu
+═══════════════════════════════════════════════════════════════ */
+.nav {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(255,255,255,.97); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow .3s;
+}
+.nav.scrolled { box-shadow: 0 4px 30px rgba(58,13,0,.1); }
+.nav-inner { height: 70px; display: flex; align-items: center; gap: 0; }
+/* Logo */
+.nav-logo { margin-right: 18px; flex-shrink: 0; display: flex; align-items: center; gap: 10px; }
+.nav-logo img { height: 40px; width: auto; }
+.nav-logo-fb { display: none; align-items: center; gap: 8px; }
+.nav-logo-fb.show { display: flex; }
+.nav-mark { width: 36px; height: 36px; background: var(--brown); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Merriweather', serif; font-weight: 900; font-size: .82rem; color: var(--gold3); }
+.nav-brand strong { display: block; font-size: .82rem; font-weight: 700; color: var(--brown); }
+.nav-brand em { font-size: .62rem; color: var(--muted); font-style: normal; }
+/* Nav link list */
+.nav-links { display: flex; align-items: center; gap: 0; flex: 1; }
+/* Each nav item wrapper (handles dropdown) */
+.nav-item { position: relative; }
+.nav-item > a, .nav-item > button {
+  display: flex; align-items: center; gap: 3px;
+  padding: 6px 9px; border-radius: 4px; font-size: .775rem;
+  font-weight: 500; color: var(--muted); transition: all .2s;
+  background: none; white-space: nowrap; cursor: none;
+}
+.nav-item > a:hover,
+.nav-item > button:hover,
+.nav-item > a.active,
+.nav-item.open > a,
+.nav-item.open > button { color: var(--brown); background: var(--cream); }
+/* Chevron for items with dropdowns */
+.nav-chevron {
+  width: 10px; height: 10px; display: inline-block;
+  transition: transform .2s;
+}
+.nav-item.open .nav-chevron { transform: rotate(180deg); }
+
+/* ── DROPDOWN PANEL (regular) ───────────────────────────── */
+.nav-drop {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  background: #fff; border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px rgba(58,13,0,.12);
+  padding: 8px; min-width: 220px;
+  opacity: 0; transform: translateY(-6px); pointer-events: none;
+  transition: opacity .2s, transform .2s;
+  z-index: 900;
+}
+.nav-item.open .nav-drop { opacity: 1; transform: none; pointer-events: auto; }
+.nav-drop a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 6px; font-size: .8rem;
+  font-weight: 500; color: var(--warm); transition: background .15s, color .15s;
+}
+.nav-drop a:hover { background: var(--cream); color: var(--brown); }
+.nav-drop-icon { width: 28px; height: 28px; border-radius: 6px; background: var(--cream2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.nav-drop-icon svg { width: 14px; height: 14px; }
+.nav-drop-text strong { display: block; font-size: .8rem; font-weight: 600; color: var(--warm); }
+.nav-drop-text span { font-size: .7rem; color: var(--muted); display: block; }
+.nav-drop-divider { height: 1px; background: var(--border); margin: 6px 0; }
+
+/* ── MEGA-MENU (Marketing) ────────────────────────────── */
+.nav-mega {
+  position: absolute; top: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: #fff; border-radius: 14px;
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 80px rgba(58,13,0,.14);
+  padding: 24px; width: 720px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s, transform .2s;
+  z-index: 900;
+}
+.nav-item.open .nav-mega { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+.nav-mega-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 0; }
+.nav-mega-col { padding: 0 20px; }
+.nav-mega-col:first-child { padding-left: 0; border-right: 1px solid var(--border); }
+.nav-mega-col:last-child { padding-right: 0; }
+.nav-mega-col:nth-child(2) { border-right: 1px solid var(--border); }
+.nav-mega-label { font-size: .66rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold2); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.nav-mega-featured {
+  background: linear-gradient(135deg, var(--brown3), var(--brown));
+  border-radius: 10px; padding: 18px; margin-bottom: 10px;
+}
+.nav-mega-featured .nav-mega-label { color: rgba(255,255,255,.5); border-color: rgba(255,255,255,.12); }
+.nav-mega-featured a { display: block; padding: 0; border-radius: 0; }
+.nav-mega-featured a:hover { background: none; }
+.nav-mega-featured h4 { font-family: 'Merriweather', serif; font-size: .95rem; font-weight: 900; color: #fff; margin-bottom: 5px; }
+.nav-mega-featured p { font-size: .74rem; color: rgba(255,255,255,.6); line-height: 1.5; margin-bottom: 10px; }
+.nav-mega-featured .nm-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; background: var(--gold); color: #fff;
+  border-radius: 4px; font-size: .74rem; font-weight: 700;
+  transition: background .2s;
+}
+.nav-mega-featured .nm-cta:hover { background: var(--gold2); }
+.nav-mega a {
+  display: flex; align-items: center; gap: 8px; padding: 7px 8px;
+  border-radius: 5px; font-size: .78rem; font-weight: 500; color: var(--warm);
+  transition: background .15s, color .15s;
+}
+.nav-mega a:hover { background: var(--cream); color: var(--brown); }
+.nav-mega-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; opacity: .6; }
+
+/* ── BURGER / MOBILE ─────────────────────────────────── */
+.nav-cta-btn { font-size: .78rem; padding: 9px 18px; margin-left: 10px; flex-shrink: 0; }
+.burger { display: none; flex-direction: column; gap: 5px; padding: 8px; border-radius: 4px; cursor: pointer; margin-left: 8px; }
+.burger span { display: block; width: 22px; height: 2px; background: var(--brown); border-radius: 2px; transition: all .3s; }
+.burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; }
+.burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile overlay + drawer */
+.mob-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 1500; }
+.mob-overlay.open { display: block; }
+.mob-menu {
+  position: fixed; top: 0; left: -100%; bottom: 0; width: 300px;
+  background: #fff; z-index: 1600;
+  overflow-y: auto; overflow-x: hidden;
+  box-shadow: 6px 0 40px rgba(0,0,0,.18);
+  transition: left .35s var(--ease);
+}
+.mob-menu.open { left: 0; }
+.mob-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.mob-close { width: 34px; height: 34px; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: .9rem; color: var(--brown); cursor: pointer; font-weight: 700; border: none; }
+.mob-body { padding: 12px 0 32px; }
+.mob-link { display: flex; align-items: center; padding: 12px 20px; font-size: .88rem; font-weight: 500; color: var(--brown); transition: background .15s; }
+.mob-link:hover { background: var(--cream); }
+.mob-link.active { color: var(--brown); font-weight: 700; background: var(--cream); }
+/* Accordion for sub-menus */
+.mob-acc-trigger {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 20px; width: 100%; font-size: .88rem; font-weight: 500;
+  color: var(--brown); background: none; border: none; cursor: pointer;
+  transition: background .15s;
+}
+.mob-acc-trigger:hover { background: var(--cream); }
+.mob-acc-trigger svg { width: 14px; height: 14px; transition: transform .25s; flex-shrink: 0; }
+.mob-acc-trigger.open svg { transform: rotate(180deg); }
+.mob-acc-panel { display: none; background: var(--cream); }
+.mob-acc-panel.open { display: block; }
+.mob-acc-panel a { display: block; padding: 10px 20px 10px 36px; font-size: .82rem; color: var(--muted); transition: color .15s, background .15s; border-left: 2px solid transparent; }
+.mob-acc-panel a:hover { color: var(--brown); background: rgba(96,39,15,.04); border-left-color: var(--gold); }
+.mob-acc-panel .mob-acc-label { padding: 10px 20px 4px 36px; font-size: .66rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold2); display: block; }
+.mob-sep { height: 1px; background: var(--border); margin: 6px 20px; }
+.mob-cta-wrap { padding: 16px 20px 0; }
+.mob-cta-wrap .btn { width: 100%; justify-content: center; }
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO  (Maya Hive style — clean white, large left text)
+═══════════════════════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  background: #fff; position: relative; overflow: hidden;
+}
+/* Subtle dot grid pattern */
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(96,39,15,.06) 1px, transparent 1px);
+  background-size: 30px 30px; pointer-events: none;
+}
+.hero-inner {
+  width: 100%; display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px; align-items: center;
+  padding: 130px 0 80px; position: relative; z-index: 2;
+}
+/* Left text side */
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: .73rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 24px;
+}
+.hero-eyebrow-line { width: 32px; height: 2px; background: var(--gold); }
+/* Strikethrough old → new (Maya Hive signature move) */
+.hero-strike {
+  font-size: 1rem; font-weight: 400; color: var(--muted);
+  text-decoration: line-through; display: block;
+  margin-bottom: 8px; opacity: .6;
+}
+.hero h1 {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+  font-weight: 900; line-height: 1.1;
+  color: var(--brown3); margin-bottom: 8px;
+}
+.hero h1 .accent {
+  color: var(--gold); font-style: italic; position: relative;
+}
+.hero h1 .accent::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 4px; background: linear-gradient(90deg, var(--gold), var(--gold3));
+  border-radius: 2px; transform: scaleX(0); transform-origin: left;
+  animation: underline-grow 1.1s 1s both ease-out;
+}
+@keyframes underline-grow { to { transform: scaleX(1); } }
+.hero-sub {
+  font-size: 1.1rem; color: var(--muted); line-height: 1.8;
+  max-width: 480px; margin: 20px 0 36px;
+}
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+/* Trust micro-badges */
+.hero-trust { display: flex; gap: 20px; flex-wrap: wrap; }
+.hero-trust-badge {
+  display: flex; align-items: center; gap: 7px;
+  font-size: .78rem; font-weight: 600; color: var(--muted);
+  padding: 8px 14px; border: 1px solid var(--border);
+  border-radius: 100px; background: var(--cream);
+}
+.trust-ico { font-size: .9rem; }
+/* Rotating scroll badge — Maya Hive style */
+.scroll-badge {
+  position: absolute; bottom: 40px; left: 40px;
+  width: 100px; height: 100px; z-index: 3;
+}
+.scroll-badge svg { width: 100%; height: 100%; animation: spin-badge 10s linear infinite; }
+.scroll-badge-arrow {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+@keyframes spin-badge { to { transform: rotate(360deg); } }
+/* Hero right — image in blob */
+.hero-right { position: relative; }
+.hero-img-blob {
+  width: 100%; max-width: 520px; margin-left: auto;
+  position: relative;
+}
+.hero-img-blob img {
+  width: 100%; height: 520px; object-fit: cover;
+  border-radius: 44% 56% 62% 38% / 42% 46% 54% 58%;
+  animation: blob-morph 8s ease-in-out infinite;
+  box-shadow: 0 24px 80px rgba(96,39,15,.2);
+}
+@keyframes blob-morph {
+  0%,100% { border-radius: 44% 56% 62% 38% / 42% 46% 54% 58%; }
+  25%      { border-radius: 58% 42% 48% 52% / 52% 58% 42% 48%; }
+  50%      { border-radius: 52% 48% 38% 62% / 56% 44% 56% 44%; }
+  75%      { border-radius: 38% 62% 52% 48% / 44% 52% 48% 56%; }
+}
+/* Floating badge over image */
+.hero-float-card {
+  position: absolute; bottom: -20px; left: -30px;
+  background: #fff; border-radius: 16px; padding: 16px 20px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.14);
+  animation: float 5s ease-in-out infinite;
+  min-width: 180px;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.hfc-num { font-family: 'Merriweather', serif; font-size: 1.8rem; font-weight: 900; color: var(--brown); line-height: 1; }
+.hfc-gold { color: var(--gold); }
+.hfc-lbl { font-size: .72rem; font-weight: 600; color: var(--muted); margin-top: 4px; }
+.hero-float-card2 {
+  position: absolute; top: 30px; right: -20px;
+  background: var(--brown); border-radius: 16px; padding: 14px 18px;
+  box-shadow: 0 12px 36px rgba(96,39,15,.3);
+  animation: float 5s 1.5s ease-in-out infinite;
+  min-width: 150px;
+}
+.hfc2-n { font-size: .8rem; font-weight: 700; color: var(--gold3); display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.hfc2-l { font-size: .68rem; color: rgba(255,255,255,.5); }
+.dot-live { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: pulse 2s infinite; }
+
+/* ═══════════════════════════════════════════════════════════════
+   MARQUEE  (infinite horizontal scroll — Maya Hive core feature)
+═══════════════════════════════════════════════════════════════ */
+.marquee-sec {
+  background: var(--gold); padding: 18px 0; overflow: hidden;
+  border-top: 3px solid var(--gold2); border-bottom: 3px solid var(--gold2);
+}
+.marquee-track {
+  display: flex; gap: 0; width: max-content;
+  animation: marquee-scroll 25s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+@keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-item {
+  display: flex; align-items: center; gap: 20px;
+  font-family: 'Merriweather', serif;
+  font-weight: 700; font-size: 1rem;
+  color: var(--brown3); white-space: nowrap; padding: 0 28px;
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.marquee-sep { font-size: 1.2rem; color: var(--brown); opacity: .5; }
+
+/* ═══════════════════════════════════════════════════════════════
+   GHOST TEXT DARK SECTION  (Maya Hive signature)
+═══════════════════════════════════════════════════════════════ */
+.ghost-sec {
+  background: var(--brown3); padding: 100px 0 80px;
+  position: relative; overflow: hidden;
+}
+.ghost-word {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(5rem, 14vw, 13rem);
+  font-weight: 900; line-height: .9;
+  -webkit-text-stroke: 2px rgba(255,255,255,.08);
+  color: transparent; text-transform: uppercase;
+  pointer-events: none; user-select: none;
+  position: absolute; bottom: -20px; right: -20px;
+  letter-spacing: -.02em;
+}
+.ghost-inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.ghost-stat-row { display: flex; flex-direction: column; gap: 40px; }
+.ghost-stat { border-left: 3px solid var(--gold); padding-left: 22px; }
+.ghost-n {
+  font-family: 'Merriweather', serif; font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900; color: #fff; line-height: 1; display: block;
+}
+.ghost-n .count-up { display: inline-block; }
+.ghost-n-accent { color: var(--gold3); }
+.ghost-nl { font-size: .82rem; color: rgba(255,255,255,.45); margin-top: 6px; display: block; text-transform: uppercase; letter-spacing: .08em; }
+.ghost-heading {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 900; line-height: 1.2; color: #fff; margin-bottom: 20px;
+}
+.ghost-heading em { color: var(--gold3); font-style: italic; }
+.ghost-heading .outline-txt {
+  -webkit-text-stroke: 2px rgba(255,255,255,.3);
+  color: transparent;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PILLARS  (8 cards, clean, cream bg)
+═══════════════════════════════════════════════════════════════ */
+.pillars-sec { background: var(--cream); padding: 100px 0; }
+.pillars-head { margin-bottom: 60px; }
+.pillars-head-inner { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.pillar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.pc {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px 22px;
+  transition: all .35s var(--ease); display: block; color: inherit;
+  position: relative; overflow: hidden;
+}
+.pc::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 4px; background: var(--border); transition: background .3s;
+}
+.pc:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,.1); border-color: rgba(196,154,10,.2); }
+.pc:hover::before { background: linear-gradient(90deg, var(--gold), var(--gold3)); }
+.pc-ico {
+  width: 52px; height: 52px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 18px;
+  transition: transform .35s var(--ease);
+}
+.pc:hover .pc-ico { transform: scale(1.15) rotate(-6deg); }
+.pc h3 { font-family: 'Merriweather', serif; font-size: .98rem; font-weight: 700; color: var(--brown); margin-bottom: 8px; }
+.pc p { font-size: .81rem; color: var(--muted); line-height: 1.65; margin-bottom: 16px; }
+.pc-arrow { font-size: .8rem; font-weight: 700; color: var(--gold); display: flex; align-items: center; gap: 6px; transition: gap .25s; }
+.pc:hover .pc-arrow { gap: 12px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   IMAGE SPLIT
+═══════════════════════════════════════════════════════════════ */
+.split-sec { padding: 100px 0; }
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.split-grid.rev { direction: rtl; }
+.split-grid.rev > * { direction: ltr; }
+.split-img-wrap {
+  position: relative; border-radius: 24px;
+  overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,.14);
+}
+.split-img-wrap img { width: 100%; height: 500px; object-fit: cover; transition: transform .9s ease; }
+.split-img-wrap:hover img { transform: scale(1.04); }
+.split-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(58,13,0,.55) 0%, transparent 60%); }
+.split-badge {
+  position: absolute; bottom: 24px; left: 24px;
+  background: var(--gold); color: #fff; padding: 9px 20px;
+  border-radius: 100px; font-size: .78rem; font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+}
+.feat-list { margin-top: 28px; display: flex; flex-direction: column; gap: 18px; }
+.feat { display: flex; gap: 14px; align-items: flex-start; }
+.feat-ck {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(196,154,10,.1); border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px; font-size: .72rem; color: var(--gold2); font-weight: 900;
+}
+.feat strong { display: block; font-size: .9rem; font-weight: 700; color: var(--brown); margin-bottom: 3px; }
+.feat span { font-size: .82rem; color: var(--muted); line-height: 1.65; }
+.split-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   PRACTICE MANAGEMENT
+═══════════════════════════════════════════════════════════════ */
+.pm-sec { background: #fff; padding: 100px 0; }
+.pm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 52px; }
+.pm-card {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; transition: all .35s var(--ease);
+}
+.pm-card:hover { transform: translateY(-6px); box-shadow: 0 20px 56px rgba(0,0,0,.1); }
+.pm-card-top { padding: 24px; display: flex; gap: 16px; align-items: flex-start; border-bottom: 1px solid var(--border); background: #fff; }
+.pm-ico { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+.pm-card-top h3 { font-size: .94rem; font-weight: 700; color: var(--brown); margin-bottom: 3px; }
+.pm-card-top p { font-size: .77rem; color: var(--muted); }
+.pm-card-body { padding: 18px 22px; }
+.pm-tag {
+  font-size: .66rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--brown2); background: #fff; border: 1px solid var(--border);
+  padding: 4px 10px; border-radius: 100px; display: inline-block;
+  margin: 3px 4px 3px 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LEGAL TECH — dark gradient
+═══════════════════════════════════════════════════════════════ */
+.lt-sec { background: linear-gradient(140deg, var(--brown3) 0%, var(--brown) 100%); padding: 100px 0; }
+.lt-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 52px; }
+.lt-card {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09);
+  border-radius: 16px; padding: 26px 22px; transition: all .35s var(--ease);
+  position: relative; overflow: hidden;
+}
+.lt-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: transparent; transition: background .3s; }
+.lt-card:hover { background: rgba(255,255,255,.09); border-color: rgba(196,154,10,.3); transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,.35); }
+.lt-card:hover::after { background: linear-gradient(90deg, var(--gold), var(--gold3)); }
+.lt-ico { font-size: 1.9rem; margin-bottom: 16px; display: block; }
+.lt-card h3 { font-size: .92rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.lt-card p { font-size: .78rem; color: rgba(255,255,255,.5); line-height: 1.65; }
+
+/* ═══════════════════════════════════════════════════════════════
+   PODCAST — image bg + glassmorphism
+═══════════════════════════════════════════════════════════════ */
+.pod-sec { position: relative; padding: 100px 0; overflow: hidden; }
+.pod-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1485579149621-3123dd979885?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover; background-position: center;
+  background-attachment: fixed;
+}
+.pod-overlay { position: absolute; inset: 0; background: linear-gradient(140deg, rgba(58,13,0,.94), rgba(96,39,15,.9)); }
+.pod-inner { position: relative; z-index: 2; }
+.pod-header { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; margin-bottom: 52px; }
+.pod-stats { display: flex; gap: 40px; }
+.pod-stat-n { font-family: 'Merriweather', serif; font-size: 2rem; font-weight: 900; color: var(--gold3); display: block; line-height: 1; }
+.pod-stat-l { font-size: .7rem; color: rgba(255,255,255,.4); margin-top: 5px; display: block; text-transform: uppercase; letter-spacing: .07em; }
+.pod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.pod-ep {
+  background: rgba(255,255,255,.07); backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,.11); border-radius: 16px;
+  padding: 24px; transition: all .35s var(--ease);
+}
+.pod-ep:hover { background: rgba(255,255,255,.13); border-color: rgba(196,154,10,.3); transform: translateY(-5px); }
+.pod-ep-num {
+  width: 36px; height: 36px; border-radius: 50%; background: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem; font-weight: 800; color: #fff; margin-bottom: 16px;
+}
+.pod-cat { font-size: .67rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold3); margin-bottom: 8px; display: block; }
+.pod-ep h4 { font-size: .9rem; font-weight: 700; color: #fff; line-height: 1.45; margin-bottom: 12px; }
+.pod-dur { font-size: .72rem; color: rgba(255,255,255,.4); display: flex; align-items: center; gap: 5px; }
+.pod-platforms { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 40px; }
+.pod-platform-lbl { font-size: .77rem; color: rgba(255,255,255,.4); margin-right: 6px; }
+.pod-pl {
+  padding: 9px 18px; border: 1px solid rgba(255,255,255,.2); border-radius: 4px;
+  color: rgba(255,255,255,.65); font-size: .79rem; font-weight: 500;
+  display: flex; align-items: center; gap: 7px; transition: all .2s;
+}
+.pod-pl:hover { border-color: rgba(255,255,255,.5); color: #fff; background: rgba(255,255,255,.07); }
+
+/* Host card */
+.pod-host {
+  display: flex; align-items: center; gap: 32px;
+  background: rgba(255,255,255,.07); backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,.13); border-radius: 18px;
+  padding: 28px 32px; margin-top: 44px;
+}
+.pod-host-img {
+  width: 110px; height: 110px; border-radius: 50%;
+  object-fit: cover; border: 3px solid var(--gold);
+  flex-shrink: 0; filter: brightness(1.05);
+}
+.pod-host-role {
+  font-size: .67rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--gold3); display: block; margin-bottom: 4px;
+}
+.pod-host-name {
+  font-family: 'Merriweather', serif; font-size: 1.25rem;
+  font-weight: 900; color: #fff; display: block; margin-bottom: 10px;
+}
+.pod-host-bio { font-size: .82rem; color: rgba(255,255,255,.55); line-height: 1.7; margin-bottom: 14px; }
+.pod-host-links { display: flex; gap: 14px; }
+.pod-host-links a {
+  font-size: .78rem; font-weight: 600; color: var(--gold3);
+  border-bottom: 1px solid rgba(196,154,10,.35); padding-bottom: 2px;
+  transition: color .2s, border-color .2s;
+}
+.pod-host-links a:hover { color: #fff; border-color: #fff; }
+@media (max-width:768px) {
+  .pod-host { flex-direction: column; text-align: center; padding: 24px 20px; }
+  .pod-host-links { justify-content: center; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SECOND MARQUEE (reverse direction)
+═══════════════════════════════════════════════════════════════ */
+.marquee2-sec { background: var(--brown); padding: 20px 0; overflow: hidden; }
+.marquee2-track {
+  display: flex; width: max-content;
+  animation: marquee2-scroll 30s linear infinite;
+}
+@keyframes marquee2-scroll { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.marquee2-item {
+  font-family: 'Inter', sans-serif; font-weight: 300; font-size: .95rem;
+  color: rgba(255,255,255,.35); white-space: nowrap; padding: 0 24px;
+  text-transform: uppercase; letter-spacing: .12em;
+}
+.m2-accent { color: var(--gold3); font-weight: 700; }
+
+/* ═══════════════════════════════════════════════════════════════
+   LEGAL TOOLS TEASER SECTION
+═══════════════════════════════════════════════════════════════ */
+.tools-teaser { background: var(--cream); padding: 100px 0; position: relative; overflow: hidden; }
+.tools-teaser::before {
+  content: 'TOOLS';
+  position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
+  font-family: 'Merriweather', serif;
+  font-size: clamp(80px, 14vw, 160px);
+  font-weight: 900; color: transparent;
+  -webkit-text-stroke: 2px rgba(96,39,15,.06);
+  pointer-events: none; line-height: 1;
+  user-select: none;
+}
+.tools-teaser-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: center;
+  position: relative; z-index: 2;
+}
+.tools-teaser-right {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.tool-preview-card {
+  background: #fff; border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 20px 18px;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
+  cursor: pointer;
+}
+.tool-preview-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 48px rgba(96,39,15,.11);
+  border-color: var(--gold);
+}
+.tool-preview-icon {
+  width: 38px; height: 38px; border-radius: 8px;
+  background: var(--brown); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+}
+.tool-preview-icon svg { width: 19px; height: 19px; }
+.tool-preview-name { font-size: .82rem; font-weight: 700; color: var(--brown3); margin-bottom: 4px; }
+.tool-preview-desc { font-size: .72rem; color: var(--muted); line-height: 1.5; }
+.tool-preview-card.featured {
+  grid-column: span 2;
+  background: linear-gradient(135deg, var(--brown3), var(--brown));
+  border-color: transparent;
+}
+.tool-preview-card.featured .tool-preview-icon { background: rgba(255,255,255,.15); }
+.tool-preview-card.featured .tool-preview-name { color: #fff; font-size: .88rem; }
+.tool-preview-card.featured .tool-preview-desc { color: rgba(255,255,255,.6); }
+.tool-preview-card.featured:hover { border-color: var(--gold3); }
+.tools-teaser-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 14px; border-radius: 100px;
+  background: rgba(196,154,10,.12); border: 1px solid rgba(196,154,10,.25);
+  font-size: .72rem; color: var(--gold2); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em;
+  margin-bottom: 20px;
+}
+.tools-teaser-badge span { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: pulse 2s ease-in-out infinite; }
+.tools-lock-note {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 22px; padding: 14px 18px;
+  background: #fff; border-radius: 8px;
+  border: 1px solid var(--border); font-size: .8rem; color: var(--muted);
+}
+.tools-lock-note svg { flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════════════════════
+   CTA — with image bg (Maya Hive big typography style)
+═══════════════════════════════════════════════════════════════ */
+.cta-sec { position: relative; padding: 120px 0; overflow: hidden; }
+.cta-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover; background-position: center; background-attachment: fixed;
+}
+.cta-overlay { position: absolute; inset: 0; background: linear-gradient(140deg, rgba(58,13,0,.93), rgba(96,39,15,.87)); }
+.cta-ghost {
+  position: absolute; bottom: -30px; right: -20px;
+  font-family: 'Merriweather', serif; font-size: clamp(6rem, 18vw, 16rem);
+  font-weight: 900; -webkit-text-stroke: 2px rgba(255,255,255,.05);
+  color: transparent; text-transform: uppercase; pointer-events: none;
+  line-height: 1; letter-spacing: -.02em;
+}
+.cta-inner {
+  position: relative; z-index: 2; text-align: center;
+  max-width: 700px; margin: 0 auto; color: #fff;
+}
+.cta-big {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 900; line-height: 1.1; margin-bottom: 22px;
+}
+.cta-big em { color: var(--gold3); font-style: italic; }
+.cta-big .outline { -webkit-text-stroke: 2px rgba(255,255,255,.4); color: transparent; }
+.cta-sub { font-size: 1.05rem; color: rgba(255,255,255,.65); line-height: 1.8; max-width: 520px; margin: 0 auto 40px; }
+.cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════════════ */
+.footer { background: var(--brown3); padding: 72px 0 0; }
+.footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 52px; }
+.footer-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.footer-logo-row img { height: 38px; width: auto; }
+.footer-logo-fb { display: none; align-items: center; gap: 10px; }
+.footer-logo-fb.show { display: flex; }
+.footer-mark { width: 36px; height: 36px; background: var(--brown2); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Merriweather', serif; font-weight: 900; font-size: .85rem; color: var(--gold3); }
+.footer-brand-t strong { display: block; font-size: .88rem; color: rgba(255,255,255,.8); }
+.footer-brand-t em { font-size: .67rem; color: rgba(255,255,255,.3); font-style: normal; }
+.footer-desc { font-size: .79rem; color: rgba(255,255,255,.45); line-height: 1.78; margin-bottom: 18px; max-width: 270px; }
+.footer-social { display: flex; gap: 8px; }
+.footer-social a {
+  width: 34px; height: 34px; border-radius: 6px; background: rgba(255,255,255,.07);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .77rem; color: rgba(255,255,255,.4); transition: all .2s;
+}
+.footer-social a:hover { background: var(--gold); color: #fff; transform: translateY(-2px); }
+.footer-col h4 { font-size: .78rem; font-weight: 700; color: #fff; margin-bottom: 14px; text-transform: uppercase; letter-spacing: .08em; }
+.footer-col ul { display: flex; flex-direction: column; gap: 9px; }
+.footer-col ul a { font-size: .78rem; color: rgba(255,255,255,.38); transition: color .2s; }
+.footer-col ul a:hover { color: var(--gold3); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.07); padding: 20px 0;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px; flex-wrap: wrap; font-size: .73rem; color: rgba(255,255,255,.22);
+}
+.footer-bottom a { color: rgba(255,255,255,.22); transition: color .2s; }
+.footer-bottom a:hover { color: rgba(255,255,255,.5); }
+.footer-bottom-links { display: flex; gap: 20px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   BACK TO TOP
+═══════════════════════════════════════════════════════════════ */
+#btt {
+  position: fixed; bottom: 28px; right: 28px; width: 48px; height: 48px;
+  border-radius: 50%; background: var(--brown); color: #fff; border: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; cursor: none; z-index: 900;
+  box-shadow: 0 6px 24px rgba(96,39,15,.3);
+  opacity: 0; transform: translateY(16px); transition: all .3s var(--ease);
+}
+#btt.show { opacity: 1; transform: translateY(0); }
+#btt:hover { background: var(--gold); transform: translateY(-3px); }
+
+/* ═══════════════════════════════════════════════════════════════
+   ICON BG COLOURS
+═══════════════════════════════════════════════════════════════ */
+.i1{background:#FFF3EC} .i2{background:#FFF8E8} .i3{background:#F0FDF4}
+.i4{background:#FFF9F0} .i5{background:#F0FDFA} .i6{background:var(--cream2)}
+.i7{background:#FFF5F0} .i8{background:#FAF6F3}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET  (≤ 1024px)
+═══════════════════════════════════════════════════════════════ */
+@media(max-width:1024px){
+  .wrap                { padding: 0 28px; }
+  /* Nav — hide full links, show burger */
+  .nav-links, .nav-cta-btn { display: none; }
+  .burger              { display: flex; }
+
+  /* Hero */
+  .hero-inner          { grid-template-columns: 1fr; padding: 104px 0 60px; }
+  .hero-right          { display: none; }
+  .scroll-badge        { display: none; }
+  .hero h1             { font-size: clamp(2.4rem, 5vw, 3.4rem); }
+
+  /* Ghost / stats section */
+  .ghost-inner         { grid-template-columns: 1fr; gap: 44px; }
+  .ghost-stat-row      { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .ghost-stat          { border-left: none; border-bottom: 2px solid rgba(196,154,10,.25); padding: 0 0 20px; }
+  .ghost-word          { font-size: clamp(5rem, 16vw, 9rem); }
+
+  /* Pillars */
+  .pillar-grid         { grid-template-columns: repeat(2, 1fr); }
+  .pillars-head-inner  { flex-direction: column; align-items: flex-start; gap: 16px; }
+
+  /* Legal tech */
+  .lt-grid             { grid-template-columns: repeat(2, 1fr); }
+
+  /* Splits */
+  .split-grid          { grid-template-columns: 1fr; gap: 44px; }
+  .split-grid.rev      { direction: ltr; }
+  .split-img-wrap img  { height: 360px; }
+
+  /* Practice management */
+  .pm-grid             { grid-template-columns: repeat(2, 1fr); }
+
+  /* Podcast */
+  .pod-grid            { grid-template-columns: repeat(2, 1fr); }
+  .pod-header          { grid-template-columns: 1fr; gap: 24px; }
+
+  /* Footer */
+  .footer-grid         { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE  (≤ 768px)
+═══════════════════════════════════════════════════════════════ */
+@media(max-width:768px){
+  /* Globals */
+  .wrap                { padding: 0 18px; }
+  .sec                 { padding: 64px 0; }
+  .h2                  { font-size: clamp(1.7rem, 6vw, 2.2rem); }
+
+  /* Announce bar */
+  .announce            { padding: 10px 18px; }
+  .announce p          { flex-direction: column; gap: 4px; font-size: .74rem; }
+
+  /* Nav */
+  .nav-links, .nav-cta { display: none; }
+  .burger              { display: flex; }
+  .nav-inner           { height: 64px; }
+  .nav-logo img        { height: 36px; }
+
+  /* Hero */
+  .hero-inner          { padding: 90px 0 50px; }
+  .hero h1             { font-size: clamp(2rem, 8vw, 2.8rem); line-height: 1.15; }
+  .hero-sub            { font-size: .97rem; margin: 16px 0 28px; }
+  .hero-actions        { flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .hero-actions .btn   { width: 100%; justify-content: center; }
+  .hero-trust          { gap: 10px; }
+  .hero-trust-badge    { font-size: .74rem; padding: 7px 12px; }
+  .hero-strike         { font-size: .9rem; }
+  .hero-eyebrow        { font-size: .67rem; margin-bottom: 16px; }
+
+  /* Marquee */
+  .marquee-item        { font-size: .82rem; padding: 0 16px; gap: 14px; }
+  .marquee2-item       { font-size: .8rem; padding: 0 16px; }
+
+  /* Ghost/stats section */
+  .ghost-sec           { padding: 64px 0 56px; }
+  .ghost-word          { font-size: clamp(3.5rem, 18vw, 6rem); bottom: -5px; right: -5px; }
+  .ghost-stat-row      { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .ghost-n             { font-size: clamp(1.8rem, 7vw, 2.6rem); }
+  .ghost-nl            { font-size: .72rem; }
+  .ghost-heading       { font-size: clamp(1.5rem, 6vw, 2rem); }
+
+  /* Pillars */
+  .pillars-sec         { padding: 64px 0; }
+  .pillars-head        { margin-bottom: 32px; }
+
+  /* Splits */
+  .split-sec           { padding: 64px 0; }
+  .split-img-wrap img  { height: 260px; }
+  .split-badge         { font-size: .72rem; padding: 7px 14px; bottom: 16px; left: 16px; }
+  .feat-list           { margin-top: 20px; gap: 14px; }
+  .split-actions       { flex-direction: column; gap: 10px; }
+  .split-actions .btn  { width: 100%; justify-content: center; }
+
+  /* Practice management */
+  .pm-sec              { padding: 64px 0; }
+  .pm-grid             { grid-template-columns: 1fr; gap: 16px; }
+  .pm-card-top         { padding: 18px; gap: 12px; }
+  .pm-card-body        { padding: 14px 18px; }
+
+  /* Legal tech */
+  .lt-sec              { padding: 64px 0; }
+  .lt-grid             { grid-template-columns: 1fr; gap: 12px; }
+  .lt-card             { padding: 20px 18px; }
+
+  /* Podcast */
+  .pod-sec             { padding: 64px 0; }
+  .pod-grid            { grid-template-columns: 1fr; gap: 14px; }
+  .pod-stats           { gap: 24px; flex-wrap: wrap; }
+  .pod-platforms       { gap: 8px; flex-wrap: wrap; }
+  .pod-platforms .btn-sm { width: 100%; justify-content: center; margin-left: 0 !important; }
+  .pod-platform-lbl    { width: 100%; }
+
+
+  /* Legal Tools Teaser */
+  .tools-teaser        { padding: 64px 0; }
+  .tools-teaser-grid   { grid-template-columns: 1fr; gap: 40px; }
+  .tools-teaser-right  { grid-template-columns: 1fr 1fr; }
+  .tool-preview-card.featured { grid-column: span 2; }
+
+  /* CTA */
+  .cta-sec             { padding: 80px 0; }
+  .cta-big             { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+  .cta-sub             { font-size: .95rem; margin-bottom: 28px; }
+  .cta-actions         { flex-direction: column; align-items: center; gap: 10px; }
+  .cta-actions .btn    { width: 100%; max-width: 340px; justify-content: center; }
+  .cta-ghost           { font-size: clamp(4rem, 20vw, 7rem); }
+
+  /* Footer */
+  .footer              { padding: 56px 0 0; }
+  .footer-grid         { grid-template-columns: 1fr; gap: 28px; }
+  .footer-desc         { max-width: 100%; }
+  .footer-bottom       { flex-direction: column; align-items: flex-start; gap: 8px; font-size: .7rem; }
+  .footer-bottom-links { gap: 14px; }
+
+  /* Back to top */
+  #btt                 { bottom: 20px; right: 20px; width: 42px; height: 42px; font-size: 1rem; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE  (≤ 480px)
+═══════════════════════════════════════════════════════════════ */
+@media(max-width:480px){
+  .wrap                { padding: 0 14px; }
+  .sec                 { padding: 52px 0; }
+
+  /* Hero */
+  .hero-inner          { padding: 80px 0 44px; }
+  .hero h1             { font-size: clamp(1.75rem, 9.5vw, 2.2rem); }
+  .hero-trust          { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .hero-trust-badge    { width: 100%; }
+
+  /* Pillars — 1 column */
+  .pillar-grid         { grid-template-columns: 1fr; gap: 14px; }
+  .pc                  { padding: 22px 18px; }
+
+  /* Ghost stats — 1 col */
+  .ghost-stat-row      { grid-template-columns: 1fr; gap: 18px; }
+  .ghost-stat          { border-bottom: 1px solid rgba(196,154,10,.2); padding-bottom: 16px; }
+
+  /* Marquee smaller */
+  .marquee-item        { font-size: .76rem; padding: 0 12px; }
+  .marquee2-item       { font-size: .72rem; padding: 0 12px; }
+
+  /* Podcast stats */
+  .pod-stats           { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* Footer columns — collapse to single */
+  .footer-grid         { grid-template-columns: 1fr; }
+  .footer-col          { display: none; } /* hide link columns on tiny screens */
+  .footer-col:first-of-type { display: block; } /* show first link col only */
+
+  /* Announce */
+  .announce p          { font-size: .7rem; }
+
+  /* CTA */
+  .cta-big             { font-size: clamp(1.6rem, 10vw, 2rem); }
+  .cta-ghost           { font-size: clamp(3.5rem, 22vw, 6rem); bottom: -5px; right: -5px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TOUCH DEVICES — hide custom cursor, restore default
+═══════════════════════════════════════════════════════════════ */
+@media(hover:none){
+  body, a, button      { cursor: auto; }
+  #cur-ico, #cur-ring  { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ACCESSIBILITY — reduce motion
+═══════════════════════════════════════════════════════════════ */
+@media(prefers-reduced-motion:reduce){
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .marquee-track        { animation: none; }
+  .marquee2-track       { animation: none; }
+  .hero-img-blob img    { animation: none; border-radius: 24px; }
+  .hero-float-card,
+  .hero-float-card2     { animation: none; }
+  .hero-bg              { background-attachment: scroll; }
+  .pod-bg               { background-attachment: scroll; }
+  .cta-bg               { background-attachment: scroll; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HOME POPUP — Latest Podcast & Upcoming Event
+═══════════════════════════════════════════════════════════════ */
+#home-popup-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(20,5,0,.55);
+  backdrop-filter: blur(4px);
+  z-index: 8800;
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; transition: opacity .35s ease;
+  pointer-events: none;
+}
+#home-popup-backdrop.visible { opacity: 1; pointer-events: auto; }
+
+#home-popup {
+  background: #fff;
+  border-radius: 20px;
+  width: 100%; max-width: 720px;
+  box-shadow: 0 40px 100px rgba(0,0,0,.28);
+  overflow: hidden;
+  transform: translateY(28px) scale(.97);
+  transition: transform .38s cubic-bezier(.4,0,.2,1);
+  position: relative;
+}
+#home-popup-backdrop.visible #home-popup { transform: none; }
+
+#home-popup-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(0,0,0,.08); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .95rem; color: var(--muted);
+  transition: background .2s, color .2s; z-index: 2;
+}
+#home-popup-close:hover { background: var(--brown); color: #fff; }
+
+.hp-header {
+  background: linear-gradient(120deg, var(--brown3), var(--brown));
+  padding: 16px 24px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hp-header-label {
+  font-size: .68rem; font-weight: 800; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--gold3);
+}
+.hp-header-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold); opacity: .5; flex-shrink: 0;
+}
+
+.hp-cards {
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.hp-card {
+  padding: 24px 26px 28px;
+}
+.hp-card:first-child { border-right: 1px solid var(--border); }
+
+.hp-card-tag {
+  font-size: .64rem; font-weight: 800; letter-spacing: .13em;
+  text-transform: uppercase; margin-bottom: 12px; display: flex;
+  align-items: center; gap: 6px;
+}
+.hp-card-tag.podcast { color: var(--brown); }
+.hp-card-tag.event   { color: var(--gold2); }
+.hp-card-tag svg     { width: 13px; height: 13px; }
+
+.hp-pod-inner { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+.hp-pod-photo {
+  width: 62px; height: 62px; border-radius: 50%; overflow: hidden;
+  flex-shrink: 0; border: 2px solid var(--gold3);
+}
+.hp-pod-photo img { width: 100%; height: 100%; object-fit: cover; }
+.hp-pod-ep {
+  font-size: .68rem; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px;
+}
+.hp-pod-title {
+  font-family: 'Merriweather', serif;
+  font-size: .9rem; font-weight: 700; color: var(--brown3);
+  line-height: 1.45; margin: 0;
+}
+
+.hp-evt-date {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--cream); border-radius: 8px;
+  padding: 6px 12px; margin-bottom: 12px;
+}
+.hp-evt-date-day { font-size: 1.35rem; font-weight: 900; color: var(--brown); line-height: 1; }
+.hp-evt-date-month { font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.hp-evt-title {
+  font-family: 'Merriweather', serif;
+  font-size: .9rem; font-weight: 700; color: var(--brown3);
+  line-height: 1.45; margin: 0 0 6px;
+}
+.hp-evt-desc {
+  font-size: .78rem; color: var(--muted); line-height: 1.6; margin: 0 0 14px;
+}
+
+.hp-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 18px; border-radius: 6px;
+  font-size: .8rem; font-weight: 700; transition: all .2s;
+  border: none; cursor: pointer; text-decoration: none;
+}
+.hp-btn-podcast  { background: var(--brown); color: #fff; }
+.hp-btn-podcast:hover { background: var(--brown3); transform: translateY(-1px); }
+.hp-btn-event    { background: var(--gold); color: var(--brown3); }
+.hp-btn-event:hover { background: var(--gold2); transform: translateY(-1px); }
+
+@media (max-width: 580px) {
+  .hp-cards { grid-template-columns: 1fr; }
+  .hp-card:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  #home-popup { max-width: 100%; border-radius: 16px; }
+}
+</style>
+<meta name="keywords" content="law firm marketing, attorney marketing, law firm growth, legal marketing platform, law firm SEO, attorney resources, law firm tools, lawyer marketing strategies, legal marketing hub, marketing for law firms">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<link rel="canonical" href="https://www.dominatelaw.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Law Firm Marketing Resources, Tools & Community | Dominate Law">
+<meta property="og:description" content="Dominate Law is the complete growth platform for ambitious attorneys — free legal calculators, marketing tools, expert webinars, a peer community, and a weekly podcast. Trusted by 2,400+ law firms.">
+<meta property="og:url" content="https://www.dominatelaw.com/">
+<meta property="og:site_name" content="Dominate Law">
+<meta property="og:image" content="https://www.dominatelaw.com/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Law Firm Marketing Resources, Tools & Community | Dominate Law">
+<meta name="twitter:description" content="Dominate Law is the complete growth platform for ambitious attorneys — free legal calculators, marketing tools, expert webinars, a peer community, and a weekly podcast. Trusted by 2,400+ law firms.">
+<meta name="twitter:image" content="https://www.dominatelaw.com/og-cover.jpg">
+<meta name="twitter:site" content="@dominatelaw">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Dominate Law",
+  "url": "https://www.dominatelaw.com",
+  "logo": "https://www.dominatelaw.com/logo.png",
+  "sameAs": [
+    "https://www.linkedin.com/company/dominatelaw",
+    "https://www.youtube.com/@dominatelaw",
+    "https://www.facebook.com/dominatelaw"
+  ],
+  "description": "Dominate Law is the complete growth platform for law firm owners \u2014 marketing tools, legal calculators, expert webinars, a peer community, and weekly podcast.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "info@dominatelaw.com"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Dominate Law",
+  "url": "https://www.dominatelaw.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.dominatelaw.com/blog.html?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I get more clients for my law firm?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The most effective strategies for law firms to attract more clients include local SEO optimization, Google Business Profile management, review generation, educational content marketing, and targeted social media. Dominate Law provides free tools and expert-led webinars to help attorneys implement these strategies."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best marketing strategy for a law firm?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The best law firm marketing strategy combines local SEO to rank in Google Search and Maps, content marketing to build authority, social media for visibility, email nurturing to convert leads, and client reviews to build trust. A consistent multi-channel approach outperforms any single tactic."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What free marketing tools are available for attorneys?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dominate Law offers 8 free legal calculators including a contingency fee calculator, billable hours tracker, statute of limitations checker, settlement estimator, and client lifetime value calculator \u2014 all free, no account required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does law firm marketing cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Law firm marketing costs vary widely \u2014 from DIY strategies using free resources (like those on Dominate Law) to full-service agency retainers ranging from $2,000\u2013$15,000/month. Ekwa Marketing offers a free 30-minute strategy meeting to build a custom growth roadmap for your practice."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ═══ HOME POPUP — Latest Podcast & Upcoming Event ══════════════ -->
+<div id="home-popup-backdrop" role="dialog" aria-modal="true" aria-labelledby="hp-title">
+  <div id="home-popup">
+    <button id="home-popup-close" aria-label="Close" onclick="dlCloseHomePopup()">✕</button>
+
+    <!-- Header -->
+    <div class="hp-header">
+      <span class="hp-header-label" id="hp-title">What's New on Dominate Law</span>
+      <span class="hp-header-dot"></span>
+      <span class="hp-header-label" style="color:rgba(255,255,255,.45);font-weight:500;text-transform:none;letter-spacing:0;font-size:.72rem">Don't miss these →</span>
+    </div>
+
+    <!-- Two cards -->
+    <div class="hp-cards">
+
+      <!-- Podcast card -->
+      <div class="hp-card">
+        <div class="hp-card-tag podcast">
+          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 8a5.5 5.5 0 1 1 11 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M1 8a7 7 0 1 1 14 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".4"/></svg>
+          Latest Podcast
+        </div>
+        <div class="hp-pod-inner">
+          <div class="hp-pod-photo">
+            <img src="https://www.dominatelaw.com/wp-content/uploads/2018/09/Alan-Fanger-sm.jpg" alt="Alan Fanger" loading="lazy">
+          </div>
+          <div>
+            <div class="hp-pod-ep">Episode #20</div>
+            <p class="hp-pod-title">Preparing Clients for a Better Deposition in the Courtroom</p>
+          </div>
+        </div>
+        <a href="podcast.html" class="hp-btn hp-btn-podcast" onclick="dlCloseHomePopup()">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><polygon points="5,3 13,8 5,13"/></svg>
+          Listen Now
+        </a>
+      </div>
+
+      <!-- Event card -->
+      <div class="hp-card">
+        <div class="hp-card-tag event">
+          <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 2v2M11 2v2M2 7h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Next Event
+        </div>
+        <div class="hp-evt-date">
+          <div class="hp-evt-date-day">15</div>
+          <div class="hp-evt-date-month">Apr 2026</div>
+        </div>
+        <p class="hp-evt-title">The Local SEO Masterclass for Law Firms</p>
+        <p class="hp-evt-desc">Live Q&amp;A with 3 legal marketing experts. Learn the exact strategies that put law firms at the top of Google.</p>
+        <a href="events.html" class="hp-btn hp-btn-event" onclick="dlCloseHomePopup()">
+          Register Free →
+        </a>
+      </div>
+
+    </div><!-- /hp-cards -->
+  </div>
+</div>
+<!-- ════════════════════════════════════════════════════════════════ -->
+
+<!-- Custom Cursor — Scales of Justice -->
+<div id="cur-ico">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+    <!-- Central pole -->
+    <rect x="11.2" y="3" width="1.6" height="17" fill="#3A0D00" rx=".8"/>
+    <!-- Base -->
+    <rect x="6" y="19" width="12" height="2.5" fill="#3A0D00" rx="1.25"/>
+    <!-- Horizontal arm -->
+    <rect x="1" y="6.5" width="22" height="1.8" fill="#60270F" rx=".9"/>
+    <!-- Left chain -->
+    <line x1="3" y1="8.3" x2="3" y2="14" stroke="#9E7C08" stroke-width="1.4" stroke-linecap="round"/>
+    <!-- Right chain -->
+    <line x1="21" y1="8.3" x2="21" y2="14" stroke="#9E7C08" stroke-width="1.4" stroke-linecap="round"/>
+    <!-- Left pan (slightly lower — balanced) -->
+    <path d="M0.5 14 Q3 17.5 5.5 14" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" fill="rgba(196,154,10,.1)"/>
+    <!-- Right pan -->
+    <path d="M18.5 14 Q21 17.5 23.5 14" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" fill="rgba(196,154,10,.1)"/>
+    <!-- Top pivot gem -->
+    <circle cx="12" cy="3.5" r="2.1" fill="#C49A0A"/>
+  </svg>
+</div>
+<div id="cur-ring"></div>
+
+<!-- Scroll Progress -->
+<div id="progress"></div>
+
+<!-- Announcement -->
+<div class="announce">
+  <span class="a-pulse"></span>
+  <strong>NEW:</strong> Episode #07 — "The AI Playbook Every Law Firm Needs in 2026" is live &nbsp;·&nbsp;
+  <a href="podcast.html">Listen Now →</a>
+</div>
+
+<!-- ═══ NAV ══════════════════════════════════════════════════════ -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <div class="nav-inner">
+      <!-- Logo -->
+      <a href="index.html" class="nav-logo">
+        <img src="https://www.dominatelaw.com/wp-content/themes/growingdentist/images/logo.png" alt="Dominate Law"
+             onerror="this.style.display='none';document.getElementById('nav-fb').classList.add('show')">
+        <div class="nav-logo-fb" id="nav-fb">
+          <div class="nav-mark">DL</div>
+          <div class="nav-brand"><strong>Dominate Law</strong><em>by Ekwa</em></div>
+        </div>
+      </a>
+
+      <!-- Desktop links -->
+      <div class="nav-links" id="navLinks">
+
+        <!-- Events dropdown -->
+        <div class="nav-item" id="ni-events">
+          <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
+            Events <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="nav-drop">
+            <a href="events.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 2v2M11 2v2M2 7h12" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Webinars & Events</strong><span>Live &amp; on-demand sessions</span></div></a>
+          </div>
+        </div>
+
+        <div class="nav-item"><a href="podcast.html">Podcast</a></div>
+
+        <!-- About Us dropdown -->
+        <div class="nav-item" id="ni-about">
+          <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
+            About Us <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="nav-drop">
+            <a href="about.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="var(--brown)" stroke-width="1.4"/><path d="M2 14c0-3.31 2.69-6 6-6s6 2.69 6 6" stroke="var(--brown)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Our Story</strong><span>Mission, values & team</span></div></a>
+            <a href="about.html#team"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="5" cy="5" r="2.5" stroke="var(--brown)" stroke-width="1.4"/><circle cx="11" cy="5" r="2.5" stroke="var(--brown)" stroke-width="1.4"/><path d="M1 14c0-2.76 1.79-5 4-5M15 14c0-2.76-1.79-5-4-5M8 9v5" stroke="var(--brown)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Our Team</strong><span>Meet the experts</span></div></a>
+            <a href="reviews.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.6 3.5L8 9.5 4.9 11.5l.6-3.5L3 5.5l3.5-.5z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Press & Media</strong><span>Coverage & mentions</span></div></a>
+          </div>
+        </div>
+
+        <div class="nav-item"><a href="reviews.html">Reviews</a></div>
+
+        <!-- Resources dropdown -->
+        <div class="nav-item" id="ni-res">
+          <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
+            Resources <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="nav-drop">
+            <a href="blog.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h4" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Blog & Insights</strong><span>Articles, guides, tips</span></div></a>
+            <a href="resources.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3M10 13v-3l2 1.5-2 1.5z" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Free Downloads</strong><span>Templates & guides</span></div></a>
+            <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
+          </div>
+        </div>
+
+        <div class="nav-item"><a href="guest-speaker.html">Guest / Speaker</a></div>
+
+        <div class="nav-item"><a href="community.html">Community</a></div>
+
+        <!-- Marketing MEGA-MENU -->
+                <div class="nav-item" id="ni-mkt">
+          <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
+            Marketing <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="nav-drop">
+            <a href="marketing-strategy-meeting.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M2 11V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6l-3-1.5L8 11 5 9.5 2 11z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Marketing Strategy Meeting</strong><span>Free 30-min session with a specialist</span></div></a>
+          </div>
+        </div>
+        </div>
+
+      </div><!-- /nav-links -->
+
+      <a href="contact.html" class="btn btn-gold nav-cta-btn">Contact Us</a>
+      <button class="burger" id="burger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ MOBILE MENU ═══════════════════════════════════════════════ -->
+<div class="mob-overlay" id="mob-overlay"></div>
+<div class="mob-menu" id="mob-menu" aria-label="Mobile navigation">
+  <div class="mob-header">
+    <div class="nav-mark">DL</div>
+    <button class="mob-close" id="mob-close" aria-label="Close menu">✕</button>
+  </div>
+  <div class="mob-body">
+    <a href="index.html" class="mob-link active">Home</a>
+    <!-- Events accordion -->
+    <button class="mob-acc-trigger" id="mob-events-trig">
+      Events
+      <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="mob-acc-panel" id="mob-events-panel">
+    </div>
+    <a href="podcast.html" class="mob-link">Podcast</a>
+
+    <!-- About Us accordion -->
+    <button class="mob-acc-trigger" id="mob-about-trig">
+      About Us
+      <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="mob-acc-panel" id="mob-about-panel">
+      <a href="about.html">Our Story</a>
+      <a href="about.html#team">Our Team</a>
+      <a href="reviews.html">Press &amp; Media</a>
+    </div>
+
+    <a href="reviews.html" class="mob-link">Reviews</a>
+
+    <!-- Resources accordion -->
+    <button class="mob-acc-trigger" id="mob-res-trig">
+      Resources
+      <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="mob-acc-panel" id="mob-res-panel">
+      <a href="blog.html">Blog &amp; Insights</a>
+      <a href="resources.html">Free Downloads</a>
+      <a href="tools.html">⚖ Legal Tools</a>
+    </div>
+
+    <a href="guest-speaker.html" class="mob-link">Sign Up as Guest / Speaker</a>
+    <a href="community.html" class="mob-link">DL Community</a>
+
+    <!-- Marketing accordion -->
+    <button class="mob-acc-trigger" id="mob-mkt-trig">
+      Marketing
+      <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+        <div class="mob-acc-panel" id="mob-mkt-panel">
+      <a href="marketing-strategy-meeting.html">Marketing Strategy Meeting</a>
+    </div>
+
+    <div class="mob-sep"></div>
+    <div class="mob-cta-wrap">
+      <a href="contact.html" class="btn btn-gold">Contact Us →</a>
+            <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HERO ═════════════════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="wrap">
+    <div class="hero-inner">
+
+      <!-- Left -->
+      <div data-aos="fade-right">
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-line"></span>
+          For Attorneys Who Lead
+        </div>
+        <span class="hero-strike">Figuring It Out Alone</span>
+        <h1 data-aos="fade-up" data-aos-delay="80">
+          The Insights to <span class="accent">Run</span><br>
+          Your <em>Firm.</em>
+        </h1>
+        <p class="hero-sub" data-aos="fade-up" data-aos-delay="160">
+          Practical podcasts, expert-led events, and real-world strategies — everything lawyers need to lead a successful practice.
+        </p>
+        <div class="hero-actions" data-aos="fade-up" data-aos-delay="240">
+          <a href="#pillars" class="btn btn-brown btn-lg">Explore the Hub ↓</a>
+          <a href="marketing-strategy-meeting.html" class="btn btn-outline-b btn-lg">Free Strategy Call</a>
+        </div>
+        <div class="hero-trust" data-aos="fade-up" data-aos-delay="320">
+          <div class="hero-trust-badge"><span class="trust-ico">📅</span> Since 2018</div>
+        </div>
+      </div>
+
+      <!-- Right — blob image with floating cards -->
+      <div class="hero-right" data-aos="fade-left" data-aos-delay="200">
+        <div class="hero-img-blob">
+          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80"
+               alt="Scales of justice — law firm success" loading="eager">
+          <div class="hero-float-card">
+            <div class="hfc-num"><span class="count-up" data-target="247">0</span><span class="hfc-gold">%</span></div>
+            <div class="hfc-lbl">Avg. Organic Traffic Growth</div>
+          </div>
+          <div class="hero-float-card2">
+            <div class="hfc2-n"><span class="dot-live"></span> 500+ Law Firms</div>
+            <div class="hfc2-l">Trust Dominate Law</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Rotating scroll badge (Maya Hive style) -->
+  <div class="scroll-badge">
+    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <path id="circ" d="M60,10 A50,50 0 1,1 59.9,10"/>
+      </defs>
+      <text font-size="11" fill="#60270F" font-family="Inter,sans-serif" font-weight="600" letter-spacing="3">
+        <textPath href="#circ">SCROLL FOR MORE · SCROLL FOR MORE · </textPath>
+      </text>
+    </svg>
+    <div class="scroll-badge-arrow">↓</div>
+  </div>
+</section>
+
+<!-- ═══ MARQUEE 1 (gold, forward scroll) ═══════════════════════ -->
+<div class="marquee-sec">
+  <div class="marquee-track">
+    <!-- Items duplicated for seamless loop -->
+    <span class="marquee-item">⚖️ Legal Marketing <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">📣 SEO for Law Firms <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">⚙️ Practice Management <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">💻 Legal Technology <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">📈 Business Growth <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🤝 Client Experience <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">💰 Finance & Billing <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🧠 Attorney Wellness <span class="marquee-sep">·</span></span>
+    <!-- Duplicate set -->
+    <span class="marquee-item">⚖️ Legal Marketing <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">📣 SEO for Law Firms <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">⚙️ Practice Management <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">💻 Legal Technology <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">📈 Business Growth <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🤝 Client Experience <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">💰 Finance & Billing <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🧠 Attorney Wellness <span class="marquee-sep">·</span></span>
+  </div>
+</div>
+
+<!-- ═══ GHOST TEXT DARK SECTION ══════════════════════════════════ -->
+<section class="ghost-sec">
+  <div class="ghost-word">DOMINATE</div>
+  <div class="wrap">
+    <div class="ghost-inner" style="grid-template-columns:1fr">
+      <!-- Text column -->
+      <div data-aos="fade-left" data-aos-delay="120">
+        <span class="lbl lbl-w">About Dominate Law</span>
+        <h2 class="ghost-heading">
+          Built for Attorneys.<br>
+          Powered by <em>8 Years</em><br>
+          of <span class="outline-txt">Expertise.</span>
+        </h2>
+        <p class="p-lead p-lead-w" style="margin-bottom:24px">
+          Dominate Law is the go-to resource hub for law firm owners who want to grow smarter — not just work harder. Since 2018, we've covered every dimension of running a successful law firm — from podcasts and live events to practical strategies you can use today.
+        </p>
+        <p class="p-lead p-lead-w" style="margin-bottom:36px">
+          Backed by Ekwa Marketing — the leading digital marketing agency for law firms in North America — every guide, tool review, and podcast episode is grounded in real results from real law firms.
+        </p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <a href="about.html" class="btn btn-gold">Our Story →</a>
+          <a href="marketing-strategy-meeting.html" class="btn btn-outline-w">Free Strategy Call</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ MARKETING SPLIT ═══════════════════════════════════════════ -->
+<section class="split-sec" style="background:#fff">
+  <div class="wrap">
+    <div class="split-grid">
+      <div class="split-img-wrap" data-aos="fade-right">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80"
+             alt="Law firm marketing professional at work" loading="lazy">
+        <div class="split-overlay"></div>
+        <div class="split-badge">📈 Avg. 247% More Organic Traffic</div>
+      </div>
+      <div data-aos="fade-left" data-aos-delay="120">
+        <span class="lbl">Marketing & SEO</span>
+        <h2 class="h2">Get Found by More<br>of the Right Clients</h2>
+        <p class="p-lead" style="margin-top:12px">Most law firm websites are invisible to Google. We help you fix that — with SEO, reputation management, and content marketing built for attorneys.</p>
+        <div class="feat-list">
+          <div class="feat">
+            <div class="feat-ck">✓</div>
+            <div><strong>Law Firm SEO That Actually Works</strong><span>Practice-area pages, local SEO, and technical audits that move you up fast.</span></div>
+          </div>
+          <div class="feat">
+            <div class="feat-ck">✓</div>
+            <div><strong>Reputation & Review Management</strong><span>Build a 5-star presence across Google, Avvo, and Yelp — automatically.</span></div>
+          </div>
+          <div class="feat">
+            <div class="feat-ck">✓</div>
+            <div><strong>Content & Thought Leadership</strong><span>Articles, videos, and podcasts that position you as the expert before prospects call.</span></div>
+          </div>
+          <div class="feat">
+            <div class="feat-ck">✓</div>
+            <div><strong>Social Media for Law Firms</strong><span>Platform-specific strategies that comply with bar rules and actually generate cases.</span></div>
+          </div>
+        </div>
+        <div class="split-actions">
+          <a href="marketing-strategy-meeting.html" class="btn btn-brown">Explore Marketing →</a>
+          <a href="marketing-strategy-meeting.html" class="btn btn-outline-b">Free SEO Audit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ PODCAST ════════════════════════════════════════════════════ -->
+<section class="pod-sec" id="podcast">
+  <div class="pod-bg"></div>
+  <div class="pod-overlay"></div>
+  <div class="wrap pod-inner">
+    <div class="pod-grid">
+      <div class="pod-ep" data-aos="fade-up" data-aos-delay="0">
+        <div class="pod-ep-num">07</div>
+        <span class="pod-cat">AI & Technology</span>
+        <h4>The AI Playbook Every Law Firm Needs in 2026</h4>
+        <div class="pod-dur">🎧 38 min</div>
+      </div>
+      <div class="pod-ep" data-aos="fade-up" data-aos-delay="80">
+        <div class="pod-ep-num">06</div>
+        <span class="pod-cat">Referrals</span>
+        <h4>Building a Referral Network That Works While You Sleep</h4>
+        <div class="pod-dur">🎧 44 min</div>
+      </div>
+      <div class="pod-ep" data-aos="fade-up" data-aos-delay="160">
+        <div class="pod-ep-num">05</div>
+        <span class="pod-cat">Lead Generation</span>
+        <h4>Panel Events That Fill Your Calendar with Qualified Leads</h4>
+        <div class="pod-dur">🎧 41 min</div>
+      </div>
+      <div class="pod-ep" data-aos="fade-up" data-aos-delay="0">
+        <div class="pod-ep-num">04</div>
+        <span class="pod-cat">Email Marketing</span>
+        <h4>Email Marketing for Attorneys: From Lead to Signed Client</h4>
+        <div class="pod-dur">🎧 36 min</div>
+      </div>
+      <div class="pod-ep" data-aos="fade-up" data-aos-delay="80">
+        <div class="pod-ep-num">03</div>
+        <span class="pod-cat">Social Media</span>
+        <h4>Social Media for Law Firms: What Actually Works in 2026</h4>
+        <div class="pod-dur">🎧 39 min</div>
+      </div>
+      <div class="pod-ep" data-aos="fade-up" data-aos-delay="160">
+        <div class="pod-ep-num">02</div>
+        <span class="pod-cat">Reputation</span>
+        <h4>The Review Strategy That Builds Trust Before the First Call</h4>
+        <div class="pod-dur">🎧 32 min</div>
+      </div>
+    </div>
+    <!-- Host card -->
+    <div class="pod-host" data-aos="fade-up" data-aos-delay="180">
+      <img src="https://www.ekwa.com/wp-content/uploads/2025/03/naren-arulrajah-photo.png" alt="Naren Arulrajah – Host of Dominate Law Podcast" class="pod-host-img">
+      <div class="pod-host-info">
+        <span class="pod-host-role">Your Host</span>
+        <strong class="pod-host-name">Naren Arulrajah</strong>
+        <p class="pod-host-bio">CEO of Ekwa Marketing and Founder of Dominate Law, Naren has spent 18+ years helping law firms grow their practices through smart digital marketing. Each episode delivers no-fluff strategies you can implement this week.</p>
+        <div class="pod-host-links">
+          <a href="https://www.linkedin.com/company/dominatelaw/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="guest-speaker.html">Be a Guest →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pod-platforms" data-aos="fade-up" data-aos-delay="200">
+      <span class="pod-platform-lbl">Listen on:</span>
+      <a href="#" class="pod-pl">🎵 Spotify</a>
+      <a href="#" class="pod-pl">🎙️ Apple Podcasts</a>
+      <a href="#" class="pod-pl">▶️ YouTube</a>
+      <a href="#" class="pod-pl">🎧 Google Podcasts</a>
+      <a href="podcast.html" class="btn btn-gold btn-sm" style="margin-left:auto">All Episodes →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ MARQUEE 2 (reverse scroll, brown bg) ═════════════════════ -->
+<div class="marquee2-sec">
+  <div class="marquee2-track">
+    <span class="marquee2-item">DOMINATE LAW · </span>
+    <span class="marquee2-item">EKWA MARKETING · </span>
+    <span class="marquee2-item">THE LAW FIRM GROWTH SHOW · </span>
+    <span class="marquee2-item"><span class="m2-accent">SINCE 2018</span> · </span>
+    <span class="marquee2-item">FOR ATTORNEYS WHO LEAD · </span>
+    <span class="marquee2-item">PODCASTS · EVENTS · COMMUNITY · </span>
+    <span class="marquee2-item">DOMINATE LAW · </span>
+    <span class="marquee2-item">EKWA MARKETING · </span>
+    <span class="marquee2-item">THE LAW FIRM GROWTH SHOW · </span>
+    <span class="marquee2-item"><span class="m2-accent">SINCE 2018</span> · </span>
+    <span class="marquee2-item">FOR ATTORNEYS WHO LEAD · </span>
+    <span class="marquee2-item">PODCASTS · EVENTS · COMMUNITY · </span>
+  </div>
+</div>
+
+<!-- ═══ LEGAL TOOLS TEASER ════════════════════════════════════════ -->
+<section class="tools-teaser" id="tools">
+  <div class="wrap">
+    <div class="tools-teaser-grid">
+
+      <!-- Left: copy -->
+      <div data-aos="fade-right">
+        <div class="tools-teaser-badge">
+          <span></span> Free Attorney Tools
+        </div>
+        <span class="lbl">Legal Calculators &amp; Niche Tools</span>
+        <h2 class="h2" style="margin-bottom:18px">
+          Numbers That<br>
+          <em style="color:var(--gold);font-style:italic">Actually Work</em><br>
+          for Lawyers
+        </h2>
+        <p class="p-lead">8 specialized calculators built for how attorneys think — contingency fees, settlement estimates, statute of limitations deadlines, billable hours, and more. Free access for legal professionals.</p>
+        <div class="tools-lock-note">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="5" y="11" width="14" height="11" rx="2" stroke="var(--gold)" stroke-width="1.8"/>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="12" cy="16.5" r="1.5" fill="var(--gold)"/>
+          </svg>
+          <span>Quick sign-up with your name, designation &amp; email — then instant free access to every tool.</span>
+        </div>
+        <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="tools.html" class="btn btn-brown">Explore All Tools →</a>
+          <a href="tools.html" class="btn btn-outline-b">Sign Up Free</a>
+        </div>
+      </div>
+
+      <!-- Right: tool preview cards -->
+      <div class="tools-teaser-right" data-aos="fade-left" data-aos-delay="100">
+
+        <!-- Featured card -->
+        <a href="tools.html" class="tool-preview-card featured">
+          <div class="tool-preview-icon">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#E8C44A" stroke-width="1.8"/><path d="M12 7v1.5M12 15.5V17M9.5 10.5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5c0 2.5-2.5 3-2.5 3v1" stroke="#E8C44A" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <div class="tool-preview-name">Contingency Fee Calculator</div>
+          <div class="tool-preview-desc">Attorney fee, litigation costs &amp; client net recovery — all in one calculation.</div>
+        </a>
+
+        <!-- Card 2 -->
+        <a href="tools.html" class="tool-preview-card">
+          <div class="tool-preview-icon">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#E8C44A" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="#E8C44A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="1" fill="#E8C44A"/></svg>
+          </div>
+          <div class="tool-preview-name">Statute of Limitations</div>
+          <div class="tool-preview-desc">Exact filing deadlines by case type, with tolling and urgency alerts.</div>
+        </a>
+
+        <!-- Card 3 -->
+        <a href="tools.html" class="tool-preview-card">
+          <div class="tool-preview-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3 17l4-8 4 5 3-3 4 6" stroke="#E8C44A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 20h18" stroke="#E8C44A" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="tool-preview-name">Settlement Estimator</div>
+          <div class="tool-preview-desc">Multiplier-method settlement range with comparative fault adjustment.</div>
+        </a>
+
+        <!-- Card 4 -->
+        <a href="tools.html" class="tool-preview-card">
+          <div class="tool-preview-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 4.8 5.3.77-3.85 3.75.9 5.3L12 14.1l-4.75 2.52.9-5.3L4.3 7.57l5.3-.77L12 2z" stroke="#E8C44A" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="tool-preview-name">Case ROI Calculator</div>
+          <div class="tool-preview-desc">Risk-adjusted return on investment for evaluating whether to take a case.</div>
+        </a>
+
+        <!-- Card 5: +more badge -->
+        <a href="tools.html" class="tool-preview-card" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--brown3);border-color:transparent;color:#fff">
+          <div style="font-family:'Merriweather',serif;font-size:2rem;font-weight:900;color:var(--gold3)">+4</div>
+          <div style="font-size:.78rem;font-weight:600;color:rgba(255,255,255,.65);text-align:center">More Free Tools<br>for Attorneys</div>
+        </a>
+
+      </div><!-- /tools-teaser-right -->
+    </div><!-- /grid -->
+  </div>
+</section>
+
+<!-- ═══ CTA SECTION ═══════════════════════════════════════════════ -->
+<section class="cta-sec">
+  <div class="cta-bg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-ghost">LAW</div>
+  <div class="wrap">
+    <div class="cta-inner" data-aos="fade-up">
+      <span class="lbl lbl-w">Ready to Grow?</span>
+      <h2 class="cta-big">
+        Stop Leaving Cases<br>
+        on the <em>Table.</em>
+      </h2>
+      <p class="cta-sub">Book your free 30-minute strategy session. We'll audit your current marketing, show you exactly what's costing you clients, and map out a clear plan to fix it — at no charge.</p>
+      <div class="cta-actions">
+        <a href="marketing-strategy-meeting.html" class="btn btn-gold btn-lg">Book Free Strategy Call →</a>
+        <a href="podcast.html" class="btn btn-outline-w btn-lg">Listen to the Podcast</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ══════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-row" id="f-logo-row">
+          <img src="https://www.dominatelaw.com/wp-content/themes/growingdentist/images/logo.png" alt="Dominate Law"
+               onerror="this.style.display='none';document.getElementById('footer-fb').classList.add('show')">
+          <div class="footer-logo-fb" id="footer-fb">
+            <div class="footer-mark">DL</div>
+            <div class="footer-brand-t"><strong>Dominate Law</strong><em>by Ekwa Marketing</em></div>
+          </div>
+        </div>
+        <p class="footer-desc">The complete resource hub for attorneys and law firm owners. Marketing, management, technology, and growth — all in one place. Powered by Ekwa Marketing.</p>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/dominatelaw/" target="_blank" rel="noopener" title="LinkedIn">in</a>
+          <a href="https://www.facebook.com/DominateLawPodcast" target="_blank" rel="noopener" title="Facebook">f</a>
+          <a href="https://www.instagram.com/dominatelawpodcast/" target="_blank" rel="noopener" title="Instagram">◎</a>
+          <a href="mailto:info@dominatelaw.com" title="Email Us">✉</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Resource Hub</h4>
+        <ul>
+          <li><a href="marketing-strategy-meeting.html">Marketing & SEO</a></li>
+          <li><a href="blog/law-firm-practice-management-guide.html">Practice Management</a></li>
+          <li><a href="blog/legal-technology-guide-2026.html">Legal Technology</a></li>
+          <li><a href="blog/law-firm-practice-management-guide.html">Business Growth</a></li>
+          <li><a href="blog/law-firm-client-experience-guide.html">Client Experience</a></li>
+          <li><a href="resources.html">Ethics & Compliance</a></li>
+          <li><a href="blog/law-firm-practice-management-guide.html">Finance & Billing</a></li>
+          <li><a href="resources.html">Attorney Wellness</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Content</h4>
+        <ul>
+          <li><a href="tools.html">⚖ Legal Tools (Free)</a></li>
+          <li><a href="podcast.html">Podcast Show</a></li>
+          <li><a href="resources.html">Free Downloads</a>
+      <a href="tools.html">⚖ Legal Tools</a></li>
+          <li><a href="blog.html">Blog & Insights</a></li>
+          <li><a href="events.html">Events & Webinars</a></li>
+          <li><a href="testimonials.html">Success Stories</a></li>
+          <li><a href="about.html">About Ekwa</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Practice Areas</h4>
+        <ul>
+          <li><a href="#">Personal Injury</a></li>
+          <li><a href="#">Family Law</a></li>
+          <li><a href="#">Criminal Defense</a></li>
+          <li><a href="#">Immigration</a></li>
+          <li><a href="#">Estate Planning</a></li>
+          <li><a href="#">Business Law</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Dominate Law by Ekwa Marketing. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Accessibility</a>
+            <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button id="btt" aria-label="Back to top">↑</button>
+
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+/* ─── AOS ─────────────────────────────────────────────────── */
+AOS.init({ once: true, offset: 70, duration: 750, easing: 'ease-out-cubic' });
+
+/* ─── Custom Cursor — Scales of Justice ───────────────────── */
+const ico  = document.getElementById('cur-ico');
+const ring = document.getElementById('cur-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+function animCursor() {
+  if (ico)  { ico.style.left  = mx + 'px'; ico.style.top  = my + 'px'; }
+  rx += (mx - rx) * 0.10;
+  ry += (my - ry) * 0.10;
+  if (ring) { ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; }
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+
+/* Hover state: scales tilt on interactive elements */
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => { ico?.classList.add('hover'); ring?.classList.add('hover'); });
+  el.addEventListener('mouseleave', () => { ico?.classList.remove('hover'); ring?.classList.remove('hover'); });
+});
+
+/* Click ripple: gold ring bursts outward on click */
+document.addEventListener('click', e => {
+  const r = document.createElement('div');
+  r.className = 'cur-ripple';
+  r.style.left = e.clientX + 'px';
+  r.style.top  = e.clientY + 'px';
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+});
+
+/* ─── Scroll Progress ──────────────────────────────────────── */
+const pBar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  pBar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+}, {passive:true});
+
+/* ─── Nav shadow on scroll ─────────────────────────────────── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, {passive:true});
+
+/* ─── Desktop Dropdown / Mega-Menu ─────────────────────────── */
+document.querySelectorAll('.nav-item').forEach(item => {
+  const trigger = item.querySelector('.nav-drop-trigger');
+  if (!trigger) return;
+  let timer;
+  const open = () => { clearTimeout(timer); item.classList.add('open'); trigger.setAttribute('aria-expanded','true'); };
+  const close = () => { timer = setTimeout(() => { item.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }, 120); };
+  item.addEventListener('mouseenter', open);
+  item.addEventListener('mouseleave', close);
+  trigger.addEventListener('click', () => item.classList.contains('open') ? close() : open());
+  // Close on outside click
+  document.addEventListener('click', e => { if (!item.contains(e.target)) item.classList.remove('open'); });
+});
+// Close all dropdowns on Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });
+
+/* ─── Mobile Menu ──────────────────────────────────────────── */
+const burger  = document.getElementById('burger');
+const mobMenu = document.getElementById('mob-menu');
+const mobOvl  = document.getElementById('mob-overlay');
+const mobCls  = document.getElementById('mob-close');
+const openMenu = (open) => {
+  mobMenu.classList.toggle('open', open);
+  mobOvl.classList.toggle('open', open);
+  burger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+};
+burger?.addEventListener('click', () => openMenu(!mobMenu.classList.contains('open')));
+mobCls?.addEventListener('click', () => openMenu(false));
+mobOvl?.addEventListener('click', () => openMenu(false));
+
+/* Mobile accordion toggles */
+document.querySelectorAll('.mob-acc-trigger').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const panelId = btn.id.replace('-trig', '-panel');
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    const isOpen = panel.classList.contains('open');
+    // Close all others
+    document.querySelectorAll('.mob-acc-panel.open').forEach(p => p.classList.remove('open'));
+    document.querySelectorAll('.mob-acc-trigger.open').forEach(t => t.classList.remove('open'));
+    if (!isOpen) { panel.classList.add('open'); btn.classList.add('open'); }
+  });
+});
+
+/* ─── Animated Counters ────────────────────────────────────── */
+function countUp(el) {
+  const target = +el.dataset.target;
+  const dur = 1800;
+  const step = target / (dur / 16);
+  let cur = 0;
+  const t = setInterval(() => {
+    cur = Math.min(cur + step, target);
+    el.textContent = Math.floor(cur);
+    if (cur >= target) clearInterval(t);
+  }, 16);
+}
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { countUp(e.target); countObs.unobserve(e.target); } });
+}, { threshold: 0.5 });
+document.querySelectorAll('.count-up[data-target]').forEach(el => countObs.observe(el));
+
+/* ─── Back to Top ──────────────────────────────────────────── */
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => btt.classList.toggle('show', window.scrollY > 500), {passive:true});
+btt.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+/* ─── Smooth anchor links ──────────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+  });
+});
+
+/* ═══ HOME POPUP LOGIC ══════════════════════════════════════════ */
+var HP_KEY = 'dl_hp_popup_seen';
+
+function dlCloseHomePopup() {
+  var bd = document.getElementById('home-popup-backdrop');
+  if (!bd) return;
+  bd.classList.remove('visible');
+  setTimeout(function() { bd.style.display = 'none'; }, 380);
+  try { sessionStorage.setItem(HP_KEY, '1'); } catch(e) {}
+}
+
+(function() {
+  // Only show once per session
+  try { if (sessionStorage.getItem(HP_KEY)) return; } catch(e) {}
+
+  setTimeout(function() {
+    var bd = document.getElementById('home-popup-backdrop');
+    if (!bd) return;
+    bd.style.display = 'flex';
+    // Tiny delay so display:flex is painted before opacity transition fires
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() { bd.classList.add('visible'); });
+    });
+  }, 2500);
+
+  // Close when clicking backdrop (outside popup)
+  var bd = document.getElementById('home-popup-backdrop');
+  if (bd) {
+    bd.addEventListener('click', function(e) {
+      if (e.target === bd) dlCloseHomePopup();
+    });
+  }
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') dlCloseHomePopup();
+  });
+})();
+</script>
+</body>
+</html>

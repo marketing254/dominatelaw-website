@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /?s=
+
+Sitemap: https://www.dominatelaw.com/sitemap.xml
+
+# Dominate Law | dominatelaw.com | Powered by Ekwa Marketing
