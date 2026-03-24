@@ -393,7 +393,7 @@ p:last-child{margin-bottom:0}
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <img src="https://www.dominatelaw.com/wp-content/themes/growingdentist/images/logo.png" alt="Dominate Law" onerror="this.style.display='none';document.getElementById('nav-fb').classList.add('show')">
+      <img src="images/logo.png" alt="Dominate Law" onerror="this.style.display='none';document.getElementById('nav-fb').classList.add('show')">
       <div class="nav-logo-fb" id="nav-fb"><div class="nav-mark">DL</div><div class="nav-brand"><strong>Dominate Law</strong><em>by Ekwa</em></div></div>
     </a>
     <div class="nav-links" id="navLinks">
@@ -484,52 +484,9 @@ p:last-child{margin-bottom:0}
       <h2 id="events-heading">Upcoming Events for Law Firm Owners</h2>
       <p>All events are free to attend. Recordings are available to all registered attendees. Register early — seats are limited.</p>
     </div>
-    <div class="grid-2">
-      <article class="event-card" data-event-date="2026-04-15">
-        <div class="event-card-header">
-          <div class="event-date"><div class="event-date-day">15</div><div class="event-date-month">Apr 2026</div></div>
-          <span class="event-badge event-status-badge">Upcoming</span>
-        </div>
-        <div class="event-card-body">
-          <h3>The Local SEO Masterclass for Law Firms</h3>
-          <p>Learn the exact SEO strategies that put law firms at the top of Google search results. Featuring live Q&amp;A with 3 legal marketing experts.</p>
-          <a href="contact.html" class="btn btn-primary btn-sm mt-16 event-register-btn" style="display:inline-flex;">Register Free →</a>
-        </div>
-      </article>
-      <article class="event-card" data-event-date="2026-05-22">
-        <div class="event-card-header">
-          <div class="event-date"><div class="event-date-day">22</div><div class="event-date-month">May 2026</div></div>
-          <span class="event-badge event-status-badge">Upcoming</span>
-        </div>
-        <div class="event-card-body">
-          <h3>Building a 5-Star Review System for Your Practice</h3>
-          <p>A step-by-step workshop on implementing a systematic review collection process that generates consistent 5-star ratings on Google, Avvo, and more.</p>
-          <a href="contact.html" class="btn btn-primary btn-sm mt-16 event-register-btn" style="display:inline-flex;">Register Free →</a>
-        </div>
-      </article>
-      <article class="event-card" data-event-date="2026-06-12">
-        <div class="event-card-header">
-          <div class="event-date"><div class="event-date-day">12</div><div class="event-date-month">Jun 2026</div></div>
-          <span class="event-badge event-status-badge">Upcoming</span>
-        </div>
-        <div class="event-card-body">
-          <h3>The Law Firm Social Media Summit 2026</h3>
-          <p>Our biggest event of the year — 6 speakers, 3 sessions, and a full day of social media strategy built exclusively for attorneys.</p>
-          <a href="contact.html" class="btn btn-primary btn-sm mt-16 event-register-btn" style="display:inline-flex;">Register Free →</a>
-        </div>
-      </article>
-      <article class="event-card" data-event-date="2026-07-18">
-        <div class="event-card-header">
-          <div class="event-date"><div class="event-date-day">18</div><div class="event-date-month">Jul 2026</div></div>
-          <span class="event-badge event-status-badge">Upcoming</span>
-        </div>
-        <div class="event-card-body">
-          <h3>Podcast Launch Masterclass for Attorneys</h3>
-          <p>From zero to published in 30 days. Everything you need to plan, record, edit, and launch a podcast that positions you as the authority in your practice area.</p>
-          <a href="contact.html" class="btn btn-primary btn-sm mt-16 event-register-btn" style="display:inline-flex;">Register Free →</a>
-        </div>
-      </article></div>
-  </div>
+    <div class="grid-2" id="events-grid">
+      <div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--muted)">Loading events…</div>
+    </div>
 </section>
 
 <section class="section section-light" aria-labelledby="why-events-heading">
@@ -578,7 +535,7 @@ p:last-child{margin-bottom:0}
   <div class="wrap">
     <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;padding-bottom:32px">
       <div style="display:flex;align-items:center;gap:10px">
-        <img src="https://www.dominatelaw.com/wp-content/themes/growingdentist/images/logo.png" alt="Dominate Law" style="height:34px" onerror="this.style.display='none';document.getElementById('f-fb-sub').style.display='flex'">
+        <img src="images/logo.png" alt="Dominate Law" style="height:34px" onerror="this.style.display='none';document.getElementById('f-fb-sub').style.display='flex'">
         <div id="f-fb-sub" style="display:none;align-items:center;gap:8px">
           <div class="nav-mark">DL</div>
           <div><strong style="display:block;font-size:.85rem;color:rgba(255,255,255,.8)">Dominate Law</strong><em style="font-size:.65rem;color:rgba(255,255,255,.3);font-style:normal">by Ekwa Marketing</em></div>
@@ -706,5 +663,6 @@ if (progressBar) {
   });
 }
 </script>
+<script src="js/sheets.js"></script>
 </body>
 </html>

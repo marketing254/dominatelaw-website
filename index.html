@@ -1259,14 +1259,14 @@ button { border: none; background: none; cursor: none; font: inherit; }
         </div>
         <div class="hp-pod-inner">
           <div class="hp-pod-photo">
-            <img src="https://www.dominatelaw.com/wp-content/uploads/2018/09/Alan-Fanger-sm.jpg" alt="Alan Fanger" loading="lazy">
+            <img id="hp-pod-img" src="" alt="" loading="lazy">
           </div>
           <div>
-            <div class="hp-pod-ep">Episode #20</div>
-            <p class="hp-pod-title">Preparing Clients for a Better Deposition in the Courtroom</p>
+            <div class="hp-pod-ep" id="hp-pod-ep">Loading...</div>
+            <p class="hp-pod-title" id="hp-pod-title"></p>
           </div>
         </div>
-        <a href="podcast.html" class="hp-btn hp-btn-podcast" onclick="dlCloseHomePopup()">
+        <a href="podcast.html" id="hp-pod-link" class="hp-btn hp-btn-podcast" onclick="dlCloseHomePopup()">
           <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><polygon points="5,3 13,8 5,13"/></svg>
           Listen Now
         </a>
@@ -1279,12 +1279,12 @@ button { border: none; background: none; cursor: none; font: inherit; }
           Next Event
         </div>
         <div class="hp-evt-date">
-          <div class="hp-evt-date-day">15</div>
-          <div class="hp-evt-date-month">Apr 2026</div>
+          <div class="hp-evt-date-day" id="hp-evt-day">—</div>
+          <div class="hp-evt-date-month" id="hp-evt-month"></div>
         </div>
-        <p class="hp-evt-title">The Local SEO Masterclass for Law Firms</p>
-        <p class="hp-evt-desc">Live Q&amp;A with 3 legal marketing experts. Learn the exact strategies that put law firms at the top of Google.</p>
-        <a href="events.html" class="hp-btn hp-btn-event" onclick="dlCloseHomePopup()">
+        <p class="hp-evt-title" id="hp-evt-title">Loading...</p>
+        <p class="hp-evt-desc" id="hp-evt-desc"></p>
+        <a href="events.html" id="hp-evt-link" class="hp-btn hp-btn-event" onclick="dlCloseHomePopup()">
           Register Free →
         </a>
       </div>
@@ -1323,8 +1323,8 @@ button { border: none; background: none; cursor: none; font: inherit; }
 <!-- Announcement -->
 <div class="announce">
   <span class="a-pulse"></span>
-  <strong>NEW:</strong> Episode #07 — "The AI Playbook Every Law Firm Needs in 2026" is live &nbsp;·&nbsp;
-  <a href="podcast.html">Listen Now →</a>
+  <strong>NEW:</strong> <span id="announce-text">Latest episode is live</span> &nbsp;·&nbsp;
+  <a href="podcast.html" id="announce-link">Listen Now →</a>
 </div>
 
 <!-- ═══ NAV ══════════════════════════════════════════════════════ -->
@@ -1333,7 +1333,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
     <div class="nav-inner">
       <!-- Logo -->
       <a href="index.html" class="nav-logo">
-        <img src="https://www.dominatelaw.com/wp-content/themes/growingdentist/images/logo.png" alt="Dominate Law"
+        <img src="images/logo.png" alt="Dominate Law"
              onerror="this.style.display='none';document.getElementById('nav-fb').classList.add('show')">
         <div class="nav-logo-fb" id="nav-fb">
           <div class="nav-mark">DL</div>
@@ -1670,7 +1670,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
     </div>
     <!-- Host card -->
     <div class="pod-host" data-aos="fade-up" data-aos-delay="180">
-      <img src="https://www.ekwa.com/wp-content/uploads/2025/03/naren-arulrajah-photo.png" alt="Naren Arulrajah – Host of Dominate Law Podcast" class="pod-host-img">
+      <img src="images/naren.jpg" alt="Naren Arulrajah – Host of Dominate Law Podcast" class="pod-host-img">
       <div class="pod-host-info">
         <span class="pod-host-role">Your Host</span>
         <strong class="pod-host-name">Naren Arulrajah</strong>
@@ -1820,7 +1820,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
     <div class="footer-grid">
       <div>
         <div class="footer-logo-row" id="f-logo-row">
-          <img src="https://www.dominatelaw.com/wp-content/themes/growingdentist/images/logo.png" alt="Dominate Law"
+          <img src="images/logo.png" alt="Dominate Law"
                onerror="this.style.display='none';document.getElementById('footer-fb').classList.add('show')">
           <div class="footer-logo-fb" id="footer-fb">
             <div class="footer-mark">DL</div>
@@ -2052,5 +2052,6 @@ function dlCloseHomePopup() {
   });
 })();
 </script>
+<script src="js/sheets.js"></script>
 </body>
 </html>
