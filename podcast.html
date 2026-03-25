@@ -298,6 +298,19 @@ p:last-child{margin-bottom:0}
   .cta-banner{flex-direction:column}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ── Marquee Ticker ──────────────────────────────────────── */
+.ticker-wrap{background:var(--brown3);border-top:1px solid rgba(196,154,10,.25);border-bottom:1px solid rgba(196,154,10,.25);overflow:hidden;padding:0;position:relative}
+.ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;width:80px;height:100%;z-index:2;pointer-events:none}
+.ticker-wrap::before{left:0;background:linear-gradient(to right,var(--brown3),transparent)}
+.ticker-wrap::after{right:0;background:linear-gradient(to left,var(--brown3),transparent)}
+.ticker-track{display:flex;width:max-content;animation:ticker-scroll 28s linear infinite}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;white-space:nowrap;font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.ticker-item svg{flex-shrink:0;opacity:.9}
+.ticker-item .t-text{color:rgba(255,255,255,.9)}
+.ticker-sep{color:var(--gold);opacity:.5;font-size:.65rem;padding:0 4px;align-self:center}
   </style>
 
   <!-- Schema.org -->
@@ -479,13 +492,60 @@ p:last-child{margin-bottom:0}
   </div>
 </section>
 
-<div class="value-bar">
-  <div class="container value-bar-inner">
-    <span class="value-item">🎙️ 20 Episodes</span>
-    <span class="value-item">⚖️ Attorney Interviews</span>
-    <span class="value-item">🚀 Empowering Attorneys as Entrepreneurs</span>
-    <span class="value-item">✓ 100% Free</span>
-    <span class="value-item">🌎 The Law Firm Growth Show</span>
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <!-- Set 1 -->
+    <span class="ticker-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+      <span class="t-text">20 Episodes</span>
+    </span>
+    <span class="ticker-sep">◆</span>
+    <span class="ticker-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M3 7h3l3 10 3-10 3 10 3-10h3"/><line x1="3" y1="21" x2="21" y2="21"/></svg>
+      <span class="t-text">Attorney Interviews</span>
+    </span>
+    <span class="ticker-sep">◆</span>
+    <span class="ticker-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      <span class="t-text">Empowering Attorneys as Entrepreneurs</span>
+    </span>
+    <span class="ticker-sep">◆</span>
+    <span class="ticker-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+      <span class="t-text">100% Free</span>
+    </span>
+    <span class="ticker-sep">◆</span>
+    <span class="ticker-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span class="t-text">The Law Firm Growth Show</span>
+    </span>
+    <span class="ticker-sep">◆</span>
+    <!-- Set 2 — duplicate for seamless loop -->
+    <span class="ticker-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+      <span class="t-text">20 Episodes</span>
+    </span>
+    <span class="ticker-sep">◆</span>
+    <span class="ticker-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M3 7h3l3 10 3-10 3 10 3-10h3"/><line x1="3" y1="21" x2="21" y2="21"/></svg>
+      <span class="t-text">Attorney Interviews</span>
+    </span>
+    <span class="ticker-sep">◆</span>
+    <span class="ticker-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      <span class="t-text">Empowering Attorneys as Entrepreneurs</span>
+    </span>
+    <span class="ticker-sep">◆</span>
+    <span class="ticker-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+      <span class="t-text">100% Free</span>
+    </span>
+    <span class="ticker-sep">◆</span>
+    <span class="ticker-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span class="t-text">The Law Firm Growth Show</span>
+    </span>
+    <span class="ticker-sep">◆</span>
   </div>
 </div>
 
