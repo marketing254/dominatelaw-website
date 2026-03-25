@@ -176,7 +176,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
 .nav-item > button:hover,
 .nav-item > a.active,
 .nav-item.open > a,
-.nav-item.open > button { color: var(--brown); background: var(--cream); }
+.nav-item.open > button { color: var(--brown); background: rgba(96,39,15,.13); }
 /* Chevron for items with dropdowns */
 .nav-chevron {
   width: 10px; height: 10px; display: inline-block;
@@ -1941,12 +1941,20 @@ document.querySelectorAll('.nav-item').forEach(item => {
   if (!trigger) return;
   let timer;
   const open = () => { clearTimeout(timer); item.classList.add('open'); trigger.setAttribute('aria-expanded','true'); };
-  const close = () => { timer = setTimeout(() => { item.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }, 120); };
+  const close = () => { timer = setTimeout(() => { item.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }, 200); };
   item.addEventListener('mouseenter', open);
   item.addEventListener('mouseleave', close);
-  trigger.addEventListener('click', () => item.classList.contains('open') ? close() : open());
-  // Close on outside click
-  document.addEventListener('click', e => { if (!item.contains(e.target)) item.classList.remove('open'); });
+  trigger.addEventListener('click', () => { if (!item.classList.contains('open')) open(); });
+});
+// Single listener — closes any open dropdown when clicking outside it
+document.addEventListener('click', e => {
+  document.querySelectorAll('.nav-item.open').forEach(item => {
+    if (!item.contains(e.target)) {
+      item.classList.remove('open');
+      const tr = item.querySelector('.nav-drop-trigger');
+      if (tr) tr.setAttribute('aria-expanded','false');
+    }
+  });
 });
 // Close all dropdowns on Escape
 document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });

@@ -1701,10 +1701,10 @@ document.querySelectorAll('.nav-item').forEach(item => {
   if (!trigger) return;
   let timer;
   item.addEventListener('mouseenter', () => { clearTimeout(timer); item.classList.add('open'); });
-  item.addEventListener('mouseleave', () => { timer = setTimeout(() => item.classList.remove('open'), 120); });
-  trigger.addEventListener('click', () => item.classList.contains('open') ? item.classList.remove('open') : item.classList.add('open'));
-  document.addEventListener('click', e => { if (!item.contains(e.target)) item.classList.remove('open'); });
+  item.addEventListener('mouseleave', () => { timer = setTimeout(() => item.classList.remove('open'), 200); });
+  trigger.addEventListener('click', () => { if (!item.classList.contains('open')) item.classList.add('open'); });
 });
+document.addEventListener('click', e => { document.querySelectorAll('.nav-item.open').forEach(i => { if (!i.contains(e.target)) i.classList.remove('open'); }); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });
 
 /* Mobile menu — handled above */

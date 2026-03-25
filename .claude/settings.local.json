@@ -10,7 +10,8 @@
       "Bash(gh auth:*)",
       "Bash(for f:*)",
       "Bash(do sed:*)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(ls *.html)"
     ]
   }
 }
