@@ -4,7 +4,13 @@
       "Bash(dir /B /S \"C:\\\\Users\\\\Fathima Rushdha\\\\Documents\\\\dominatelaw-website\\\\images\")",
       "WebFetch(domain:www.lessinsurancedependence.com)",
       "Bash(python -c \":*)",
-      "WebFetch(domain:www.dominatelaw.com)"
+      "WebFetch(domain:www.dominatelaw.com)",
+      "Bash(gh api:*)",
+      "Bash(winget install:*)",
+      "Bash(gh auth:*)",
+      "Bash(for f:*)",
+      "Bash(do sed:*)",
+      "Bash(done)"
     ]
   }
 }

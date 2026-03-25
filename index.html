@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Dominate Law is the complete growth platform for ambitious attorneys — free legal calculators, marketing tools, expert webinars, a peer community, and a weekly podcast. Trusted by 2,400+ law firms.">
+<meta name="description" content="Dominate Law is the complete growth platform for ambitious attorneys — free legal calculators, marketing tools, expert webinars, a peer community, and a weekly podcast. The complete growth platform for law firm owners.">
 <title>Law Firm Marketing Resources, Tools & Community | Dominate Law</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -155,7 +155,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
 .nav.scrolled { box-shadow: 0 4px 30px rgba(58,13,0,.1); }
 .nav-inner { height: 70px; display: flex; align-items: center; gap: 0; }
 /* Logo */
-.nav-logo { margin-right: 18px; flex-shrink: 0; display: flex; align-items: center; gap: 10px; }
+.nav-logo { margin-right: 40px; flex-shrink: 0; display: flex; align-items: center; gap: 10px; }
 .nav-logo img { height: 40px; width: auto; }
 .nav-logo-fb { display: none; align-items: center; gap: 8px; }
 .nav-logo-fb.show { display: flex; }
@@ -163,13 +163,13 @@ button { border: none; background: none; cursor: none; font: inherit; }
 .nav-brand strong { display: block; font-size: .82rem; font-weight: 700; color: var(--brown); }
 .nav-brand em { font-size: .62rem; color: var(--muted); font-style: normal; }
 /* Nav link list */
-.nav-links { display: flex; align-items: center; gap: 0; flex: 1; }
+.nav-links { display: flex; align-items: center; gap: 0; margin-left: auto; }
 /* Each nav item wrapper (handles dropdown) */
 .nav-item { position: relative; }
 .nav-item > a, .nav-item > button {
   display: flex; align-items: center; gap: 3px;
   padding: 6px 9px; border-radius: 4px; font-size: .775rem;
-  font-weight: 500; color: var(--muted); transition: all .2s;
+  font-weight: 500; color: var(--muted); transition: color .15s, background .15s;
   background: none; white-space: nowrap; cursor: none;
 }
 .nav-item > a:hover,
@@ -1145,7 +1145,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
 <link rel="canonical" href="https://www.dominatelaw.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Law Firm Marketing Resources, Tools & Community | Dominate Law">
-<meta property="og:description" content="Dominate Law is the complete growth platform for ambitious attorneys — free legal calculators, marketing tools, expert webinars, a peer community, and a weekly podcast. Trusted by 2,400+ law firms.">
+<meta property="og:description" content="Dominate Law is the complete growth platform for ambitious attorneys — free legal calculators, marketing tools, expert webinars, a peer community, and a weekly podcast. The complete growth platform for law firm owners.">
 <meta property="og:url" content="https://www.dominatelaw.com/">
 <meta property="og:site_name" content="Dominate Law">
 <meta property="og:image" content="https://www.dominatelaw.com/og-cover.jpg">
@@ -1154,7 +1154,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Law Firm Marketing Resources, Tools & Community | Dominate Law">
-<meta name="twitter:description" content="Dominate Law is the complete growth platform for ambitious attorneys — free legal calculators, marketing tools, expert webinars, a peer community, and a weekly podcast. Trusted by 2,400+ law firms.">
+<meta name="twitter:description" content="Dominate Law is the complete growth platform for ambitious attorneys — free legal calculators, marketing tools, expert webinars, a peer community, and a weekly podcast. The complete growth platform for law firm owners.">
 <meta name="twitter:image" content="https://www.dominatelaw.com/og-cover.jpg">
 <meta name="twitter:site" content="@dominatelaw">
 <script type="application/ld+json">
@@ -1344,6 +1344,16 @@ button { border: none; background: none; cursor: none; font: inherit; }
       <!-- Desktop links -->
       <div class="nav-links" id="navLinks">
 
+        <!-- About Us dropdown -->
+        <div class="nav-item" id="ni-about">
+          <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
+            About Us <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="nav-drop">
+            <a href="about.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="var(--brown)" stroke-width="1.4"/><path d="M2 14c0-3.31 2.69-6 6-6s6 2.69 6 6" stroke="var(--brown)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Our Story</strong><span>Mission &amp; values</span></div></a>
+          </div>
+        </div>
+
         <!-- Events dropdown -->
         <div class="nav-item" id="ni-events">
           <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
@@ -1356,18 +1366,6 @@ button { border: none; background: none; cursor: none; font: inherit; }
 
         <div class="nav-item"><a href="podcast.html">Podcast</a></div>
 
-        <!-- About Us dropdown -->
-        <div class="nav-item" id="ni-about">
-          <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
-            About Us <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div class="nav-drop">
-            <a href="about.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="var(--brown)" stroke-width="1.4"/><path d="M2 14c0-3.31 2.69-6 6-6s6 2.69 6 6" stroke="var(--brown)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Our Story</strong><span>Mission, values & team</span></div></a>
-            <a href="about.html#team"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="5" cy="5" r="2.5" stroke="var(--brown)" stroke-width="1.4"/><circle cx="11" cy="5" r="2.5" stroke="var(--brown)" stroke-width="1.4"/><path d="M1 14c0-2.76 1.79-5 4-5M15 14c0-2.76-1.79-5-4-5M8 9v5" stroke="var(--brown)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Our Team</strong><span>Meet the experts</span></div></a>
-            <a href="reviews.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.6 3.5L8 9.5 4.9 11.5l.6-3.5L3 5.5l3.5-.5z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Press & Media</strong><span>Coverage & mentions</span></div></a>
-          </div>
-        </div>
-
         <div class="nav-item"><a href="reviews.html">Reviews</a></div>
 
         <!-- Resources dropdown -->
@@ -1377,7 +1375,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
           </button>
           <div class="nav-drop">
             <a href="blog.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h4" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Blog & Insights</strong><span>Articles, guides, tips</span></div></a>
-            <a href="resources.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3M10 13v-3l2 1.5-2 1.5z" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Free Downloads</strong><span>Templates & guides</span></div></a>
+            <a href="resources.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3M10 13v-3l2 1.5-2 1.5z" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Free Downloads</strong><span>Templates &amp; guides</span></div></a>
             <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
           </div>
         </div>
@@ -1386,15 +1384,14 @@ button { border: none; background: none; cursor: none; font: inherit; }
 
         <div class="nav-item"><a href="community.html">Community</a></div>
 
-        <!-- Marketing MEGA-MENU -->
-                <div class="nav-item" id="ni-mkt">
+        <!-- MSM dropdown -->
+        <div class="nav-item" id="ni-mkt">
           <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
-            Marketing <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Marketing Strategy Meeting <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
           <div class="nav-drop">
-            <a href="marketing-strategy-meeting.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M2 11V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6l-3-1.5L8 11 5 9.5 2 11z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Marketing Strategy Meeting</strong><span>Free 30-min session with a specialist</span></div></a>
+            <a href="msm.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M2 11V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6l-3-1.5L8 11 5 9.5 2 11z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Marketing Strategy Meeting</strong><span>Free 30-min strategy session</span></div></a>
           </div>
-        </div>
         </div>
 
       </div><!-- /nav-links -->
@@ -1416,14 +1413,6 @@ button { border: none; background: none; cursor: none; font: inherit; }
   </div>
   <div class="mob-body">
     <a href="index.html" class="mob-link active">Home</a>
-    <!-- Events accordion -->
-    <button class="mob-acc-trigger" id="mob-events-trig">
-      Events
-      <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg>
-    </button>
-    <div class="mob-acc-panel" id="mob-events-panel">
-    </div>
-    <a href="podcast.html" class="mob-link">Podcast</a>
 
     <!-- About Us accordion -->
     <button class="mob-acc-trigger" id="mob-about-trig">
@@ -1432,10 +1421,18 @@ button { border: none; background: none; cursor: none; font: inherit; }
     </button>
     <div class="mob-acc-panel" id="mob-about-panel">
       <a href="about.html">Our Story</a>
-      <a href="about.html#team">Our Team</a>
-      <a href="reviews.html">Press &amp; Media</a>
     </div>
 
+    <!-- Events accordion -->
+    <button class="mob-acc-trigger" id="mob-events-trig">
+      Events
+      <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="mob-acc-panel" id="mob-events-panel">
+      <a href="events.html">Webinars &amp; Events</a>
+    </div>
+
+    <a href="podcast.html" class="mob-link">Podcast</a>
     <a href="reviews.html" class="mob-link">Reviews</a>
 
     <!-- Resources accordion -->
@@ -1449,22 +1446,21 @@ button { border: none; background: none; cursor: none; font: inherit; }
       <a href="tools.html">⚖ Legal Tools</a>
     </div>
 
-    <a href="guest-speaker.html" class="mob-link">Sign Up as Guest / Speaker</a>
-    <a href="community.html" class="mob-link">DL Community</a>
+    <a href="guest-speaker.html" class="mob-link">Guest / Speaker</a>
+    <a href="community.html" class="mob-link">Community</a>
 
-    <!-- Marketing accordion -->
+    <!-- MSM accordion -->
     <button class="mob-acc-trigger" id="mob-mkt-trig">
-      Marketing
+      Marketing Strategy Meeting
       <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
-        <div class="mob-acc-panel" id="mob-mkt-panel">
-      <a href="marketing-strategy-meeting.html">Marketing Strategy Meeting</a>
+    <div class="mob-acc-panel" id="mob-mkt-panel">
+      <a href="msm.html">Marketing Strategy Meeting</a>
     </div>
 
     <div class="mob-sep"></div>
     <div class="mob-cta-wrap">
       <a href="contact.html" class="btn btn-gold">Contact Us →</a>
-            <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
     </div>
   </div>
 </div>
@@ -1490,7 +1486,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
         </p>
         <div class="hero-actions" data-aos="fade-up" data-aos-delay="240">
           <a href="#pillars" class="btn btn-brown btn-lg">Explore the Hub ↓</a>
-          <a href="marketing-strategy-meeting.html" class="btn btn-outline-b btn-lg">Free Strategy Call</a>
+          <a href="msm.html" class="btn btn-outline-b btn-lg">Free Strategy Call</a>
         </div>
         <div class="hero-trust" data-aos="fade-up" data-aos-delay="320">
           <div class="hero-trust-badge"><span class="trust-ico">📅</span> Since 2018</div>
@@ -1503,12 +1499,12 @@ button { border: none; background: none; cursor: none; font: inherit; }
           <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80"
                alt="Scales of justice — law firm success" loading="eager">
           <div class="hero-float-card">
-            <div class="hfc-num"><span class="count-up" data-target="247">0</span><span class="hfc-gold">%</span></div>
-            <div class="hfc-lbl">Avg. Organic Traffic Growth</div>
+            <div class="hfc-num"><span class="hfc-gold">★★★★★</span></div>
+            <div class="hfc-lbl">5-Star Rated Platform</div>
           </div>
           <div class="hero-float-card2">
-            <div class="hfc2-n"><span class="dot-live"></span> 500+ Law Firms</div>
-            <div class="hfc2-l">Trust Dominate Law</div>
+            <div class="hfc2-n"><span class="dot-live"></span> Growing Network</div>
+            <div class="hfc2-l">of Law Firms</div>
           </div>
         </div>
       </div>
@@ -1575,7 +1571,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
         </p>
         <div style="display:flex;gap:14px;flex-wrap:wrap">
           <a href="about.html" class="btn btn-gold">Our Story →</a>
-          <a href="marketing-strategy-meeting.html" class="btn btn-outline-w">Free Strategy Call</a>
+          <a href="msm.html" class="btn btn-outline-w">Free Strategy Call</a>
         </div>
       </div>
     </div>
@@ -1591,7 +1587,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
         <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80"
              alt="Law firm marketing professional at work" loading="lazy">
         <div class="split-overlay"></div>
-        <div class="split-badge">📈 Avg. 247% More Organic Traffic</div>
+        <div class="split-badge">⭐ Trusted by Law Firms Nationwide</div>
       </div>
       <div data-aos="fade-left" data-aos-delay="120">
         <span class="lbl">Marketing & SEO</span>
@@ -1616,8 +1612,8 @@ button { border: none; background: none; cursor: none; font: inherit; }
           </div>
         </div>
         <div class="split-actions">
-          <a href="marketing-strategy-meeting.html" class="btn btn-brown">Explore Marketing →</a>
-          <a href="marketing-strategy-meeting.html" class="btn btn-outline-b">Free SEO Audit</a>
+          <a href="msm.html" class="btn btn-brown">Explore Marketing →</a>
+          <a href="msm.html" class="btn btn-outline-b">Free SEO Audit</a>
         </div>
       </div>
     </div>
@@ -1807,7 +1803,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
       </h2>
       <p class="cta-sub">Book your free 30-minute strategy session. We'll audit your current marketing, show you exactly what's costing you clients, and map out a clear plan to fix it — at no charge.</p>
       <div class="cta-actions">
-        <a href="marketing-strategy-meeting.html" class="btn btn-gold btn-lg">Book Free Strategy Call →</a>
+        <a href="msm.html" class="btn btn-gold btn-lg">Book Free Strategy Call →</a>
         <a href="podcast.html" class="btn btn-outline-w btn-lg">Listen to the Podcast</a>
       </div>
     </div>
@@ -1838,7 +1834,7 @@ button { border: none; background: none; cursor: none; font: inherit; }
       <div class="footer-col">
         <h4>Resource Hub</h4>
         <ul>
-          <li><a href="marketing-strategy-meeting.html">Marketing & SEO</a></li>
+          <li><a href="msm.html">Marketing & SEO</a></li>
           <li><a href="blog/law-firm-practice-management-guide.html">Practice Management</a></li>
           <li><a href="blog/legal-technology-guide-2026.html">Legal Technology</a></li>
           <li><a href="blog/law-firm-practice-management-guide.html">Business Growth</a></li>

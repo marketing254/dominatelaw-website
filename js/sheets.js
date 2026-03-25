@@ -421,7 +421,7 @@ async function dlLoadEventsGrid() {
         <article class="event-card${isPast ? ' past' : ''}" data-event-date="${ev.date_iso}">
           <div class="event-card-header">
             <div class="event-date"><div class="event-date-day">${ev.day}</div><div class="event-date-month">${ev.month_year}</div></div>
-            <span class="event-badge event-status-badge">${isPast ? 'Past' : 'Upcoming'}</span>
+            <span class="event-badge event-status-badge" style="${isPast ? 'background:rgba(255,255,255,.1);color:rgba(255,255,255,.4)' : 'background:var(--gold);color:#fff'}">${isPast ? 'Concluded' : 'Upcoming'}</span>
           </div>
           <div class="event-card-body">
             <h3>${ev.title}</h3>

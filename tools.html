@@ -100,8 +100,8 @@ input, select, textarea { font: inherit; }
 }
 .btn-brown { background: var(--brown); color: #fff; }
 .btn-brown:hover { background: var(--brown3); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(96,39,15,.35); }
-.btn-gold { background: var(--gold); color: #fff; }
-.btn-gold:hover { background: var(--gold2); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(196,154,10,.4); }
+.btn-gold { background: var(--brown); color: #fff; }
+.btn-gold:hover { background: var(--brown3); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(58,13,0,.3); }
 .btn-outline-b { background: transparent; color: var(--brown); border-color: var(--brown); }
 .btn-outline-b:hover { background: var(--brown); color: #fff; transform: translateY(-2px); }
 
@@ -125,17 +125,28 @@ input, select, textarea { font: inherit; }
 }
 .nav.scrolled { box-shadow: 0 4px 30px rgba(58,13,0,.1); }
 .nav-inner { height: 74px; display: flex; align-items: center; max-width: var(--max); margin: 0 auto; padding: 0 40px; }
-.nav-logo { margin-right: auto; flex-shrink: 0; display: flex; align-items: center; gap: 10px; }
-.nav-logo img { height: 44px; width: auto; }
+.nav-logo { margin-right: 40px; flex-shrink: 0; display: flex; align-items: center; gap: 10px; }
+.nav-logo img { height: 40px; width: auto; }
 .nav-logo-fb { display: none; align-items: center; gap: 10px; }
 .nav-logo-fb.show { display: flex; }
 .nav-mark { width: 40px; height: 40px; background: var(--brown); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Merriweather', serif; font-weight: 900; font-size: .9rem; color: var(--gold3); }
 .nav-brand strong { display: block; font-size: .9rem; font-weight: 700; color: var(--brown); }
 .nav-brand em { font-size: .67rem; color: var(--muted); font-style: normal; }
-.nav-links { display: flex; align-items: center; gap: 2px; margin: 0 16px; }
-.nav-links a { padding: 7px 13px; border-radius: 4px; font-size: .84rem; font-weight: 500; color: var(--muted); transition: all .2s; }
-.nav-links a:hover, .nav-links a.active { color: var(--brown); background: var(--cream); }
-.nav-cta { font-size:.83rem; padding:10px 22px; }
+.nav-links { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+.nav-item { position: relative; }
+.nav-item > a, .nav-item > button { display: flex; align-items: center; gap: 3px; padding: 6px 9px; border-radius: 4px; font-size: .775rem; font-weight: 500; color: var(--muted); transition: color .15s, background .15s; background: none; white-space: nowrap; cursor: none; }
+.nav-item > a:hover, .nav-item > button:hover, .nav-item > a.active, .nav-item.open > a, .nav-item.open > button { color: var(--brown); background: var(--cream); }
+.nav-chevron { width: 10px; height: 10px; display: inline-block; transition: transform .2s; }
+.nav-item.open .nav-chevron { transform: rotate(180deg); }
+.nav-drop { position: absolute; top: calc(100% + 8px); left: 0; background: #fff; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(58,13,0,.12); padding: 8px; min-width: 220px; opacity: 0; transform: translateY(-6px); pointer-events: none; transition: opacity .2s, transform .2s; z-index: 900; }
+.nav-item.open .nav-drop { opacity: 1; transform: none; pointer-events: auto; }
+.nav-drop a { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 6px; font-size: .8rem; font-weight: 500; color: var(--warm); transition: background .15s, color .15s; }
+.nav-drop a:hover { background: var(--cream); color: var(--brown); }
+.nav-drop-icon { width: 28px; height: 28px; border-radius: 6px; background: var(--cream); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.nav-drop-icon svg { width: 14px; height: 14px; }
+.nav-drop-text strong { display: block; font-size: .79rem; }
+.nav-drop-text span { font-size: .7rem; color: var(--muted); display: block; }
+.nav-cta { font-size: .83rem; padding: 10px 22px; }
 .burger { display: none; flex-direction: column; gap: 5px; padding: 8px; border-radius: 4px; cursor: pointer; }
 .burger span { display: block; width: 22px; height: 2px; background: var(--brown); border-radius: 2px; transition: all .3s; }
 .mob-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 1500; }
@@ -613,6 +624,7 @@ input, select, textarea { font: inherit; }
 <!-- ═══════════════════════════════════ SIGNUP GATE MODAL ══════════════════════ -->
 <div class="gate-overlay" id="gateOverlay">
   <div class="gate-box" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+    <button onclick="window.location.href='index.html'" aria-label="Close" style="position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;background:rgba(96,39,15,.08);border:none;cursor:pointer;font-size:1.1rem;color:var(--brown);display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(96,39,15,.18)'" onmouseout="this.style.background='rgba(96,39,15,.08)'">✕</button>
     <div class="gate-badge">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
         <rect x="10.4" y="2" width="3.2" height="18" fill="#E8C44A" rx="1.6"/>
@@ -670,23 +682,47 @@ input, select, textarea { font: inherit; }
 <!-- ═══════════════════════════════════ NAV ═══════════════════════════════════ -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <div class="nav-logo">
+    <a href="index.html" class="nav-logo">
       <img src="images/logo.png" alt="Dominate Law"
            onerror="this.style.display='none';document.getElementById('nav-fb').classList.add('show')">
       <div class="nav-logo-fb" id="nav-fb">
         <div class="nav-mark">DL</div>
         <div class="nav-brand"><strong>Dominate Law</strong><em>by Ekwa Marketing</em></div>
       </div>
-    </div>
+    </a>
     <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="marketing-strategy-meeting.html">Marketing</a>
-      <a href="podcast.html">Podcast</a>
-      <a href="tools.html" class="active">Legal Tools</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html">Contact</a>
+      <div class="nav-item" id="ni-about">
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">About Us <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="nav-drop">
+          <a href="about.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="var(--brown)" stroke-width="1.4"/><path d="M2 14c0-3.31 2.69-6 6-6s6 2.69 6 6" stroke="var(--brown)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Our Story</strong><span>Mission &amp; values</span></div></a>
+        </div>
+      </div>
+      <div class="nav-item" id="ni-events">
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">Events <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="nav-drop">
+          <a href="events.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 2v2M11 2v2M2 7h12" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Webinars &amp; Events</strong><span>Live &amp; on-demand sessions</span></div></a>
+        </div>
+      </div>
+      <div class="nav-item"><a href="podcast.html">Podcast</a></div>
+      <div class="nav-item"><a href="reviews.html">Reviews</a></div>
+      <div class="nav-item active" id="ni-res">
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">Resources <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="nav-drop">
+          <a href="blog.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h4" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Blog &amp; Insights</strong><span>Articles, guides, tips</span></div></a>
+          <a href="resources.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3M10 13v-3l2 1.5-2 1.5z" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Free Downloads</strong><span>Templates &amp; guides</span></div></a>
+          <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
+        </div>
+      </div>
+      <div class="nav-item"><a href="guest-speaker.html">Guest / Speaker</a></div>
+      <div class="nav-item"><a href="community.html">Community</a></div>
+      <div class="nav-item" id="ni-mkt">
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false" id="ni-mkt-label">Marketing Strategy Meeting <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="nav-drop">
+          <a href="msm.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M2 11V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6l-3-1.5L8 11 5 9.5 2 11z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Marketing Strategy Meeting</strong><span>Free 30-min strategy session</span></div></a>
+        </div>
+      </div>
     </div>
-    <a href="marketing-strategy-meeting.html" class="btn btn-gold nav-cta">Free Strategy Call</a>
+    <a href="contact.html" class="btn btn-gold nav-cta">Contact Us</a>
     <button class="burger" id="burger">
       <span></span><span></span><span></span>
     </button>
@@ -696,15 +732,28 @@ input, select, textarea { font: inherit; }
 <!-- Mobile Menu -->
 <div class="mob-overlay" id="mob-overlay"></div>
 <div class="mob-menu" id="mob-menu">
-  <button class="mob-close" id="mob-close">✕</button>
-  <a href="index.html">Home</a>
-  <a href="marketing-strategy-meeting.html">Marketing & SEO</a>
-  <a href="podcast.html">Podcast</a>
-  <a href="tools.html">Legal Tools</a>
-  <a href="resources.html">Resources</a>
-  <div class="mob-sep"></div>
-  <a href="contact.html">Contact</a>
-  <a href="marketing-strategy-meeting.html" class="btn btn-gold" style="text-align:center;justify-content:center;margin-top:12px">Free Strategy Call →</a>
+  <div class="mob-header"><div class="nav-mark">DL</div><button class="mob-close" id="mob-close">✕</button></div>
+  <div class="mob-body">
+    <a href="index.html" class="mob-link">Home</a>
+    <button class="mob-acc-trigger" id="mob-about-trig">About Us <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="mob-acc-panel" id="mob-about-panel"><a href="about.html">Our Story</a></div>
+    <button class="mob-acc-trigger" id="mob-events-trig">Events <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="mob-acc-panel" id="mob-events-panel"><a href="events.html">Webinars &amp; Events</a></div>
+    <a href="podcast.html" class="mob-link">Podcast</a>
+    <a href="reviews.html" class="mob-link">Reviews</a>
+    <button class="mob-acc-trigger" id="mob-res-trig">Resources <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="mob-acc-panel" id="mob-res-panel">
+      <a href="blog.html">Blog &amp; Insights</a>
+      <a href="resources.html">Free Downloads</a>
+      <a href="tools.html">⚖ Legal Tools</a>
+    </div>
+    <a href="guest-speaker.html" class="mob-link">Guest / Speaker</a>
+    <a href="community.html" class="mob-link">Community</a>
+    <button class="mob-acc-trigger" id="mob-mkt-trig">Marketing Strategy Meeting <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="mob-acc-panel" id="mob-mkt-panel"><a href="msm.html">Marketing Strategy Meeting</a></div>
+    <div class="mob-sep"></div>
+    <div class="mob-cta-wrap"><a href="contact.html" class="btn btn-gold">Contact Us →</a></div>
+  </div>
 </div>
 
 <!-- ═══════════════════════════════════ PAGE HERO ═════════════════════════════════ -->
@@ -1201,7 +1250,7 @@ input, select, textarea { font: inherit; }
         <a href="tools.html" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Legal Tools</a>
         <a href="community.html" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Community</a>
         <a href="guest-speaker.html" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Guest/Speaker</a>
-        <a href="marketing-strategy-meeting.html" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Free Strategy Meeting</a>
+        <a href="msm.html" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Free Strategy Meeting</a>
         <a href="contact.html" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Contact</a>
       </div>
     </div>
@@ -1273,8 +1322,10 @@ document.addEventListener('click', e => {
    Persists via localStorage + cookie so user is only asked once
    per device/browser, regardless of session or tab.
 ═══════════════════════════════════════════════════════════════ */
-var GATE_KEY = 'dl_tools_user';
-var GATE_COOKIE = 'dl_tools_ok';
+var GATE_KEY = 'dl_tools_user_v2';
+var GATE_COOKIE = 'dl_tools_ok_v2';
+var DL_SHEETS_URL = 'YOUR_APPS_SCRIPT_URL';
+function dlSendToSheets(payload){try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)});}catch(e){}}
 
 /* ── Cookie helpers ─────────────────────────────────────────── */
 function dlSetCookie(name, value, days) {
@@ -1338,6 +1389,7 @@ function dlGateSubmit() {
   if (!ok) return;
 
   dlSaveSubmission({ firstName: firstName, lastName: lastName, email: email, role: role, ts: Date.now() });
+  dlSendToSheets({tab:'Legal Tools Gate','First Name':firstName,'Last Name':lastName,'Email':email,'Role':role});
   dlDismissGate();
 }
 

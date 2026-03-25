@@ -53,16 +53,16 @@ input, select, textarea { font: inherit; }
 .nav{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:box-shadow .3s;}
 .nav.scrolled{box-shadow:0 4px 30px rgba(58,13,0,.1);}
 .nav-inner{height:70px;display:flex;align-items:center;gap:0;max-width:var(--max);margin:0 auto;padding:0 40px;}
-.nav-logo{margin-right:18px;flex-shrink:0;display:flex;align-items:center;gap:10px;}
+.nav-logo{margin-right:40px;flex-shrink:0;display:flex;align-items:center;gap:10px;}
 .nav-logo img{height:40px;width:auto;}
 .nav-logo-fb{display:none;align-items:center;gap:8px;}
 .nav-logo-fb.show{display:flex;}
 .nav-mark{width:36px;height:36px;background:var(--brown);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Merriweather',serif;font-weight:900;font-size:.82rem;color:var(--gold3);}
 .nav-brand strong{display:block;font-size:.82rem;font-weight:700;color:var(--brown);}
 .nav-brand em{font-size:.62rem;color:var(--muted);font-style:normal;}
-.nav-links{display:flex;align-items:center;gap:0;flex:1;}
+.nav-links{display:flex;align-items:center;gap:0;margin-left:auto;}
 .nav-item{position:relative;}
-.nav-item>a,.nav-item>button{display:flex;align-items:center;gap:3px;padding:6px 9px;border-radius:4px;font-size:.775rem;font-weight:500;color:var(--muted);transition:all .2s;background:none;white-space:nowrap;cursor:none;}
+.nav-item>a,.nav-item>button{display:flex;align-items:center;gap:3px;padding:6px 9px;border-radius:4px;font-size:.775rem;font-weight:500;color:var(--muted);transition:color .15s,background .15s;background:none;white-space:nowrap;cursor:none;}
 .nav-item>a:hover,.nav-item>button:hover,.nav-item>a.active,.nav-item.open>a,.nav-item.open>button{color:var(--brown);background:var(--cream);}
 .nav-chevron{width:10px;height:10px;display:inline-block;transition:transform .2s;}
 .nav-item.open .nav-chevron{transform:rotate(180deg);}
@@ -126,19 +126,28 @@ input, select, textarea { font: inherit; }
 }
 .cm-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;}
 .cm-hero::after{content:'COMMUNITY';position:absolute;right:-60px;bottom:-50px;font-family:'Merriweather',serif;font-size:clamp(60px,12vw,140px);font-weight:900;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.05);pointer-events:none;line-height:1;white-space:nowrap;}
-.cm-hero-inner{position:relative;z-index:2;text-align:center;max-width:760px;margin:0 auto;}
+.cm-hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:center;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
 .cm-live-tag{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:100px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);font-size:.74rem;font-weight:700;color:rgba(255,255,255,.75);margin-bottom:22px;}
 .cm-live-dot{width:8px;height:8px;border-radius:50%;background:var(--gold3);animation:pulse 2s ease-in-out infinite;}
 .cm-hero h1{font-family:'Merriweather',serif;font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:18px;}
 .cm-hero h1 em{color:var(--gold3);font-style:italic;}
-.cm-hero-sub{font-size:1.05rem;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:36px;max-width:600px;margin-left:auto;margin-right:auto;}
-.cm-hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
-.cm-hero-stats{display:flex;gap:0;justify-content:center;margin-top:50px;padding-top:40px;border-top:1px solid rgba(255,255,255,.1);}
-.cm-hero-stat{padding:0 40px;text-align:center;border-right:1px solid rgba(255,255,255,.1);}
-.cm-hero-stat:last-child{border-right:none;}
-.cm-hero-stat-num{font-family:'Merriweather',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:900;color:var(--gold3);}
-.cm-hero-stat-lbl{font-size:.78rem;color:rgba(255,255,255,.5);margin-top:4px;}
+.cm-hero-sub{font-size:1.05rem;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:36px;max-width:540px;}
+.cm-hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+.cm-hero-stats{display:flex;gap:0;margin-top:50px;padding-top:40px;border-top:1px solid rgba(255,255,255,.1);}
+.cm-hero-stat{padding:0 32px 0 0;text-align:left;border-right:1px solid rgba(255,255,255,.1);margin-right:32px;}
+.cm-hero-stat:last-child{border-right:none;margin-right:0;}
+.cm-hero-stat-num{font-family:'Merriweather',serif;font-size:clamp(1.6rem,2.5vw,2rem);font-weight:900;color:var(--gold3);}
+.cm-hero-stat-lbl{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:4px;}
+/* Hero join card */
+.cm-hero-form-card{background:#fff;border-radius:20px;padding:32px 28px;box-shadow:0 24px 80px rgba(0,0,0,.3);}
+.cm-hero-form-card .join-card-tag{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:100px;background:rgba(196,154,10,.12);border:1px solid rgba(196,154,10,.3);font-size:.7rem;font-weight:700;color:var(--gold2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;}
+.cm-hero-form-card h3{font-family:'Merriweather',serif;font-size:1.15rem;font-weight:900;color:var(--brown3);margin-bottom:6px;}
+.cm-hero-form-card>p{font-size:.8rem;color:var(--muted);margin-bottom:18px;line-height:1.6;}
+.cm-host-tag{display:flex;align-items:center;gap:12px;padding:14px 0 18px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:18px;}
+.cm-host-tag img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+.cm-host-name{font-weight:700;font-size:.85rem;color:var(--brown3);}
+.cm-host-title{font-size:.72rem;color:var(--muted);}
 
 /* ─── FEATURES ──────────────────────────────────────────────── */
 .feat-sec{padding:90px 0;background:var(--cream);}
@@ -232,6 +241,8 @@ input, select, textarea { font: inherit; }
   .feat-grid{grid-template-columns:1fr 1fr;}
   .who-grid,.founder-grid,.join-grid{grid-template-columns:1fr;gap:40px;}
   .founder-grid{text-align:center;}
+  .cm-hero-inner{grid-template-columns:1fr;}
+  .cm-hero-form-card{display:none;}
   .cm-hero-stats{flex-wrap:wrap;gap:20px;}
   .cm-hero-stat{border:none;padding:10px 20px;}
 }
@@ -356,40 +367,34 @@ input, select, textarea { font: inherit; }
       <div class="nav-logo-fb" id="nav-fb"><div class="nav-mark">DL</div><div class="nav-brand"><strong>Dominate Law</strong><em>by Ekwa</em></div></div>
     </a>
     <div class="nav-links">
-        <!-- Events dropdown -->
-        <div class="nav-item" id="ni-events">
-          <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
-            Events <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div class="nav-drop">
-          </div>
-        </div>
-      <div class="nav-item"><a href="podcast.html">Podcast</a></div>
       <div class="nav-item" id="ni-about">
-        <button class="nav-drop-trigger">About Us <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">About Us <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
         <div class="nav-drop">
-          <a href="about.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="var(--brown)" stroke-width="1.4"/><path d="M2 14c0-3.31 2.69-6 6-6s6 2.69 6 6" stroke="var(--brown)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Our Story</strong></div></a>
-          <a href="reviews.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.6 3.5L8 9.5 4.9 11.5l.6-3.5L3 5.5l3.5-.5z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Press &amp; Media</strong></div></a>
+          <a href="about.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="var(--brown)" stroke-width="1.4"/><path d="M2 14c0-3.31 2.69-6 6-6s6 2.69 6 6" stroke="var(--brown)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Our Story</strong><span>Mission &amp; values</span></div></a>
         </div>
       </div>
+      <div class="nav-item" id="ni-events">
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">Events <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="nav-drop">
+          <a href="events.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 2v2M11 2v2M2 7h12" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Webinars &amp; Events</strong><span>Live &amp; on-demand sessions</span></div></a>
+        </div>
+      </div>
+      <div class="nav-item"><a href="podcast.html">Podcast</a></div>
       <div class="nav-item"><a href="reviews.html">Reviews</a></div>
       <div class="nav-item" id="ni-res">
-        <button class="nav-drop-trigger">Resources <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">Resources <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
         <div class="nav-drop">
-          <a href="blog.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--brown)" stroke-width="1.4"/></svg></div><div class="nav-drop-text"><strong>Blog &amp; Insights</strong></div></a>
-          <a href="resources.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/></svg></div><div class="nav-drop-text"><strong>Free Downloads</strong></div></a>
-            <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
+          <a href="blog.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h4" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Blog &amp; Insights</strong><span>Articles, guides, tips</span></div></a>
+          <a href="resources.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3M10 13v-3l2 1.5-2 1.5z" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Free Downloads</strong><span>Templates &amp; guides</span></div></a>
+          <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
         </div>
       </div>
       <div class="nav-item"><a href="guest-speaker.html">Guest / Speaker</a></div>
       <div class="nav-item"><a href="community.html" class="active">Community</a></div>
-              <div class="nav-item" id="ni-mkt">
-          <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
-            Marketing <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div class="nav-drop">
-            <a href="marketing-strategy-meeting.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M2 11V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6l-3-1.5L8 11 5 9.5 2 11z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Marketing Strategy Meeting</strong><span>Free 30-min session with a specialist</span></div></a>
-          </div>
+      <div class="nav-item" id="ni-mkt">
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false" id="ni-mkt-label">Marketing Strategy Meeting <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="nav-drop">
+          <a href="msm.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M2 11V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6l-3-1.5L8 11 5 9.5 2 11z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Marketing Strategy Meeting</strong><span>Free 30-min strategy session</span></div></a>
         </div>
       </div>
     </div>
@@ -402,25 +407,22 @@ input, select, textarea { font: inherit; }
   <div class="mob-header"><div class="nav-mark">DL</div><button class="mob-close" id="mob-close">✕</button></div>
   <div class="mob-body">
     <a href="index.html" class="mob-link">Home</a>
-    <!-- Events accordion -->
-    <button class="mob-acc-trigger" id="mob-events-trig">
-      Events
-      <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg>
-    </button>
-    <div class="mob-acc-panel" id="mob-events-panel">
-    </div>
-    <a href="podcast.html" class="mob-link">Podcast</a>
     <button class="mob-acc-trigger" id="mob-about-trig">About Us <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-    <div class="mob-acc-panel" id="mob-about-panel"><a href="about.html">Our Story</a><a href="reviews.html">Press &amp; Media</a></div>
+    <div class="mob-acc-panel" id="mob-about-panel"><a href="about.html">Our Story</a></div>
+    <button class="mob-acc-trigger" id="mob-events-trig">Events <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="mob-acc-panel" id="mob-events-panel"><a href="events.html">Webinars &amp; Events</a></div>
+    <a href="podcast.html" class="mob-link">Podcast</a>
     <a href="reviews.html" class="mob-link">Reviews</a>
     <button class="mob-acc-trigger" id="mob-res-trig">Resources <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-    <div class="mob-acc-panel" id="mob-res-panel"><a href="blog.html">Blog</a><a href="resources.html">Downloads</a></div>
-    <a href="guest-speaker.html" class="mob-link">Sign Up as Guest / Speaker</a>
-    <a href="community.html" class="mob-link active">DL Community</a>
-    <button class="mob-acc-trigger" id="mob-mkt-trig">Marketing <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-        <div class="mob-acc-panel" id="mob-mkt-panel">
-      <a href="marketing-strategy-meeting.html">Marketing Strategy Meeting</a>
+    <div class="mob-acc-panel" id="mob-res-panel">
+      <a href="blog.html">Blog &amp; Insights</a>
+      <a href="resources.html">Free Downloads</a>
+      <a href="tools.html">⚖ Legal Tools</a>
     </div>
+    <a href="guest-speaker.html" class="mob-link">Guest / Speaker</a>
+    <a href="community.html" class="mob-link active">Community</a>
+    <button class="mob-acc-trigger" id="mob-mkt-trig">Marketing Strategy Meeting <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="mob-acc-panel" id="mob-mkt-panel"><a href="msm.html">Marketing Strategy Meeting</a></div>
     <div class="mob-sep"></div>
     <div class="mob-cta-wrap"><a href="contact.html" class="btn btn-gold">Contact Us →</a></div>
   </div>
@@ -429,19 +431,79 @@ input, select, textarea { font: inherit; }
 <!-- HERO -->
 <section class="cm-hero">
   <div class="wrap">
-    <div class="cm-hero-inner" data-aos="fade-up">
-      <div class="cm-live-tag"><span class="cm-live-dot"></span> Now Open — Free to Join</div>
-      <h1>The Private Network for<br>Attorneys Who Want to <em>Dominate.</em></h1>
-      <p class="cm-hero-sub">Join a community of ambitious law firm owners and attorneys sharing real strategies, exclusive resources, and peer support to grow their practices and win more clients.</p>
-      <div class="cm-hero-btns">
-        <a href="#join" class="btn btn-gold" onclick="document.getElementById('join').scrollIntoView({behavior:'smooth'});return false;">Join the Community — Free →</a>
-        <a href="podcast.html" class="btn btn-outline-w">Listen to the Podcast</a>
+    <div class="cm-hero-inner">
+      <!-- Left: Hero text -->
+      <div data-aos="fade-right">
+        <div class="cm-live-tag"><span class="cm-live-dot"></span> Now Open — Free to Join</div>
+        <h1>The Private Network for<br>Attorneys Who Want to <em>Dominate.</em></h1>
+        <p class="cm-hero-sub">Join a community of ambitious law firm owners and attorneys sharing real strategies, exclusive resources, and peer support to grow their practices and win more clients.</p>
+        <div class="cm-hero-btns">
+          <a href="#join" class="btn btn-gold" onclick="document.getElementById('join').scrollIntoView({behavior:'smooth'});return false;">Join the Community — Free →</a>
+          <a href="podcast.html" class="btn btn-outline-w">Listen to the Podcast</a>
+        </div>
+        <div class="cm-hero-stats">
+          <div class="cm-hero-stat"><div class="cm-hero-stat-num">Growing</div><div class="cm-hero-stat-lbl">Law Firm Network</div></div>
+          <div class="cm-hero-stat"><div class="cm-hero-stat-num">60+</div><div class="cm-hero-stat-lbl">Podcast Episodes</div></div>
+          <div class="cm-hero-stat"><div class="cm-hero-stat-num">Free</div><div class="cm-hero-stat-lbl">Always Free to Join</div></div>
+          <div class="cm-hero-stat"><div class="cm-hero-stat-num">40+</div><div class="cm-hero-stat-lbl">Practice Areas</div></div>
+        </div>
       </div>
-      <div class="cm-hero-stats">
-        <div class="cm-hero-stat"><div class="cm-hero-stat-num">2,400+</div><div class="cm-hero-stat-lbl">Law Firms in Our Network</div></div>
-        <div class="cm-hero-stat"><div class="cm-hero-stat-num">60+</div><div class="cm-hero-stat-lbl">Podcast Episodes</div></div>
-        <div class="cm-hero-stat"><div class="cm-hero-stat-num">Free</div><div class="cm-hero-stat-lbl">Always Free to Join</div></div>
-        <div class="cm-hero-stat"><div class="cm-hero-stat-num">40+</div><div class="cm-hero-stat-lbl">Practice Areas</div></div>
+      <!-- Right: Join form card -->
+      <div data-aos="fade-left" data-aos-delay="100">
+        <div class="cm-hero-form-card">
+          <div class="join-card-tag">🎉 Free to Join</div>
+          <h3>Join the Community</h3>
+          <p>Instant access. No credit card. No spam.</p>
+          <div class="cm-host-tag">
+            <img src="images/naren.jpg" alt="Naren Arulrajah">
+            <div>
+              <div class="cm-host-name">Naren Arulrajah</div>
+              <div class="cm-host-title">Founder &amp; Host, Dominate Law</div>
+            </div>
+          </div>
+          <form class="join-form" id="heroJoinForm" novalidate>
+            <div class="join-row">
+              <div class="jf"><label for="hj-fname">First Name *</label><input type="text" id="hj-fname" placeholder="Alex" required></div>
+              <div class="jf"><label for="hj-lname">Last Name *</label><input type="text" id="hj-lname" placeholder="Thompson" required></div>
+            </div>
+            <div class="jf"><label for="hj-email">Email Address *</label><input type="email" id="hj-email" placeholder="alex@yourfirm.com" required></div>
+            <div class="jf">
+              <label for="hj-role">Your Role *</label>
+              <select id="hj-role" required>
+                <option value="">— Select —</option>
+                <option>Solo Practitioner</option>
+                <option>Associate Attorney</option>
+                <option>Partner</option>
+                <option>Managing Partner</option>
+                <option>Law Firm Owner</option>
+                <option>Paralegal / Legal Professional</option>
+                <option>Law Student</option>
+                <option>Legal Consultant</option>
+              </select>
+            </div>
+            <div class="jf">
+              <label for="hj-area">Primary Practice Area</label>
+              <select id="hj-area">
+                <option value="">— Select —</option>
+                <option>Personal Injury</option>
+                <option>Family Law</option>
+                <option>Criminal Defense</option>
+                <option>Immigration</option>
+                <option>Estate Planning</option>
+                <option>Business / Corporate</option>
+                <option>Employment Law</option>
+                <option>Real Estate</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <button type="submit" class="join-submit">Join Free →</button>
+          </form>
+          <div class="join-success" id="heroJoinSuccess" style="display:none">
+            <svg width="40" height="40" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="26" stroke="var(--green)" stroke-width="2.5"/><path d="M18 28l7 7 13-14" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h3 style="font-size:1rem">Welcome to the Community!</h3>
+            <p style="font-size:.82rem">Check your inbox for a welcome email from Naren.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -470,11 +532,6 @@ input, select, textarea { font: inherit; }
         <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 2h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="#E8C44A" stroke-width="1.8"/><path d="M7 7h10M7 11h7M17 18v4l-3-2-3 2v-4" stroke="#E8C44A" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         <h3>Free Resources &amp; Templates</h3>
         <p>Downloadable marketing templates, checklists, SOPs, and guides created by Ekwa Marketing's team — available exclusively to community members.</p>
-      </div>
-      <div class="feat-card" data-aos="fade-up" data-aos-delay="0">
-        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="8" cy="8" r="4" stroke="#E8C44A" stroke-width="1.8"/><path d="M4 20c0-2.76 1.79-5 4-5h8c2.21 0 4 2.24 4 5" stroke="#E8C44A" stroke-width="1.8" stroke-linecap="round"/><path d="M16 4a4 4 0 0 1 0 8" stroke="#E8C44A" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-        <h3>Peer Networking &amp; Referrals</h3>
-        <p>Connect with attorneys outside your practice area for referrals, co-counsel relationships, and business development opportunities nationwide.</p>
       </div>
       <div class="feat-card" data-aos="fade-up" data-aos-delay="60">
         <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#E8C44A" stroke-width="1.8"/><path d="M12 8v4.5l3 1.5" stroke="#E8C44A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -517,7 +574,7 @@ input, select, textarea { font: inherit; }
   <div class="wrap">
     <div class="founder-grid" data-aos="fade-up">
       <div class="founder-img-wrap">
-        <img src="https://www.ekwa.com/wp-content/uploads/2025/03/naren-arulrajah-photo.png" alt="Naren Arulrajah — Founder, Dominate Law" class="founder-img">
+        <img src="images/naren.jpg" alt="Naren Arulrajah — Founder, Dominate Law" class="founder-img">
         <div class="founder-name">Naren Arulrajah</div>
         <div class="founder-title">Founder &amp; Host, Dominate Law<br>CEO, Ekwa Marketing</div>
         <div class="founder-social">
@@ -529,7 +586,7 @@ input, select, textarea { font: inherit; }
       <div>
         <span class="sec-lbl" style="color:rgba(255,255,255,.4)">A Message from Naren</span>
         <p class="founder-quote">The attorneys who will win the next decade aren't just the best lawyers — they're the best business owners. This community is where we help you become both.</p>
-        <p class="founder-body">I started Dominate Law because I saw too many brilliant attorneys struggling not because of their legal skills, but because no one taught them how to run and grow a law firm as a business. Through Ekwa Marketing, we've helped over 2,400 firms transform their marketing. The Dominate Law Community is where we share those insights directly — for free — with attorneys who are serious about growth.</p>
+        <p class="founder-body">I started Dominate Law because I saw too many brilliant attorneys struggling not because of their legal skills, but because no one taught them how to run and grow a law firm as a business. Through Ekwa Marketing, we've helped law firms transform their marketing. The Dominate Law Community is where we share those insights directly — for free — with attorneys who are serious about growth.</p>
         <div style="margin-top:24px">
           <a href="#join" class="btn btn-gold" onclick="document.getElementById('join').scrollIntoView({behavior:'smooth'});return false;" style="cursor:none">Join the Community →</a>
         </div>
@@ -572,7 +629,7 @@ input, select, textarea { font: inherit; }
     <div class="join-grid">
       <div data-aos="fade-right">
         <span class="sec-lbl">Free Membership</span>
-        <h2 class="sec-h2">Join 2,400+ Attorneys<br>Growing Their Practices</h2>
+        <h2 class="sec-h2">Join Attorneys<br>Growing Their Practices</h2>
         <p class="sec-sub">Membership is completely free. Get instant access to the community forums, resources, and upcoming events.</p>
         <div class="join-perks">
           <div class="join-perk"><div class="join-perk-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>Community Forum Access</strong><p>Post questions, share strategies, and connect with attorneys across all practice areas.</p></div></div>
@@ -658,7 +715,7 @@ input, select, textarea { font: inherit; }
         <a href="tools.html" style="font-size:.8rem;color:rgba(255,255,255,.38)">Legal Tools</a>
         <a href="community.html" style="font-size:.8rem;color:rgba(255,255,255,.38)">Community</a>
         <a href="guest-speaker.html" style="font-size:.8rem;color:rgba(255,255,255,.38)">Guest/Speaker</a>
-        <a href="marketing-strategy-meeting.html" style="font-size:.8rem;color:rgba(255,255,255,.38)">Free Strategy Meeting</a>
+        <a href="msm.html" style="font-size:.8rem;color:rgba(255,255,255,.38)">Free Strategy Meeting</a>
         <a href="contact.html" style="font-size:.8rem;color:rgba(255,255,255,.38)">Contact</a>
       </div>
     </div>
@@ -687,7 +744,10 @@ function animCursor(){if(ico){ico.style.left=mx+'px';ico.style.top=my+'px';}rx+=
 animCursor();
 document.querySelectorAll('a,button,input,select').forEach(el=>{el.addEventListener('mouseenter',()=>{ico?.classList.add('hover');ring?.classList.add('hover');});el.addEventListener('mouseleave',()=>{ico?.classList.remove('hover');ring?.classList.remove('hover');});});
 document.addEventListener('click',e=>{const r=document.createElement('div');r.className='cur-ripple';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';document.body.appendChild(r);setTimeout(()=>r.remove(),600);});
-document.getElementById('joinForm')?.addEventListener('submit',function(e){e.preventDefault();const fn=document.getElementById('j-fname').value.trim(),ln=document.getElementById('j-lname').value.trim(),em=document.getElementById('j-email').value.trim(),ro=document.getElementById('j-role').value;if(!fn||!ln||!em||!ro){alert('Please fill in all required fields.');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}this.style.display='none';document.getElementById('joinSuccess').style.display='block';});
+var DL_SHEETS_URL='YOUR_APPS_SCRIPT_URL';
+function dlCommunitySheets(src,fn,ln,em,ro,area){try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Community Join','Source':src,'First Name':fn,'Last Name':ln,'Email':em,'Role':ro,'Practice Area':area||''})});}catch(e){}}
+document.getElementById('joinForm')?.addEventListener('submit',function(e){e.preventDefault();const fn=document.getElementById('j-fname').value.trim(),ln=document.getElementById('j-lname').value.trim(),em=document.getElementById('j-email').value.trim(),ro=document.getElementById('j-role').value,area=document.getElementById('j-area')?.value||'';if(!fn||!ln||!em||!ro){alert('Please fill in all required fields.');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}dlCommunitySheets('Main Form',fn,ln,em,ro,area);this.style.display='none';document.getElementById('joinSuccess').style.display='block';});
+document.getElementById('heroJoinForm')?.addEventListener('submit',function(e){e.preventDefault();const fn=document.getElementById('hj-fname').value.trim(),ln=document.getElementById('hj-lname').value.trim(),em=document.getElementById('hj-email').value.trim(),ro=document.getElementById('hj-role').value,area=document.getElementById('hj-area')?.value||'';if(!fn||!ln||!em||!ro){alert('Please fill in all required fields.');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}dlCommunitySheets('Hero Form',fn,ln,em,ro,area);this.style.display='none';document.getElementById('heroJoinSuccess').style.display='flex';document.getElementById('heroJoinSuccess').style.flexDirection='column';document.getElementById('heroJoinSuccess').style.alignItems='center';document.getElementById('heroJoinSuccess').style.gap='8px';document.getElementById('heroJoinSuccess').style.textAlign='center';});
 </script>
 </body>
 </html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Sheets Setup Guide — Dominate Law</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#FBF7F4;color:#1a0800;line-height:1.7}
+:root{--brown:#60270F;--brown3:#3A0D00;--gold:#C49A0A;--gold3:#E8C44A;--cream:#FBF7F4;--cream2:#F0E8E0;--border:#e8ddd6;--muted:#6b5040}
+a{color:var(--brown);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:860px;margin:0 auto;padding:48px 32px}
+/* Header */
+.guide-header{background:var(--brown3);color:#fff;padding:40px 0;margin-bottom:0}
+.guide-header .wrap{padding-bottom:32px}
+.guide-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(196,154,10,.18);border:1px solid rgba(196,154,10,.4);border-radius:100px;padding:5px 14px;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold3);margin-bottom:16px}
+.guide-header h1{font-family:'Merriweather',serif;font-size:2rem;font-weight:900;line-height:1.2;margin-bottom:10px}
+.guide-header p{font-size:.95rem;color:rgba(255,255,255,.7);max-width:600px}
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:32px;margin-top:40px}
+.step{background:#fff;border-radius:14px;border:1px solid var(--border);padding:28px 32px;display:flex;gap:20px;align-items:flex-start}
+.step-num{width:40px;height:40px;background:var(--brown);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Merriweather',serif;font-weight:900;font-size:1rem;color:var(--gold3);flex-shrink:0}
+.step-body h3{font-size:1.05rem;font-weight:700;color:var(--brown3);margin-bottom:6px}
+.step-body p{font-size:.88rem;color:var(--muted);margin-bottom:8px}
+.step-body ul{padding-left:16px;font-size:.87rem;color:var(--muted)}
+.step-body ul li{margin-bottom:4px}
+.code-block{background:var(--brown3);color:var(--gold3);border-radius:8px;padding:14px 18px;font-family:'Courier New',monospace;font-size:.82rem;line-height:1.8;margin-top:10px;word-break:break-all}
+.copy-note{font-size:.75rem;color:var(--gold);margin-top:6px;font-weight:600}
+/* URL box */
+.url-box{background:var(--cream2);border:2px dashed var(--gold);border-radius:10px;padding:20px 24px;margin-top:10px}
+.url-box p{font-size:.85rem;font-weight:600;color:var(--brown3);margin-bottom:6px}
+.url-box code{font-family:'Courier New',monospace;font-size:.82rem;color:var(--brown);word-break:break-all}
+/* Tabs section */
+.tabs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px}
+.tab-card{background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.tab-card .tab-name{font-size:.8rem;font-weight:700;color:var(--brown3);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.tab-card .tab-fields{font-size:.72rem;color:var(--muted);line-height:1.6}
+.tab-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;flex-shrink:0}
+/* Important box */
+.important{background:rgba(196,154,10,.08);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-top:12px}
+.important strong{color:var(--brown3);font-size:.85rem}
+.important p{font-size:.83rem;color:var(--muted);margin-top:4px}
+/* Footer nav */
+.back-link{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.6);font-size:.82rem;margin-bottom:20px}
+.back-link:hover{color:#fff;text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="guide-header">
+  <div class="wrap">
+    <a href="index.html" class="back-link">← Back to Dominate Law</a>
+    <div class="guide-badge">📊 Admin Guide</div>
+    <h1>Google Sheets Setup &amp;<br>Form Data Guide</h1>
+    <p>How to connect all Dominate Law forms to Google Sheets and manage incoming leads, community sign-ups, guest applications, and contact messages.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="steps">
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Create a new Google Spreadsheet</h3>
+        <p>Go to <a href="https://sheets.google.com" target="_blank">sheets.google.com</a> and create a new blank spreadsheet. Name it something like <strong>Dominate Law — Form Submissions</strong>.</p>
+        <p>The script will automatically create these tabs (worksheets) the first time each form is submitted:</p>
+        <div class="tabs-grid">
+          <div class="tab-card">
+            <div class="tab-name"><div class="tab-dot"></div>Legal Tools Gate</div>
+            <div class="tab-fields">Timestamp · First Name · Last Name · Email · Role</div>
+          </div>
+          <div class="tab-card">
+            <div class="tab-name"><div class="tab-dot"></div>Free Downloads Gate</div>
+            <div class="tab-fields">Timestamp · First Name · Last Name · Email · Firm Name · Role</div>
+          </div>
+          <div class="tab-card">
+            <div class="tab-name"><div class="tab-dot"></div>Community Join</div>
+            <div class="tab-fields">Timestamp · Source · First Name · Last Name · Email · Role · Practice Area</div>
+          </div>
+          <div class="tab-card">
+            <div class="tab-name"><div class="tab-dot"></div>Guest Speaker</div>
+            <div class="tab-fields">Timestamp · First Name · Last Name · Title · Organization · Email · Phone · Type · Topic · Bio · Links</div>
+          </div>
+          <div class="tab-card">
+            <div class="tab-name"><div class="tab-dot"></div>Contact Us</div>
+            <div class="tab-fields">Timestamp · First Name · Last Name · Email · Phone · Subject · Message</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Open the Apps Script editor</h3>
+        <p>In your new Google Sheet, click the menu: <strong>Extensions → Apps Script</strong>. This opens the script editor in a new tab.</p>
+        <p>Delete any existing code in the editor (usually a default empty function).</p>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Paste the script code</h3>
+        <p>Open the file <code>google-apps-script.js</code> (in the same folder as this guide). Copy its entire contents and paste it into the Apps Script editor.</p>
+        <p>Click the 💾 <strong>Save</strong> button (or press Ctrl+S). You can name the project <em>Dominate Law Forms</em>.</p>
+        <div class="code-block">// File: google-apps-script.js<br>// Location: dominatelaw-website/google-apps-script.js<br>// Copy entire file → paste into Apps Script editor</div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Deploy as a Web App</h3>
+        <p>In the Apps Script editor, click <strong>Deploy → New deployment</strong>.</p>
+        <ul>
+          <li>Type: <strong>Web app</strong></li>
+          <li>Execute as: <strong>Me</strong></li>
+          <li>Who has access: <strong>Anyone</strong></li>
+        </ul>
+        <p>Click <strong>Deploy</strong>. You'll be asked to authorize — click <strong>Authorize access</strong> and follow the prompts.</p>
+        <div class="important">
+          <strong>⚠️ Important — Authorize Google</strong>
+          <p>You may see a "Google hasn't verified this app" warning. Click <em>Advanced → Go to Dominate Law Forms (unsafe)</em>. This is your own script, it's safe.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>Copy your Web App URL</h3>
+        <p>After deployment, you'll see a <strong>Web app URL</strong> like this:</p>
+        <div class="url-box">
+          <p>Your URL will look like:</p>
+          <code>https://script.google.com/macros/s/AKfycb.../exec</code>
+        </div>
+        <p class="copy-note">Copy this URL — you'll need it in the next step.</p>
+      </div>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h3>Add the URL to all HTML files</h3>
+        <p>Open each of these HTML files and find the line <code>var DL_SHEETS_URL = 'YOUR_APPS_SCRIPT_URL';</code>. Replace <code>YOUR_APPS_SCRIPT_URL</code> with your actual Web App URL.</p>
+        <ul>
+          <li><strong>tools.html</strong> — Legal Tools gate form</li>
+          <li><strong>resources.html</strong> — Free Downloads gate form</li>
+          <li><strong>community.html</strong> — Community join forms (hero + main)</li>
+          <li><strong>guest-speaker.html</strong> — Speaker application form</li>
+          <li><strong>contact.html</strong> — Contact Us form</li>
+        </ul>
+        <div class="code-block">// Find this line in each file:<br>var DL_SHEETS_URL = 'YOUR_APPS_SCRIPT_URL';<br><br>// Replace with:<br>var DL_SHEETS_URL = 'https://script.google.com/macros/s/YOUR_ID/exec';</div>
+        <p style="margin-top:10px;font-size:.83rem;color:var(--muted)">After saving and pushing to GitHub, every form submission will automatically appear in the correct tab of your Google Sheet within seconds.</p>
+      </div>
+    </div>
+
+    <!-- Step 7 — Managing data -->
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <h3>Managing your form data</h3>
+        <p>Each form submission adds a new row to the correct tab. Here's how to manage it:</p>
+        <ul>
+          <li><strong>Filter by date:</strong> Use Google Sheets' built-in filter (Data → Create a filter) on the Timestamp column</li>
+          <li><strong>Export leads:</strong> File → Download → .csv to export any tab for use in your CRM or email tool</li>
+          <li><strong>Email alerts:</strong> In Apps Script, add <code>MailApp.sendEmail('you@firm.com', 'New Lead', ...)</code> inside <code>doPost()</code> to get instant email notifications</li>
+          <li><strong>Avoid duplicates:</strong> The script appends every submission — you can add a de-dupe step in Apps Script if needed</li>
+          <li><strong>Re-deploy after edits:</strong> Any time you edit the Apps Script code, go to Deploy → Manage deployments → Edit → create a new version and deploy</li>
+        </ul>
+        <div class="important">
+          <strong>📌 Tip — Community tab "Source" column</strong>
+          <p>The Community Join tab has a "Source" column — it will say "Hero Form" or "Main Form" so you know which join form on the community page the person used.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

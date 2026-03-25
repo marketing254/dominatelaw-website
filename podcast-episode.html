@@ -58,16 +58,16 @@ input,select,textarea{font:inherit}
 /* ── NAV ────────────────────────────────────────────────── */
 .nav{position:sticky;top:0;z-index:800;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
 .nav-inner{display:flex;align-items:center;gap:16px;height:64px;max-width:var(--max);margin:0 auto;padding:0 40px}
-.nav-logo{display:flex;align-items:center;gap:10px;margin-right:auto;flex-shrink:0}
+.nav-logo{display:flex;align-items:center;gap:10px;margin-right:40px;flex-shrink:0}
 .nav-logo img{height:36px;width:auto}
 .nav-logo-fb{display:none;align-items:center;gap:8px}
 .nav-logo-fb.show{display:flex}
 .nav-mark{width:36px;height:36px;background:var(--brown);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Merriweather',serif;font-weight:900;font-size:.85rem;color:var(--gold3);flex-shrink:0}
 .nav-brand strong{display:block;font-size:.88rem;color:var(--warm)}
 .nav-brand em{font-size:.67rem;color:var(--muted);font-style:normal}
-.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links{display:flex;align-items:center;gap:2px;margin-left:auto}
 .nav-item{position:relative}
-.nav-item>a,.nav-item>button{display:flex;align-items:center;gap:3px;padding:6px 9px;border-radius:4px;font-size:.775rem;font-weight:500;color:var(--muted);transition:all .2s;background:none;white-space:nowrap;cursor:none}
+.nav-item>a,.nav-item>button{display:flex;align-items:center;gap:3px;padding:6px 9px;border-radius:4px;font-size:.775rem;font-weight:500;color:var(--muted);transition:color .15s,background .15s;background:none;white-space:nowrap;cursor:none}
 .nav-item>a:hover,.nav-item>button:hover,.nav-item>a.active,.nav-item.open>button{color:var(--brown);background:var(--cream)}
 .nav-chevron{width:10px;height:10px;display:inline-block;transition:transform .2s}
 .nav-item.open .nav-chevron{transform:rotate(180deg)}

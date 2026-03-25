@@ -57,16 +57,16 @@ input, select, textarea { font: inherit; }
 .nav { position:sticky; top:0; z-index:1000; background:rgba(255,255,255,.97); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); transition:box-shadow .3s; }
 .nav.scrolled { box-shadow:0 4px 30px rgba(58,13,0,.1); }
 .nav-inner { height:70px; display:flex; align-items:center; gap:0; max-width:var(--max); margin:0 auto; padding:0 40px; }
-.nav-logo { margin-right:18px; flex-shrink:0; display:flex; align-items:center; gap:10px; }
+.nav-logo { margin-right:40px; flex-shrink:0; display:flex; align-items:center; gap:10px; }
 .nav-logo img { height:40px; width:auto; }
 .nav-logo-fb { display:none; align-items:center; gap:8px; }
 .nav-logo-fb.show { display:flex; }
 .nav-mark { width:36px; height:36px; background:var(--brown); border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Merriweather',serif; font-weight:900; font-size:.82rem; color:var(--gold3); }
 .nav-brand strong { display:block; font-size:.82rem; font-weight:700; color:var(--brown); }
 .nav-brand em { font-size:.62rem; color:var(--muted); font-style:normal; }
-.nav-links { display:flex; align-items:center; gap:0; flex:1; }
+.nav-links { display:flex; align-items:center; gap:0; margin-left:auto; }
 .nav-item { position:relative; }
-.nav-item > a, .nav-item > button { display:flex; align-items:center; gap:3px; padding:6px 9px; border-radius:4px; font-size:.775rem; font-weight:500; color:var(--muted); transition:all .2s; background:none; white-space:nowrap; cursor:none; }
+.nav-item > a, .nav-item > button { display:flex; align-items:center; gap:3px; padding:6px 9px; border-radius:4px; font-size:.775rem; font-weight:500; color:var(--muted); transition:color .15s,background .15s; background:none; white-space:nowrap; cursor:none; }
 .nav-item > a:hover, .nav-item > button:hover, .nav-item > a.active, .nav-item.open > a, .nav-item.open > button { color:var(--brown); background:var(--cream); }
 .nav-chevron { width:10px; height:10px; display:inline-block; transition:transform .2s; }
 .nav-item.open .nav-chevron { transform:rotate(180deg); }
@@ -454,11 +454,11 @@ input, select, textarea { font: inherit; }
 </style>
 <meta name="keywords" content="free law firm marketing audit, law firm marketing strategy meeting, attorney marketing consultation, legal marketing strategy, law firm growth roadmap, marketing for law firms free consultation, law firm marketing review, attorney marketing plan">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<link rel="canonical" href="https://www.dominatelaw.com/marketing-strategy-meeting.html">
+<link rel="canonical" href="https://www.dominatelaw.com/msm.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Free Law Firm Marketing Strategy Meeting | Get Your Growth Roadmap — Dominate Law">
 <meta property="og:description" content="Book your free 30-minute Law Firm Marketing Strategy Meeting. Receive a personalized audit, competitor analysis, and a custom growth roadmap for your practice. No obligation. Limited spots available.">
-<meta property="og:url" content="https://www.dominatelaw.com/marketing-strategy-meeting.html">
+<meta property="og:url" content="https://www.dominatelaw.com/msm.html">
 <meta property="og:site_name" content="Dominate Law">
 <meta property="og:image" content="https://www.dominatelaw.com/og-cover.jpg">
 <meta property="og:image:width" content="1200">
@@ -512,7 +512,7 @@ input, select, textarea { font: inherit; }
     "@type": "Audience",
     "audienceType": "Law firm owners and managing partners"
   },
-  "url": "https://www.dominatelaw.com/marketing-strategy-meeting.html"
+  "url": "https://www.dominatelaw.com/msm.html"
 }
 </script>
 <script type="application/ld+json">
@@ -578,40 +578,34 @@ input, select, textarea { font: inherit; }
       </div>
     </a>
     <div class="nav-links" id="navLinks">
-        <!-- Events dropdown -->
-        <div class="nav-item" id="ni-events">
-          <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
-            Events <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div class="nav-drop">
-          </div>
-        </div>
-      <div class="nav-item"><a href="podcast.html">Podcast</a></div>
       <div class="nav-item" id="ni-about">
-        <button class="nav-drop-trigger">About Us <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">About Us <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
         <div class="nav-drop">
-          <a href="about.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="var(--brown)" stroke-width="1.4"/><path d="M2 14c0-3.31 2.69-6 6-6s6 2.69 6 6" stroke="var(--brown)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Our Story</strong><span>Mission, values & team</span></div></a>
-          <a href="reviews.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.6 3.5L8 9.5 4.9 11.5l.6-3.5L3 5.5l3.5-.5z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Press & Media</strong></div></a>
+          <a href="about.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="var(--brown)" stroke-width="1.4"/><path d="M2 14c0-3.31 2.69-6 6-6s6 2.69 6 6" stroke="var(--brown)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Our Story</strong><span>Mission &amp; values</span></div></a>
         </div>
       </div>
+      <div class="nav-item" id="ni-events">
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">Events <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="nav-drop">
+          <a href="events.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 2v2M11 2v2M2 7h12" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Webinars &amp; Events</strong><span>Live &amp; on-demand sessions</span></div></a>
+        </div>
+      </div>
+      <div class="nav-item"><a href="podcast.html">Podcast</a></div>
       <div class="nav-item"><a href="reviews.html">Reviews</a></div>
       <div class="nav-item" id="ni-res">
-        <button class="nav-drop-trigger">Resources <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">Resources <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
         <div class="nav-drop">
-          <a href="blog.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h4" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Blog & Insights</strong></div></a>
-          <a href="resources.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/></svg></div><div class="nav-drop-text"><strong>Free Downloads</strong></div></a>
-            <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
+          <a href="blog.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h4" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Blog &amp; Insights</strong><span>Articles, guides, tips</span></div></a>
+          <a href="resources.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3M10 13v-3l2 1.5-2 1.5z" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Free Downloads</strong><span>Templates &amp; guides</span></div></a>
+          <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
         </div>
       </div>
       <div class="nav-item"><a href="guest-speaker.html">Guest / Speaker</a></div>
       <div class="nav-item"><a href="community.html">Community</a></div>
-              <div class="nav-item" id="ni-mkt">
-          <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
-            Marketing <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div class="nav-drop">
-            <a href="marketing-strategy-meeting.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M2 11V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6l-3-1.5L8 11 5 9.5 2 11z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Marketing Strategy Meeting</strong><span>Free 30-min session with a specialist</span></div></a>
-          </div>
+      <div class="nav-item active" id="ni-mkt">
+        <button class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false" id="ni-mkt-label">Marketing Strategy Meeting <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="nav-drop">
+          <a href="msm.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M2 11V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6l-3-1.5L8 11 5 9.5 2 11z" stroke="var(--brown)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="nav-drop-text"><strong>Marketing Strategy Meeting</strong><span>Free 30-min strategy session</span></div></a>
         </div>
       </div>
     </div>
@@ -629,36 +623,24 @@ input, select, textarea { font: inherit; }
   </div>
   <div class="mob-body">
     <a href="index.html" class="mob-link">Home</a>
-    <!-- Events accordion -->
-    <button class="mob-acc-trigger" id="mob-events-trig">
-      Events
-      <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg>
-    </button>
-    <div class="mob-acc-panel" id="mob-events-panel">
-    </div>
-    <a href="podcast.html" class="mob-link">Podcast</a>
     <button class="mob-acc-trigger" id="mob-about-trig">About Us <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-    <div class="mob-acc-panel" id="mob-about-panel">
-      <a href="about.html">Our Story</a>
-      <a href="reviews.html">Press &amp; Media</a>
-    </div>
+    <div class="mob-acc-panel" id="mob-about-panel"><a href="about.html">Our Story</a></div>
+    <button class="mob-acc-trigger" id="mob-events-trig">Events <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="mob-acc-panel" id="mob-events-panel"><a href="events.html">Webinars &amp; Events</a></div>
+    <a href="podcast.html" class="mob-link">Podcast</a>
     <a href="reviews.html" class="mob-link">Reviews</a>
     <button class="mob-acc-trigger" id="mob-res-trig">Resources <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
     <div class="mob-acc-panel" id="mob-res-panel">
       <a href="blog.html">Blog &amp; Insights</a>
       <a href="resources.html">Free Downloads</a>
       <a href="tools.html">⚖ Legal Tools</a>
-      
     </div>
     <a href="guest-speaker.html" class="mob-link">Guest / Speaker</a>
-    <a href="community.html" class="mob-link">DL Community</a>
-    <button class="mob-acc-trigger" id="mob-mkt-trig">Marketing <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-        <div class="mob-acc-panel" id="mob-mkt-panel">
-      <a href="marketing-strategy-meeting.html">Marketing Strategy Meeting</a>
-    </div>
+    <a href="community.html" class="mob-link">Community</a>
+    <button class="mob-acc-trigger" id="mob-mkt-trig">Marketing Strategy Meeting <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="mob-acc-panel" id="mob-mkt-panel"><a href="msm.html">Marketing Strategy Meeting</a></div>
     <div class="mob-sep"></div>
-    <div class="mob-cta-wrap"><a href="contact.html" class="btn btn-gold">Contact Us →</a>
-            <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a></div>
+    <div class="mob-cta-wrap"><a href="contact.html" class="btn btn-gold">Contact Us →</a></div>
   </div>
 </div>
 
@@ -679,7 +661,7 @@ input, select, textarea { font: inherit; }
         <div class="msm-trust">
           <div class="msm-trust-badge">
             <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#E8C44A" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#E8C44A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            2,400+ Law Firms Helped
+            Law Firms Helped
           </div>
           <div class="msm-trust-badge">
             <svg viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.6 3.5L8 9.5l-3.1 2 .6-3.5L3 5.5l3.5-.5z" stroke="#E8C44A" stroke-width="1.4" stroke-linejoin="round"/></svg>
@@ -740,149 +722,15 @@ input, select, textarea { font: inherit; }
         <div class="msm-form-card">
           <div class="msm-form-tag"><span></span> Limited Spots Available</div>
           <h2>Book Your Free Strategy Meeting</h2>
-          <p>Fill in your details and we'll confirm your spot within 1 business day.</p>
+          <p>Select your preferred date and time below. YouCanBook.me will collect your details and confirm your spot instantly.</p>
 
-          <form class="msm-form" id="msmForm" novalidate>
-
-            <!-- ── Date & Time ─────────────────────────────── -->
-            <div class="msm-section-label">Select Your Preferred Date &amp; Time</div>
-            <div class="msm-form-row">
-              <div class="msm-field">
-                <label for="msm-date">Preferred Date <span class="req">*</span></label>
-                <input type="date" id="msm-date" required>
-              </div>
-              <div class="msm-field">
-                <label for="msm-time">Preferred Time <span class="req">*</span></label>
-                <select id="msm-time" required>
-                  <option value="">— Select —</option>
-                  <option>9:00 AM</option>
-                  <option>9:30 AM</option>
-                  <option>10:00 AM</option>
-                  <option>10:30 AM</option>
-                  <option>11:00 AM</option>
-                  <option>11:30 AM</option>
-                  <option>12:00 PM</option>
-                  <option>12:30 PM</option>
-                  <option>1:00 PM</option>
-                  <option>1:30 PM</option>
-                  <option>2:00 PM</option>
-                  <option>2:30 PM</option>
-                  <option>3:00 PM</option>
-                  <option>3:30 PM</option>
-                  <option>4:00 PM</option>
-                  <option>4:30 PM</option>
-                  <option>5:00 PM</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- ── Name ────────────────────────────────────── -->
-            <div class="msm-section-label" style="margin-top:6px">Your Details</div>
-            <div class="msm-form-row">
-              <div class="msm-field">
-                <label for="msm-fname">First Name <span class="req">*</span></label>
-                <input type="text" id="msm-fname" placeholder="Sarah" required>
-              </div>
-              <div class="msm-field">
-                <label for="msm-lname">Last Name</label>
-                <input type="text" id="msm-lname" placeholder="Mitchell">
-              </div>
-            </div>
-
-            <!-- ── Website ─────────────────────────────────── -->
-            <div class="msm-field">
-              <label for="msm-website">Website</label>
-              <input type="url" id="msm-website" placeholder="https://yourfirm.com">
-            </div>
-
-            <!-- ── Address ─────────────────────────────────── -->
-            <div class="msm-field">
-              <label for="msm-address">Address</label>
-              <input type="text" id="msm-address" placeholder="123 Main St, Chicago, IL 60601">
-            </div>
-
-            <!-- ── Email ───────────────────────────────────── -->
-            <div class="msm-field">
-              <label for="msm-email">Your Email <span class="req">*</span></label>
-              <input type="email" id="msm-email" placeholder="sarah@yourfirm.com" required>
-            </div>
-
-            <!-- ── Cell ────────────────────────────────────── -->
-            <div class="msm-field">
-              <label for="msm-phone">Your Cell Number <span class="req">*</span></label>
-              <input type="tel" id="msm-phone" placeholder="(555) 000-0000" required>
-            </div>
-
-            <!-- ── Owner / Partner ────────────────────────── -->
-            <div class="msm-field">
-              <label class="msm-field-label-block">Are you the owner / partner of the practice? <span class="req">*</span></label>
-              <div class="msm-radio-group">
-                <label class="msm-radio-opt">
-                  <input type="radio" name="msm-owner" id="msm-owner-yes" value="yes" required>
-                  <span class="msm-radio-box"></span>
-                  Yes
-                </label>
-                <label class="msm-radio-opt">
-                  <input type="radio" name="msm-owner" id="msm-owner-no" value="no">
-                  <span class="msm-radio-box"></span>
-                  No
-                </label>
-              </div>
-              <div class="msm-owner-note" id="ownerNote">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                Please note: for a productive meeting we require the practice owner / partner to join the meeting.
-              </div>
-            </div>
-
-            <!-- ── How Did You Hear ────────────────────────── -->
-            <div class="msm-field">
-              <label for="msm-hear">How did you hear about us? <span class="req">*</span></label>
-              <select id="msm-hear" required>
-                <option value="">— Select —</option>
-                <option>Google Search</option>
-                <option>Dominate Law Podcast</option>
-                <option>Social Media</option>
-                <option>Referral from a colleague</option>
-                <option>Ekwa Marketing</option>
-                <option>Events / Webinar</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            <!-- ── Additional Info ────────────────────────── -->
-            <div class="msm-field">
-              <label for="msm-info">Any additional information you'd like to share before our call?</label>
-              <textarea id="msm-info" placeholder="e.g. We've tried SEO before but haven't seen results. Looking to improve local rankings and lead quality..." style="min-height:90px"></textarea>
-            </div>
-
-            <!-- ── Consent ─────────────────────────────────── -->
-            <label class="msm-consent">
-              <input type="checkbox" id="msm-consent" required>
-              <span class="msm-consent-check"></span>
-              <span class="msm-consent-text">By submitting the above form, you are consenting to receive calls, SMS, and emails from Ekwa Marketing. You certify that you are the owner of the contact information provided. Data rates may apply, reply STOP to opt out. <span class="req">*</span></span>
-            </label>
-            <div class="msm-consent-error" id="consentError">Please accept the terms to continue.</div>
-
-            <button type="submit" class="msm-submit" id="msmSubmitBtn">
-              <span class="msm-spinner" id="msmSpinner"></span>
-              <span class="msm-btn-text" id="msmBtnText">Confirm My Strategy Meeting →</span>
-            </button>
-            <div class="msm-send-error" id="msmSendError">
-              ⚠️ There was a problem sending your request. Please email us directly at <a href="mailto:info@dominatelaw.com" style="color:var(--brown);font-weight:600">info@dominatelaw.com</a> and we'll get back to you right away.
-            </div>
-          </form>
-
-          <div class="msm-success" id="msmSuccess">
-            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-              <circle cx="28" cy="28" r="26" stroke="var(--green)" stroke-width="2.5"/>
-              <path d="M18 28l7 7 13-14" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <h3>Meeting Request Confirmed!</h3>
-            <div class="msm-success-dt">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              <span id="successDateTime">Your selected date &amp; time</span>
-            </div>
-            <p>Thank you! We've received your request. A member of the Ekwa Marketing team will reach out within 1 business day to confirm your meeting. Check your inbox — we'll send a calendar invite shortly.</p>
+          <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:16px 0 8px;">
+            <iframe src="https://dominatelaw-growmypractice.youcanbook.me/?embed=true"
+                    style="width:100%;min-height:520px;border:none;display:block;"
+                    frameborder="0"
+                    allow="payment"
+                    title="Book your free strategy meeting">
+            </iframe>
           </div>
 
           <p class="msm-form-note">🔒 Your information is secure. We never sell data or spam. Unsubscribe anytime.</p>
@@ -1004,8 +852,8 @@ input, select, textarea { font: inherit; }
   <div class="wrap">
     <div class="proof-stats" data-aos="fade-up">
       <div class="proof-stat">
-        <div class="proof-stat-num">2,400<span style="color:var(--gold3)">+</span></div>
-        <div class="proof-stat-label">Law Firms Helped by Ekwa Marketing</div>
+        <div class="proof-stat-num">Law Firms<span style="color:var(--gold3);font-size:.6em;vertical-align:super">✓</span></div>
+        <div class="proof-stat-label">Helped by Ekwa Marketing</div>
       </div>
       <div class="proof-stat">
         <div class="proof-stat-num">98<span style="color:var(--gold3)">%</span></div>
@@ -1048,11 +896,12 @@ input, select, textarea { font: inherit; }
         <span class="sec-label">Who We Are</span>
         <h2 class="sec-h2">The Team Behind<br>Dominate Law</h2>
         <div class="ekwa-logo-row">
-          <div class="nav-mark">DL</div>
+          <img src="images/logo.png" alt="Dominate Law" style="height:36px;width:auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="nav-mark" style="display:none">DL</div>
           <span style="font-size:.8rem;color:var(--muted)">Powered by</span>
           <div class="ekwa-pill">Ekwa Marketing</div>
         </div>
-        <p style="font-size:.95rem;color:var(--muted);line-height:1.8;margin-bottom:16px">Ekwa Marketing is a specialist digital marketing agency dedicated exclusively to law firms. Founded over 16 years ago, we've helped more than 2,400 firms across North America build dominant online presences, generate consistent lead flow, and grow profitable practices.</p>
+        <p style="font-size:.95rem;color:var(--muted);line-height:1.8;margin-bottom:16px">Ekwa Marketing is a specialist digital marketing agency dedicated exclusively to law firms. Founded over 16 years ago, we've helped law firms across North America build dominant online presences, generate consistent lead flow, and grow profitable practices.</p>
         <ul class="ekwa-list">
           <li>Exclusively focused on legal industry marketing</li>
           <li>No long-term contracts required</li>
@@ -1078,7 +927,7 @@ input, select, textarea { font: inherit; }
   <div class="wrap" style="position:relative;z-index:2">
     <div data-aos="fade-up">
       <h2>Ready to Stop Guessing<br>and Start <em>Growing?</em></h2>
-      <p>Join 2,400+ law firms that have used their Ekwa strategy session to build a clear, proven path to more clients.</p>
+      <p>Join law firms that have used their Ekwa strategy session to build a clear, proven path to more clients.</p>
       <div class="msm-cta-btns">
         <a href="#top" class="btn btn-gold" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Book My Free Meeting →</a>
         <a href="reviews.html" class="btn btn-outline-w" style="color:#fff;border-color:rgba(255,255,255,.5)">Read Success Stories</a>
@@ -1113,7 +962,7 @@ input, select, textarea { font: inherit; }
         <a href="tools.html">Legal Tools</a>
         <a href="community.html">Community</a>
         <a href="guest-speaker.html">Guest / Speaker</a>
-        <a href="marketing-strategy-meeting.html">Free Strategy Meeting</a>
+        <a href="msm.html">Free Strategy Meeting</a>
         <a href="contact.html">Contact</a>
       </div>
     </div>
