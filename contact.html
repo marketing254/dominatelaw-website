@@ -654,7 +654,7 @@ const CJ_SERVICE_ID  = 'YOUR_SERVICE_ID';
 const CJ_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
 emailjs.init({ publicKey: CJ_PUBLIC_KEY });
 
-var DL_SHEETS_URL = 'YOUR_APPS_SCRIPT_URL';
+var DL_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbybCzyEreEMeTyvDoLAh311wCK9DuRNITOoxszXXnWFB8GjjRFR5czwEAQRzBm_HVQ_/exec';
 
 /* ── FORM SUBMIT ────────────────────────────────────────────── */
 document.getElementById('contactForm')?.addEventListener('submit', async function(e) {
@@ -699,14 +699,20 @@ document.getElementById('contactForm')?.addEventListener('submit', async functio
   };
 
   try {
-    await emailjs.send(CJ_SERVICE_ID, CJ_TEMPLATE_ID, templateParams);
+    /* Send to Google Sheets (always) */
     try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Contact Us','First Name':fname,'Last Name':lname,'Email':email,'Phone':phone,'Subject':selectedSubject,'Message':message})});}catch(ex){}
-    /* Show success */
+
+    /* Send via EmailJS only if credentials are configured */
+    if (CJ_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' && CJ_SERVICE_ID !== 'YOUR_SERVICE_ID') {
+      try { await emailjs.send(CJ_SERVICE_ID, CJ_TEMPLATE_ID, templateParams); } catch(ejErr) { console.warn('EmailJS skipped:', ejErr); }
+    }
+
+    /* Show success regardless */
     this.style.display = 'none';
     document.getElementById('cfSuccess').style.display = 'block';
     document.getElementById('cfSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
   } catch (err) {
-    console.error('EmailJS error:', err);
+    console.error('Contact form error:', err);
     btn.disabled = false;
     btn.classList.remove('loading');
     spinner.style.display = 'none';

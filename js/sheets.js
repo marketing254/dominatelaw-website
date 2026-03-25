@@ -20,7 +20,7 @@ const DL_SHEET_ID = '1xf9FygiOjqYrfaTeG2j0SW3RjqGPv2SX-6eJBI_6VUA';
 
 // ── Fetch & parse a sheet tab ─────────────────────────────────────
 async function dlFetchSheet(sheetName) {
-  if (DL_SHEET_ID === 'YOUR_SHEET_ID_HERE') {
+  if (!DL_SHEET_ID || DL_SHEET_ID === 'YOUR_SHEET_ID_HERE') {
     console.warn('DL Sheets: Please set your Google Sheet ID in js/sheets.js');
     return [];
   }

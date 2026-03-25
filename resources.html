@@ -380,99 +380,112 @@ p:last-child{margin-bottom:0}
 
 <!-- ═══ DOWNLOAD GATE POPUP ═══════════════════════════════════════ -->
 <style>
-.dl-gate-ov{position:fixed;inset:0;background:rgba(20,5,0,.72);backdrop-filter:blur(6px);z-index:9100;display:none;align-items:center;justify-content:center;padding:16px}
-.dl-gate-ov.open{display:flex}
-.dl-gate-box{background:#fff;border-radius:16px;width:100%;max-width:520px;padding:28px 36px 24px;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.35);animation:gateIn .45s cubic-bezier(.4,0,.2,1) both}
-@keyframes gateIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
-.dl-gate-badge{width:40px;height:40px;background:var(--brown);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
-.dl-gate-eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
-.dl-gate-box h2{font-family:'Merriweather',serif;font-size:1.35rem;font-weight:900;color:var(--brown3);line-height:1.2;margin-bottom:6px}
-.dl-gate-box>p{font-size:.82rem;color:var(--muted);line-height:1.6;margin-bottom:14px}
-.dl-gate-field{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
-.dl-gate-field label{font-size:.74rem;font-weight:600;color:var(--warm)}
-.dl-gate-field input,.dl-gate-field select{padding:9px 12px;border:2px solid var(--border);border-radius:6px;font-size:.88rem;color:var(--warm);background:var(--cream);outline:none;transition:border-color .2s,background .2s}
-.dl-gate-field input:focus,.dl-gate-field select:focus{border-color:var(--gold);background:#fff}
-.dl-gate-err{font-size:.72rem;color:#c0392b;display:none;margin-top:2px}
-.dl-gate-submit{width:100%;padding:12px;background:var(--brown);color:#fff;font-size:.95rem;font-weight:700;border-radius:6px;cursor:pointer;transition:background .2s,transform .2s;margin-top:4px;border:none}
-.dl-gate-submit:hover{background:var(--brown3);transform:translateY(-2px)}
-.dl-gate-note{font-size:.7rem;color:var(--muted);text-align:center;margin-top:8px;line-height:1.5}
-@media(max-width:540px){.dl-gate-box{padding:22px 18px}}
+.res-gate-ov{position:fixed;inset:0;background:rgba(20,5,0,.72);backdrop-filter:blur(6px);z-index:9100;display:none;align-items:center;justify-content:center;padding:20px}
+.res-gate-ov.open{display:flex}
+.res-gate-box{background:#fff;border-radius:16px;width:100%;max-width:520px;padding:48px 44px;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.35);animation:resGateIn .45s cubic-bezier(.4,0,.2,1) both}
+@keyframes resGateIn{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
+.res-gate-badge{width:60px;height:60px;background:var(--brown);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.res-gate-badge svg{width:32px;height:32px}
+.res-gate-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.res-gate-box h2{font-family:'Merriweather',serif;font-size:1.7rem;font-weight:900;color:var(--brown3);line-height:1.2;margin-bottom:10px}
+.res-gate-box>p{font-size:.9rem;color:var(--muted);line-height:1.75;margin-bottom:28px}
+.res-gate-form{display:flex;flex-direction:column;gap:14px}
+.res-gate-field{display:flex;flex-direction:column;gap:5px}
+.res-gate-field label{font-size:.78rem;font-weight:600;color:var(--warm)}
+.res-gate-field input,.res-gate-field select{padding:13px 16px;border:2px solid var(--border);border-radius:6px;font-size:.92rem;color:var(--warm);background:var(--cream);outline:none;transition:border-color .2s,background .2s}
+.res-gate-field input:focus,.res-gate-field select:focus{border-color:var(--gold);background:#fff}
+.res-gate-err{font-size:.78rem;color:#c0392b;display:none;margin-top:2px}
+.res-gate-submit{width:100%;padding:16px;background:var(--brown);color:#fff;font-size:1rem;font-weight:700;border-radius:6px;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s;margin-top:6px;border:none}
+.res-gate-submit:hover{background:var(--brown3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(96,39,15,.3)}
+.res-gate-note{font-size:.72rem;color:var(--muted);text-align:center;margin-top:14px;line-height:1.6}
+@media(max-width:560px){.res-gate-box{padding:32px 24px}}
 </style>
-<div class="dl-gate-ov" id="dlResourceGate">
-  <div class="dl-gate-box" role="dialog" aria-modal="true" aria-labelledby="dlResGateTitle">
+<div class="res-gate-ov" id="dlResourceGate">
+  <div class="res-gate-box" role="dialog" aria-modal="true" aria-labelledby="dlResGateTitle">
     <button onclick="window.location.href='index.html'" aria-label="Close" style="position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;background:rgba(96,39,15,.08);border:none;cursor:pointer;font-size:1.1rem;color:var(--brown);display:flex;align-items:center;justify-content:center;transition:background .2s" onmouseover="this.style.background='rgba(96,39,15,.18)'" onmouseout="this.style.background='rgba(96,39,15,.08)'">✕</button>
-    <div class="dl-gate-badge">
-      <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M4 2h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="#E8C44A" stroke-width="1.8"/><path d="M7 7h10M7 11h7M17 18v4l-3-2-3 2v-4" stroke="#E8C44A" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <div class="res-gate-badge">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M4 2h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="#E8C44A" stroke-width="1.8"/>
+        <path d="M7 7h10M7 11h7M17 18v4l-3-2-3 2v-4" stroke="#E8C44A" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
     </div>
-    <div class="dl-gate-eyebrow">Free Resources — Legal Professionals Only</div>
+    <div class="res-gate-eyebrow">Free Resources — Legal Professionals Only</div>
     <h2 id="dlResGateTitle">Unlock Your Free<br>Resource Library</h2>
-    <p>Get instant access to all Dominate Law templates, guides, and checklists — built specifically for law firm owners and attorneys.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <div class="dl-gate-field">
-        <label for="dlrFirst">First Name <span style="color:#c0392b">*</span></label>
-        <input type="text" id="dlrFirst" placeholder="e.g. Sarah" autocomplete="given-name">
-        <span class="dl-gate-err" id="dlrFirstErr">Required.</span>
+    <p>Get instant, free access to all Dominate Law templates, guides, and checklists — built specifically for law firm owners and attorneys.</p>
+    <form class="res-gate-form" id="resGateForm" novalidate>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="res-gate-field">
+          <label for="dlrFirst">First Name <span style="color:#c0392b">*</span></label>
+          <input type="text" id="dlrFirst" placeholder="e.g. Sarah" autocomplete="given-name">
+          <span class="res-gate-err" id="dlrFirstErr">Required.</span>
+        </div>
+        <div class="res-gate-field">
+          <label for="dlrLast">Last Name <span style="color:#c0392b">*</span></label>
+          <input type="text" id="dlrLast" placeholder="e.g. Mitchell" autocomplete="family-name">
+          <span class="res-gate-err" id="dlrLastErr">Required.</span>
+        </div>
       </div>
-      <div class="dl-gate-field">
-        <label for="dlrLast">Last Name <span style="color:#c0392b">*</span></label>
-        <input type="text" id="dlrLast" placeholder="e.g. Mitchell" autocomplete="family-name">
-        <span class="dl-gate-err" id="dlrLastErr">Required.</span>
+      <div class="res-gate-field">
+        <label for="dlrEmail">Email Address <span style="color:#c0392b">*</span></label>
+        <input type="email" id="dlrEmail" placeholder="you@yourfirm.com" autocomplete="email">
+        <span class="res-gate-err" id="dlrEmailErr">Please enter a valid email address.</span>
       </div>
-    </div>
-    <div class="dl-gate-field">
-      <label for="dlrEmail">Email Address <span style="color:#c0392b">*</span></label>
-      <input type="email" id="dlrEmail" placeholder="you@yourfirm.com" autocomplete="email">
-      <span class="dl-gate-err" id="dlrEmailErr">Please enter a valid email address.</span>
-    </div>
-    <div class="dl-gate-field">
-      <label for="dlrFirm">Firm Name <span style="color:#c0392b">*</span></label>
-      <input type="text" id="dlrFirm" placeholder="Smith &amp; Associates">
-      <span class="dl-gate-err" id="dlrFirmErr">Required.</span>
-    </div>
-    <div class="dl-gate-field">
-      <label for="dlrRole">Your Role <span style="color:#c0392b">*</span></label>
-      <select id="dlrRole">
-        <option value="">— Select your role —</option>
-        <option>Attorney / Lawyer</option>
-        <option>Managing Partner</option>
-        <option>Solo Practitioner</option>
-        <option>Law Firm Owner</option>
-        <option>Paralegal</option>
-        <option>Legal Administrator</option>
-        <option>Other Legal Professional</option>
-      </select>
-      <span class="dl-gate-err" id="dlrRoleErr">Please select your role.</span>
-    </div>
-    <button class="dl-gate-submit" onclick="dlResGateSubmit()">Get Free Access → Unlock All Resources</button>
-    <p class="dl-gate-note">🔒 We respect your privacy. No spam, no selling your data.</p>
+      <div class="res-gate-field">
+        <label for="dlrFirm">Firm Name <span style="color:#c0392b">*</span></label>
+        <input type="text" id="dlrFirm" placeholder="Smith &amp; Associates">
+        <span class="res-gate-err" id="dlrFirmErr">Required.</span>
+      </div>
+      <div class="res-gate-field">
+        <label for="dlrRole">Your Role <span style="color:#c0392b">*</span></label>
+        <select id="dlrRole">
+          <option value="">— Select your role —</option>
+          <option>Attorney / Lawyer</option>
+          <option>Managing Partner</option>
+          <option>Solo Practitioner</option>
+          <option>Law Firm Owner</option>
+          <option>Paralegal</option>
+          <option>Legal Administrator</option>
+          <option>Other Legal Professional</option>
+        </select>
+        <span class="res-gate-err" id="dlrRoleErr">Please select your role.</span>
+      </div>
+      <button type="button" class="res-gate-submit" onclick="dlResGateSubmit()">Get Free Access → Unlock All Resources</button>
+    </form>
+    <p class="res-gate-note">🔒 We respect your privacy. No spam, no selling your data. Unsubscribe anytime.</p>
   </div>
 </div>
 <script>
-var DL_SHEETS_URL='YOUR_APPS_SCRIPT_URL';
+var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbybCzyEreEMeTyvDoLAh311wCK9DuRNITOoxszXXnWFB8GjjRFR5czwEAQRzBm_HVQ_/exec';
+var RES_KEY='dl_res_gate_v2';
+function resSubmitted(){try{if(localStorage.getItem(RES_KEY))return true;}catch(e){}return document.cookie.indexOf(RES_KEY+'=1')>-1;}
+function resSave(d){try{localStorage.setItem(RES_KEY,JSON.stringify(d));}catch(e){}try{document.cookie=RES_KEY+'=1;max-age=31536000;path=/'}catch(e){}}
+window.dlResGateSubmit=function(){
+  var fn=(document.getElementById('dlrFirst').value||'').trim();
+  var ln=(document.getElementById('dlrLast').value||'').trim();
+  var em=(document.getElementById('dlrEmail').value||'').trim();
+  var fi=(document.getElementById('dlrFirm').value||'').trim();
+  var ro=(document.getElementById('dlrRole').value||'').trim();
+  var ok=true;
+  var show=function(id,v){document.getElementById(id).style.display=v?'block':'none'};
+  if(!fn){show('dlrFirstErr',true);ok=false}else{show('dlrFirstErr',false)}
+  if(!ln){show('dlrLastErr',true);ok=false}else{show('dlrLastErr',false)}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){show('dlrEmailErr',true);ok=false}else{show('dlrEmailErr',false)}
+  if(!fi){show('dlrFirmErr',true);ok=false}else{show('dlrFirmErr',false)}
+  if(!ro){show('dlrRoleErr',true);ok=false}else{show('dlrRoleErr',false)}
+  if(!ok)return;
+  resSave({firstName:fn,lastName:ln,email:em,firm:fi,role:ro,ts:Date.now()});
+  try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Free Downloads Gate','First Name':fn,'Last Name':ln,'Email':em,'Firm Name':fi,'Role':ro})});}catch(e){}
+  document.getElementById('dlResourceGate').classList.remove('open');
+  document.body.style.overflow='';
+};
 (function(){
-  var KEY='dl_res_gate_v2';
-  function submitted(){try{return localStorage.getItem(KEY)||document.cookie.indexOf(KEY+'=1')>-1}catch(e){return false}}
-  function save(d){try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}try{document.cookie=KEY+'=1;max-age=31536000;path=/'}catch(e){}}
-  window.dlResGateSubmit=function(){
-    var fn=(document.getElementById('dlrFirst').value||'').trim();
-    var ln=(document.getElementById('dlrLast').value||'').trim();
-    var em=(document.getElementById('dlrEmail').value||'').trim();
-    var fi=(document.getElementById('dlrFirm').value||'').trim();
-    var ro=(document.getElementById('dlrRole').value||'').trim();
-    var ok=true;
-    var show=function(id,v){document.getElementById(id).style.display=v?'block':'none'};
-    if(!fn){show('dlrFirstErr',true);ok=false}else{show('dlrFirstErr',false)}
-    if(!ln){show('dlrLastErr',true);ok=false}else{show('dlrLastErr',false)}
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){show('dlrEmailErr',true);ok=false}else{show('dlrEmailErr',false)}
-    if(!fi){show('dlrFirmErr',true);ok=false}else{show('dlrFirmErr',false)}
-    if(!ro){show('dlrRoleErr',true);ok=false}else{show('dlrRoleErr',false)}
-    if(!ok)return;
-    save({firstName:fn,lastName:ln,email:em,firm:fi,role:ro,ts:Date.now()});
-    try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Free Downloads Gate','First Name':fn,'Last Name':ln,'Email':em,'Firm Name':fi,'Role':ro})});}catch(e){}
-    document.getElementById('dlResourceGate').classList.remove('open');
-    document.body.style.overflow='';
-  };
-  if(!submitted()){
+  // ?reset_gate = force clear and re-show (for testing)
+  if(window.location.search.indexOf('reset_gate')>-1){
+    try{localStorage.removeItem(RES_KEY);}catch(e){}
+    document.cookie=RES_KEY+'=;max-age=0;path=/';
+    history.replaceState(null,'',window.location.pathname);
+  }
+  if(!resSubmitted()){
     setTimeout(function(){
       document.getElementById('dlResourceGate').classList.add('open');
       document.body.style.overflow='hidden';

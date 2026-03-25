@@ -1324,7 +1324,7 @@ document.addEventListener('click', e => {
 ═══════════════════════════════════════════════════════════════ */
 var GATE_KEY = 'dl_tools_user_v2';
 var GATE_COOKIE = 'dl_tools_ok_v2';
-var DL_SHEETS_URL = 'YOUR_APPS_SCRIPT_URL';
+var DL_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbybCzyEreEMeTyvDoLAh311wCK9DuRNITOoxszXXnWFB8GjjRFR5czwEAQRzBm_HVQ_/exec';
 function dlSendToSheets(payload){try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)});}catch(e){}}
 
 /* ── Cookie helpers ─────────────────────────────────────────── */
@@ -1395,6 +1395,12 @@ function dlGateSubmit() {
 
 /* ── On page load: skip gate if already seen ────────────────── */
 (function() {
+  // ?reset_gate in URL = force-clear everything and show gate (for testing)
+  if (window.location.search.indexOf('reset_gate') > -1) {
+    try { localStorage.removeItem(GATE_KEY); } catch(e) {}
+    dlSetCookie(GATE_COOKIE, '', -1); // expire the cookie
+    history.replaceState(null, '', window.location.pathname);
+  }
   if (dlAlreadySubmitted()) {
     dlDismissGate();
     return;
