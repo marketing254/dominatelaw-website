@@ -1910,6 +1910,17 @@ const countObs = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 document.querySelectorAll('.count-up[data-target]').forEach(el => countObs.observe(el));
 
+/* ─── Close all dropdowns on page restore (bfcache) ───────── */
+function closeAllDropdowns() {
+  document.querySelectorAll('.nav-item.open').forEach(i => {
+    i.classList.remove('open');
+    const tr = i.querySelector('.nav-drop-trigger');
+    if (tr) tr.setAttribute('aria-expanded','false');
+  });
+}
+window.addEventListener('pageshow', e => { if (e.persisted) closeAllDropdowns(); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') closeAllDropdowns(); });
+
 /* ─── Back to Top ──────────────────────────────────────────── */
 const btt = document.getElementById('btt');
 window.addEventListener('scroll', () => btt.classList.toggle('show', window.scrollY > 500), {passive:true});

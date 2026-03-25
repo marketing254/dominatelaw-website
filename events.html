@@ -39,10 +39,9 @@
 /* ── RESET ──────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',system-ui,sans-serif;color:#1a0800;background:#fff;overflow-x:hidden;cursor:none}
-@media(hover:none){body{cursor:auto}}
+body{font-family:'Inter',system-ui,sans-serif;color:#1a0800;background:#fff;overflow-x:hidden;cursor:pointer}
 img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-style:none}
-button{border:none;background:none;cursor:none;font:inherit}
+button{border:none;background:none;cursor:pointer;font:inherit}
 input,select,textarea{font:inherit}
 
 /* ── TOKENS ─────────────────────────────────────────────── */
@@ -57,19 +56,12 @@ input,select,textarea{font:inherit}
 }
 
 /* ── CURSOR ─────────────────────────────────────────────── */
-#cur-ico{position:fixed;width:28px;height:28px;pointer-events:none;z-index:99999;transform:translate(-14px,-14px);transition:transform .2s ease,filter .2s ease;filter:drop-shadow(0 2px 6px rgba(58,13,0,.3))}
-#cur-ico svg{width:100%;height:100%;display:block}
-#cur-ico.hover{transform:translate(-14px,-14px) rotate(18deg) scale(1.3);filter:drop-shadow(0 4px 14px rgba(196,154,10,.55))}
-#cur-ring{position:fixed;width:50px;height:50px;border:1.5px solid rgba(196,154,10,.35);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-25px,-25px);transition:width .2s,height .2s,transform .2s,border-color .2s}
-#cur-ring.hover{width:66px;height:66px;transform:translate(-33px,-33px);border-color:rgba(196,154,10,.6)}
-@keyframes ripple-out{to{transform:translate(-50%,-50%) scale(6);opacity:0}}
-.cur-ripple{position:fixed;width:10px;height:10px;border-radius:50%;border:2px solid #C49A0A;pointer-events:none;z-index:99990;transform:translate(-50%,-50%) scale(1);animation:ripple-out .55s ease-out forwards}
 #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#C49A0A,#E8C44A);z-index:9999;transition:width .08s linear}
 
 /* ── UTILS ──────────────────────────────────────────────── */
 .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 40px}
 .container{width:100%;max-width:1200px;margin:0 auto;padding:0 40px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:4px;font-weight:700;font-size:.9rem;letter-spacing:.02em;transition:all .25s var(--ease);cursor:none;border:2px solid transparent;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:4px;font-weight:700;font-size:.9rem;letter-spacing:.02em;transition:all .25s var(--ease);cursor:pointer;border:2px solid transparent;white-space:nowrap}
 .btn-primary,.btn-gold{background:var(--brown);color:#fff}
 .btn-primary:hover,.btn-gold:hover{background:var(--brown3);transform:translateY(-3px);box-shadow:0 12px 32px rgba(58,13,0,.3)}
 .btn-secondary{background:transparent;color:var(--brown);border-color:var(--brown)}
@@ -90,7 +82,7 @@ input,select,textarea{font:inherit}
 .nav-brand em{font-size:.67rem;color:var(--muted);font-style:normal}
 .nav-links{display:flex;align-items:center;gap:2px;margin-left:auto}
 .nav-item{position:relative}
-.nav-item>a,.nav-item>button{display:flex;align-items:center;gap:3px;padding:6px 9px;border-radius:4px;font-size:.775rem;font-weight:500;color:var(--muted);transition:color .15s,background .15s;background:none;white-space:nowrap;cursor:none}
+.nav-item>a,.nav-item>button{display:flex;align-items:center;gap:3px;padding:6px 9px;border-radius:4px;font-size:.775rem;font-weight:500;color:var(--muted);transition:color .15s,background .15s;background:none;white-space:nowrap;cursor:pointer}
 .nav-item>a:hover,.nav-item>button:hover,.nav-item>a.active,.nav-item.open>a,.nav-item.open>button{color:var(--brown);background:rgba(96,39,15,.13)}
 .nav-chevron{width:10px;height:10px;display:inline-block;transition:transform .2s}
 .nav-item.open .nav-chevron{transform:rotate(180deg)}
@@ -374,20 +366,6 @@ p:last-child{margin-bottom:0}
 </head>
 <body>
   <!-- Cursor elements -->
-  <div id="cur-ico">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-      <rect x="11.2" y="3" width="1.6" height="17" fill="#3A0D00" rx=".8"/>
-      <rect x="6" y="19" width="12" height="2.5" fill="#3A0D00" rx="1.25"/>
-      <rect x="1" y="6.5" width="22" height="1.8" fill="#60270F" rx=".9"/>
-      <line x1="3" y1="8.3" x2="3" y2="14" stroke="#9E7C08" stroke-width="1.4" stroke-linecap="round"/>
-      <line x1="21" y1="8.3" x2="21" y2="14" stroke="#9E7C08" stroke-width="1.4" stroke-linecap="round"/>
-      <path d="M0.5 14 Q3 17.5 5.5 14" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" fill="rgba(196,154,10,.1)"/>
-      <path d="M18.5 14 Q21 17.5 23.5 14" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" fill="rgba(196,154,10,.1)"/>
-      <circle cx="12" cy="3.5" r="2.1" fill="#C49A0A"/>
-    </svg>
-  </div>
-  <div id="cur-ring"></div>
-  <div class="cur-ripple"></div>
 
 <!-- ═══ NAV ══════════════════════════════════════════════════════ -->
 <nav class="nav" id="nav">
@@ -573,6 +551,8 @@ document.querySelectorAll('.nav-item').forEach(item => {
 });
 document.addEventListener('click', e => { document.querySelectorAll('.nav-item.open').forEach(i => { if (!i.contains(e.target)) i.classList.remove('open'); }); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });
+window.addEventListener('pageshow', e => { if (e.persisted) document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });
 
 /* Mobile menu */
 const burger = document.getElementById('burger');
@@ -623,26 +603,6 @@ document.querySelectorAll('.mob-acc-trigger').forEach(btn => {
   });
 })();
 
-/* Cursor */
-const cur = { x: 0, y: 0, size: 24 };
-const ring = { x: 0, y: 0, size: 48, vx: 0, vy: 0 };
-const ico = document.getElementById('cur-ico');
-const ringEl = document.getElementById('cur-ring');
-
-document.addEventListener('mousemove', (e) => {
-  cur.x = e.clientX;
-  cur.y = e.clientY;
-  ico.style.left = (cur.x - cur.size / 2) + 'px';
-  ico.style.top = (cur.y - cur.size / 2) + 'px';
-  ring.vx += (cur.x - ring.x) * 0.15;
-  ring.vy += (cur.y - ring.y) * 0.15;
-  ring.x += ring.vx;
-  ring.y += ring.vy;
-  ring.vx *= 0.9;
-  ring.vy *= 0.9;
-  ringEl.style.left = (ring.x - ring.size / 2) + 'px';
-  ringEl.style.top = (ring.y - ring.size / 2) + 'px';
-});
 
 /* Scroll Progress */
 const progressBar = document.getElementById('progress');

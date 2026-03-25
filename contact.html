@@ -12,12 +12,11 @@
 /* ── RESET ──────────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',system-ui,sans-serif;color:#1a0800;background:#fff;overflow-x:hidden;cursor:none}
-@media(hover:none){body{cursor:auto}}
+body{font-family:'Inter',system-ui,sans-serif;color:#1a0800;background:#fff;overflow-x:hidden;cursor:pointer}
 img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
 ul{list-style:none}
-button{border:none;background:none;cursor:none;font:inherit}
+button{border:none;background:none;cursor:pointer;font:inherit}
 input,select,textarea{font:inherit}
 
 /* ── TOKENS ──────────────────────────────────────────────────── */
@@ -30,20 +29,13 @@ input,select,textarea{font:inherit}
 }
 
 /* ── CURSOR ──────────────────────────────────────────────────── */
-#cur-ico{position:fixed;width:28px;height:28px;pointer-events:none;z-index:99999;transform:translate(-14px,-14px);transition:transform .2s ease,filter .2s ease;filter:drop-shadow(0 2px 6px rgba(58,13,0,.3))}
-#cur-ico svg{width:100%;height:100%;display:block}
-#cur-ico.hover{transform:translate(-14px,-14px) rotate(18deg) scale(1.3);filter:drop-shadow(0 4px 14px rgba(196,154,10,.55))}
-#cur-ring{position:fixed;width:50px;height:50px;border:1.5px solid rgba(196,154,10,.35);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-25px,-25px);transition:width .2s,height .2s,transform .2s,border-color .2s}
-#cur-ring.hover{width:66px;height:66px;transform:translate(-33px,-33px);border-color:rgba(196,154,10,.6)}
-@keyframes ripple-out{to{transform:translate(-50%,-50%) scale(6);opacity:0}}
-.cur-ripple{position:fixed;width:10px;height:10px;border-radius:50%;border:2px solid var(--gold);pointer-events:none;z-index:99990;transform:translate(-50%,-50%) scale(1);animation:ripple-out .55s ease-out forwards}
 
 /* ── PROGRESS BAR ────────────────────────────────────────────── */
 #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),var(--gold3));z-index:9999;transition:width .08s linear}
 
 /* ── UTILS ───────────────────────────────────────────────────── */
 .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 40px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:4px;font-weight:700;font-size:.92rem;letter-spacing:.02em;transition:all .25s var(--ease);cursor:none;border:2px solid transparent;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:4px;font-weight:700;font-size:.92rem;letter-spacing:.02em;transition:all .25s var(--ease);cursor:pointer;border:2px solid transparent;white-space:nowrap}
 .btn-gold{background:var(--gold);color:#fff}
 .btn-gold:hover{background:var(--gold2);transform:translateY(-3px);box-shadow:0 12px 32px rgba(196,154,10,.4)}
 .req{color:#c0392b;font-weight:700}
@@ -60,7 +52,7 @@ input,select,textarea{font:inherit}
 .nav-brand em{font-size:.67rem;color:var(--muted);font-style:normal}
 .nav-links{display:flex;align-items:center;gap:2px;margin-left:auto}
 .nav-item{position:relative}
-.nav-item>a,.nav-item>button{display:flex;align-items:center;gap:3px;padding:6px 9px;border-radius:4px;font-size:.775rem;font-weight:500;color:var(--muted);transition:color .15s,background .15s;background:none;white-space:nowrap;cursor:none}
+.nav-item>a,.nav-item>button{display:flex;align-items:center;gap:3px;padding:6px 9px;border-radius:4px;font-size:.775rem;font-weight:500;color:var(--muted);transition:color .15s,background .15s;background:none;white-space:nowrap;cursor:pointer}
 .nav-item>a:hover,.nav-item>button:hover,.nav-item>a.active,.nav-item.open>a,.nav-item.open>button{color:var(--brown);background:rgba(96,39,15,.13)}
 .nav-chevron{width:10px;height:10px;display:inline-block;transition:transform .2s}
 .nav-item.open .nav-chevron{transform:rotate(180deg)}
@@ -152,7 +144,7 @@ input,select,textarea{font:inherit}
 
 /* Social links */
 .contact-social{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-.cs-btn{display:flex;align-items:center;gap:8px;padding:9px 16px;border:1.5px solid var(--border);border-radius:8px;font-size:.8rem;font-weight:600;color:var(--warm);transition:all .2s;cursor:none}
+.cs-btn{display:flex;align-items:center;gap:8px;padding:9px 16px;border:1.5px solid var(--border);border-radius:8px;font-size:.8rem;font-weight:600;color:var(--warm);transition:all .2s;cursor:pointer}
 .cs-btn:hover{border-color:var(--brown);background:var(--cream);color:var(--brown);transform:translateY(-2px)}
 .cs-ico{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;flex-shrink:0}
 .cs-ico.li{background:#0A66C2;color:#fff}
@@ -308,8 +300,6 @@ input,select,textarea{font:inherit}
 <body>
 
 <!-- Cursor -->
-<div id="cur-ico"><svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="16" y1="2" x2="16" y2="30" stroke="#60270F" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="10" x2="30" y2="10" stroke="#60270F" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="10" x2="8" y2="22" stroke="#60270F" stroke-width="1.8" stroke-linecap="round"/><line x1="30" y1="10" x2="24" y2="22" stroke="#60270F" stroke-width="1.8" stroke-linecap="round"/><ellipse cx="8" cy="23" rx="4" ry="2.2" stroke="#60270F" stroke-width="1.8"/><ellipse cx="24" cy="23" rx="4" ry="2.2" stroke="#60270F" stroke-width="1.8"/></svg></div>
-<div id="cur-ring"></div>
 <div id="progress"></div>
 
 <!-- ═══ NAV ════════════════════════════════════════════════════ -->
@@ -566,22 +556,6 @@ input,select,textarea{font:inherit}
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-/* ── CURSOR ─────────────────────────────────────────────────── */
-const ico  = document.getElementById('cur-ico');
-const ring = document.getElementById('cur-ring');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; ico.style.left = mx + 'px'; ico.style.top = my + 'px'; });
-function animCursor() { rx += (mx - rx) * .12; ry += (my - ry) * .12; ring.style.left = rx + 'px'; ring.style.top  = ry + 'px'; requestAnimationFrame(animCursor); }
-animCursor();
-document.querySelectorAll('a,button,input,select,textarea,.cf-pill').forEach(el => {
-  el.addEventListener('mouseenter', () => { ico?.classList.add('hover'); ring?.classList.add('hover'); });
-  el.addEventListener('mouseleave', () => { ico?.classList.remove('hover'); ring?.classList.remove('hover'); });
-});
-document.addEventListener('click', e => {
-  const r = document.createElement('div'); r.className = 'cur-ripple';
-  r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px';
-  document.body.appendChild(r); setTimeout(() => r.remove(), 560);
-});
 
 /* ── SCROLL PROGRESS ────────────────────────────────────────── */
 const prog = document.getElementById('progress');
@@ -602,6 +576,8 @@ document.querySelectorAll('.nav-item').forEach(item => {
 });
 document.addEventListener('click', e => { document.querySelectorAll('.nav-item.open').forEach(i => { if (!i.contains(e.target)) i.classList.remove('open'); }); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });
+window.addEventListener('pageshow', e => { if (e.persisted) document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });
 
 /* ── MOBILE MENU ────────────────────────────────────────────── */
 const burger  = document.getElementById('burger');

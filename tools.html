@@ -20,13 +20,12 @@ body {
   color: #1a0800;
   background: #fff;
   overflow-x: hidden;
-  cursor: none;
+  cursor: pointer;
 }
-@media (hover: none) { body { cursor: auto; } }
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
-button { border: none; background: none; cursor: none; font: inherit; }
+button { border: none; background: none; cursor: pointer; font: inherit; }
 input, select, textarea { font: inherit; }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -53,7 +52,6 @@ input, select, textarea { font: inherit; }
 /* ═══════════════════════════════════════════════════════════════
    CUSTOM CURSOR
 ═══════════════════════════════════════════════════════════════ */
-#cur-ico {
   position: fixed; width: 28px; height: 28px;
   pointer-events: none; z-index: 99999;
   transform: translate(-14px, -14px);
@@ -61,12 +59,9 @@ input, select, textarea { font: inherit; }
   filter: drop-shadow(0 2px 6px rgba(58,13,0,.3));
   will-change: left, top, transform;
 }
-#cur-ico svg { width: 100%; height: 100%; display: block; }
-#cur-ico.hover {
   transform: translate(-14px, -14px) rotate(18deg) scale(1.3);
   filter: drop-shadow(0 4px 14px rgba(196,154,10,.55));
 }
-#cur-ring {
   position: fixed; width: 50px; height: 50px;
   border: 1.5px solid rgba(196,154,10,.35); border-radius: 50%;
   pointer-events: none; z-index: 99998;
@@ -74,17 +69,13 @@ input, select, textarea { font: inherit; }
   transition: width .2s ease, height .2s ease, transform .2s ease, border-color .2s;
   will-change: left, top;
 }
-#cur-ring.hover {
   width: 66px; height: 66px;
   transform: translate(-33px, -33px);
   border-color: rgba(196,154,10,.6);
 }
-@keyframes ripple-out { to { transform: translate(-50%,-50%) scale(6); opacity: 0; } }
-.cur-ripple {
   position: fixed; width: 10px; height: 10px; border-radius: 50%;
   border: 2px solid var(--gold); pointer-events: none; z-index: 99990;
   transform: translate(-50%,-50%) scale(1);
-  animation: ripple-out .55s ease-out forwards;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -95,7 +86,7 @@ input, select, textarea { font: inherit; }
   display: inline-flex; align-items: center; gap: 8px;
   padding: 14px 30px; border-radius: 4px;
   font-weight: 700; font-size: .92rem; letter-spacing: .02em;
-  transition: all .25s var(--ease); cursor: none;
+  transition: all .25s var(--ease); cursor: pointer;
   border: 2px solid transparent; white-space: nowrap;
 }
 .btn-brown { background: var(--brown); color: #fff; }
@@ -134,8 +125,8 @@ input, select, textarea { font: inherit; }
 .nav-brand em { font-size: .67rem; color: var(--muted); font-style: normal; }
 .nav-links { display: flex; align-items: center; gap: 2px; margin-left: auto; }
 .nav-item { position: relative; }
-.nav-item > a, .nav-item > button { display: flex; align-items: center; gap: 3px; padding: 6px 9px; border-radius: 4px; font-size: .775rem; font-weight: 500; color: var(--muted); transition: color .15s, background .15s; background: none; white-space: nowrap; cursor: none; }
-.nav-item > a:hover, .nav-item > button:hover, .nav-item > a.active, .nav-item.open > a, .nav-item.open > button { color: var(--brown); background: var(--cream); }
+.nav-item > a, .nav-item > button { display: flex; align-items: center; gap: 3px; padding: 6px 9px; border-radius: 4px; font-size: .775rem; font-weight: 500; color: var(--muted); transition: color .15s, background .15s; background: none; white-space: nowrap; cursor: pointer; }
+.nav-item > a:hover, .nav-item > button:hover, .nav-item > a.active, .nav-item.open > a, .nav-item.open > button { color: var(--brown); background: rgba(96,39,15,.13); }
 .nav-chevron { width: 10px; height: 10px; display: inline-block; transition: transform .2s; }
 .nav-item.open .nav-chevron { transform: rotate(180deg); }
 .nav-drop { position: absolute; top: calc(100% + 8px); left: 0; background: #fff; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(58,13,0,.12); padding: 8px; min-width: 220px; opacity: 0; transform: translateY(-6px); pointer-events: none; transition: opacity .2s, transform .2s; z-index: 900; }
@@ -154,7 +145,7 @@ input, select, textarea { font: inherit; }
 .mob-menu { position: fixed; top: 0; right: -310px; bottom: 0; width: 290px; background: #fff; z-index: 1600; padding: 80px 20px 28px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; box-shadow: -6px 0 40px rgba(0,0,0,.18); transition: right .35s var(--ease); }
 .mob-menu.open { right: 0; }
 .mob-menu a { padding: 12px 16px; border-radius: 4px; font-weight: 500; color: var(--brown); transition: background .2s; }
-.mob-menu a:hover { background: var(--cream); }
+.mob-menu a:hover { background: rgba(96,39,15,.13); }
 .mob-sep { height: 1px; background: var(--border); margin: 8px 0; }
 .mob-close { position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--brown); cursor: pointer; font-weight: 700; }
 
@@ -287,7 +278,7 @@ input, select, textarea { font: inherit; }
 /* ═══════════════════════════════════════════════════════════════
    TOOLS GRID & CARDS
 ═══════════════════════════════════════════════════════════════ */
-.tools-sec { padding: 80px 0 100px; background: var(--cream); }
+.tools-sec { padding: 80px 0 100px; background: rgba(96,39,15,.13); }
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
@@ -445,7 +436,6 @@ input, select, textarea { font: inherit; }
 }
 @media(hover: none) {
   body, a, button { cursor: auto; }
-  #cur-ico, #cur-ring { display: none; }
 }
 @media(prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
@@ -606,19 +596,6 @@ input, select, textarea { font: inherit; }
 <body>
 
 <!-- Custom Cursor -->
-<div id="cur-ico">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-    <rect x="11.2" y="3" width="1.6" height="17" fill="#3A0D00" rx=".8"/>
-    <rect x="6" y="19" width="12" height="2.5" fill="#3A0D00" rx="1.25"/>
-    <rect x="1" y="6.5" width="22" height="1.8" fill="#60270F" rx=".9"/>
-    <line x1="3" y1="8.3" x2="3" y2="14" stroke="#9E7C08" stroke-width="1.4" stroke-linecap="round"/>
-    <line x1="21" y1="8.3" x2="21" y2="14" stroke="#9E7C08" stroke-width="1.4" stroke-linecap="round"/>
-    <path d="M0.5 14 Q3 17.5 5.5 14" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" fill="rgba(196,154,10,.1)"/>
-    <path d="M18.5 14 Q21 17.5 23.5 14" stroke="#C49A0A" stroke-width="1.8" stroke-linecap="round" fill="rgba(196,154,10,.1)"/>
-    <circle cx="12" cy="3.5" r="2.1" fill="#C49A0A"/>
-  </svg>
-</div>
-<div id="cur-ring"></div>
 
 <!-- Progress Bar -->
 <div id="progress"></div>
@@ -1294,30 +1271,6 @@ burger?.addEventListener('click', openMenu);
 mobClose?.addEventListener('click', closeMenu);
 mobOv?.addEventListener('click', closeMenu);
 
-/* ═══════ CUSTOM CURSOR ══════════════════════════════════════ */
-const ico  = document.getElementById('cur-ico');
-const ring = document.getElementById('cur-ring');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-function animCursor() {
-  if (ico)  { ico.style.left  = mx + 'px'; ico.style.top  = my + 'px'; }
-  rx += (mx - rx) * 0.10; ry += (my - ry) * 0.10;
-  if (ring) { ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; }
-  requestAnimationFrame(animCursor);
-}
-animCursor();
-document.querySelectorAll('a, button, input, select').forEach(el => {
-  el.addEventListener('mouseenter', () => { ico?.classList.add('hover'); ring?.classList.add('hover'); });
-  el.addEventListener('mouseleave', () => { ico?.classList.remove('hover'); ring?.classList.remove('hover'); });
-});
-document.addEventListener('click', e => {
-  const r = document.createElement('div');
-  r.className = 'cur-ripple';
-  r.style.left = e.clientX + 'px';
-  r.style.top  = e.clientY + 'px';
-  document.body.appendChild(r);
-  setTimeout(() => r.remove(), 600);
-});
 
 /* ═══════════════════════════════════════════════════════════════
    SIGNUP GATE LOGIC
@@ -1706,6 +1659,8 @@ document.querySelectorAll('.nav-item').forEach(item => {
 });
 document.addEventListener('click', e => { document.querySelectorAll('.nav-item.open').forEach(i => { if (!i.contains(e.target)) i.classList.remove('open'); }); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });
+window.addEventListener('pageshow', e => { if (e.persisted) document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open')); });
 
 /* Mobile menu — handled above */
 

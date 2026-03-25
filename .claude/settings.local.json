@@ -11,7 +11,17 @@
       "Bash(for f:*)",
       "Bash(do sed:*)",
       "Bash(done)",
-      "Bash(ls *.html)"
+      "Bash(ls *.html)",
+      "Bash(do)",
+      "Bash(sed -i \"s|document\\\\.addEventListener\\(''keydown'', e => { if \\(e\\\\.key === ''Escape''\\) document\\\\.querySelectorAll\\(''\\\\.nav-item\\\\.open''\\)\\\\.forEach\\(i => i\\\\.classList\\\\.remove\\(''open''\\)\\); }\\);|document.addEventListener\\(''keydown'', e => { if \\(e.key === ''Escape''\\) document.querySelectorAll\\(''.nav-item.open''\\).forEach\\(i => i.classList.remove\\(''open''\\)\\); }\\);\\\\nwindow.addEventListener\\(''pageshow'', e => { if \\(e.persisted\\) document.querySelectorAll\\(''.nav-item.open''\\).forEach\\(i => i.classList.remove\\(''open''\\)\\); }\\);\\\\ndocument.addEventListener\\(''visibilitychange'', \\(\\) => { if \\(document.visibilityState === ''hidden''\\) document.querySelectorAll\\(''.nav-item.open''\\).forEach\\(i => i.classList.remove\\(''open''\\)\\); }\\);|g\" \"$f\")",
+      "Bash(FILES=\"about.html blog.html community.html contact.html events.html guest-speaker.html msm.html podcast-episode.html podcast.html resources.html reviews.html tools.html\")",
+      "Bash(sed -i 's/cursor:none/cursor:pointer/g; s/cursor: none/cursor: pointer/g' $FILES)",
+      "Bash(perl -0777 -i -pe 's|<div id=\"\"cur-ico\"\">.*?</div>\\\\s*||gs; s|<div id='\"''\"'cur-ico'\"''\"'>.*?</div>\\\\s*||gs' $FILES)",
+      "Bash(perl -0777 -i -pe 's/const ico = document\\\\.getElementById\\\\\\('\"''\"'cur-ico'\"''\"'\\\\\\);\\\\nconst ring = document\\\\.getElementById\\\\\\('\"''\"'cur-ring'\"''\"'\\\\\\);\\\\nlet mx.*?\\\\nanimCursor\\\\\\(\\\\\\);\\\\n//gs' msm.html podcast-episode.html)",
+      "Bash(grep -rl \"cur-ico\\\\|cur-ring\\\\|cursor:none\\\\|cursor: none\\\\|animCursor\" *.html)",
+      "Bash(sed -i 's/cursor:none/cursor:pointer/g; s/cursor: none/cursor: pointer/g' index1.html)",
+      "Bash(sed -i '/#cur-ico/d; /#cur-ring/d; /\\\\.cur-ripple/d; /ripple-out/d; /animCursor/d; /cur-ico\\\\|cur-ring/d' index1.html)",
+      "Bash(grep -rn \"ico\\\\.style\\\\|ring\\\\.style\\\\|cur-ripple\\\\|ico?\\\\.classList\\\\|animCursor\\\\|cur-ico\\\\|cur-ring\" \"C:/Users/Fathima Rushdha/Documents/dominatelaw-website/\"*.html)"
     ]
   }
 }
