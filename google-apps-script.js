@@ -18,7 +18,7 @@
  */
 
 /* ── Configuration ─────────────────────────────────────────── */
-var NOTIFY_EMAIL = 'rushdhaakbar82@gmail.com';   // e.g. 'you@yourfirm.com' — leave '' to disable
+var NOTIFY_EMAIL = 'rushdhaakbar82@gmail.com,lester@ekwa.com,ashani@ekwa.com,chamika@ekwa.com';  // comma-separated, no spaces
 
 var SHEET_HEADERS = {
   'Legal Tools Gate':    ['Timestamp', 'First Name', 'Last Name', 'Email', 'Role'],
