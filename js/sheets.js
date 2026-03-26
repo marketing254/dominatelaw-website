@@ -529,8 +529,8 @@ async function dlLoadTranscript(transcriptUrl, epTitle, guestName) {
 // ── Format raw transcript text into styled HTML ────────────────────
 // Handles format: "Speaker N    HH:MM:SS    text content"
 function dlFormatTranscript(text, guestName, hostName) {
-  hostName  = hostName  || 'Host';
-  guestName = guestName || 'Guest';
+  hostName  = (hostName  || 'Host').split(' ')[0];
+  guestName = (guestName || 'Guest').split(' ')[0];
 
   // ── Parse each line ──────────────────────────────────────────────
   // Format: Speaker N    00:00:00    text  (4-space separated)
