@@ -45,34 +45,51 @@ function dlInitials(name) {
   return (name || '??').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 }
 
-// ── Helper: convert any Google Drive share URL to a displayable image URL ──
-// Handles formats:
+// ── Helper: extract Drive file ID from ANY Drive URL format ──────────────
+// Handles all formats users might paste:
 //   https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+//   https://drive.google.com/file/d/FILE_ID/edit
+//   https://drive.google.com/file/d/FILE_ID
+//   https://drive.google.com/open?id=FILE_ID
 //   https://drive.google.com/uc?export=view&id=FILE_ID
+//   https://drive.google.com/uc?id=FILE_ID&export=download
 //   https://drive.google.com/thumbnail?id=FILE_ID
-// Returns a thumbnail URL that works as an <img src>
-function dlDriveImg(url, size = 'w800') {
-  if (!url) return '';
-  // Already a thumbnail URL — just return
-  if (url.includes('drive.google.com/thumbnail')) return url;
-  // Extract file ID from /file/d/ID/view format
-  const match = url.match(/\/d\/([\w-]+)/);
-  if (match) return `https://drive.google.com/thumbnail?id=${match[1]}&sz=${size}`;
-  // Extract file ID from uc?export=view&id=ID format
-  const match2 = url.match(/[?&]id=([\w-]+)/);
-  if (match2) return `https://drive.google.com/thumbnail?id=${match2[1]}&sz=${size}`;
-  // Not a Drive URL — return as-is (e.g. external URLs)
-  return url;
-}
-
-// ── Helper: extract Drive file ID from any Drive URL ──────────────
+//   https://docs.google.com/uc?export=open&id=FILE_ID
+//   https://lh3.googleusercontent.com/d/FILE_ID
+//   Just a bare file ID (long alphanumeric string)
 function dlDriveId(url) {
   if (!url) return '';
-  const m1 = url.match(/\/d\/([\w-]+)/);
-  if (m1) return m1[1];
-  const m2 = url.match(/[?&]id=([\w-]+)/);
-  if (m2) return m2[1];
+  url = url.trim();
+  // /file/d/ID or /d/ID
+  var m = url.match(/\/d\/([\w-]{20,})/);
+  if (m) return m[1];
+  // ?id=ID or &id=ID
+  m = url.match(/[?&]id=([\w-]{20,})/);
+  if (m) return m[1];
+  // lh3.googleusercontent.com/d/ID
+  m = url.match(/googleusercontent\.com\/d\/([\w-]{20,})/);
+  if (m) return m[1];
+  // Bare file ID (20+ alphanumeric chars, no slashes/dots — likely a raw ID)
+  if (/^[\w-]{20,}$/.test(url)) return url;
   return '';
+}
+
+// ── Helper: convert any Google Drive URL to a displayable image URL ──
+// Users can paste ANY Drive link format — this auto-converts to thumbnail
+function dlDriveImg(url, size = 'w800') {
+  if (!url) return '';
+  url = url.trim();
+  // Already a direct image URL (non-Drive) — return as-is
+  if (!url.includes('drive.google.com') && !url.includes('google.com') && !url.includes('googleusercontent.com') && !/^[\w-]{20,}$/.test(url)) {
+    return url;
+  }
+  // Already a working thumbnail URL with size
+  if (url.includes('drive.google.com/thumbnail') && url.includes('sz=')) return url;
+  // Extract file ID and build thumbnail URL
+  const id = dlDriveId(url);
+  if (id) return `https://drive.google.com/thumbnail?id=${id}&sz=${size}`;
+  // Not a recognizable Drive URL — return as-is
+  return url;
 }
 
 // ── Helper: Drive audio → preview iframe URL (most reliable) ──────
@@ -80,6 +97,19 @@ function dlDriveId(url) {
 function dlDriveAudio(url) {
   const id = dlDriveId(url);
   return id ? `https://drive.google.com/file/d/${id}/preview` : url;
+}
+
+// ── Helper: Drive audio → direct streamable URL for <audio> ───────
+// Returns an array of URLs to try in order (fallback chain)
+function dlDriveAudioUrls(url) {
+  if (!url) return [];
+  const id = dlDriveId(url);
+  if (id) return [
+    `https://drive.google.com/uc?export=download&id=${id}`,
+    `https://docs.google.com/uc?export=open&id=${id}`,
+    `https://drive.google.com/uc?id=${id}&export=download`
+  ];
+  return [url]; // already a direct MP3/audio URL
 }
 
 // ── Helper: parse description into key points + bio ────────────────
@@ -139,13 +169,27 @@ async function dlLoadLatestPodcast() {
     if (!episodes.length) return;
     const ep = episodes[episodes.length - 1]; // last row = newest
 
-    // Announcement bar
+    // Log audio column status for debugging
+    if (!ep.audio_source && !('audio_source' in ep)) {
+      console.warn('DL Sheets: "audio_source" column not found in podcasts tab. Add it to enable inline playback.');
+    } else if (!ep.audio_source) {
+      console.warn('DL Sheets: "audio_source" is empty for the latest episode. Paste a Drive/MP3 link to enable playback.');
+    }
+
+    // Announcement bar — inline mini-player (NEVER redirects)
     const announce = document.querySelector('.announce');
     if (announce) {
+      const driveId  = dlDriveId(ep.audio_source);
+      const epHref   = `podcast-episode.html?ep=${ep.episode}`;
+      const epLabel  = `Ep #${ep.episode}: ${ep.title}`;
+
+      announce.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:10px 16px;';
       announce.innerHTML = `
         <span class="a-pulse"></span>
-        <strong>NEW:</strong> Episode #${ep.episode} — "${ep.title}" is live &nbsp;·&nbsp;
-        <a href="podcast-episode.html?ep=${ep.episode}">Listen Now →</a>
+        <strong style="color:var(--gold3)">NEW:</strong>
+        <span style="color:rgba(255,255,255,.85);max-width:340px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${epLabel}</span>
+        <span style="color:rgba(255,255,255,.3)">·</span>
+        <a href="${epHref}" style="color:var(--gold3);text-decoration:underline;font-weight:700;white-space:nowrap;">Listen Now →</a>
       `;
     }
 
@@ -193,6 +237,9 @@ async function dlLoadPodcastGrid() {
   try {
     const episodes = await dlFetchSheet('podcasts');
     if (!episodes.length) { grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted)">No episodes found.</p>'; return; }
+
+    // Update ticker count dynamically
+    document.querySelectorAll('#ticker-ep-count').forEach(el => el.textContent = episodes.length);
 
     grid.innerHTML = episodes.slice().reverse().map(ep => {
       const initials = dlInitials(ep.guest_name);
@@ -435,62 +482,15 @@ async function dlLoadEventsGrid() {
   }
 }
 
-// ── HOME: Latest podcast in popup ────────────────────────────────
-async function dlLoadLatestPodcast() {
-  try {
-    const episodes = await dlFetchSheet('podcasts');
-    if (!episodes.length) return;
-    const ep = episodes[episodes.length - 1]; // last row = latest
-
-    const img   = document.getElementById('hp-pod-img');
-    const epNum = document.getElementById('hp-pod-ep');
-    const title = document.getElementById('hp-pod-title');
-    const link  = document.getElementById('hp-pod-link');
-
-    if (img)   { img.src = dlDriveImg(ep.guest_photo_url, 'w200'); img.alt = ep.guest_name || ''; }
-    if (epNum) epNum.textContent = `Episode #${ep.episode}`;
-    if (title) title.textContent = ep.title;
-    if (link)  link.href = `podcast-episode.html?ep=${ep.episode}`;
-
-    // ── Announcement bar
-    const announceText = document.getElementById('announce-text');
-    const announceLink = document.getElementById('announce-link');
-    if (announceText) announceText.textContent = `Episode #${ep.episode} — "${ep.title}" is live`;
-    if (announceLink) announceLink.href = `podcast-episode.html?ep=${ep.episode}`;
-  } catch (e) {
-    console.warn('DL Sheets: Could not load latest podcast for popup', e);
-  }
-}
-
-// ── HOME: Next upcoming event in popup ───────────────────────────
-async function dlLoadNextEvent() {
-  try {
-    const events = await dlFetchSheet('events');
-    if (!events.length) return;
-
-    const today = new Date(); today.setHours(0, 0, 0, 0);
-    const upcoming = events.filter(ev => ev.date_iso && new Date(ev.date_iso) >= today);
-    const ev = upcoming.length ? upcoming[0] : events[events.length - 1];
-
-    const day   = document.getElementById('hp-evt-day');
-    const month = document.getElementById('hp-evt-month');
-    const title = document.getElementById('hp-evt-title');
-    const desc  = document.getElementById('hp-evt-desc');
-    const link  = document.getElementById('hp-evt-link');
-
-    if (day)   day.textContent   = ev.day || '—';
-    if (month) month.textContent = ev.month_year || '';
-    if (title) title.textContent = ev.title || '';
-    if (desc)  desc.textContent  = ev.description || '';
-    if (link)  link.href = ev.register_url || 'events.html';
-  } catch (e) {
-    console.warn('DL Sheets: Could not load next event for popup', e);
-  }
-}
-
 // ── Auto-init based on current page ──────────────────────────────
 (function () {
   const path = window.location.pathname;
+
+  // Always update the announcement bar on every page that has .announce
+  if (document.querySelector('.announce')) {
+    dlLoadLatestPodcast();
+  }
+
   if (path.includes('podcast-episode')) {
     dlLoadEpisodePage();
   } else if (path.includes('podcast')) {
@@ -499,9 +499,8 @@ async function dlLoadNextEvent() {
     dlLoadReviewsGrid();
   } else if (path.includes('events')) {
     dlLoadEventsGrid();
-  } else {
-    // Home page (index.html)
-    dlLoadLatestPodcast();
+  } else if (path.endsWith('/') || path.endsWith('index.html') || path.endsWith('index1.html') || path === '') {
+    // Home page — also load event popup
     dlLoadNextEvent();
   }
 })();
