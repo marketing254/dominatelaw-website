@@ -16,7 +16,8 @@
 //  The Sheet must be shared: File → Share → Publish to web → Entire document → Web page → Publish
 // ─────────────────────────────────────────────────────────────────
 
-const DL_SHEET_ID = '1xf9FygiOjqYrfaTeG2j0SW3RjqGPv2SX-6eJBI_6VUA';
+const DL_SHEET_ID        = '1xf9FygiOjqYrfaTeG2j0SW3RjqGPv2SX-6eJBI_6VUA';
+const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxCmZIkYwqb_t3MDv91bTyfDCfnISeYznMS2jByqY4w2YySUUaXOrs_eTxgBVLOvil2/exec';
 
 // ── Fetch & parse a sheet tab ─────────────────────────────────────
 async function dlFetchSheet(sheetName) {
@@ -392,6 +393,9 @@ async function dlLoadEpisodePage() {
     const body = document.getElementById('ep-body');
     if (body) body.style.display = 'block';
 
+    // ── Transcript tab
+    dlLoadTranscript(ep.transcript_url, ep.title, ep.guest_name);
+
     // ── Prev / Next
     const navSec   = document.getElementById('ep-nav-section');
     const prevNext = document.getElementById('ep-prev-next');
@@ -418,6 +422,178 @@ async function dlLoadEpisodePage() {
     console.warn('DL Sheets: Could not load episode page', e);
     if (heroEl) heroEl.innerHTML = `<div class="ep-not-found"><h2>Could Not Load Episode</h2><p>Please try again or check your connection.</p><a href="podcast.html" class="btn btn-primary" style="margin-top:16px">Browse All Episodes →</a></div>`;
   }
+}
+
+// ── TRANSCRIPT: fetch .txt from Drive via Apps Script proxy ──────
+async function dlLoadTranscript(transcriptUrl, epTitle, guestName) {
+  const container = document.getElementById('ep-transcript-content');
+  const tabBtn    = document.getElementById('ep-tab-transcript-btn');
+  if (!container) return;
+
+  // No URL in sheet — keep "not available" message
+  if (!transcriptUrl) return;
+
+  const fileId = dlDriveId(transcriptUrl);
+  if (!fileId) return;
+
+  // Show loading spinner while fetching
+  container.innerHTML = `
+    <div class="ep-transcript-loading" style="padding:40px 0">
+      <div class="ep-transcript-spinner"></div>
+      <span>Loading transcript…</span>
+    </div>`;
+
+  // Badge on tab button
+  if (tabBtn) tabBtn.innerHTML = '📄 Transcript <span style="background:var(--gold3);color:#fff;font-size:.6rem;padding:2px 6px;border-radius:100px;margin-left:5px;font-weight:700">NEW</span>';
+
+  try {
+    // Fetch through Apps Script proxy (bypasses CORS on Google Drive)
+    const proxyUrl = `${DL_APPS_SCRIPT_URL}?action=getTranscript&id=${fileId}`;
+    const res  = await fetch(proxyUrl);
+    const data = await res.json();
+
+    if (data.status !== 'ok' || !data.content) throw new Error(data.error || 'Empty');
+
+    const text = data.content;
+    // Pass guest name + default host name for speaker labelling
+    const hostName  = 'Naren Raja';
+    const html = dlFormatTranscript(text, guestName, hostName);
+    const wordCount = text.split(/\s+/).length;
+    const readMins  = Math.max(1, Math.round(wordCount / 200));
+
+    container.innerHTML = `
+      <div class="ep-transcript-header">
+        <div>
+          <h3>Full Transcript</h3>
+          <p style="font-size:.75rem;color:var(--muted);margin:4px 0 0">
+            ~${wordCount.toLocaleString()} words &nbsp;·&nbsp; ${readMins} min read
+          </p>
+        </div>
+        <div class="ep-transcript-actions">
+          <div class="ep-transcript-search">
+            <svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="#60270F" stroke-width="1.4"/><path d="M9.5 9.5l3 3" stroke="#60270F" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <input type="text" id="ep-ts-search" placeholder="Search transcript…" autocomplete="off">
+          </div>
+          <button class="ep-transcript-dl" id="ep-ts-download">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12h10" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Download
+          </button>
+        </div>
+      </div>
+      <div class="ep-transcript-body" id="ep-ts-body">${html}</div>
+      <button class="ep-transcript-expand" id="ep-ts-expand">Show full transcript ↓</button>
+    `;
+
+    // Expand/collapse
+    const tsBody   = document.getElementById('ep-ts-body');
+    const expandBtn = document.getElementById('ep-ts-expand');
+    let expanded = false;
+    expandBtn.addEventListener('click', () => {
+      expanded = !expanded;
+      tsBody.style.maxHeight = expanded ? 'none' : '520px';
+      expandBtn.textContent  = expanded ? 'Collapse transcript ↑' : 'Show full transcript ↓';
+    });
+
+    // Search/highlight
+    const searchInput = document.getElementById('ep-ts-search');
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim();
+      if (!q) { tsBody.innerHTML = html; return; }
+      const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp(`(${escaped})`, 'gi');
+      tsBody.innerHTML = html.replace(re, '<mark class="ep-transcript-highlight">$1</mark>');
+    });
+
+    // Download as txt
+    document.getElementById('ep-ts-download').addEventListener('click', () => {
+      const blob = new Blob([text], { type: 'text/plain' });
+      const a    = Object.assign(document.createElement('a'), {
+        href: URL.createObjectURL(blob),
+        download: `transcript-${(epTitle || 'episode').toLowerCase().replace(/\s+/g,'-').slice(0,40)}.txt`
+      });
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+  } catch (err) {
+    console.warn('DL Sheets: Transcript fetch failed', err);
+    container.innerHTML = `
+      <div class="ep-transcript-unavailable" style="margin-top:28px">
+        <p>Transcript couldn't be loaded automatically.</p>
+        <a href="https://drive.google.com/file/d/${fileId}/view" target="_blank" rel="noopener"
+           class="btn btn-primary btn-sm" style="margin-top:4px">View Transcript in Drive →</a>
+      </div>`;
+  }
+}
+
+// ── Format raw transcript text into styled HTML ────────────────────
+// Handles format: "Speaker N    HH:MM:SS    text content"
+function dlFormatTranscript(text, guestName, hostName) {
+  hostName  = hostName  || 'Host';
+  guestName = guestName || 'Guest';
+
+  // ── Parse each line ──────────────────────────────────────────────
+  // Format: Speaker N    00:00:00    text  (4-space separated)
+  const lineRe = /^(Speaker\s+(\d+))\s{2,}(\d{1,2}:\d{2}(?::\d{2})?)\s{2,}(.+)$/;
+
+  const lines = text.split(/\r?\n/);
+  const entries = [];
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) continue;
+
+    const m = line.match(lineRe);
+    if (!m) {
+      // Fallback: plain line with no structure
+      const t = line.trim();
+      if (t && t !== '<silence>') {
+        entries.push({ speakerNum: -1, label: '', time: '', text: t });
+      }
+      continue;
+    }
+
+    const speakerNum = parseInt(m[2], 10);
+    const time       = m[3];
+    const textContent = m[4].trim();
+
+    // Skip silences and empty
+    if (!textContent || textContent === '<silence>' || textContent === '<silence>  ') continue;
+
+    // Map speaker numbers to labels
+    let label, role;
+    if (speakerNum === 0) continue;                // silence / noise
+    if (speakerNum === 1) { label = 'Intro'; role = 'intro'; }
+    else if (speakerNum === 2) { label = hostName; role = 'host'; }
+    else { label = guestName; role = 'guest'; }    // Speaker 3, 4, etc.
+
+    entries.push({ speakerNum, label, role, time, text: textContent });
+  }
+
+  if (!entries.length) return '<div class="ep-transcript-para"><div class="ep-transcript-text">Transcript content could not be parsed.</div></div>';
+
+  // ── Build HTML ───────────────────────────────────────────────────
+  let html = '';
+  let lastRole = null;
+
+  for (const e of entries) {
+    const roleClass = e.role === 'host'  ? 'ep-ts-host'
+                    : e.role === 'guest' ? 'ep-ts-guest'
+                    : 'ep-ts-intro';
+
+    const showSpeaker = (e.role !== lastRole) || e.role === 'intro';
+    lastRole = e.role;
+
+    html += `<div class="ep-transcript-para ${roleClass}">
+      <div class="ep-ts-meta">
+        ${showSpeaker && e.label ? `<span class="ep-transcript-speaker ${roleClass}-badge">${e.label}</span>` : '<span></span>'}
+        ${e.time ? `<span class="ep-transcript-time">${e.time}</span>` : ''}
+      </div>
+      <div class="ep-transcript-text">${e.text}</div>
+    </div>`;
+  }
+
+  return html;
 }
 
 // ── REVIEWS PAGE: Render all reviews ─────────────────────────────

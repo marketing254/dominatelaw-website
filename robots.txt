@@ -1,10 +1,21 @@
 User-agent: *
 Allow: /
 
-Disallow: /wp-admin/
-Disallow: /wp-login.php
-Disallow: /?s=
+# Block utility/script files from indexing
+Disallow: /js/
+Disallow: /seo-inject.js
 
-Sitemap: https://www.dominatelaw.com/sitemap.xml
+# Block known AI scrapers that don't respect robots
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemap
+Sitemap: https://dominatelaw.com/sitemap.xml
 
 # Dominate Law | dominatelaw.com | Powered by Ekwa Marketing

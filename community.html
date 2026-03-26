@@ -6,7 +6,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Join 500+ law firm owners in the Dominate Law Community — share proven growth strategies, access exclusive resources, get peer support, and grow your practice alongside ambitious attorneys.">
 <title>Law Firm Owners Community & Attorney Peer Network | Dominate Law</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <!-- ═══ SEO — community.html ════════════════════════════════════ -->
+  <link rel="canonical" href="https://dominatelaw.com/community.html">
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="law firm community, attorney network, law firm owners group, attorney peer support, legal marketing community, law firm mastermind">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Dominate Law">
+  <meta property="og:title" content="Law Firm Owners Community & Attorney Peer Network | Dominate Law">
+  <meta property="og:description" content="Join 500+ law firm owners in the Dominate Law Community — share proven growth strategies, access exclusive resources, get peer support, and grow your practice alongside ambitious attorneys.">
+  <meta property="og:url" content="https://dominatelaw.com/community.html">
+  <meta property="og:image" content="https://dominatelaw.com/images/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dominate Law — Growth Platform for Law Firm Owners">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@dominatelaw">
+  <meta name="twitter:title" content="Law Firm Owners Community & Attorney Peer Network | Dominate Law">
+  <meta name="twitter:description" content="Join 500+ law firm owners in the Dominate Law Community — share proven growth strategies, access exclusive resources, get peer support, and grow your practice alongside ambitious attorneys.">
+  <meta name="twitter:image" content="https://dominatelaw.com/images/og-cover.jpg">
+
+  <!-- Performance hints -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="dns-prefetch" href="//unpkg.com">
+  <link rel="dns-prefetch" href="//script.google.com">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Law Firm Owners Community",
+  "url": "https://dominatelaw.com/community.html",
+  "description": "Join 500+ law firm owners sharing proven growth strategies and peer support.",
+  "publisher": {
+    "@id": "https://dominatelaw.com/#organization"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://dominatelaw.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Community",
+        "item": "https://dominatelaw.com/community.html"
+      }
+    ]
+  }
+}
+  </script>
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
@@ -727,7 +791,7 @@ burger?.addEventListener('click',()=>openMenu(!mobMenu.classList.contains('open'
 mobCls?.addEventListener('click',()=>openMenu(false));
 mobOvl?.addEventListener('click',()=>openMenu(false));
 document.querySelectorAll('.mob-acc-trigger').forEach(btn=>{btn.addEventListener('click',()=>{const p=document.getElementById(btn.id.replace('-trig','-panel'));if(!p)return;const o=p.classList.contains('open');document.querySelectorAll('.mob-acc-panel.open').forEach(x=>x.classList.remove('open'));document.querySelectorAll('.mob-acc-trigger.open').forEach(x=>x.classList.remove('open'));if(!o){p.classList.add('open');btn.classList.add('open');}});});
-var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbybCzyEreEMeTyvDoLAh311wCK9DuRNITOoxszXXnWFB8GjjRFR5czwEAQRzBm_HVQ_/exec';
+var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbxCmZIkYwqb_t3MDv91bTyfDCfnISeYznMS2jByqY4w2YySUUaXOrs_eTxgBVLOvil2/exec';
 function dlCommunitySheets(src,fn,ln,em,ro,area){try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Community Join','Source':src,'First Name':fn,'Last Name':ln,'Email':em,'Role':ro,'Practice Area':area||''})});}catch(e){}}
 document.getElementById('joinForm')?.addEventListener('submit',function(e){e.preventDefault();const fn=document.getElementById('j-fname').value.trim(),ln=document.getElementById('j-lname').value.trim(),em=document.getElementById('j-email').value.trim(),ro=document.getElementById('j-role').value,area=document.getElementById('j-area')?.value||'';if(!fn||!ln||!em||!ro){alert('Please fill in all required fields.');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}dlCommunitySheets('Main Form',fn,ln,em,ro,area);this.style.display='none';document.getElementById('joinSuccess').style.display='block';});
 document.getElementById('heroJoinForm')?.addEventListener('submit',function(e){e.preventDefault();const fn=document.getElementById('hj-fname').value.trim(),ln=document.getElementById('hj-lname').value.trim(),em=document.getElementById('hj-email').value.trim(),ro=document.getElementById('hj-role').value,area=document.getElementById('hj-area')?.value||'';if(!fn||!ln||!em||!ro){alert('Please fill in all required fields.');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}dlCommunitySheets('Hero Form',fn,ln,em,ro,area);this.style.display='none';document.getElementById('heroJoinSuccess').style.display='flex';document.getElementById('heroJoinSuccess').style.flexDirection='column';document.getElementById('heroJoinSuccess').style.alignItems='center';document.getElementById('heroJoinSuccess').style.gap='8px';document.getElementById('heroJoinSuccess').style.textAlign='center';});

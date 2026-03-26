@@ -1,69 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Homepage -->
   <url>
-    <loc>https://www.dominatelaw.com/</loc>
+    <loc>https://dominatelaw.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-03-26</lastmod>
   </url>
+
+  <!-- Core pages -->
   <url>
-    <loc>https://www.dominatelaw.com/about.html</loc>
+    <loc>https://dominatelaw.com/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-03-26</lastmod>
   </url>
+
   <url>
-    <loc>https://www.dominatelaw.com/resources.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2026-03-01</lastmod>
-  </url>
-  <url>
-    <loc>https://www.dominatelaw.com/podcast.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2026-03-01</lastmod>
-  </url>
-  <url>
-    <loc>https://www.dominatelaw.com/events.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2026-03-01</lastmod>
-  </url>
-  <url>
-    <loc>https://www.dominatelaw.com/blog.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2026-03-01</lastmod>
-  </url>
-  <url>
-    <loc>https://www.dominatelaw.com/blog/law-firm-seo-guide-2026.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2026-03-01</lastmod>
-  </url>
-  <url>
-    <loc>https://www.dominatelaw.com/blog/google-business-profile-lawyers.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2026-03-01</lastmod>
-  </url>
-  <url>
-    <loc>https://www.dominatelaw.com/blog/law-firm-social-media-strategy.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2026-03-01</lastmod>
-  </url>
-  <url>
-    <loc>https://www.dominatelaw.com/reviews.html</loc>
+    <loc>https://dominatelaw.com/contact.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-03-26</lastmod>
   </url>
+
   <url>
-    <loc>https://www.dominatelaw.com/contact.html</loc>
+    <loc>https://dominatelaw.com/reviews.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-03-26</lastmod>
   </url>
+
+  <!-- Content hub -->
+  <url>
+    <loc>https://dominatelaw.com/podcast.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2026-03-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dominatelaw.com/events.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2026-03-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dominatelaw.com/blog.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2026-03-26</lastmod>
+  </url>
+
+  <!-- Tools & Resources -->
+  <url>
+    <loc>https://dominatelaw.com/resources.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2026-03-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dominatelaw.com/tools.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2026-03-26</lastmod>
+  </url>
+
+  <!-- Community & CTAs -->
+  <url>
+    <loc>https://dominatelaw.com/community.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2026-03-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dominatelaw.com/msm.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2026-03-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dominatelaw.com/guest-speaker.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-03-26</lastmod>
+  </url>
+
+  <!-- Blog posts -->
+  <url>
+    <loc>https://dominatelaw.com/blog/law-firm-seo-guide-2026.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2026-03-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dominatelaw.com/blog/google-business-profile-lawyers.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-03-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://dominatelaw.com/blog/law-firm-social-media-strategy.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-03-26</lastmod>
+  </url>
+
 </urlset>

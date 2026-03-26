@@ -47,7 +47,9 @@
       "Bash(rm fix-announce.js)",
       "Bash(cp tools-rebuild.html tools.html)",
       "Bash(rm tools-rebuild.html)",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(node seo-inject.js)",
+      "Bash(del \"C:\\\\Users\\\\Fathima Rushdha\\\\Documents\\\\dominatelaw-website\\\\seo-inject.js\")"
     ]
   }
 }

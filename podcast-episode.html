@@ -193,17 +193,89 @@ p:last-child{margin-bottom:0}
 .ep-not-found h2{color:#fff}
 .ep-not-found p{color:rgba(255,255,255,.55);margin-bottom:24px}
 
+/* ── TRANSCRIPT TABS ────────────────────────────────────── */
+.ep-tabs-wrap{max-width:860px;margin:0 auto;padding:0 40px}
+.ep-tabs-nav{display:flex;border-bottom:2px solid var(--border);margin-bottom:0;gap:4px}
+.ep-tab-btn{padding:13px 22px;font-size:.82rem;font-weight:700;color:var(--muted);background:none;border:none;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s;letter-spacing:.02em}
+.ep-tab-btn:hover{color:var(--brown)}
+.ep-tab-btn.active{color:var(--brown);border-bottom-color:var(--brown)}
+.ep-tab-panel{display:none}
+.ep-tab-panel.active{display:block}
+
+/* Show Notes tab */
+.ep-shownotes-content{padding:32px 0}
+
+/* Transcript tab */
+.ep-transcript-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:24px 0 18px;border-bottom:1px solid var(--border);margin-bottom:28px}
+.ep-transcript-header h3{font-family:'Merriweather',serif;font-size:1rem;font-weight:900;color:var(--brown3);margin:0}
+.ep-transcript-actions{display:flex;gap:10px;align-items:center}
+.ep-transcript-search{display:flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:7px 14px}
+.ep-transcript-search input{border:none;background:none;font-size:.82rem;color:var(--warm);width:160px;outline:none}
+.ep-transcript-search input::placeholder{color:var(--muted)}
+.ep-transcript-search svg{width:14px;height:14px;flex-shrink:0;opacity:.45}
+.ep-transcript-dl{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:8px;background:var(--brown);color:#fff;font-size:.78rem;font-weight:700;text-decoration:none;transition:background .2s;cursor:pointer;border:none}
+.ep-transcript-dl:hover{background:var(--brown3)}
+.ep-transcript-dl svg{width:14px;height:14px}
+
+/* Transcript body */
+.ep-transcript-body{font-size:.88rem;line-height:1.9;color:var(--warm);max-height:560px;overflow-y:auto;padding-right:6px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.ep-transcript-body::-webkit-scrollbar{width:4px}
+.ep-transcript-body::-webkit-scrollbar-track{background:transparent}
+.ep-transcript-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* Each spoken block */
+.ep-transcript-para{display:flex;flex-direction:column;gap:5px;margin-bottom:20px;padding:14px 18px 14px 16px;border-radius:10px;border-left:3px solid transparent;transition:background .15s}
+.ep-transcript-para:hover{background:var(--cream)}
+
+/* Host block — gold left border */
+.ep-ts-host{border-left-color:var(--gold)}
+.ep-ts-host:hover{background:rgba(196,154,10,.06)}
+
+/* Guest block — brown left border */
+.ep-ts-guest{border-left-color:var(--brown)}
+.ep-ts-guest:hover{background:rgba(96,39,15,.05)}
+
+/* Intro block — subtle */
+.ep-ts-intro{border-left-color:var(--border)}
+.ep-ts-intro .ep-transcript-text{color:var(--muted);font-style:italic;font-size:.82rem}
+
+/* Meta row: speaker badge + timestamp */
+.ep-ts-meta{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+
+/* Speaker badges */
+.ep-transcript-speaker{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:4px;padding:2px 9px;line-height:1.6}
+.ep-ts-host-badge{background:rgba(196,154,10,.12);color:var(--gold2);border:1px solid rgba(196,154,10,.3)}
+.ep-ts-guest-badge{background:rgba(96,39,15,.09);color:var(--brown);border:1px solid rgba(96,39,15,.2)}
+.ep-ts-intro-badge{background:var(--cream2);color:var(--muted);border:1px solid var(--border)}
+
+.ep-transcript-time{font-size:.67rem;color:var(--muted);font-weight:500;background:var(--cream2);padding:1px 7px;border-radius:3px;letter-spacing:.02em}
+.ep-transcript-text{color:var(--warm);line-height:1.85;font-size:.88rem}
+.ep-transcript-highlight{background:rgba(196,154,10,.28);border-radius:2px;padding:1px 2px}
+
+/* Expand/collapse */
+.ep-transcript-expand{display:block;width:100%;margin-top:16px;padding:11px;background:var(--cream);border:1px solid var(--border);border-radius:8px;font-size:.8rem;font-weight:700;color:var(--brown);cursor:pointer;transition:background .2s}
+.ep-transcript-expand:hover{background:var(--cream2)}
+
+/* Loading/error states */
+.ep-transcript-loading{display:flex;align-items:center;gap:12px;padding:36px 0;color:var(--muted);font-size:.85rem}
+.ep-transcript-spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--brown);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+.ep-transcript-unavailable{padding:36px 20px;text-align:center;background:var(--cream);border-radius:12px;margin-top:8px}
+.ep-transcript-unavailable p{font-size:.85rem;color:var(--muted);margin-bottom:14px}
+
 /* ── RESPONSIVE ─────────────────────────────────────────── */
 @media(max-width:700px){
   .ep-audio-player-wrap{padding:0 20px}
   .ep-content-area{padding:36px 20px}
   .ep-poster-section{padding:24px 0}
+  .ep-tabs-wrap{padding:0 20px}
+  .ep-transcript-search input{width:110px}
 }
 @media(max-width:600px){
   .container{padding:0 20px}
   .wrap{padding:0 20px}
   .section{padding:52px 0}
   .ep-prev-next{flex-direction:column}
+  .ep-tab-btn{padding:11px 14px;font-size:.78rem}
 }
   </style>
 </head>
@@ -332,25 +404,48 @@ p:last-child{margin-bottom:0}
   </div>
 </div>
 
-<!-- ═══ EPISODE CONTENT ══════════════════════════════════════════════ -->
-<div class="ep-content-area" id="ep-body" style="display:none">
+<!-- ═══ EPISODE CONTENT — TABBED ══════════════════════════════════ -->
+<div id="ep-body" style="display:none">
 
-  <!-- Key Points -->
-  <div id="ep-keypoints-wrap">
-    <h2 class="ep-content-heading">Key Points</h2>
-    <ul class="ep-content-list" id="ep-keypoints-list"></ul>
+  <!-- Tab navigation -->
+  <div class="ep-tabs-wrap" style="padding-top:36px">
+    <div class="ep-tabs-nav" role="tablist">
+      <button class="ep-tab-btn active" role="tab" data-tab="shownotes" aria-selected="true">📋 Show Notes</button>
+      <button class="ep-tab-btn" role="tab" data-tab="transcript" aria-selected="false" id="ep-tab-transcript-btn">📄 Transcript</button>
+    </div>
   </div>
 
-  <!-- More About Guest -->
-  <div id="ep-bio-wrap" style="display:none">
-    <h2 class="ep-content-heading" id="ep-bio-heading">More About Guest</h2>
-    <ul class="ep-content-list" id="ep-bio-list"></ul>
+  <!-- ── Show Notes tab ── -->
+  <div class="ep-content-area ep-tab-panel active" id="ep-tab-shownotes" role="tabpanel">
+
+    <!-- Key Points -->
+    <div id="ep-keypoints-wrap">
+      <h2 class="ep-content-heading">Key Points</h2>
+      <ul class="ep-content-list" id="ep-keypoints-list"></ul>
+    </div>
+
+    <!-- More About Guest -->
+    <div id="ep-bio-wrap" style="display:none">
+      <h2 class="ep-content-heading" id="ep-bio-heading">More About Guest</h2>
+      <ul class="ep-content-list" id="ep-bio-list"></ul>
+    </div>
+
+    <!-- Connect with Guest -->
+    <div id="ep-connect-wrap" style="display:none">
+      <h2 class="ep-content-heading">Connect with <span id="ep-connect-name"></span></h2>
+      <div class="ep-connect-grid" id="ep-connect-grid"></div>
+    </div>
+
   </div>
 
-  <!-- Connect with Guest -->
-  <div id="ep-connect-wrap" style="display:none">
-    <h2 class="ep-content-heading">Connect with <span id="ep-connect-name"></span></h2>
-    <div class="ep-connect-grid" id="ep-connect-grid"></div>
+  <!-- ── Transcript tab ── -->
+  <div class="ep-tabs-wrap ep-tab-panel" id="ep-tab-transcript" role="tabpanel">
+    <div id="ep-transcript-content">
+      <!-- Populated by sheets.js -->
+      <div class="ep-transcript-unavailable" style="margin-top:28px">
+        <p>Transcript is not available for this episode yet.</p>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -405,6 +500,19 @@ p:last-child{margin-bottom:0}
 </footer>
 
 <script>
+
+/* ── Episode tabs ── */
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.ep-tab-btn');
+  if (!btn) return;
+  const tabId = btn.dataset.tab;
+  document.querySelectorAll('.ep-tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.querySelectorAll('.ep-tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected','true');
+  const panel = document.getElementById('ep-tab-' + tabId);
+  if (panel) panel.classList.add('active');
+});
 
 /* ── Scroll progress ── */
 const progressBar = document.getElementById('progress');
