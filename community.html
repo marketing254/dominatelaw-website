@@ -109,9 +109,9 @@ input, select, textarea { font: inherit; }
 /* NAV (shared) */
 .nav{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:box-shadow .3s;}
 .nav.scrolled{box-shadow:0 4px 30px rgba(58,13,0,.1);}
-.nav-inner{height:70px;display:flex;align-items:center;gap:0;max-width:var(--max);margin:0 auto;padding:0 40px;}
+.nav-inner{height:84px;display:flex;align-items:center;gap:0;max-width:var(--max);margin:0 auto;padding:0 40px;}
 .nav-logo{margin-right:40px;flex-shrink:0;display:flex;align-items:center;gap:10px;}
-.nav-logo img{height:40px;width:auto;}
+.nav-logo img{height:72px;width:auto;}
 .nav-logo-fb{display:none;align-items:center;gap:8px;}
 .nav-logo-fb.show{display:flex;}
 .nav-mark{width:36px;height:36px;background:var(--brown);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Merriweather',serif;font-weight:900;font-size:.82rem;color:var(--gold3);}
@@ -749,7 +749,7 @@ input, select, textarea { font: inherit; }
     <div style="display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap;justify-content:space-between;padding-bottom:32px">
       <div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-          <img src="images/logo.png" alt="Dominate Law" style="height:34px" onerror="this.style.display='none'">
+          <img src="images/footer-logo.jpg" alt="Dominate Law" style="height:50px" onerror="this.style.display='none'">
           <div><strong style="display:block;font-size:.85rem;color:rgba(255,255,255,.8)">Dominate Law</strong><em style="font-size:.65rem;color:rgba(255,255,255,.3);font-style:normal">by Ekwa Marketing</em></div>
         </div>
         <div style="font-size:.78rem;color:rgba(255,255,255,.4);margin-bottom:8px">📧 <a href="mailto:info@dominatelaw.com" style="color:rgba(255,255,255,.5)">info@dominatelaw.com</a></div>
@@ -791,7 +791,7 @@ burger?.addEventListener('click',()=>openMenu(!mobMenu.classList.contains('open'
 mobCls?.addEventListener('click',()=>openMenu(false));
 mobOvl?.addEventListener('click',()=>openMenu(false));
 document.querySelectorAll('.mob-acc-trigger').forEach(btn=>{btn.addEventListener('click',()=>{const p=document.getElementById(btn.id.replace('-trig','-panel'));if(!p)return;const o=p.classList.contains('open');document.querySelectorAll('.mob-acc-panel.open').forEach(x=>x.classList.remove('open'));document.querySelectorAll('.mob-acc-trigger.open').forEach(x=>x.classList.remove('open'));if(!o){p.classList.add('open');btn.classList.add('open');}});});
-var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbxCmZIkYwqb_t3MDv91bTyfDCfnISeYznMS2jByqY4w2YySUUaXOrs_eTxgBVLOvil2/exec';
+var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbxQfP6ube4kSar5mpoNVpqZkwmHGupSDb-RsFOsb607FG24IfTd4yI_uA-y9HF06fTe/exec';
 function dlCommunitySheets(src,fn,ln,em,ro,area){try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Community Join','Source':src,'First Name':fn,'Last Name':ln,'Email':em,'Role':ro,'Practice Area':area||''})});}catch(e){}}
 document.getElementById('joinForm')?.addEventListener('submit',function(e){e.preventDefault();const fn=document.getElementById('j-fname').value.trim(),ln=document.getElementById('j-lname').value.trim(),em=document.getElementById('j-email').value.trim(),ro=document.getElementById('j-role').value,area=document.getElementById('j-area')?.value||'';if(!fn||!ln||!em||!ro){alert('Please fill in all required fields.');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}dlCommunitySheets('Main Form',fn,ln,em,ro,area);this.style.display='none';document.getElementById('joinSuccess').style.display='block';});
 document.getElementById('heroJoinForm')?.addEventListener('submit',function(e){e.preventDefault();const fn=document.getElementById('hj-fname').value.trim(),ln=document.getElementById('hj-lname').value.trim(),em=document.getElementById('hj-email').value.trim(),ro=document.getElementById('hj-role').value,area=document.getElementById('hj-area')?.value||'';if(!fn||!ln||!em||!ro){alert('Please fill in all required fields.');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}dlCommunitySheets('Hero Form',fn,ln,em,ro,area);this.style.display='none';document.getElementById('heroJoinSuccess').style.display='flex';document.getElementById('heroJoinSuccess').style.flexDirection='column';document.getElementById('heroJoinSuccess').style.alignItems='center';document.getElementById('heroJoinSuccess').style.gap='8px';document.getElementById('heroJoinSuccess').style.textAlign='center';});

@@ -27,9 +27,10 @@ ul,ol{padding-left:1.4em}
 .site-nav{position:sticky;top:0;z-index:800;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0}
 .nav-inner{display:flex;align-items:center;gap:12px;height:62px;max-width:1200px;margin:0 auto;padding:0 28px}
 .nav-logo{display:flex;align-items:center;gap:10px;margin-right:auto;flex-shrink:0;text-decoration:none}
-.nav-logo-mark{width:34px;height:34px;background:var(--brown);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.82rem;color:var(--gold3);flex-shrink:0}
-.nav-logo-text strong{display:block;font-size:.85rem;color:var(--warm);font-weight:700}
-.nav-logo-text em{font-size:.64rem;color:var(--muted);font-style:normal}
+.nav-logo img{height:56px;width:auto;display:block}
+.nav-logo-mark{width:34px;height:34px;background:var(--brown);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.82rem;color:var(--gold3);flex-shrink:0;display:none}
+.nav-logo-text strong{display:block;font-size:.85rem;color:var(--warm);font-weight:700;display:none}
+.nav-logo-text em{font-size:.64rem;color:var(--muted);font-style:normal;display:none}
 .nav-links{display:flex;align-items:center;gap:4px}
 .nav-links a{padding:6px 10px;border-radius:5px;font-size:.78rem;font-weight:500;color:var(--muted);transition:all .2s}
 .nav-links a:hover,.nav-links a.active{color:var(--brown);background:var(--cream)}
@@ -114,3 +115,10 @@ ul,ol{padding-left:1.4em}
   .footer-bottom{flex-direction:column;align-items:flex-start}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ── ANNOUNCE BAR ── */
+.announce{background:var(--brown3);text-align:center;padding:10px 16px;font-size:.76rem;color:rgba(255,255,255,.75);display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.announce strong{color:var(--gold3)}
+.announce a{color:var(--gold3);text-decoration:underline;font-weight:700}
+.a-pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold3);margin-right:4px;animation:ann-pulse 2s ease-in-out infinite;vertical-align:middle;flex-shrink:0}
+@keyframes ann-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}

@@ -49,7 +49,13 @@
       "Bash(rm tools-rebuild.html)",
       "mcp__Claude_Preview__preview_start",
       "Bash(node seo-inject.js)",
-      "Bash(del \"C:\\\\Users\\\\Fathima Rushdha\\\\Documents\\\\dominatelaw-website\\\\seo-inject.js\")"
+      "Bash(del \"C:\\\\Users\\\\Fathima Rushdha\\\\Documents\\\\dominatelaw-website\\\\seo-inject.js\")",
+      "Bash(OLD=\"AKfycbxCmZIkYwqb_t3MDv91bTyfDCfnISeYznMS2jByqY4w2YySUUaXOrs_eTxgBVLOvil2\")",
+      "Bash(NEW=\"AKfycbzANb2SXjYUeLl4ZYY4GmORwrKr5jmpwHqgm3dJnmDHvCdzB91vOeGWCkLICQQUS3EF\")",
+      "Bash(grep -rl \"$OLD\" --include=\"*.html\" --include=\"*.js\" .)",
+      "Bash(xargs sed:*)",
+      "Bash(sed -i \"s|images/logo\\\\.png\"\" alt=\"\"Dominate Law\"\" style=\"\"height:34px\"\"|images/footer-logo.jpg\"\" alt=\"\"Dominate Law\"\" style=\"\"height:50px\"\"|g\" \"$f\")",
+      "Bash(sed -i \"s|images/logo\\\\.png\"\" alt=\"\"Dominate Law\"\" style=\"\"height:36px;width:auto\"\"|images/footer-logo.jpg\"\" alt=\"\"Dominate Law\"\" style=\"\"height:50px;width:auto\"\"|g\" \"$f\")"
     ]
   }
 }

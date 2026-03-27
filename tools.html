@@ -167,7 +167,7 @@ input, select, textarea { font: inherit; }
 .nav.scrolled { box-shadow: 0 4px 30px rgba(58,13,0,.1); }
 .nav-inner { height: 74px; display: flex; align-items: center; max-width: var(--max); margin: 0 auto; padding: 0 40px; }
 .nav-logo { margin-right: 40px; flex-shrink: 0; display: flex; align-items: center; gap: 10px; }
-.nav-logo img { height: 40px; width: auto; }
+.nav-logo img { height: 72px; width: auto; }
 .nav-logo-fb { display: none; align-items: center; gap: 10px; }
 .nav-logo-fb.show { display: flex; }
 .nav-mark { width: 40px; height: 40px; background: var(--brown); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Merriweather', serif; font-weight: 900; font-size: .9rem; color: var(--gold3); }
@@ -1274,7 +1274,7 @@ input, select, textarea { font: inherit; }
   <div class="wrap">
     <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;padding-bottom:32px">
       <div style="display:flex;align-items:center;gap:10px">
-        <img src="images/logo.png" alt="Dominate Law" style="height:34px" onerror="this.style.display='none';document.getElementById('f-fb-sub').style.display='flex'">
+        <img src="images/footer-logo.jpg" alt="Dominate Law" style="height:50px" onerror="this.style.display='none';document.getElementById('f-fb-sub').style.display='flex'">
         <div id="f-fb-sub" style="display:none;align-items:center;gap:8px">
           <div class="nav-mark">DL</div>
           <div><strong style="display:block;font-size:.85rem;color:rgba(255,255,255,.8)">Dominate Law</strong><em style="font-size:.65rem;color:rgba(255,255,255,.3);font-style:normal">by Ekwa Marketing</em></div>
@@ -1407,7 +1407,7 @@ function dlGateSubmit() {
 
   if (!ok) return;
 
-  var DL_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxCmZIkYwqb_t3MDv91bTyfDCfnISeYznMS2jByqY4w2YySUUaXOrs_eTxgBVLOvil2/exec';
+  var DL_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxQfP6ube4kSar5mpoNVpqZkwmHGupSDb-RsFOsb607FG24IfTd4yI_uA-y9HF06fTe/exec';
   dlSaveSubmission({ firstName: firstName, lastName: lastName, email: email, role: role, ts: Date.now() });
   try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Legal Tools Gate','First Name':firstName,'Last Name':lastName,'Email':email,'Role':role})});}catch(ex){}
   dlDismissGate();

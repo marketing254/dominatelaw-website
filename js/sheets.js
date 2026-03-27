@@ -17,7 +17,7 @@
 // ─────────────────────────────────────────────────────────────────
 
 const DL_SHEET_ID        = '1xf9FygiOjqYrfaTeG2j0SW3RjqGPv2SX-6eJBI_6VUA';
-const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxCmZIkYwqb_t3MDv91bTyfDCfnISeYznMS2jByqY4w2YySUUaXOrs_eTxgBVLOvil2/exec';
+const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxQfP6ube4kSar5mpoNVpqZkwmHGupSDb-RsFOsb607FG24IfTd4yI_uA-y9HF06fTe/exec';
 
 // ── Fetch & parse a sheet tab ─────────────────────────────────────
 async function dlFetchSheet(sheetName) {

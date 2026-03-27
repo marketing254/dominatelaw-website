@@ -124,7 +124,7 @@ input,select,textarea{font:inherit}
 .nav{position:sticky;top:0;z-index:800;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
 .nav-inner{display:flex;align-items:center;gap:16px;height:64px;max-width:var(--max);margin:0 auto;padding:0 40px}
 .nav-logo{display:flex;align-items:center;gap:10px;margin-right:40px;flex-shrink:0}
-.nav-logo img{height:36px;width:auto}
+.nav-logo img{height:72px;width:auto}
 .nav-logo-fb{display:none;align-items:center;gap:8px}
 .nav-logo-fb.show{display:flex}
 .nav-mark{width:36px;height:36px;background:var(--brown);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Merriweather',serif;font-weight:900;font-size:.85rem;color:var(--gold3);flex-shrink:0}
@@ -484,7 +484,7 @@ p:last-child{margin-bottom:0}
   </div>
 </div>
 <script>
-var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbxCmZIkYwqb_t3MDv91bTyfDCfnISeYznMS2jByqY4w2YySUUaXOrs_eTxgBVLOvil2/exec';
+var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbxQfP6ube4kSar5mpoNVpqZkwmHGupSDb-RsFOsb607FG24IfTd4yI_uA-y9HF06fTe/exec';
 var RES_KEY='dl_res_gate_v2';
 function resSubmitted(){try{if(localStorage.getItem(RES_KEY))return true;}catch(e){}return document.cookie.indexOf(RES_KEY+'=1')>-1;}
 function resSave(d){try{localStorage.setItem(RES_KEY,JSON.stringify(d));}catch(e){}try{document.cookie=RES_KEY+'=1;max-age=31536000;path=/'}catch(e){}}
@@ -792,7 +792,7 @@ window.dlResGateSubmit=function(){
   <div class="wrap">
     <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;padding-bottom:32px">
       <div style="display:flex;align-items:center;gap:10px">
-        <img src="images/logo.png" alt="Dominate Law" style="height:34px" onerror="this.style.display='none';document.getElementById('f-fb-sub').style.display='flex'">
+        <img src="images/footer-logo.jpg" alt="Dominate Law" style="height:50px" onerror="this.style.display='none';document.getElementById('f-fb-sub').style.display='flex'">
         <div id="f-fb-sub" style="display:none;align-items:center;gap:8px">
           <div class="nav-mark">DL</div>
           <div><strong style="display:block;font-size:.85rem;color:rgba(255,255,255,.8)">Dominate Law</strong><em style="font-size:.65rem;color:rgba(255,255,255,.3);font-style:normal">by Ekwa Marketing</em></div>
@@ -827,14 +827,49 @@ window.dlResGateSubmit=function(){
   </div>
 </footer>
 <script>
-/* Lead magnet form */
-function handleLeadForm(e) {
+/* Lead magnet form — submits to Apps Script, emails PDF to user */
+async function handleLeadForm(e) {
   e.preventDefault();
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.textContent = '✓ Request Received! Redirecting…';
+  const form  = e.target;
+  const btn   = form.querySelector('button[type="submit"]');
+  const name  = (document.getElementById('r-name')?.value || '').trim();
+  const email = (document.getElementById('r-email')?.value || '').trim();
+  const firm  = (document.getElementById('r-firm')?.value || '').trim();
+
+  btn.textContent = 'Sending your guide…';
   btn.disabled = true;
-  btn.style.background = 'var(--gold2)';
-  setTimeout(() => { window.location.href = 'msm.html'; }, 1400);
+
+  try {
+    await fetch('https://script.google.com/macros/s/AKfycbxQfP6ube4kSar5mpoNVpqZkwmHGupSDb-RsFOsb607FG24IfTd4yI_uA-y9HF06fTe/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        tab: 'Free Downloads Gate',
+        'First Name': name.split(' ')[0],
+        'Last Name':  name.split(' ').slice(1).join(' '),
+        'Email':      email,
+        'Firm Name':  firm,
+        'Role':       '',
+        sendGuide:    true
+      })
+    });
+  } catch (_) {}
+
+  // Show success in-place — no redirect
+  form.innerHTML = `
+    <div style="text-align:center;padding:16px 0">
+      <div style="width:52px;height:52px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 style="font-size:1.15rem;margin:0 0 8px;color:var(--brown)">Your guide is on its way!</h3>
+      <p style="font-size:.88rem;color:var(--muted);margin:0 0 18px;line-height:1.6">
+        Check your inbox at <strong>${email}</strong> — we've sent you the<br>
+        <em>Law Firm Growth Blueprint 2026</em> directly.
+      </p>
+      <p style="font-size:.78rem;color:var(--muted);margin:0">Didn't get it? Check your spam folder or <a href="contact.html" style="color:var(--brown)">contact us</a>.</p>
+    </div>
+  `;
 }
 
 /* Desktop dropdowns */
