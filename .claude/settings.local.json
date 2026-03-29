@@ -55,7 +55,8 @@
       "Bash(grep -rl \"$OLD\" --include=\"*.html\" --include=\"*.js\" .)",
       "Bash(xargs sed:*)",
       "Bash(sed -i \"s|images/logo\\\\.png\"\" alt=\"\"Dominate Law\"\" style=\"\"height:34px\"\"|images/footer-logo.jpg\"\" alt=\"\"Dominate Law\"\" style=\"\"height:50px\"\"|g\" \"$f\")",
-      "Bash(sed -i \"s|images/logo\\\\.png\"\" alt=\"\"Dominate Law\"\" style=\"\"height:36px;width:auto\"\"|images/footer-logo.jpg\"\" alt=\"\"Dominate Law\"\" style=\"\"height:50px;width:auto\"\"|g\" \"$f\")"
+      "Bash(sed -i \"s|images/logo\\\\.png\"\" alt=\"\"Dominate Law\"\" style=\"\"height:36px;width:auto\"\"|images/footer-logo.jpg\"\" alt=\"\"Dominate Law\"\" style=\"\"height:50px;width:auto\"\"|g\" \"$f\")",
+      "Bash(grep -E \"\\\\.\\(html|xml|txt\\)$\")"
     ]
   }
 }

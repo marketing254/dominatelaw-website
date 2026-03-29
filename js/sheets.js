@@ -16,8 +16,8 @@
 //  The Sheet must be shared: File → Share → Publish to web → Entire document → Web page → Publish
 // ─────────────────────────────────────────────────────────────────
 
-const DL_SHEET_ID        = '1xf9FygiOjqYrfaTeG2j0SW3RjqGPv2SX-6eJBI_6VUA';
-const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxQfP6ube4kSar5mpoNVpqZkwmHGupSDb-RsFOsb607FG24IfTd4yI_uA-y9HF06fTe/exec';
+const DL_SHEET_ID        = '1Kqtgrii6peL3DxEp7PO45zSYd3sSeTN-e1tHmkFdLpg';
+const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzL4GgFhxwak6VgGT5ibtvSmHirCFnppKKE7apK2PIZDpPc9z8YZjvEID0Qs6tx81Jw/exec';
 
 // ── Fetch & parse a sheet tab ─────────────────────────────────────
 async function dlFetchSheet(sheetName) {
