@@ -17,7 +17,7 @@
 // ─────────────────────────────────────────────────────────────────
 
 const DL_SHEET_ID        = '1Kqtgrii6peL3DxEp7PO45zSYd3sSeTN-e1tHmkFdLpg';
-const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzL4GgFhxwak6VgGT5ibtvSmHirCFnppKKE7apK2PIZDpPc9z8YZjvEID0Qs6tx81Jw/exec';
+const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrTFhuGlUR1grxKM7iHCq4tuGK11CT0_7-yDjEKB7xukWGmP4QNGVOd0_7rMLb0zsJ/exec';
 
 // ── Fetch & parse a sheet tab ─────────────────────────────────────
 async function dlFetchSheet(sheetName) {
@@ -793,35 +793,140 @@ function dlInitRvCarousel() {
   startAuto();
 }
 
-// ── EVENTS PAGE: Render all events ───────────────────────────────
+// ── EVENTS PAGE: Featured next event + upcoming list ─────────────
 async function dlLoadEventsGrid() {
-  const grid = document.getElementById('events-grid');
-  if (!grid) return;
+  const featEl     = document.getElementById('ev-featured');
+  const upWrap     = document.getElementById('ev-upcoming-wrap');
+  const upList     = document.getElementById('ev-upcoming-list');
+  if (!featEl) return;
+
   try {
     const events = await dlFetchSheet('events');
-    if (!events.length) { grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted)">No events found.</p>'; return; }
+    if (!events.length) { featEl.innerHTML = '<p style="text-align:center;color:var(--muted);padding:48px">No events scheduled yet.</p>'; return; }
 
-    const today = new Date(); today.setHours(0, 0, 0, 0);
-    grid.innerHTML = events.map(ev => {
-      const isPast = dlParseDate(ev.date_iso) < today;
-      const btnHtml = isPast
-        ? `<span class="btn btn-primary btn-sm mt-16 btn-closed">Registration Closed</span>`
-        : `<a href="${ev.register_url || 'contact.html'}" class="btn btn-primary btn-sm mt-16 event-register-btn" style="display:inline-flex;">Register Free →</a>`;
+    const today = new Date(); today.setHours(0,0,0,0);
+    const upcoming = events.filter(ev => dlParseDate(ev.date_iso) >= today);
+    const past     = events.filter(ev => dlParseDate(ev.date_iso) < today);
+
+    // ── Pick featured = soonest upcoming, fallback to most recent past
+    const featured = upcoming.length ? upcoming[0] : past[past.length - 1];
+    const rest     = upcoming.slice(1); // remaining upcoming after featured
+    const isPast   = dlParseDate(featured.date_iso) < today;
+
+    // Parse panelists + image_urls
+    const panelists = (featured.Panelists || '').split('\n').map(s => s.trim()).filter(Boolean);
+    const imageMap  = {};
+    (featured.image_urls || '').split('\n').forEach(line => {
+      const ci = line.indexOf(':');
+      if (ci > -1) {
+        const name = line.substring(0, ci).trim();
+        const url  = line.substring(ci + 1).trim();
+        imageMap[name] = url;
+      }
+    });
+
+    // Build speaker cards
+    const speakersHtml = panelists.map(name => {
+      const imgUrl = Object.keys(imageMap).find(k => name.toLowerCase().includes(k.toLowerCase().split(' ')[0]));
+      const src    = imgUrl ? dlDriveImg(imageMap[imgUrl]) : '';
+      const ini    = dlInitials(name);
       return `
-        <article class="event-card${isPast ? ' past' : ''}" data-event-date="${ev.date_iso}">
-          <div class="event-card-header">
-            <div class="event-date"><div class="event-date-day">${ev.day}</div><div class="event-date-month">${ev.month_year}</div></div>
-            <span class="event-badge event-status-badge" style="${isPast ? 'background:rgba(255,255,255,.1);color:rgba(255,255,255,.4)' : 'background:var(--gold);color:#fff'}">${isPast ? 'Concluded' : 'Upcoming'}</span>
+        <div class="ev-speaker">
+          <div class="ev-speaker-img">
+            ${src ? `<img src="${src}" alt="${name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span style="display:none;width:100%;height:100%;align-items:center;justify-content:center">${ini}</span>` : `<span>${ini}</span>`}
           </div>
-          <div class="event-card-body">
-            <h3>${ev.title}</h3>
-            <p>${ev.description}</p>
-            ${btnHtml}
-          </div>
-        </article>`;
+          <div class="ev-speaker-name">${name}</div>
+        </div>`;
     }).join('');
+
+    // Build agenda items
+    const agendaLines = (featured.description || '').split('\n').map(s => s.trim().replace(/^\d+\.\s*/,'')).filter(Boolean).slice(0,5);
+    const agendaHtml  = agendaLines.map(l => `<div class="ev-agenda-item"><div class="ev-agenda-dot"></div><span>${l}</span></div>`).join('');
+
+    // Render featured
+    featEl.innerHTML = `
+      <div class="ev-hero">
+        <div class="ev-hero-inner">
+          <div class="ev-hero-content">
+            <div class="ev-live-badge"><div class="ev-live-dot"></div>${isPast ? 'Past Event' : 'Next Event'}</div>
+            <h2>${featured.title}</h2>
+            <div class="ev-meta-row">
+              <div class="ev-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                ${featured.day} ${featured.month_year}
+              </div>
+              <div class="ev-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                12:00 PM ET · 60 min
+              </div>
+              <div class="ev-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.82v6.36a1 1 0 0 1-1.447.89L15 14M3 8a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>
+                Virtual · Free
+              </div>
+            </div>
+            <div class="ev-agenda">
+              <div class="ev-agenda-lbl">What We'll Cover</div>
+              ${agendaHtml}
+            </div>
+            ${isPast
+              ? `<span class="ev-reg-btn" style="opacity:.55;cursor:default">Registration Closed</span>`
+              : `<button class="ev-reg-btn" onclick="dlOpenEventModal(${JSON.stringify(featured).replace(/"/g,'&quot;')})">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  Register Free — Save My Spot
+                </button>`
+            }
+          </div>
+          <div class="ev-sidebar">
+            <div class="ev-date-big">
+              <div class="ev-day">${featured.day}</div>
+              <div class="ev-mo">${featured.month_year}</div>
+            </div>
+            ${!isPast ? `
+            <div>
+              <div class="ev-cd-label">Event Starts In</div>
+              <div class="ev-countdown">
+                <div class="ev-cd-block"><div class="ev-cd-num" id="ev-cd-days">--</div><div class="ev-cd-lbl">Days</div></div>
+                <div class="ev-cd-block"><div class="ev-cd-num" id="ev-cd-hrs">--</div><div class="ev-cd-lbl">Hrs</div></div>
+                <div class="ev-cd-block"><div class="ev-cd-num" id="ev-cd-min">--</div><div class="ev-cd-lbl">Min</div></div>
+                <div class="ev-cd-block"><div class="ev-cd-num" id="ev-cd-sec">--</div><div class="ev-cd-lbl">Sec</div></div>
+              </div>
+            </div>` : ''}
+            ${panelists.length ? `
+            <div>
+              <div class="ev-speakers-lbl">Panelists</div>
+              ${speakersHtml}
+            </div>` : ''}
+          </div>
+        </div>
+      </div>`;
+
+    // Start countdown if upcoming
+    if (!isPast) {
+      const target = dlParseDate(featured.date_iso);
+      target.setHours(12, 0, 0, 0); // noon ET
+      if (typeof dlStartCountdown === 'function') dlStartCountdown(target);
+    }
+
+    // Render upcoming list
+    if (rest.length && upWrap && upList) {
+      upList.innerHTML = rest.map(ev => `
+        <div class="ev-upcoming-card">
+          <div class="ev-upcoming-badge">
+            <div class="ev-upcoming-day">${ev.day}</div>
+            <div class="ev-upcoming-mo">${(ev.month_year||'').split(' ')[0]}</div>
+          </div>
+          <div class="ev-upcoming-info">
+            <h4>${ev.title}</h4>
+            <p>${(ev.Panelists||'').split('\n').map(s=>s.trim()).filter(Boolean).join(' · ') || 'Panelists TBA'}</p>
+          </div>
+          <button class="btn btn-primary btn-sm" style="flex-shrink:0" onclick="dlOpenEventModal(${JSON.stringify(ev).replace(/"/g,'&quot;')})">Register →</button>
+        </div>`).join('');
+      upWrap.style.display = '';
+    }
+
   } catch (e) {
-    console.warn('DL Sheets: Could not load events grid', e);
+    console.warn('DL Sheets: Could not load events', e);
+    if (featEl) featEl.innerHTML = '<p style="text-align:center;color:var(--muted);padding:48px">Could not load event. Please try again.</p>';
   }
 }
 

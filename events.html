@@ -235,21 +235,84 @@ p:last-child{margin-bottom:0}
 .card:hover{box-shadow:0 12px 40px rgba(58,13,0,.1);transform:translateY(-4px)}
 .card-icon{font-size:1.8rem;margin-bottom:16px}
 
-/* ── EVENT CARDS ────────────────────────────────────────── */
-.event-card{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .25s,transform .25s}
-.event-card:hover{box-shadow:0 12px 40px rgba(58,13,0,.1);transform:translateY(-4px)}
-.event-card-header{background:var(--brown3);padding:20px 24px;display:flex;align-items:center;justify-content:space-between}
-.event-date{display:flex;flex-direction:column;align-items:flex-start}
-.event-date-day{font-family:'Merriweather',serif;font-size:2rem;font-weight:900;color:#fff;line-height:1}
-.event-date-month{font-size:.72rem;font-weight:700;color:var(--gold3);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
-.event-badge{padding:5px 12px;border-radius:100px;background:var(--gold);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.event-card-body{padding:24px}
-.event-card-body h3{font-size:1.05rem;margin-bottom:12px}
-.event-details{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
-.event-detail{display:flex;align-items:center;gap:5px;font-size:.77rem;color:var(--muted)}
-.event-card.past .event-card-header{background:var(--muted);opacity:.85}
-.event-card.past .event-status-badge{background:rgba(255,255,255,.12);color:rgba(255,255,255,.45)}
+/* ── FEATURED EVENT ─────────────────────────────────────── */
+.ev-wrap{max-width:1100px;margin:0 auto}
+.ev-hero{background:linear-gradient(135deg,var(--brown3) 0%,#1d0600 100%);border-radius:24px;overflow:hidden;position:relative;margin-bottom:48px}
+.ev-hero-inner{display:grid;grid-template-columns:1fr 340px}
+.ev-hero-content{padding:52px 48px 48px;position:relative;z-index:2}
+.ev-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1400&q=40') center/cover;opacity:.05;pointer-events:none}
+.ev-live-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,196,74,.12);border:1px solid rgba(232,196,74,.28);border-radius:100px;padding:6px 16px;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold3);margin-bottom:22px}
+.ev-live-dot{width:7px;height:7px;border-radius:50%;background:var(--gold3);animation:ann-pulse 2s ease-in-out infinite;flex-shrink:0}
+.ev-hero h2{font-family:'Merriweather',serif;font-size:clamp(1.35rem,2.8vw,2.05rem);font-weight:900;color:#fff;line-height:1.28;margin:0 0 18px;max-width:540px}
+.ev-meta-row{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:30px}
+.ev-meta-item{display:flex;align-items:center;gap:7px;font-size:.8rem;color:rgba(255,255,255,.6)}
+.ev-meta-item svg{width:14px;height:14px;opacity:.7;flex-shrink:0}
+.ev-agenda{margin-bottom:36px}
+.ev-agenda-lbl{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:12px}
+.ev-agenda-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:9px;font-size:.83rem;color:rgba(255,255,255,.78);line-height:1.5}
+.ev-agenda-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px}
+.ev-reg-btn{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#1a0800;padding:15px 32px;border-radius:8px;font-weight:800;font-size:.92rem;border:none;cursor:pointer;transition:all .25s;letter-spacing:.01em}
+.ev-reg-btn:hover{background:#d4a80c;transform:translateY(-2px);box-shadow:0 14px 36px rgba(196,154,10,.38)}
+.ev-sidebar{background:rgba(0,0,0,.28);padding:36px 28px;display:flex;flex-direction:column;gap:28px;border-left:1px solid rgba(255,255,255,.06)}
+.ev-date-big{text-align:center;padding-bottom:22px;border-bottom:1px solid rgba(255,255,255,.08)}
+.ev-date-big .ev-day{font-family:'Merriweather',serif;font-size:4.5rem;font-weight:900;color:#fff;line-height:1}
+.ev-date-big .ev-mo{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold3);margin-top:4px}
+.ev-cd-label{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:12px}
+.ev-countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.ev-cd-block{background:rgba(255,255,255,.07);border-radius:10px;padding:10px 4px;text-align:center}
+.ev-cd-num{font-family:'Merriweather',serif;font-size:1.35rem;font-weight:900;color:#fff;line-height:1}
+.ev-cd-lbl{font-size:.55rem;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+.ev-speakers-lbl{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:14px}
+.ev-speaker{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ev-speaker:last-child{margin-bottom:0}
+.ev-speaker-img{width:72px;height:72px;border-radius:50%;border:2px solid rgba(255,255,255,.25);overflow:hidden;flex-shrink:0;background:var(--brown2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;color:#fff}
+.ev-speaker-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ev-speaker-name{font-size:.88rem;font-weight:700;color:#fff;line-height:1.3}
+/* upcoming list */
+.ev-upcoming-title{font-family:'Merriweather',serif;font-size:1.25rem;font-weight:900;color:var(--brown3);margin-bottom:20px}
+.ev-upcoming-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 22px;display:flex;align-items:center;gap:18px;margin-bottom:12px;transition:box-shadow .2s}
+.ev-upcoming-card:last-child{margin-bottom:0}
+.ev-upcoming-card:hover{box-shadow:0 6px 24px rgba(58,13,0,.08)}
+.ev-upcoming-badge{width:54px;height:54px;border-radius:10px;background:var(--cream2);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.ev-upcoming-day{font-family:'Merriweather',serif;font-size:1.25rem;font-weight:900;color:var(--brown);line-height:1}
+.ev-upcoming-mo{font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.ev-upcoming-info{flex:1;min-width:0}
+.ev-upcoming-info h4{font-size:.88rem;font-weight:700;color:var(--warm);margin:0 0 4px;line-height:1.35}
+.ev-upcoming-info p{font-size:.76rem;color:var(--muted);margin:0}
+/* ── REGISTRATION MODAL ─────────────────────────────────── */
+.ev-modal-bg{position:fixed;inset:0;background:rgba(8,2,0,.72);z-index:2000;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(5px)}
+.ev-modal-bg.open{opacity:1;pointer-events:auto}
+.ev-modal{background:#fff;border-radius:20px;width:100%;max-width:600px;max-height:94dvh;overflow-y:auto;box-shadow:0 40px 100px rgba(0,0,0,.4);position:relative;animation:ev-slide-in .3s var(--ease)}
+@keyframes ev-slide-in{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+.ev-modal-head{background:linear-gradient(135deg,var(--brown3),#5a2510);padding:26px 32px 22px;border-radius:20px 20px 0 0;position:sticky;top:0;z-index:2}
+.ev-modal-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;border:none}
+.ev-modal-close:hover{background:rgba(255,255,255,.2);color:#fff}
+.ev-modal-head h3{font-family:'Merriweather',serif;font-size:1rem;font-weight:900;color:#fff;margin:0 24px 4px 0}
+.ev-modal-head p{font-size:.75rem;color:rgba(255,255,255,.55);margin:0}
+.ev-modal-body{padding:26px 32px 32px}
+.ev-frow{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
+.ev-fg{margin-bottom:13px}
+.ev-fg label{display:block;font-size:.76rem;font-weight:600;color:var(--warm);margin-bottom:5px}
+.ev-fg label em{color:var(--brown);font-style:normal}
+.ev-fg input,.ev-fg select,.ev-fg textarea{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:.875rem;color:var(--warm);outline:none;transition:border-color .2s,box-shadow .2s;background:#fff}
+.ev-fg input:focus,.ev-fg select:focus,.ev-fg textarea:focus{border-color:var(--brown);box-shadow:0 0 0 3px rgba(96,39,15,.07)}
+.ev-fg textarea{min-height:76px;resize:vertical}
+.ev-yn{display:flex;gap:10px}
+.ev-yn-opt{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:10px;cursor:pointer;font-size:.84rem;font-weight:600;color:var(--muted);text-align:center;transition:all .18s;user-select:none}
+.ev-yn-opt.sel{border-color:var(--brown);background:rgba(96,39,15,.06);color:var(--brown)}
+.ev-divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--muted);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.ev-divider::before,.ev-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.ev-submit{width:100%;padding:14px;background:var(--brown);color:#fff;border:none;border-radius:8px;font-weight:800;font-size:.92rem;cursor:pointer;transition:all .25s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:10px}
+.ev-submit:hover:not(:disabled){background:var(--brown3);box-shadow:0 8px 24px rgba(58,13,0,.25)}
+.ev-submit:disabled{opacity:.55;cursor:not-allowed}
+.ev-success{text-align:center;padding:16px 0}
+.ev-success-icon{font-size:3.2rem;margin-bottom:14px}
+.ev-success h3{font-family:'Merriweather',serif;font-size:1.25rem;color:var(--brown3);margin-bottom:8px}
+.ev-success p{font-size:.87rem;color:var(--muted);line-height:1.72}
+/* old card styles kept for fallback */
 .btn-closed{background:var(--border)!important;color:var(--muted)!important;border-color:var(--border)!important;cursor:not-allowed!important;transform:none!important;box-shadow:none!important;pointer-events:none;opacity:.7}
+@media(max-width:900px){.ev-hero-inner{grid-template-columns:1fr}.ev-sidebar{border-left:none;border-top:1px solid rgba(255,255,255,.07);padding:26px}.ev-hero-content{padding:36px 24px 28px}.ev-countdown{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.ev-frow{grid-template-columns:1fr}.ev-modal-body{padding:20px 20px 28px}.ev-countdown{grid-template-columns:repeat(2,1fr)}}
 
 /* ── CTA SECTION ────────────────────────────────────────── */
 .cta-section{background:var(--brown3);padding:80px 0;text-align:center;position:relative;overflow:hidden}
@@ -495,17 +558,72 @@ p:last-child{margin-bottom:0}
   </div>
 </section>
 
-<section class="section" aria-labelledby="events-heading">
-  <div class="container">
-    <div class="section-intro">
-      <span class="label">2026 Event Calendar</span>
-      <h2 id="events-heading">Upcoming Events for Law Firm Owners</h2>
-      <p>All events are free to attend. Recordings are available to all registered attendees. Register early — seats are limited.</p>
+<section class="section" aria-labelledby="events-heading" style="padding-top:56px">
+  <div class="container ev-wrap">
+    <!-- Featured next event — rendered by JS -->
+    <div id="ev-featured">
+      <div style="text-align:center;padding:64px 0;color:var(--muted)">Loading event…</div>
     </div>
-    <div class="grid-2" id="events-grid">
-      <div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--muted)">Loading events…</div>
+    <!-- Upcoming list — rendered by JS -->
+    <div id="ev-upcoming-wrap" style="display:none">
+      <p class="ev-upcoming-title">More Upcoming Events</p>
+      <div id="ev-upcoming-list"></div>
     </div>
+  </div>
 </section>
+
+<!-- Registration Modal -->
+<div class="ev-modal-bg" id="ev-modal-bg" role="dialog" aria-modal="true" aria-labelledby="ev-modal-title">
+  <div class="ev-modal" id="ev-modal">
+    <div class="ev-modal-head">
+      <button class="ev-modal-close" id="ev-modal-close" aria-label="Close">✕</button>
+      <h3 id="ev-modal-title">Reserve Your Spot</h3>
+      <p id="ev-modal-subtitle">Free virtual event — seats are limited</p>
+    </div>
+    <div class="ev-modal-body">
+      <div id="ev-form-wrap">
+        <div class="ev-frow">
+          <div class="ev-fg"><label for="evFname">First Name <em>*</em></label><input id="evFname" type="text" placeholder="Alex" required></div>
+          <div class="ev-fg"><label for="evLname">Last Name <em>*</em></label><input id="evLname" type="text" placeholder="Thompson" required></div>
+        </div>
+        <div class="ev-fg"><label for="evEmail">Email Address <em>*</em></label><input id="evEmail" type="email" placeholder="alex@yourfirm.com" required></div>
+        <div class="ev-frow">
+          <div class="ev-fg"><label for="evPhone">Phone <em>*</em></label><input id="evPhone" type="tel" placeholder="+1 (555) 000-0000" required></div>
+          <div class="ev-fg"><label for="evTitle">Job Title <em>*</em></label><input id="evTitle" type="text" placeholder="Managing Partner" required></div>
+        </div>
+        <div class="ev-fg"><label for="evFirm">Practice Name <em>*</em></label><input id="evFirm" type="text" placeholder="Your Law Firm, LLP" required></div>
+        <div class="ev-divider">Additional Info</div>
+        <div class="ev-fg">
+          <label>Would you like a text reminder? <em>*</em></label>
+          <div class="ev-yn">
+            <div class="ev-yn-opt" data-field="evReminder" data-val="Yes">Yes</div>
+            <div class="ev-yn-opt" data-field="evReminder" data-val="No">No</div>
+          </div>
+          <input type="hidden" id="evReminder">
+        </div>
+        <div class="ev-fg">
+          <label>Are you an owner of the practice? <em>*</em></label>
+          <div class="ev-yn">
+            <div class="ev-yn-opt" data-field="evOwner" data-val="Yes">Yes</div>
+            <div class="ev-yn-opt" data-field="evOwner" data-val="No">No</div>
+          </div>
+          <input type="hidden" id="evOwner">
+        </div>
+        <div class="ev-fg"><label for="evQuestion">What question would you like the panel to address? <em>*</em></label><textarea id="evQuestion" placeholder="Share your question for the panelists…" required></textarea></div>
+        <button class="ev-submit" id="ev-submit-btn" onclick="dlSubmitEventReg()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Reserve My Spot — It's Free
+        </button>
+        <p style="text-align:center;font-size:.72rem;color:var(--muted);margin-top:12px">No credit card required. You'll receive a Zoom confirmation email.</p>
+      </div>
+      <div class="ev-success" id="ev-success" style="display:none">
+        <div class="ev-success-icon">🎉</div>
+        <h3>You're Registered!</h3>
+        <p>Check your inbox for a Zoom confirmation email.<br>We'll also send you a reminder before the event.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <section class="section section-light" aria-labelledby="why-events-heading">
   <div class="container">
@@ -664,5 +782,113 @@ if (progressBar) {
 }
 </script>
 <script src="js/sheets.js"></script>
+<script>
+// ── Modal open/close ──────────────────────────────────────────────
+const evModalBg = document.getElementById('ev-modal-bg');
+const evModal   = document.getElementById('ev-modal');
+let _evCurrent  = {};
+
+function dlOpenEventModal(ev) {
+  _evCurrent = ev;
+  document.getElementById('ev-modal-title').textContent = 'Reserve Your Spot';
+  document.getElementById('ev-modal-subtitle').textContent = ev.title || 'Free virtual event — seats are limited';
+  document.getElementById('ev-form-wrap').style.display = '';
+  document.getElementById('ev-success').style.display = 'none';
+  // reset Y/N
+  document.querySelectorAll('.ev-yn-opt').forEach(o => o.classList.remove('sel'));
+  document.getElementById('evReminder').value = '';
+  document.getElementById('evOwner').value = '';
+  evModalBg.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function dlCloseEventModal() {
+  evModalBg.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('ev-modal-close').addEventListener('click', dlCloseEventModal);
+evModalBg.addEventListener('click', e => { if (e.target === evModalBg) dlCloseEventModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') dlCloseEventModal(); });
+
+// ── Y/N toggle ───────────────────────────────────────────────────
+document.querySelectorAll('.ev-yn-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const field = opt.dataset.field;
+    document.querySelectorAll(`.ev-yn-opt[data-field="${field}"]`).forEach(o => o.classList.remove('sel'));
+    opt.classList.add('sel');
+    document.getElementById(field).value = opt.dataset.val;
+  });
+});
+
+// ── Submit registration ──────────────────────────────────────────
+async function dlSubmitEventReg() {
+  const get = id => (document.getElementById(id)?.value || '').trim();
+  const fields = {
+    first_name: get('evFname'), last_name: get('evLname'),
+    email: get('evEmail'), phone: get('evPhone'),
+    job_title: get('evTitle'), practice_name: get('evFirm'),
+    text_reminder: get('evReminder'), is_owner: get('evOwner'),
+    panel_question: get('evQuestion')
+  };
+  const required = ['first_name','last_name','email','phone','job_title','practice_name','text_reminder','is_owner','panel_question'];
+  const missing = required.filter(k => !fields[k]);
+  if (missing.length) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+  const btn = document.getElementById('ev-submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity=".3"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg> Registering…';
+
+  const payload = {
+    ...fields,
+    webinar_id: _evCurrent.webinarID || '',
+    event_title: _evCurrent.title || '',
+    event_date: _evCurrent.month_year ? `${_evCurrent.day} ${_evCurrent.month_year}` : '',
+    zoom_account: _evCurrent.Account || '',
+    timestamp: new Date().toISOString(),
+    form: 'event_registration'
+  };
+
+  try {
+    await fetch(DL_APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    document.getElementById('ev-form-wrap').style.display = 'none';
+    document.getElementById('ev-success').style.display = '';
+    btn.disabled = false;
+  } catch (e) {
+    alert('Something went wrong. Please try again.');
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Reserve My Spot — It\'s Free';
+  }
+}
+
+// ── Countdown timer ──────────────────────────────────────────────
+function dlStartCountdown(targetDate) {
+  function tick() {
+    const now = new Date();
+    const diff = targetDate - now;
+    if (diff <= 0) {
+      ['ev-cd-days','ev-cd-hrs','ev-cd-min','ev-cd-sec'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '00';
+      });
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const fmt = n => String(n).padStart(2, '0');
+    const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = fmt(v); };
+    setEl('ev-cd-days', d); setEl('ev-cd-hrs', h); setEl('ev-cd-min', m); setEl('ev-cd-sec', s);
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+</script>
 </body>
 </html>
