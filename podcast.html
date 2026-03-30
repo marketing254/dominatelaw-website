@@ -302,6 +302,14 @@ p:last-child{margin-bottom:0}
 @media(max-width:900px){.ep-photo-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.ep-photo-grid{grid-template-columns:1fr}}
 
+/* ── PAGINATION ─────────────────────────────────────────── */
+#pod-pagination{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:32px;flex-wrap:wrap}
+.pod-page-btn{min-width:40px;height:40px;border-radius:8px;border:1.5px solid var(--border);background:#fff;color:var(--warm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;padding:0 12px}
+.pod-page-btn:hover:not(:disabled){background:var(--cream);border-color:var(--brown);color:var(--brown)}
+.pod-page-btn.active{background:var(--brown);border-color:var(--brown);color:#fff}
+.pod-page-btn:disabled{opacity:.35;cursor:default}
+.pod-page-nav{font-size:1.1rem;min-width:40px;padding:0}
+
 /* ── RESOURCES ──────────────────────────────────────────── */
 .res-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;transition:box-shadow .2s,transform .2s}
 .res-card:hover{box-shadow:0 8px 30px rgba(58,13,0,.08);transform:translateY(-3px)}

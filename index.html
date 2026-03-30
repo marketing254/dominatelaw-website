@@ -637,6 +637,16 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 .pod-stat-n { font-family: 'Merriweather', serif; font-size: 2rem; font-weight: 900; color: var(--gold3); display: block; line-height: 1; }
 .pod-stat-l { font-size: .7rem; color: rgba(255,255,255,.4); margin-top: 5px; display: block; text-transform: uppercase; letter-spacing: .07em; }
 .pod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+/* ep-photo card style for home podcast grid */
+.ep-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ep-photo-card{background:rgba(255,255,255,.09);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:20px 16px 24px;text-decoration:none;text-align:center;transition:transform .25s,box-shadow .25s;display:block}
+.ep-photo-card:hover{transform:translateY(-5px);box-shadow:0 18px 48px rgba(0,0,0,.35);background:rgba(255,255,255,.14)}
+.ep-badge{font-size:.66rem;font-weight:800;color:var(--gold3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
+.ep-circle{width:108px;height:108px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.2);margin:0 auto 16px;background:rgba(255,255,255,.1)}
+.ep-circle img{width:100%;height:100%;object-fit:cover;display:block}
+.ep-photo-card p{font-size:.79rem;color:rgba(255,255,255,.88);line-height:1.52;margin:0;font-weight:500}
+@media(max-width:900px){.ep-photo-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.ep-photo-grid{grid-template-columns:1fr}}
 .pod-ep {
   background: rgba(255,255,255,.07); backdrop-filter: blur(18px);
   border: 1px solid rgba(255,255,255,.11); border-radius: 16px;
@@ -1470,7 +1480,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
           Practical podcasts, expert-led events, and real-world strategies — everything lawyers need to lead a successful practice.
         </p>
         <div class="hero-actions" data-aos="fade-up" data-aos-delay="240">
-          <a href="#pillars" class="btn btn-brown btn-lg">Explore the Hub ↓</a>
+          <a href="community.html" class="btn btn-brown btn-lg">Explore the Hub ↓</a>
           <a href="msm.html" class="btn btn-outline-b btn-lg">Free Strategy Call</a>
         </div>
         <div class="hero-trust" data-aos="fade-up" data-aos-delay="320">
@@ -1618,43 +1628,8 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
   <div class="pod-bg"></div>
   <div class="pod-overlay"></div>
   <div class="wrap pod-inner">
-    <div class="pod-grid">
-      <div class="pod-ep" data-aos="fade-up" data-aos-delay="0">
-        <div class="pod-ep-num">07</div>
-        <span class="pod-cat">AI & Technology</span>
-        <h4>The AI Playbook Every Law Firm Needs in 2026</h4>
-        <div class="pod-dur">🎧 38 min</div>
-      </div>
-      <div class="pod-ep" data-aos="fade-up" data-aos-delay="80">
-        <div class="pod-ep-num">06</div>
-        <span class="pod-cat">Referrals</span>
-        <h4>Building a Referral Network That Works While You Sleep</h4>
-        <div class="pod-dur">🎧 44 min</div>
-      </div>
-      <div class="pod-ep" data-aos="fade-up" data-aos-delay="160">
-        <div class="pod-ep-num">05</div>
-        <span class="pod-cat">Lead Generation</span>
-        <h4>Panel Events That Fill Your Calendar with Qualified Leads</h4>
-        <div class="pod-dur">🎧 41 min</div>
-      </div>
-      <div class="pod-ep" data-aos="fade-up" data-aos-delay="0">
-        <div class="pod-ep-num">04</div>
-        <span class="pod-cat">Email Marketing</span>
-        <h4>Email Marketing for Attorneys: From Lead to Signed Client</h4>
-        <div class="pod-dur">🎧 36 min</div>
-      </div>
-      <div class="pod-ep" data-aos="fade-up" data-aos-delay="80">
-        <div class="pod-ep-num">03</div>
-        <span class="pod-cat">Social Media</span>
-        <h4>Social Media for Law Firms: What Actually Works in 2026</h4>
-        <div class="pod-dur">🎧 39 min</div>
-      </div>
-      <div class="pod-ep" data-aos="fade-up" data-aos-delay="160">
-        <div class="pod-ep-num">02</div>
-        <span class="pod-cat">Reputation</span>
-        <h4>The Review Strategy That Builds Trust Before the First Call</h4>
-        <div class="pod-dur">🎧 32 min</div>
-      </div>
+    <div class="ep-photo-grid" id="hp-pod-grid">
+      <div style="grid-column:1/-1;text-align:center;padding:32px;color:rgba(255,255,255,.4)">Loading latest episodes…</div>
     </div>
     <!-- Host card -->
     <div class="pod-host" data-aos="fade-up" data-aos-delay="180">

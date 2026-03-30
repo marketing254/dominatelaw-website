@@ -231,18 +231,15 @@ async function dlLoadNextEvent() {
   }
 }
 
-// ── PODCAST PAGE: Render all episodes ────────────────────────────
-async function dlLoadPodcastGrid() {
-  const grid = document.getElementById('episodes-grid');
+// ── HOME PAGE: Load latest 6 episodes into homepage podcast grid ─
+async function dlLoadHomePodcastGrid() {
+  const grid = document.getElementById('hp-pod-grid');
   if (!grid) return;
   try {
     const episodes = await dlFetchSheet('podcasts');
-    if (!episodes.length) { grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted)">No episodes found.</p>'; return; }
-
-    // Update ticker count dynamically
-    document.querySelectorAll('#ticker-ep-count').forEach(el => el.textContent = episodes.length);
-
-    grid.innerHTML = episodes.slice().reverse().map(ep => {
+    if (!episodes.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,.4);padding:32px">No episodes yet.</div>'; return; }
+    const latest6 = episodes.slice().reverse().slice(0, 6);
+    grid.innerHTML = latest6.map(ep => {
       const initials = dlInitials(ep.guest_name);
       return `
         <a href="podcast-episode.html?ep=${ep.episode}" class="ep-photo-card">
@@ -255,6 +252,87 @@ async function dlLoadPodcastGrid() {
           <p>${ep.title}</p>
         </a>`;
     }).join('');
+  } catch (e) {
+    console.warn('DL Sheets: Could not load home podcast grid', e);
+  }
+}
+
+// ── PODCAST PAGE: Render episodes with numbered pagination ────────
+async function dlLoadPodcastGrid() {
+  const grid = document.getElementById('episodes-grid');
+  if (!grid) return;
+  try {
+    const episodes = await dlFetchSheet('podcasts');
+    if (!episodes.length) { grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted)">No episodes found.</p>'; return; }
+
+    document.querySelectorAll('#ticker-ep-count').forEach(el => el.textContent = episodes.length);
+
+    const PAGE_SIZE = 10;
+    const all = episodes.slice().reverse(); // newest first
+    const totalPages = Math.ceil(all.length / PAGE_SIZE);
+    let currentPage = 0;
+
+    // Pagination bar (stays at bottom of grid)
+    const paginationWrap = document.createElement('div');
+    paginationWrap.id = 'pod-pagination';
+    grid.innerHTML = '';
+    grid.appendChild(paginationWrap);
+
+    function renderPage(page) {
+      currentPage = Math.max(0, Math.min(page, totalPages - 1));
+      // Remove all episode cards, keep pagination
+      Array.from(grid.children).forEach(child => { if (child !== paginationWrap) child.remove(); });
+
+      const batch = all.slice(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE);
+      batch.forEach(ep => {
+        const initials = dlInitials(ep.guest_name);
+        const card = document.createElement('a');
+        card.href = `podcast-episode.html?ep=${ep.episode}`;
+        card.className = 'ep-photo-card';
+        card.innerHTML = `
+          <span class="ep-badge">Episode #${ep.episode}</span>
+          <div class="ep-circle">
+            <img src="${dlDriveImg(ep.guest_photo_url)}" alt="${ep.guest_name}" loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.1rem">${initials}</div>
+          </div>
+          <p>${ep.title}</p>`;
+        grid.insertBefore(card, paginationWrap);
+      });
+
+      buildPagination();
+      // Scroll to episodes section smoothly
+      if (currentPage > 0) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function buildPagination() {
+      if (totalPages <= 1) { paginationWrap.style.display = 'none'; return; }
+      paginationWrap.innerHTML = '';
+
+      const prev = document.createElement('button');
+      prev.innerHTML = '&#8592;';
+      prev.className = 'pod-page-btn pod-page-nav';
+      prev.disabled = currentPage === 0;
+      prev.addEventListener('click', () => renderPage(currentPage - 1));
+      paginationWrap.appendChild(prev);
+
+      for (let i = 0; i < totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i + 1;
+        btn.className = 'pod-page-btn' + (i === currentPage ? ' active' : '');
+        btn.addEventListener('click', () => renderPage(i));
+        paginationWrap.appendChild(btn);
+      }
+
+      const next = document.createElement('button');
+      next.innerHTML = '&#8594;';
+      next.className = 'pod-page-btn pod-page-nav';
+      next.disabled = currentPage >= totalPages - 1;
+      next.addEventListener('click', () => renderPage(currentPage + 1));
+      paginationWrap.appendChild(next);
+    }
+
+    renderPage(0);
   } catch (e) {
     console.warn('DL Sheets: Could not load podcast grid', e);
   }
@@ -596,13 +674,13 @@ function dlFormatTranscript(text, guestName, hostName) {
   return html;
 }
 
-// ── REVIEWS PAGE: Render all reviews ─────────────────────────────
+// ── REVIEWS PAGE: Render all reviews with carousel ───────────────
 async function dlLoadReviewsGrid() {
   const grid = document.getElementById('reviews-grid');
   if (!grid) return;
   try {
     const reviews = await dlFetchSheet('reviews');
-    if (!reviews.length) { grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted)">No reviews found.</p>'; return; }
+    if (!reviews.length) { grid.innerHTML = '<div style="padding:48px;text-align:center;color:var(--muted);flex-shrink:0;width:100%">No reviews found.</div>'; return; }
 
     const stars = n => '★'.repeat(Math.min(5, parseInt(n) || 5));
     grid.innerHTML = reviews.map(r => {
@@ -613,17 +691,97 @@ async function dlLoadReviewsGrid() {
         : `<div style="width:44px;height:44px;border-radius:50%;background:var(--brown);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:#fff;flex-shrink:0">${initials}</div>`;
       return `
         <article class="review-card">
-          <div class="review-header"><div class="stars">${stars(r.rating)}</div><div class="review-platform">${r.platform || 'Dominate Law Podcast'}</div></div>
+          <div class="review-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div class="review-stars">${stars(r.rating)}</div><div style="font-size:.7rem;color:var(--muted)">${r.platform || 'Dominate Law'}</div></div>
           <p class="review-text">"${r.review_text}"</p>
-          <div class="testimonial-author" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+          <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;">
             ${photoHtml}
-            <div><div class="review-author">${r.reviewer_name}</div><div class="review-firm">${r.firm_name}</div></div>
+            <div><span class="review-name">${r.reviewer_name}</span><span class="review-title">${r.firm_name}</span></div>
           </div>
         </article>`;
     }).join('');
+
+    // Init carousel after DOM is updated
+    dlInitRvCarousel();
   } catch (e) {
     console.warn('DL Sheets: Could not load reviews', e);
   }
+}
+
+// ── REVIEWS CAROUSEL: Initialize controls ────────────────────────
+function dlInitRvCarousel() {
+  const track = document.getElementById('reviews-grid');
+  const prev = document.getElementById('rv-prev');
+  const next = document.getElementById('rv-next');
+  const dotsWrap = document.getElementById('rv-dots');
+  if (!track || !prev || !next || !dotsWrap) return;
+
+  let page = 0;
+
+  function perView() {
+    return window.innerWidth >= 900 ? 3 : window.innerWidth >= 600 ? 2 : 1;
+  }
+
+  function allCards() { return Array.from(track.querySelectorAll('.review-card')); }
+
+  function pageCount() { return Math.max(1, Math.ceil(allCards().length / perView())); }
+
+  function goTo(p) {
+    const cards = allCards();
+    if (!cards.length) return;
+    page = Math.max(0, Math.min(p, pageCount() - 1));
+    const pv = perView();
+    const idx = page * pv;
+    let offset = 0;
+    for (let i = 0; i < idx && i < cards.length; i++) {
+      offset += cards[i].offsetWidth + 24; // 24 = gap
+    }
+    track.style.transform = `translateX(-${offset}px)`;
+    prev.style.opacity = page === 0 ? '.35' : '1';
+    prev.disabled = page === 0;
+    next.style.opacity = page >= pageCount() - 1 ? '.35' : '1';
+    next.disabled = page >= pageCount() - 1;
+    buildDots();
+  }
+
+  function buildDots() {
+    const count = pageCount();
+    dotsWrap.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'rv-dot' + (i === page ? ' active' : '');
+      dot.setAttribute('aria-label', `Page ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    }
+  }
+
+  prev.addEventListener('click', () => { goTo(page - 1); resetAuto(); });
+  next.addEventListener('click', () => { goTo(page + 1); resetAuto(); });
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => goTo(0), 150);
+  });
+
+  // Auto-slide every 4 seconds; pause on hover
+  let autoTimer;
+  function startAuto() {
+    autoTimer = setInterval(() => {
+      goTo(page >= pageCount() - 1 ? 0 : page + 1);
+    }, 4000);
+  }
+  function stopAuto() { clearInterval(autoTimer); }
+  function resetAuto() { stopAuto(); startAuto(); }
+
+  const viewport = track.closest('.rv-viewport') || track.parentElement;
+  if (viewport) {
+    viewport.addEventListener('mouseenter', stopAuto);
+    viewport.addEventListener('mouseleave', startAuto);
+  }
+
+  goTo(0);
+  startAuto();
 }
 
 // ── EVENTS PAGE: Render all events ───────────────────────────────
@@ -676,7 +834,8 @@ async function dlLoadEventsGrid() {
   } else if (path.includes('events')) {
     dlLoadEventsGrid();
   } else if (path.endsWith('/') || path.endsWith('index.html') || path.endsWith('index1.html') || path === '') {
-    // Home page — also load event popup
+    // Home page — load event popup + podcast grid
     dlLoadNextEvent();
+    dlLoadHomePodcastGrid();
   }
 })();
