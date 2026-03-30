@@ -46,6 +46,15 @@ function dlInitials(name) {
   return (name || '??').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 }
 
+// ── Helper: parse GViz date OR plain ISO string ───────────────────
+// Google Sheets stores dates as Date(YYYY,M,D) in the GViz API (month is 0-indexed)
+function dlParseDate(str) {
+  if (!str) return null;
+  const m = String(str).match(/^Date\((\d+),(\d+),(\d+)\)/);
+  if (m) return new Date(parseInt(m[1]), parseInt(m[2]), parseInt(m[3]));
+  return new Date(str);
+}
+
 // ── Helper: extract Drive file ID from ANY Drive URL format ──────────────
 // Handles all formats users might paste:
 //   https://drive.google.com/file/d/FILE_ID/view?usp=sharing
@@ -213,7 +222,7 @@ async function dlLoadNextEvent() {
   try {
     const events = await dlFetchSheet('events');
     const today = new Date(); today.setHours(0, 0, 0, 0);
-    const upcoming = events.find(ev => new Date(ev.date_iso) >= today);
+    const upcoming = events.find(ev => dlParseDate(ev.date_iso) >= today);
     if (!upcoming) return;
 
     const dayEl   = document.querySelector('.hp-evt-date-day');
@@ -794,7 +803,7 @@ async function dlLoadEventsGrid() {
 
     const today = new Date(); today.setHours(0, 0, 0, 0);
     grid.innerHTML = events.map(ev => {
-      const isPast = new Date(ev.date_iso) < today;
+      const isPast = dlParseDate(ev.date_iso) < today;
       const btnHtml = isPast
         ? `<span class="btn btn-primary btn-sm mt-16 btn-closed">Registration Closed</span>`
         : `<a href="${ev.register_url || 'contact.html'}" class="btn btn-primary btn-sm mt-16 event-register-btn" style="display:inline-flex;">Register Free →</a>`;
