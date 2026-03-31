@@ -282,27 +282,24 @@ p:last-child{margin-bottom:0}
 /* ── REGISTRATION MODAL ─────────────────────────────────── */
 .ev-modal-bg{position:fixed;inset:0;background:rgba(8,2,0,.72);z-index:2000;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(5px)}
 .ev-modal-bg.open{opacity:1;pointer-events:auto}
-.ev-modal{background:#fff;border-radius:20px;width:100%;max-width:600px;max-height:94dvh;overflow-y:auto;box-shadow:0 40px 100px rgba(0,0,0,.4);position:relative;animation:ev-slide-in .3s var(--ease)}
+.ev-modal{background:#fff;border-radius:20px;width:100%;max-width:600px;max-height:94dvh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 40px 100px rgba(0,0,0,.4);position:relative;animation:ev-slide-in .3s var(--ease)}
 @keyframes ev-slide-in{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
-.ev-modal-head{background:linear-gradient(135deg,var(--brown3),#5a2510);padding:26px 32px 22px;border-radius:20px 20px 0 0;position:sticky;top:0;z-index:2}
-.ev-modal-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;border:none}
+.ev-modal-head{background:linear-gradient(135deg,var(--brown3),#5a2510);padding:20px 26px 16px;border-radius:20px 20px 0 0;position:relative;z-index:2;flex-shrink:0}
+.ev-modal-close{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:.85rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;border:none}
 .ev-modal-close:hover{background:rgba(255,255,255,.2);color:#fff}
-.ev-modal-head h3{font-family:'Merriweather',serif;font-size:1rem;font-weight:900;color:#fff;margin:0 24px 4px 0}
-.ev-modal-head p{font-size:.75rem;color:rgba(255,255,255,.55);margin:0}
-.ev-modal-body{padding:26px 32px 32px}
-.ev-frow{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
-.ev-fg{margin-bottom:13px}
-.ev-fg label{display:block;font-size:.76rem;font-weight:600;color:var(--warm);margin-bottom:5px}
+.ev-modal-head h3{font-family:'Merriweather',serif;font-size:.95rem;font-weight:900;color:#fff;margin:0 24px 3px 0}
+.ev-modal-head p{font-size:.72rem;color:rgba(255,255,255,.55);margin:0}
+.ev-modal-body{padding:18px 26px 22px;overflow-y:auto;flex:1}
+.ev-frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.ev-fg{margin-bottom:10px}
+.ev-fg label{display:block;font-size:.73rem;font-weight:600;color:var(--warm);margin-bottom:4px}
 .ev-fg label em{color:var(--brown);font-style:normal}
-.ev-fg input,.ev-fg select,.ev-fg textarea{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:.875rem;color:var(--warm);outline:none;transition:border-color .2s,box-shadow .2s;background:#fff}
+.ev-fg input,.ev-fg select,.ev-fg textarea{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:8px;font-size:.84rem;color:var(--warm);outline:none;transition:border-color .2s,box-shadow .2s;background:#fff}
 .ev-fg input:focus,.ev-fg select:focus,.ev-fg textarea:focus{border-color:var(--brown);box-shadow:0 0 0 3px rgba(96,39,15,.07)}
-.ev-fg textarea{min-height:76px;resize:vertical}
-.ev-yn{display:flex;gap:10px}
-.ev-yn-opt{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:10px;cursor:pointer;font-size:.84rem;font-weight:600;color:var(--muted);text-align:center;transition:all .18s;user-select:none}
-.ev-yn-opt.sel{border-color:var(--brown);background:rgba(96,39,15,.06);color:var(--brown)}
-.ev-divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--muted);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.ev-fg textarea{min-height:62px;resize:vertical}
+.ev-divider{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--muted);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .ev-divider::before,.ev-divider::after{content:'';flex:1;height:1px;background:var(--border)}
-.ev-submit{width:100%;padding:14px;background:var(--brown);color:#fff;border:none;border-radius:8px;font-weight:800;font-size:.92rem;cursor:pointer;transition:all .25s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:10px}
+.ev-submit{width:100%;padding:12px;background:var(--brown);color:#fff;border:none;border-radius:8px;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .25s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:10px}
 .ev-submit:hover:not(:disabled){background:var(--brown3);box-shadow:0 8px 24px rgba(58,13,0,.25)}
 .ev-submit:disabled{opacity:.55;cursor:not-allowed}
 .ev-success{text-align:center;padding:16px 0}
@@ -593,22 +590,6 @@ p:last-child{margin-bottom:0}
         </div>
         <div class="ev-fg"><label for="evFirm">Practice Name <em>*</em></label><input id="evFirm" type="text" placeholder="Your Law Firm, LLP" required></div>
         <div class="ev-divider">Additional Info</div>
-        <div class="ev-fg">
-          <label>Would you like a text reminder? <em>*</em></label>
-          <div class="ev-yn">
-            <div class="ev-yn-opt" data-field="evReminder" data-val="Yes">Yes</div>
-            <div class="ev-yn-opt" data-field="evReminder" data-val="No">No</div>
-          </div>
-          <input type="hidden" id="evReminder">
-        </div>
-        <div class="ev-fg">
-          <label>Are you an owner of the practice? <em>*</em></label>
-          <div class="ev-yn">
-            <div class="ev-yn-opt" data-field="evOwner" data-val="Yes">Yes</div>
-            <div class="ev-yn-opt" data-field="evOwner" data-val="No">No</div>
-          </div>
-          <input type="hidden" id="evOwner">
-        </div>
         <div class="ev-fg"><label for="evQuestion">What question would you like the panel to address? <em>*</em></label><textarea id="evQuestion" placeholder="Share your question for the panelists…" required></textarea></div>
         <button class="ev-submit" id="ev-submit-btn" onclick="dlSubmitEventReg()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -794,10 +775,6 @@ function dlOpenEventModal(ev) {
   document.getElementById('ev-modal-subtitle').textContent = ev.title || 'Free virtual event — seats are limited';
   document.getElementById('ev-form-wrap').style.display = '';
   document.getElementById('ev-success').style.display = 'none';
-  // reset Y/N
-  document.querySelectorAll('.ev-yn-opt').forEach(o => o.classList.remove('sel'));
-  document.getElementById('evReminder').value = '';
-  document.getElementById('evOwner').value = '';
   evModalBg.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -809,16 +786,6 @@ document.getElementById('ev-modal-close').addEventListener('click', dlCloseEvent
 evModalBg.addEventListener('click', e => { if (e.target === evModalBg) dlCloseEventModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') dlCloseEventModal(); });
 
-// ── Y/N toggle ───────────────────────────────────────────────────
-document.querySelectorAll('.ev-yn-opt').forEach(opt => {
-  opt.addEventListener('click', () => {
-    const field = opt.dataset.field;
-    document.querySelectorAll(`.ev-yn-opt[data-field="${field}"]`).forEach(o => o.classList.remove('sel'));
-    opt.classList.add('sel');
-    document.getElementById(field).value = opt.dataset.val;
-  });
-});
-
 // ── Submit registration ──────────────────────────────────────────
 async function dlSubmitEventReg() {
   const get = id => (document.getElementById(id)?.value || '').trim();
@@ -826,10 +793,9 @@ async function dlSubmitEventReg() {
     first_name: get('evFname'), last_name: get('evLname'),
     email: get('evEmail'), phone: get('evPhone'),
     job_title: get('evTitle'), practice_name: get('evFirm'),
-    text_reminder: get('evReminder'), is_owner: get('evOwner'),
     panel_question: get('evQuestion')
   };
-  const required = ['first_name','last_name','email','phone','job_title','practice_name','text_reminder','is_owner','panel_question'];
+  const required = ['first_name','last_name','email','phone','job_title','practice_name','panel_question'];
   const missing = required.filter(k => !fields[k]);
   if (missing.length) {
     alert('Please fill in all required fields.');
@@ -844,7 +810,7 @@ async function dlSubmitEventReg() {
     webinar_id: _evCurrent.webinarID || '',
     event_title: _evCurrent.title || '',
     event_date: _evCurrent.month_year ? `${_evCurrent.day} ${_evCurrent.month_year}` : '',
-    zoom_account: _evCurrent.Account || '',
+    zoom_account: _evCurrent.zoom_account || '',
     timestamp: new Date().toISOString(),
     form: 'event_registration'
   };

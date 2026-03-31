@@ -17,7 +17,7 @@
 // ─────────────────────────────────────────────────────────────────
 
 const DL_SHEET_ID        = '1Kqtgrii6peL3DxEp7PO45zSYd3sSeTN-e1tHmkFdLpg';
-const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrTFhuGlUR1grxKM7iHCq4tuGK11CT0_7-yDjEKB7xukWGmP4QNGVOd0_7rMLb0zsJ/exec';
+const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQmQJCf-ODnFl-nqYEq0KBe6TQqx_UnyiQwm6Ptkk7QHt7v5-gVlq6UOcMaMW4v7F4/exec';
 
 // ── Fetch & parse a sheet tab ─────────────────────────────────────
 async function dlFetchSheet(sheetName) {
@@ -857,7 +857,7 @@ async function dlLoadEventsGrid() {
               </div>
               <div class="ev-meta-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                12:00 PM ET · 60 min
+                ${featured.time || 'Time TBA'}
               </div>
               <div class="ev-meta-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.82v6.36a1 1 0 0 1-1.447.89L15 14M3 8a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>
