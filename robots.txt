@@ -2,7 +2,6 @@ User-agent: *
 Allow: /
 
 # Block utility/script files from indexing
-Disallow: /js/
 Disallow: /seo-inject.js
 
 # Block dev/test/backup pages from indexing

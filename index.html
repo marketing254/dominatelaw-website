@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='white'/%3E%3Cpath d='M16 3 L28 7 L28 17 C28 23 22 28 16 30 C10 28 4 23 4 17 L4 7 Z' fill='%233A0D00' stroke='%23C9A84C' stroke-width='1'/%3E%3Cpath d='M16 8 L23 11 L23 18 C23 22 20 25 16 27 C12 25 9 22 9 18 L9 11 Z' fill='none' stroke='%23C9A84C' stroke-width='0.8'/%3E%3Cline x1='16' y1='9' x2='16' y2='22' stroke='%23C9A84C' stroke-width='1'/%3E%3Cline x1='11' y1='16' x2='21' y2='16' stroke='%23C9A84C' stroke-width='0.8'/%3E%3Ccircle cx='13' cy='16' r='1.5' fill='none' stroke='%23C9A84C' stroke-width='0.7'/%3E%3Ccircle cx='19' cy='16' r='1.5' fill='none' stroke='%23C9A84C' stroke-width='0.7'/%3E%3C/svg%3E">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Dominate Law is the complete growth platform for ambitious attorneys — free legal calculators, marketing tools, expert webinars, a peer community, and a weekly podcast to help law firms grow.">
+<meta name="description" content="Dominate Law: free legal calculators, marketing tools, expert webinars, a peer community, and a weekly podcast to help your law firm grow faster.">
 <title>Law Firm Marketing Resources, Tools & Community | Dominate Law</title>
 
   <!-- ═══ SEO — index.html ════════════════════════════════════ -->
@@ -72,7 +72,7 @@
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": "https://dominatelaw.com/blog.html?q={search_term_string}"
+          "urlTemplate": "https://dominatelaw.com/blog?q={search_term_string}"
         },
         "query-input": "required name=search_term_string"
       }
@@ -1260,7 +1260,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
             <p class="hp-pod-title" id="hp-pod-title"></p>
           </div>
         </div>
-        <a href="podcast.html" id="hp-pod-link" class="hp-btn hp-btn-podcast" onclick="dlCloseHomePopup()">
+        <a href="/podcast" id="hp-pod-link" class="hp-btn hp-btn-podcast" onclick="dlCloseHomePopup()">
           <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><polygon points="5,3 13,8 5,13"/></svg>
           Listen Now
         </a>
@@ -1278,7 +1278,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
         </div>
         <p class="hp-evt-title" id="hp-evt-title">Loading...</p>
         <p class="hp-evt-desc" id="hp-evt-desc"></p>
-        <a href="events.html" id="hp-evt-link" class="hp-btn hp-btn-event" onclick="dlCloseHomePopup()">
+        <a href="/events" id="hp-evt-link" class="hp-btn hp-btn-event" onclick="dlCloseHomePopup()">
           Register Free →
         </a>
       </div>
@@ -1293,14 +1293,14 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 <div id="progress"></div>
 
 <!-- Announcement -->
-<div class="announce" style="display:flex;align-items:center;justify-content:center;gap:6px;"><button aria-label="Play latest episode" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:var(--gold3);border:none;border-radius:50%;cursor:pointer;flex-shrink:0;margin-right:8px;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.5l5 3-5 3V1.5z" fill="white"/></svg></button><span class="a-pulse"></span><strong>NEW:</strong> <span id="announce-text">Latest episode is live</span> &nbsp;&middot;&nbsp; <a href="podcast.html" id="announce-link">Listen Now →</a></div>
+<div class="announce" style="display:flex;align-items:center;justify-content:center;gap:6px;"><button aria-label="Play latest episode" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:var(--gold3);border:none;border-radius:50%;cursor:pointer;flex-shrink:0;margin-right:8px;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.5l5 3-5 3V1.5z" fill="white"/></svg></button><span class="a-pulse"></span><strong>NEW:</strong> <span id="announce-text">Latest episode is live</span> &nbsp;&middot;&nbsp; <a href="/podcast" id="announce-link">Listen Now →</a></div>
 
 <!-- ═══ NAV ══════════════════════════════════════════════════════ -->
 <nav class="nav" id="nav">
   <div class="wrap">
     <div class="nav-inner">
       <!-- Logo -->
-      <a href="index.html" class="nav-logo">
+      <a href="/" class="nav-logo">
         <img src="images/logo.png" alt="Dominate Law"
              onerror="this.style.display='none';document.getElementById('nav-fb').classList.add('show')">
         <div class="nav-logo-fb" id="nav-fb">
@@ -1312,7 +1312,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
       <!-- Desktop links -->
       <div class="nav-links" id="navLinks">
 
-        <div class="nav-item"><a href="about.html">About Us</a></div>
+        <div class="nav-item"><a href="/about">About Us</a></div>
 
         <!-- Events dropdown -->
         <div class="nav-item" id="ni-events">
@@ -1320,13 +1320,13 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
             Events <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
           <div class="nav-drop">
-            <a href="events.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 2v2M11 2v2M2 7h12" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Webinars & Events</strong><span>Live &amp; on-demand sessions</span></div></a>
+            <a href="/events"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 2v2M11 2v2M2 7h12" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Webinars & Events</strong><span>Live &amp; on-demand sessions</span></div></a>
           </div>
         </div>
 
-        <div class="nav-item"><a href="podcast.html">Podcast</a></div>
+        <div class="nav-item"><a href="/podcast">Podcast</a></div>
 
-        <div class="nav-item"><a href="reviews.html">Reviews</a></div>
+        <div class="nav-item"><a href="/reviews">Reviews</a></div>
 
         <!-- Resources dropdown -->
         <div class="nav-item" id="ni-res">
@@ -1334,21 +1334,21 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
             Resources <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
           <div class="nav-drop">
-            <a href="blog.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h4" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Blog & Insights</strong><span>Articles, guides, tips</span></div></a>
-            <a href="resources.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3M10 13v-3l2 1.5-2 1.5z" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Free Downloads</strong><span>Templates &amp; guides</span></div></a>
-            <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
+            <a href="/blog"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h4" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Blog & Insights</strong><span>Articles, guides, tips</span></div></a>
+            <a href="/resources"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3M10 13v-3l2 1.5-2 1.5z" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Free Downloads</strong><span>Templates &amp; guides</span></div></a>
+            <a href="/tools"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
           </div>
         </div>
 
-        <div class="nav-item"><a href="guest-speaker.html">Guest / Speaker</a></div>
+        <div class="nav-item"><a href="/guest-speaker">Guest / Speaker</a></div>
 
-        <div class="nav-item"><a href="community.html">Community</a></div>
+        <div class="nav-item"><a href="/community">Community</a></div>
 
-        <div class="nav-item"><a href="msm.html">Marketing</a></div>
+        <div class="nav-item"><a href="/msm">Marketing</a></div>
 
       </div><!-- /nav-links -->
 
-      <a href="contact.html" class="btn btn-primary nav-cta-btn">Contact Us</a>
+      <a href="/contact" class="btn btn-primary nav-cta-btn">Contact Us</a>
       <button class="burger" id="burger" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
@@ -1364,9 +1364,9 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
     <button class="mob-close" id="mob-close" aria-label="Close menu">✕</button>
   </div>
   <div class="mob-body">
-    <a href="index.html" class="mob-link active">Home</a>
+    <a href="/" class="mob-link active">Home</a>
 
-    <a href="about.html" class="mob-link">About Us</a>
+    <a href="/about" class="mob-link">About Us</a>
 
     <!-- Events accordion -->
     <button class="mob-acc-trigger" id="mob-events-trig">
@@ -1374,11 +1374,11 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
       <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
     <div class="mob-acc-panel" id="mob-events-panel">
-      <a href="events.html">Webinars &amp; Events</a>
+      <a href="/events">Webinars &amp; Events</a>
     </div>
 
-    <a href="podcast.html" class="mob-link">Podcast</a>
-    <a href="reviews.html" class="mob-link">Reviews</a>
+    <a href="/podcast" class="mob-link">Podcast</a>
+    <a href="/reviews" class="mob-link">Reviews</a>
 
     <!-- Resources accordion -->
     <button class="mob-acc-trigger" id="mob-res-trig">
@@ -1386,20 +1386,20 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
       <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="var(--brown)" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
     <div class="mob-acc-panel" id="mob-res-panel">
-      <a href="blog.html">Blog &amp; Insights</a>
-      <a href="resources.html">Free Downloads</a>
-      <a href="tools.html">⚖ Legal Tools</a>
+      <a href="/blog">Blog &amp; Insights</a>
+      <a href="/resources">Free Downloads</a>
+      <a href="/tools">⚖ Legal Tools</a>
     </div>
 
-    <a href="guest-speaker.html" class="mob-link">Guest / Speaker</a>
-    <a href="community.html" class="mob-link">Community</a>
+    <a href="/guest-speaker" class="mob-link">Guest / Speaker</a>
+    <a href="/community" class="mob-link">Community</a>
 
     <!-- MSM accordion -->
-    <a href="msm.html" class="mob-link">Marketing</a>
+    <a href="/msm" class="mob-link">Marketing</a>
 
     <div class="mob-sep"></div>
     <div class="mob-cta-wrap">
-      <a href="contact.html" class="btn btn-primary">Contact Us →</a>
+      <a href="/contact" class="btn btn-primary">Contact Us →</a>
     </div>
   </div>
 </div>
@@ -1424,8 +1424,8 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
           Practical podcasts, expert-led events, and real-world strategies — everything lawyers need to lead a successful practice.
         </p>
         <div class="hero-actions" data-aos="fade-up" data-aos-delay="240">
-          <a href="community.html" class="btn btn-brown btn-lg">Explore the Hub ↓</a>
-          <a href="msm.html" class="btn btn-outline-b btn-lg">Free Strategy Call</a>
+          <a href="/community" class="btn btn-brown btn-lg">Explore the Hub ↓</a>
+          <a href="/msm" class="btn btn-outline-b btn-lg">Free Strategy Call</a>
         </div>
         <div class="hero-trust" data-aos="fade-up" data-aos-delay="320">
           <div class="hero-trust-badge">
@@ -1516,8 +1516,8 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
           Backed by Ekwa Marketing — the leading digital marketing agency for law firms in North America — every guide, tool review, and podcast episode is grounded in real results from real law firms.
         </p>
         <div style="display:flex;gap:14px;flex-wrap:wrap">
-          <a href="about.html" class="btn btn-gold">Our Story →</a>
-          <a href="msm.html" class="btn btn-outline-w">Free Strategy Call</a>
+          <a href="/about" class="btn btn-gold">Our Story →</a>
+          <a href="/msm" class="btn btn-outline-w">Free Strategy Call</a>
         </div>
       </div>
     </div>
@@ -1558,8 +1558,8 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
           </div>
         </div>
         <div class="split-actions">
-          <a href="msm.html" class="btn btn-brown">Explore Marketing →</a>
-          <a href="msm.html" class="btn btn-outline-b">Free SEO Audit</a>
+          <a href="/msm" class="btn btn-brown">Explore Marketing →</a>
+          <a href="/msm" class="btn btn-outline-b">Free SEO Audit</a>
         </div>
       </div>
     </div>
@@ -1584,7 +1584,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
         <p class="pod-host-bio">CEO of Ekwa Marketing and Founder of Dominate Law, Naren has spent 18+ years helping law firms grow their practices through smart digital marketing. Each episode delivers no-fluff strategies you can implement this week.</p>
         <div class="pod-host-links">
           <a href="https://www.linkedin.com/company/dominatelaw/" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="guest-speaker.html">Be a Guest →</a>
+          <a href="/guest-speaker">Be a Guest →</a>
         </div>
       </div>
     </div>
@@ -1594,7 +1594,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
       <a href="#" class="pod-pl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="12" fill="#1DB954"/><path d="M17.25 16.2c-.2.33-.64.43-.97.22-2.66-1.63-6.01-2-9.96-1.1-.38.09-.76-.15-.85-.53-.09-.38.15-.76.53-.85 4.32-1 8.01-.57 11 1.29.33.2.43.64.25.97zm1.16-2.6c-.25.41-.79.54-1.2.29-3.04-1.87-7.68-2.42-11.28-1.32-.47.14-.96-.13-1.1-.59-.14-.46.13-.96.59-1.1 4.11-1.25 9.22-.64 12.7 1.52.41.25.54.79.29 1.2zm.1-2.7c-3.65-2.17-9.67-2.37-13.15-1.31-.56.17-1.15-.14-1.32-.7-.17-.56.14-1.15.7-1.32 4-1.22 10.64-.98 14.84 1.52.51.3.68.96.38 1.47-.3.51-.96.67-1.47.34z" fill="white"/></svg> Spotify</a>
       <a href="#" class="pod-pl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><defs><linearGradient id="apg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F452FF"/><stop offset="100%" stop-color="#832BC1"/></linearGradient></defs><rect width="24" height="24" rx="5.5" fill="url(#apg)"/><path d="M12 4.8c-3.1 0-5.5 2.56-5.5 5.72 0 2.33 1.35 4.36 3.32 5.3v1.3c0 .49.36.88.84.88H13.34c.48 0 .84-.39.84-.88v-1.3C16.15 14.88 17.5 12.85 17.5 10.52 17.5 7.36 15.1 4.8 12 4.8z" fill="white"/><path d="M10.5 17.12h3v1.5c0 .27-.22.48-.5.48h-2c-.28 0-.5-.21-.5-.48v-1.5z" fill="rgba(255,255,255,0.7)"/><circle cx="12" cy="10.5" r="2" fill="rgba(255,255,255,0.9)"/><circle cx="12" cy="10.5" r=".8" fill="#832BC1"/></svg> Apple Podcasts</a>
       <a href="#" class="pod-pl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.38.46A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14C4.5 20.4 12 20.4 12 20.4s7.5 0 9.38-.46a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8z" fill="#FF0000"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="white"/></svg> YouTube</a>
-      <a href="podcast.html" class="btn btn-gold btn-sm" style="margin-left:auto">All Episodes →</a>
+      <a href="/podcast" class="btn btn-gold btn-sm" style="margin-left:auto">All Episodes →</a>
     </div>
   </div>
 </section>
@@ -1644,8 +1644,8 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
           <span>Quick sign-up with your name, designation &amp; email — then instant free access to every tool.</span>
         </div>
         <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
-          <a href="tools.html" class="btn btn-brown">Explore All Tools →</a>
-          <a href="tools.html" class="btn btn-outline-b">Sign Up Free</a>
+          <a href="/tools" class="btn btn-brown">Explore All Tools →</a>
+          <a href="/tools" class="btn btn-outline-b">Sign Up Free</a>
         </div>
       </div>
 
@@ -1653,7 +1653,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
       <div class="tools-teaser-right" data-aos="fade-left" data-aos-delay="100">
 
         <!-- Featured card -->
-        <a href="tools.html" class="tool-preview-card featured">
+        <a href="/tools" class="tool-preview-card featured">
           <div class="tool-preview-icon">
             <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#E8C44A" stroke-width="1.8"/><path d="M12 7v1.5M12 15.5V17M9.5 10.5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5c0 2.5-2.5 3-2.5 3v1" stroke="#E8C44A" stroke-width="1.6" stroke-linecap="round"/></svg>
           </div>
@@ -1662,7 +1662,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
         </a>
 
         <!-- Card 2 -->
-        <a href="tools.html" class="tool-preview-card">
+        <a href="/tools" class="tool-preview-card">
           <div class="tool-preview-icon">
             <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#E8C44A" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="#E8C44A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="1" fill="#E8C44A"/></svg>
           </div>
@@ -1671,7 +1671,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
         </a>
 
         <!-- Card 3 -->
-        <a href="tools.html" class="tool-preview-card">
+        <a href="/tools" class="tool-preview-card">
           <div class="tool-preview-icon">
             <svg viewBox="0 0 24 24" fill="none"><path d="M3 17l4-8 4 5 3-3 4 6" stroke="#E8C44A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 20h18" stroke="#E8C44A" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
@@ -1680,7 +1680,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
         </a>
 
         <!-- Card 4 -->
-        <a href="tools.html" class="tool-preview-card">
+        <a href="/tools" class="tool-preview-card">
           <div class="tool-preview-icon">
             <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 4.8 5.3.77-3.85 3.75.9 5.3L12 14.1l-4.75 2.52.9-5.3L4.3 7.57l5.3-.77L12 2z" stroke="#E8C44A" stroke-width="1.7" stroke-linejoin="round"/></svg>
           </div>
@@ -1689,7 +1689,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
         </a>
 
         <!-- Card 5: +more badge -->
-        <a href="tools.html" class="tool-preview-card" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--brown3);border-color:transparent;color:#fff">
+        <a href="/tools" class="tool-preview-card" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--brown3);border-color:transparent;color:#fff">
           <div style="font-family:'Merriweather',serif;font-size:2rem;font-weight:900;color:var(--gold3)">+4</div>
           <div style="font-size:.78rem;font-weight:600;color:rgba(255,255,255,.65);text-align:center">More Free Tools<br>for Attorneys</div>
         </a>
@@ -1713,8 +1713,8 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
       </h2>
       <p class="cta-sub">Book your free 30-minute strategy session. We'll audit your current marketing, show you exactly what's costing you clients, and map out a clear plan to fix it — at no charge.</p>
       <div class="cta-actions">
-        <a href="msm.html" class="btn btn-gold btn-lg">Book Free Strategy Call →</a>
-        <a href="podcast.html" class="btn btn-outline-w btn-lg">Listen to the Podcast</a>
+        <a href="/msm" class="btn btn-gold btn-lg">Book Free Strategy Call →</a>
+        <a href="/podcast" class="btn btn-outline-w btn-lg">Listen to the Podcast</a>
       </div>
     </div>
   </div>
@@ -1744,27 +1744,27 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
       <div class="footer-col">
         <h4>Resource Hub</h4>
         <ul>
-          <li><a href="msm.html">Marketing & SEO</a></li>
-          <li><a href="blog/law-firm-practice-management-guide.html">Practice Management</a></li>
-          <li><a href="blog/legal-technology-guide-2026.html">Legal Technology</a></li>
-          <li><a href="blog/law-firm-practice-management-guide.html">Business Growth</a></li>
-          <li><a href="blog/law-firm-client-experience-guide.html">Client Experience</a></li>
-          <li><a href="resources.html">Ethics & Compliance</a></li>
-          <li><a href="blog/law-firm-practice-management-guide.html">Finance & Billing</a></li>
-          <li><a href="resources.html">Attorney Wellness</a></li>
+          <li><a href="/msm">Marketing & SEO</a></li>
+          <li><a href="/blog/law-firm-practice-management-guide">Practice Management</a></li>
+          <li><a href="/blog/legal-technology-guide-2026">Legal Technology</a></li>
+          <li><a href="/blog/law-firm-practice-management-guide">Business Growth</a></li>
+          <li><a href="/blog/law-firm-client-experience-guide">Client Experience</a></li>
+          <li><a href="/resources">Ethics & Compliance</a></li>
+          <li><a href="/blog/law-firm-practice-management-guide">Finance & Billing</a></li>
+          <li><a href="/resources">Attorney Wellness</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Content</h4>
         <ul>
-          <li><a href="tools.html">⚖ Legal Tools (Free)</a></li>
-          <li><a href="podcast.html">Podcast Show</a></li>
-          <li><a href="resources.html">Free Downloads</a>
-      <a href="tools.html">⚖ Legal Tools</a></li>
-          <li><a href="blog.html">Blog & Insights</a></li>
-          <li><a href="events.html">Events & Webinars</a></li>
-          <li><a href="testimonials.html">Success Stories</a></li>
-          <li><a href="about.html">About Ekwa</a></li>
+          <li><a href="/tools">⚖ Legal Tools (Free)</a></li>
+          <li><a href="/podcast">Podcast Show</a></li>
+          <li><a href="/resources">Free Downloads</a>
+      <a href="/tools">⚖ Legal Tools</a></li>
+          <li><a href="/blog">Blog & Insights</a></li>
+          <li><a href="/events">Events & Webinars</a></li>
+          <li><a href="/reviews">Success Stories</a></li>
+          <li><a href="/about">About Ekwa</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1785,7 +1785,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Use</a>
         <a href="#">Accessibility</a>
-            <a href="tools.html"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
+            <a href="/tools"><div class="nav-drop-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--brown)" stroke-width="1.4"/><path d="M5 6h6M5 9h3" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/><path d="M10 11l1.5-1.5L10 8" stroke="var(--brown)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="nav-drop-text"><strong>Legal Tools</strong><span>Free calculators for attorneys</span></div></a>
       </div>
     </div>
   </div>

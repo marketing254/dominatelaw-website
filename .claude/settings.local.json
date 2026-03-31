@@ -66,7 +66,17 @@
       "Bash(echo -n \"$title\")",
       "Bash(grep -h 'link rel=canonical' *.html blog/*.html)",
       "Bash(wc -l *.html)",
-      "Bash(head -5 grep -n \"og:\\\\|twitter:\\\\|</head>\" \"/c/Users/Fathima Rushdha/Documents/dominatelaw-website/podcast-episode.html\")"
+      "Bash(head -5 grep -n \"og:\\\\|twitter:\\\\|</head>\" \"/c/Users/Fathima Rushdha/Documents/dominatelaw-website/podcast-episode.html\")",
+      "Bash(python generate_seo_report.py)",
+      "Bash(pip install:*)",
+      "Bash(pip show:*)",
+      "Bash(python generate_tracker.py)",
+      "Bash(powershell -Command \"Get-ChildItem ''C:/Users/Fathima Rushdha/Documents/dominatelaw-website'' -Name | Sort-Object\")",
+      "Bash(powershell -Command \"Get-ChildItem ''C:/Users/Fathima Rushdha/Documents/dominatelaw-website/blog'' -Name | Sort-Object\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\Fathima Rushdha\\\\Documents\\\\dominatelaw-website\\\\fix_urls.ps1\")",
+      "Bash(powershell -Command \":*)",
+      "Bash(for file:*)",
+      "Bash(echo \"=== $file ===\")"
     ]
   }
 }

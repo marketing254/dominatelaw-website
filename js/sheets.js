@@ -190,7 +190,7 @@ async function dlLoadLatestPodcast() {
     const announce = document.querySelector('.announce');
     if (announce) {
       const driveId  = dlDriveId(ep.audio_source);
-      const epHref   = `podcast-episode.html?ep=${ep.episode}`;
+      const epHref   = `/podcast-episode/?ep=${ep.episode}`;
       const epLabel  = `Ep #${ep.episode}: ${ep.title}`;
 
       announce.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:10px 16px;';
@@ -211,7 +211,7 @@ async function dlLoadLatestPodcast() {
     if (photoEl) { photoEl.src = dlDriveImg(ep.guest_photo_url); photoEl.alt = ep.guest_name; }
     if (epNumEl) epNumEl.textContent = `Episode #${ep.episode}`;
     if (titleEl) titleEl.textContent = ep.title;
-    if (listenBtn) listenBtn.href = `podcast-episode.html?ep=${ep.episode}`;
+    if (listenBtn) listenBtn.href = `/podcast-episode/?ep=${ep.episode}`;
   } catch (e) {
     console.warn('DL Sheets: Could not load latest podcast', e);
   }
@@ -234,7 +234,7 @@ async function dlLoadNextEvent() {
     if (monthEl) monthEl.textContent = upcoming.month_year;
     if (titleEl) titleEl.textContent = upcoming.title;
     if (descEl)  descEl.textContent  = upcoming.description;
-    if (btnEl) btnEl.href = 'events.html';
+    if (btnEl) btnEl.href = '/events';
   } catch (e) {
     console.warn('DL Sheets: Could not load next event', e);
   }
@@ -251,7 +251,7 @@ async function dlLoadHomePodcastGrid() {
     grid.innerHTML = latest6.map(ep => {
       const initials = dlInitials(ep.guest_name);
       return `
-        <a href="podcast-episode.html?ep=${ep.episode}" class="ep-photo-card">
+        <a href="/podcast-episode/?ep=${ep.episode}" class="ep-photo-card">
           <span class="ep-badge">Episode #${ep.episode}</span>
           <div class="ep-circle">
             <img src="${dlDriveImg(ep.guest_photo_url)}" alt="${ep.guest_name}" loading="lazy"
@@ -296,7 +296,7 @@ async function dlLoadPodcastGrid() {
       batch.forEach(ep => {
         const initials = dlInitials(ep.guest_name);
         const card = document.createElement('a');
-        card.href = `podcast-episode.html?ep=${ep.episode}`;
+        card.href = `/podcast-episode/?ep=${ep.episode}`;
         card.className = 'ep-photo-card';
         card.innerHTML = `
           <span class="ep-badge">Episode #${ep.episode}</span>
@@ -355,17 +355,17 @@ async function dlLoadEpisodePage() {
   const crumbEl  = document.getElementById('ep-breadcrumb');
 
   if (!epNum) {
-    if (heroEl) heroEl.innerHTML = `<div class="ep-not-found"><h2>Episode Not Found</h2><p>No episode number provided.</p><a href="podcast.html" class="btn btn-primary" style="margin-top:16px">Browse All Episodes →</a></div>`;
+    if (heroEl) heroEl.innerHTML = `<div class="ep-not-found"><h2>Episode Not Found</h2><p>No episode number provided.</p><a href="/podcast" class="btn btn-primary" style="margin-top:16px">Browse All Episodes →</a></div>`;
     return;
   }
 
   try {
     const episodes = await dlFetchSheet('podcasts');
-    if (!episodes.length) { window.location.href = 'podcast.html'; return; }
+    if (!episodes.length) { window.location.href = '/podcast'; return; }
 
     const idx  = episodes.findIndex(e => String(e.episode) === String(epNum));
     if (idx === -1) {
-      if (heroEl) heroEl.innerHTML = `<div class="ep-not-found"><h2>Episode #${epNum} Not Found</h2><p>This episode doesn't exist yet.</p><a href="podcast.html" class="btn btn-primary" style="margin-top:16px">Browse All Episodes →</a></div>`;
+      if (heroEl) heroEl.innerHTML = `<div class="ep-not-found"><h2>Episode #${epNum} Not Found</h2><p>This episode doesn't exist yet.</p><a href="/podcast" class="btn btn-primary" style="margin-top:16px">Browse All Episodes →</a></div>`;
       return;
     }
 
@@ -489,14 +489,14 @@ async function dlLoadEpisodePage() {
     if (navSec) navSec.style.display = 'block';
     if (prevNext) {
       const prevCard = prev
-        ? `<a href="podcast-episode.html?ep=${prev.episode}" class="ep-nav-card">
+        ? `<a href="/podcast-episode/?ep=${prev.episode}" class="ep-nav-card">
              <div class="ep-nav-dir">← Previous Episode</div>
              <div class="ep-nav-ep">Episode #${prev.episode}</div>
              <div class="ep-nav-title">${prev.title}</div>
            </a>`
         : `<div class="ep-nav-card ep-nav-placeholder"><div class="ep-nav-dir">← Previous</div><div class="ep-nav-title">This is the first episode</div></div>`;
       const nextCard = next
-        ? `<a href="podcast-episode.html?ep=${next.episode}" class="ep-nav-card ep-nav-right">
+        ? `<a href="/podcast-episode/?ep=${next.episode}" class="ep-nav-card ep-nav-right">
              <div class="ep-nav-dir">Next Episode →</div>
              <div class="ep-nav-ep">Episode #${next.episode}</div>
              <div class="ep-nav-title">${next.title}</div>
@@ -507,7 +507,7 @@ async function dlLoadEpisodePage() {
 
   } catch (e) {
     console.warn('DL Sheets: Could not load episode page', e);
-    if (heroEl) heroEl.innerHTML = `<div class="ep-not-found"><h2>Could Not Load Episode</h2><p>Please try again or check your connection.</p><a href="podcast.html" class="btn btn-primary" style="margin-top:16px">Browse All Episodes →</a></div>`;
+    if (heroEl) heroEl.innerHTML = `<div class="ep-not-found"><h2>Could Not Load Episode</h2><p>Please try again or check your connection.</p><a href="/podcast" class="btn btn-primary" style="margin-top:16px">Browse All Episodes →</a></div>`;
   }
 }
 
@@ -947,7 +947,7 @@ async function dlLoadEventsGrid() {
     dlLoadReviewsGrid();
   } else if (path.includes('events')) {
     dlLoadEventsGrid();
-  } else if (path.endsWith('/') || path.endsWith('index.html') || path.endsWith('index1.html') || path === '') {
+  } else if (path.endsWith('/') || path === '') {
     // Home page — load event popup + podcast grid
     dlLoadNextEvent();
     dlLoadHomePodcastGrid();
