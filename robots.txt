@@ -5,6 +5,17 @@ Allow: /
 Disallow: /js/
 Disallow: /seo-inject.js
 
+# Block dev/test/backup pages from indexing
+Disallow: /index1.html
+Disallow: /og-example.html
+Disallow: /og-preview.html
+Disallow: /tools-new.html
+Disallow: /sheets-guide.html
+Disallow: /blog.html.bak
+Disallow: /events.html.bak
+Disallow: /podcast.html.bak
+Disallow: /resources.html.bak
+
 # Block known AI scrapers that don't respect robots
 User-agent: GPTBot
 Disallow: /

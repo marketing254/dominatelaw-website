@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='white'/%3E%3Cpath d='M16 3 L28 7 L28 17 C28 23 22 28 16 30 C10 28 4 23 4 17 L4 7 Z' fill='%233A0D00' stroke='%23C9A84C' stroke-width='1'/%3E%3Cpath d='M16 8 L23 11 L23 18 C23 22 20 25 16 27 C12 25 9 22 9 18 L9 11 Z' fill='none' stroke='%23C9A84C' stroke-width='0.8'/%3E%3Cline x1='16' y1='9' x2='16' y2='22' stroke='%23C9A84C' stroke-width='1'/%3E%3Cline x1='11' y1='16' x2='21' y2='16' stroke='%23C9A84C' stroke-width='0.8'/%3E%3Ccircle cx='13' cy='16' r='1.5' fill='none' stroke='%23C9A84C' stroke-width='0.7'/%3E%3Ccircle cx='19' cy='16' r='1.5' fill='none' stroke='%23C9A84C' stroke-width='0.7'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found | Dominate Law</title>
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://dominatelaw.com/404.html">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;0,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#faf8f5;color:#2d1a0e;min-height:100vh;display:flex;flex-direction:column}
+:root{
+  --brown:#60270F;--brown2:#3A0D00;--brown3:#5a1e08;
+  --gold:#C9A84C;--cream:#faf8f5;--border:#e8ddd5;--muted:#7a6055;--warm:#2d1a0e;
+}
+/* ── NAV ── */
+.nav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo img{height:36px;width:auto}
+.nav-logo-text{font-family:'Merriweather',serif;font-weight:900;font-size:.95rem;color:var(--brown2)}
+.nav-home{font-size:.85rem;font-weight:600;color:var(--brown);text-decoration:none;border:1.5px solid var(--brown);border-radius:8px;padding:7px 16px;transition:all .2s}
+.nav-home:hover{background:var(--brown);color:#fff}
+
+/* ── HERO ── */
+.hero{flex:1;display:flex;align-items:center;justify-content:center;padding:80px 24px;text-align:center}
+.hero-inner{max-width:560px}
+.err-num{font-family:'Merriweather',serif;font-size:clamp(5rem,18vw,9rem);font-weight:900;color:var(--brown2);line-height:1;letter-spacing:-4px;opacity:.12;user-select:none;margin-bottom:-20px}
+.err-icon{font-size:3.5rem;margin-bottom:16px}
+h1{font-family:'Merriweather',serif;font-size:clamp(1.5rem,4vw,2.25rem);font-weight:900;color:var(--brown2);margin-bottom:14px;line-height:1.25}
+.err-desc{font-size:1rem;color:var(--muted);line-height:1.75;margin-bottom:40px;max-width:440px;margin-left:auto;margin-right:auto}
+.err-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--brown);color:#fff;padding:12px 24px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;transition:all .25s}
+.btn-primary:hover{background:var(--brown3);box-shadow:0 8px 24px rgba(58,13,0,.2)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--border);color:var(--warm);padding:12px 24px;border-radius:8px;font-weight:600;font-size:.9rem;text-decoration:none;transition:all .25s}
+.btn-secondary:hover{border-color:var(--brown);color:var(--brown);background:rgba(96,39,15,.04)}
+
+/* ── QUICK LINKS ── */
+.quick-links{border-top:1px solid var(--border);padding-top:32px}
+.quick-label{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.quick-grid{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.quick-card{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 18px;text-decoration:none;color:var(--warm);font-size:.84rem;font-weight:600;transition:all .2s}
+.quick-card:hover{border-color:var(--brown);color:var(--brown);box-shadow:0 4px 16px rgba(58,13,0,.07)}
+.quick-card span{font-size:1.1rem}
+
+/* ── FOOTER ── */
+footer{background:var(--brown2);color:rgba(255,255,255,.45);text-align:center;padding:20px 24px;font-size:.75rem}
+footer a{color:rgba(255,255,255,.6);text-decoration:none}
+footer a:hover{color:#fff}
+
+@media(max-width:480px){.err-actions{flex-direction:column;align-items:center}.quick-grid{flex-direction:column;align-items:center}.quick-card{width:100%;max-width:280px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo" aria-label="Dominate Law Home">
+    <img src="images/logo.png" alt="Dominate Law" onerror="this.style.display='none'">
+    <span class="nav-logo-text">Dominate Law</span>
+  </a>
+  <a href="index.html" class="nav-home">← Back to Home</a>
+</nav>
+
+<main class="hero">
+  <div class="hero-inner">
+    <div class="err-num">404</div>
+    <div class="err-icon">⚖️</div>
+    <h1>Page Not Found</h1>
+    <p class="err-desc">The page you're looking for may have moved or no longer exists. Let's get you back on track.</p>
+    <div class="err-actions">
+      <a href="index.html" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        Go to Homepage
+      </a>
+      <a href="contact.html" class="btn-secondary">Contact Us</a>
+    </div>
+    <div class="quick-links">
+      <p class="quick-label">Or go to one of these pages</p>
+      <div class="quick-grid">
+        <a href="tools.html" class="quick-card"><span>🧮</span> Free Tools</a>
+        <a href="events.html" class="quick-card"><span>🎤</span> Events</a>
+        <a href="podcast.html" class="quick-card"><span>🎙️</span> Podcast</a>
+        <a href="community.html" class="quick-card"><span>👥</span> Community</a>
+        <a href="blog.html" class="quick-card"><span>📖</span> Blog</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">Dominate Law</a> — Powered by <a href="https://www.ekwa.com" target="_blank" rel="noopener">Ekwa Marketing</a></p>
+</footer>
+
+</body>
+</html>

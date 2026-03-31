@@ -56,7 +56,17 @@
       "Bash(xargs sed:*)",
       "Bash(sed -i \"s|images/logo\\\\.png\"\" alt=\"\"Dominate Law\"\" style=\"\"height:34px\"\"|images/footer-logo.jpg\"\" alt=\"\"Dominate Law\"\" style=\"\"height:50px\"\"|g\" \"$f\")",
       "Bash(sed -i \"s|images/logo\\\\.png\"\" alt=\"\"Dominate Law\"\" style=\"\"height:36px;width:auto\"\"|images/footer-logo.jpg\"\" alt=\"\"Dominate Law\"\" style=\"\"height:50px;width:auto\"\"|g\" \"$f\")",
-      "Bash(grep -E \"\\\\.\\(html|xml|txt\\)$\")"
+      "Bash(grep -E \"\\\\.\\(html|xml|txt\\)$\")",
+      "WebFetch(domain:developers.zoom.us)",
+      "Bash(grep -n \"rel=\"\"canonical\"\"\" \"/c/Users/Fathima Rushdha/Documents/dominatelaw-website\"/*.html)",
+      "Bash(find /c/Users/Fathima Rushdha/Documents/dominatelaw-website -maxdepth 1 -name \"*.html\" -exec grep -l \"rel=\"\"canonical\"\"\" {})",
+      "Bash(grep -l www. /c/Users/Fathima Rushdha/Documents/dominatelaw-website/*.html)",
+      "Bash(grep -h \"og:title\\\\|og:description\" *.html)",
+      "Bash(while read:*)",
+      "Bash(echo -n \"$title\")",
+      "Bash(grep -h 'link rel=canonical' *.html blog/*.html)",
+      "Bash(wc -l *.html)",
+      "Bash(head -5 grep -n \"og:\\\\|twitter:\\\\|</head>\" \"/c/Users/Fathima Rushdha/Documents/dominatelaw-website/podcast-episode.html\")"
     ]
   }
 }
