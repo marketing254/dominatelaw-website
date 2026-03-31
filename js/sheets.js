@@ -234,7 +234,7 @@ async function dlLoadNextEvent() {
     if (monthEl) monthEl.textContent = upcoming.month_year;
     if (titleEl) titleEl.textContent = upcoming.title;
     if (descEl)  descEl.textContent  = upcoming.description;
-    if (btnEl && upcoming.register_url) btnEl.href = upcoming.register_url;
+    if (btnEl) btnEl.href = 'events.html';
   } catch (e) {
     console.warn('DL Sheets: Could not load next event', e);
   }

@@ -773,8 +773,22 @@ function dlOpenEventModal(ev) {
   _evCurrent = ev;
   document.getElementById('ev-modal-title').textContent = 'Reserve Your Spot';
   document.getElementById('ev-modal-subtitle').textContent = ev.title || 'Free virtual event — seats are limited';
-  document.getElementById('ev-form-wrap').style.display = '';
-  document.getElementById('ev-success').style.display = 'none';
+
+  // Reset button state
+  const btn = document.getElementById('ev-submit-btn');
+  btn.disabled = false;
+  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Reserve My Spot — It\'s Free';
+
+  // Check if already registered for this event
+  const regKey = 'dl_reg_' + (ev.webinarID || ev.title || 'event');
+  if (localStorage.getItem(regKey)) {
+    document.getElementById('ev-form-wrap').style.display = 'none';
+    document.getElementById('ev-success').style.display = '';
+  } else {
+    document.getElementById('ev-form-wrap').style.display = '';
+    document.getElementById('ev-success').style.display = 'none';
+  }
+
   evModalBg.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -822,6 +836,8 @@ async function dlSubmitEventReg() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
+    const regKey = 'dl_reg_' + (_evCurrent.webinarID || _evCurrent.title || 'event');
+    localStorage.setItem(regKey, '1');
     document.getElementById('ev-form-wrap').style.display = 'none';
     document.getElementById('ev-success').style.display = '';
     btn.disabled = false;
