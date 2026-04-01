@@ -76,7 +76,9 @@
       "Bash(powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\Fathima Rushdha\\\\Documents\\\\dominatelaw-website\\\\fix_urls.ps1\")",
       "Bash(powershell -Command \":*)",
       "Bash(for file:*)",
-      "Bash(echo \"=== $file ===\")"
+      "Bash(echo \"=== $file ===\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\Fathima Rushdha\\\\Documents\\\\dominatelaw-website\\\\add_ga4.ps1\")",
+      "Bash(powershell -Command \"Remove-Item ''C:\\\\Users\\\\Fathima Rushdha\\\\Documents\\\\dominatelaw-website\\\\add_ga4.ps1''\")"
     ]
   }
 }
