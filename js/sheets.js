@@ -222,21 +222,38 @@ async function dlLoadNextEvent() {
   try {
     const events = await dlFetchSheet('events');
     const today = new Date(); today.setHours(0, 0, 0, 0);
-    const upcoming = events.find(ev => dlParseDate(ev.date_iso) >= today);
-    if (!upcoming) return;
 
-    const dayEl   = document.querySelector('.hp-evt-date-day');
-    const monthEl = document.querySelector('.hp-evt-date-month');
-    const titleEl = document.querySelector('.hp-evt-title');
-    const descEl  = document.querySelector('.hp-evt-desc');
+    // Sort ascending and find first event on or after today
+    const sorted   = events.slice().sort((a, b) => dlParseDate(a.date_iso) - dlParseDate(b.date_iso));
+    const upcoming = sorted.find(ev => {
+      const d = dlParseDate(ev.date_iso);
+      return d && d >= today;
+    });
+
+    // If no upcoming event, hide the event card entirely
+    if (!upcoming) {
+      const card = document.querySelector('.hp-card:last-child');
+      if (card) card.style.display = 'none';
+      return;
+    }
+
+    const dayEl   = document.getElementById('hp-evt-day');
+    const monthEl = document.getElementById('hp-evt-month');
+    const titleEl = document.getElementById('hp-evt-title');
+    const descEl  = document.getElementById('hp-evt-desc');
     const btnEl   = document.querySelector('.hp-btn-event');
-    if (dayEl)   dayEl.textContent   = upcoming.day;
-    if (monthEl) monthEl.textContent = upcoming.month_year;
-    if (titleEl) titleEl.textContent = upcoming.title;
-    if (descEl)  descEl.textContent  = upcoming.description;
-    if (btnEl) btnEl.href = '/events';
+
+    if (dayEl)   dayEl.textContent   = upcoming.day        || '';
+    if (monthEl) monthEl.textContent = upcoming.month_year || '';
+    if (titleEl) titleEl.textContent = upcoming.title      || 'Upcoming Event';
+    if (descEl)  descEl.textContent  = upcoming.description || '';
+    if (btnEl) {
+      btnEl.href = upcoming.register_url || '/events';
+    }
   } catch (e) {
     console.warn('DL Sheets: Could not load next event', e);
+    const card = document.querySelector('.hp-card:last-child');
+    if (card) card.style.display = 'none';
   }
 }
 

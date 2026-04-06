@@ -1,19 +1,22 @@
 User-agent: *
 Allow: /
 
-# Block utility/script files from indexing
-Disallow: /seo-inject.js
+# Block old WordPress paths (site migrated from WP — these pages no longer exist)
+Disallow: /wp-content/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-json/
+Disallow: /feed/
+Disallow: /podcast-show/
+Disallow: /newswire/
+Disallow: /contact-us.php
+Disallow: /about-us/
 
-# Block dev/test/backup pages from indexing
-Disallow: /index1.html
-Disallow: /og-example.html
-Disallow: /og-preview.html
-Disallow: /tools-new.html
-Disallow: /sheets-guide.html
-Disallow: /blog.html.bak
-Disallow: /events.html.bak
-Disallow: /podcast.html.bak
-Disallow: /resources.html.bak
+# Block data/dev folder — contains scripts, backups, and internal files
+Disallow: /data/
+
+# Block utility/script files
+Disallow: /seo-inject.js
 
 # Block known AI scrapers that don't respect robots
 User-agent: GPTBot

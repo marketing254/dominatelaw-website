@@ -8,7 +8,7 @@
 <title>Free Legal Calculators for Attorneys | Dominate Law</title>
 
   <!-- ═══ SEO — tools.html ════════════════════════════════════ -->
-  <link rel="canonical" href="https://dominatelaw.com/tools">
+  <link rel="canonical" href="https://dominatelaw.com/tools/">
   <meta name="robots" content="index, follow">
   <meta name="keywords" content="free legal calculators, attorney tools, contingency fee calculator, billable hours tracker, law firm ROI calculator, statute of limitations checker, settlement estimator">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,6 +90,7 @@
   <link rel="dns-prefetch" href="https://drive.google.com">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 <style>
+
 /* ═══════════════════════════════════════════════════════════════
    RESET & BASE
 ═══════════════════════════════════════════════════════════════ */
@@ -467,19 +468,6 @@ input, select, textarea { font: inherit; }
 /* ═══════════════════════════════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════════════════════════════ */
-.footer { background: var(--brown3); padding: 56px 0 0; }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,.07); padding: 22px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: .74rem; color: rgba(255,255,255,.3); }
-.footer-bottom a { color: rgba(255,255,255,.22); transition: color .2s; }
-.footer-bottom a:hover { color: rgba(255,255,255,.5); }
-.footer-bottom-links { display: flex; gap: 20px; }
-.footer-simple { padding: 40px 0 0; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: space-between; }
-.footer-simple-logo { display: flex; align-items: center; gap: 10px; }
-.footer-mark { width: 36px; height: 36px; background: var(--brown2); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Merriweather', serif; font-weight: 900; font-size: .85rem; color: var(--gold3); }
-.footer-brand-t strong { display: block; font-size: .88rem; color: rgba(255,255,255,.8); }
-.footer-brand-t em { font-size: .67rem; color: rgba(255,255,255,.3); font-style: normal; }
-.footer-simple-links { display: flex; gap: 18px; flex-wrap: wrap; }
-.footer-simple-links a { font-size: .8rem; color: rgba(255,255,255,.38); transition: color .2s; }
-.footer-simple-links a:hover { color: var(--gold3); }
 
 /* ═══════════════════════════════════════════════════════════════
    RESPONSIVE
@@ -505,6 +493,20 @@ input, select, textarea { font: inherit; }
 @media(prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* ─── FOOTER ─────────────────────────────────────────────────── */
+.footer { background: var(--brown3); padding: 48px 0 0; border-top: 1px solid rgba(255,255,255,.07); }
+.footer-simple { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: space-between; padding-bottom: 32px; }
+.footer-simple-logo { display: flex; align-items: center; gap: 10px; }
+.footer-simple-links { display: flex; gap: 18px; flex-wrap: wrap; }
+.footer-simple-links a { font-size: .8rem; color: rgba(255,255,255,.38); transition: color .2s; }
+.footer-simple-links a:hover { color: var(--gold3); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.07); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: .74rem; color: rgba(255,255,255,.3); }
+.footer-bottom a { color: rgba(255,255,255,.22); transition: color .2s; }
+.footer-bottom a:hover { color: rgba(255,255,255,.5); }
+.footer-bottom-links { display: flex; gap: 20px; }
+.footer-brand-t strong { display: block; font-size: .88rem; color: rgba(255,255,255,.8); }
+.footer-brand-t em { font-size: .67rem; color: rgba(255,255,255,.3); font-style: normal; }
 </style>
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LX7QLWPWSM"></script>
@@ -1121,40 +1123,41 @@ input, select, textarea { font: inherit; }
 </section>
 
 <!-- ═══════════════════════════════════ FOOTER ═══════════════════════════════════ -->
-<footer class="footer" style="background:#3A0D00;padding:48px 0 0">
+<footer class="footer">
   <div class="wrap">
-    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;padding-bottom:32px">
-      <div style="display:flex;align-items:center;gap:10px">
-        <img src="/images/footer-logo.jpg" loading="lazy" alt="Dominate Law" style="height:50px" onerror="this.style.display='none';document.getElementById('f-fb-sub').style.display='flex'">
-        <div id="f-fb-sub" style="display:none;align-items:center;gap:8px">
+    <div class="footer-simple">
+      <div class="footer-simple-logo">
+        <img src="/images/footer-logo.jpg" alt="Dominate Law" style="height:50px"
+             loading="lazy" onerror="this.style.display='none';document.getElementById('f-fb').classList.add('show')">
+        <div class="nav-logo-fb" id="f-fb">
           <div class="nav-mark">DL</div>
-          <div><strong style="display:block;font-size:.85rem;color:rgba(255,255,255,.8)">Dominate Law</strong><em style="font-size:.65rem;color:rgba(255,255,255,.3);font-style:normal">by Ekwa Marketing</em></div>
+          <div class="footer-brand-t"><strong>Dominate Law</strong><em>by Ekwa Marketing</em></div>
         </div>
       </div>
       <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:18px 0 10px;border-bottom:1px solid rgba(255,255,255,.07)">
         <span style="font-size:.75rem;color:rgba(255,255,255,.35);margin-right:4px">Follow Us:</span>
         <a href="https://www.linkedin.com/company/dominatelaw/" target="_blank" rel="noopener" title="LinkedIn" style="width:34px;height:34px;border-radius:6px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:rgba(255,255,255,.45);text-decoration:none;transition:all .2s" onmouseover="this.style.background='#C49A0A';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.07)';this.style.color='rgba(255,255,255,.45)'">in</a>
         <a href="https://www.facebook.com/DominateLawPodcast" target="_blank" rel="noopener" title="Facebook" style="width:34px;height:34px;border-radius:6px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:rgba(255,255,255,.45);text-decoration:none;transition:all .2s" onmouseover="this.style.background='#C49A0A';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.07)';this.style.color='rgba(255,255,255,.45)'">f</a>
-        <a href="https://www.instagram.com/dominatelawpodcast/" target="_blank" rel="noopener" title="Instagram" style="width:34px;height:34px;border-radius:6px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:rgba(255,255,255,.45);text-decoration:none;transition:all .2s" onmouseover="this.style.background='#C49A0A';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.07)';this.style.color='rgba(255,255,255,.45)'">◎</a>
-        <a href="mailto:info@dominatelaw.com" title="Email Us" style="width:34px;height:34px;border-radius:6px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:rgba(255,255,255,.45);text-decoration:none;transition:all .2s" onmouseover="this.style.background='#C49A0A';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.07)';this.style.color='rgba(255,255,255,.45)'">✉</a>
+        <a href="https://www.instagram.com/dominatelawpodcast/" target="_blank" rel="noopener" title="Instagram" style="width:34px;height:34px;border-radius:6px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:rgba(255,255,255,.45);text-decoration:none;transition:all .2s" onmouseover="this.style.background='#C49A0A';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.07)';this.style.color='rgba(255,255,255,.45)'">&#9678;</a>
+        <a href="mailto:info@dominatelaw.com" title="Email Us" style="width:34px;height:34px;border-radius:6px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:rgba(255,255,255,.45);text-decoration:none;transition:all .2s" onmouseover="this.style.background='#C49A0A';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.07)';this.style.color='rgba(255,255,255,.45)'">&#9993;</a>
       </div>
-      <div style="display:flex;gap:18px;flex-wrap:wrap">
-        <a href="/" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Home</a>
-        <a href="/events" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Events</a>
-        <a href="/podcast" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Podcast</a>
-        <a href="/tools" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Legal Tools</a>
-        <a href="/community" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Community</a>
-        <a href="/guest-speaker" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Guest/Speaker</a>
-        <a href="/msm" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Free Strategy Meeting</a>
-        <a href="/contact" style="font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s" onmouseover="this.style.color='#E8C44A'" onmouseout="this.style.color='rgba(255,255,255,.38)'">Contact</a>
+      <div class="footer-simple-links">
+        <a href="/">Home</a>
+        <a href="/events">Events</a>
+        <a href="/podcast">Podcast</a>
+        <a href="/tools">Legal Tools</a>
+        <a href="/community">Community</a>
+        <a href="/guest-speaker">Guest / Speaker</a>
+        <a href="/msm">Free Strategy Meeting</a>
+        <a href="/contact">Contact</a>
       </div>
     </div>
-    <div style="border-top:1px solid rgba(255,255,255,.07);padding:20px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.74rem;color:rgba(255,255,255,.3)">
-      <span>© 2026 Dominate Law by Ekwa Marketing. All rights reserved.</span>
-      <div style="display:flex;gap:20px">
-        <a href="#" style="color:rgba(255,255,255,.22);transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.5)'" onmouseout="this.style.color='rgba(255,255,255,.22)'">Privacy Policy</a>
-        <a href="#" style="color:rgba(255,255,255,.22);transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.5)'" onmouseout="this.style.color='rgba(255,255,255,.22)'">Terms of Use</a>
-        <a href="/contact" style="color:rgba(255,255,255,.22);transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.5)'" onmouseout="this.style.color='rgba(255,255,255,.22)'">Contact</a>
+    <div class="footer-bottom">
+      <span>&#169; 2026 Dominate Law by Ekwa Marketing. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="/contact">Contact</a>
       </div>
     </div>
   </div>
@@ -1592,5 +1595,6 @@ document.querySelectorAll('.mob-acc-trigger').forEach(btn => {
 
 </script>
 <script src="/js/sheets.js"></script>
+<script src="/js/cookie-consent.js"></script>
 </body>
 </html>
