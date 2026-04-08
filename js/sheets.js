@@ -17,7 +17,7 @@
 // ─────────────────────────────────────────────────────────────────
 
 const DL_SHEET_ID        = '1Kqtgrii6peL3DxEp7PO45zSYd3sSeTN-e1tHmkFdLpg';
-const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQmQJCf-ODnFl-nqYEq0KBe6TQqx_UnyiQwm6Ptkk7QHt7v5-gVlq6UOcMaMW4v7F4/exec';
+const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyvgEM5OryiVvaVVyJ9fDbTib3xYhLFKv_qSOOu6jrhM4TyjoBJzqwkU5FfmEDw9PV6/exec';
 
 // ── Fetch & parse a sheet tab ─────────────────────────────────────
 async function dlFetchSheet(sheetName) {
@@ -881,16 +881,36 @@ async function dlLoadEventsGrid() {
                 Virtual · Free
               </div>
             </div>
+            ${!isPast ? `
+            <div class="ev-urgency-bump" style="margin:18px 0 4px;padding:13px 16px;background:linear-gradient(135deg,rgba(196,154,10,.18),rgba(96,39,15,.22));border:1px solid rgba(196,154,10,.55);border-radius:10px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex-shrink:0;">
+                  <span style="position:absolute;width:20px;height:20px;border-radius:50%;background:rgba(196,154,10,.25);animation:seat-ping 1.6s ease-out infinite;"></span>
+                  <span style="position:relative;width:8px;height:8px;border-radius:50%;background:#E8C44A;display:block;"></span>
+                </span>
+                <span style="font-size:.79rem;font-weight:700;color:#E8C44A;letter-spacing:.01em;">Seats Are Filling Up Fast</span>
+              </div>
+              <div style="background:rgba(0,0,0,.09);border-radius:100px;height:6px;overflow:hidden;margin-bottom:6px;">
+                <div style="width:74%;height:100%;background:linear-gradient(90deg,#C49A0A,#E8C44A);border-radius:100px;animation:seat-fill .9s ease-out forwards;"></div>
+              </div>
+              <div style="font-size:.71rem;color:rgba(255,255,255,.6);">Limited capacity &nbsp;·&nbsp; Free to attend &nbsp;·&nbsp; No credit card required</div>
+            </div>` : ''}
             <div class="ev-agenda">
               <div class="ev-agenda-lbl">What We'll Cover</div>
               ${agendaHtml}
             </div>
             ${isPast
               ? `<span class="ev-reg-btn" style="opacity:.55;cursor:default">Registration Closed</span>`
-              : `<button class="ev-reg-btn" onclick="dlOpenEventModal(${JSON.stringify(featured).replace(/"/g,'&quot;')})">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                  Register Free — Save My Spot
-                </button>`
+              : `<div>
+                  <button class="ev-reg-btn ev-reg-btn-hype" onclick="dlOpenEventModal(${JSON.stringify(featured).replace(/"/g,'&quot;')})">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    Reserve My Free Spot Now
+                  </button>
+                  <p style="font-size:.72rem;color:var(--muted);margin-top:9px;display:flex;align-items:center;gap:6px;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Secure registration &nbsp;·&nbsp; Zoom link sent instantly &nbsp;·&nbsp; No waitlist once full
+                  </p>
+                </div>`
             }
           </div>
           <div class="ev-sidebar">
@@ -935,8 +955,18 @@ async function dlLoadEventsGrid() {
           <div class="ev-upcoming-info">
             <h4>${ev.title}</h4>
             <p>${(ev.Panelists||'').split('\n').map(s=>s.trim()).filter(Boolean).join(' · ') || 'Panelists TBA'}</p>
+            <div style="display:flex;align-items:center;gap:6px;margin-top:5px;">
+              <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;flex-shrink:0;">
+                <span style="position:absolute;width:14px;height:14px;border-radius:50%;background:rgba(196,154,10,.25);animation:seat-ping 1.8s ease-out infinite;"></span>
+                <span style="position:relative;width:6px;height:6px;border-radius:50%;background:#C49A0A;display:block;"></span>
+              </span>
+              <span style="font-size:.69rem;font-weight:600;color:#7A3515;letter-spacing:.01em;">Limited seats · Register early</span>
+            </div>
           </div>
-          <button class="btn btn-primary btn-sm" style="flex-shrink:0" onclick="dlOpenEventModal(${JSON.stringify(ev).replace(/"/g,'&quot;')})">Register →</button>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+            <button class="btn btn-primary btn-sm" onclick="dlOpenEventModal(${JSON.stringify(ev).replace(/"/g,'&quot;')})">Reserve Spot →</button>
+            <span style="font-size:.67rem;color:var(--muted);">Free · No card needed</span>
+          </div>
         </div>`).join('');
       upWrap.style.display = '';
     }

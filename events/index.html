@@ -503,6 +503,21 @@ p:last-child{margin-bottom:0}
     <span class="label">Panel Events &amp; Webinars</span>
     <h1>Live Events That Position You as the Legal Expert in Your Market</h1>
     <p>Quarterly virtual panel events, workshops, and masterclasses — all free, all designed to give law firm owners the edge in their local markets.</p>
+    <div style="margin-top:18px;display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(196,154,10,0.4);border-radius:100px;padding:8px 18px 8px 10px;backdrop-filter:blur(6px);">
+      <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex-shrink:0;">
+        <span style="position:absolute;width:20px;height:20px;border-radius:50%;background:rgba(196,154,10,0.3);animation:seat-ping 1.6s ease-out infinite;"></span>
+        <span style="position:relative;width:9px;height:9px;border-radius:50%;background:#E8C44A;display:block;"></span>
+      </span>
+      <span style="font-size:.78rem;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:.01em;">Limited seats available — register early to secure your spot</span>
+    </div>
+    <style>
+      @keyframes seat-ping{0%{transform:scale(1);opacity:.8}70%{transform:scale(2.2);opacity:0}100%{transform:scale(2.2);opacity:0}}
+      @keyframes seat-fill{from{width:0}to{width:74%}}
+      @keyframes seat-bump{0%,100%{transform:translateY(0) scale(1)}30%{transform:translateY(-4px) scale(1.012)}60%{transform:translateY(-2px) scale(1.006)}}
+      .ev-urgency-bump{animation:seat-bump 2.8s ease-in-out infinite;transform-origin:center;}
+      .ev-reg-btn-hype{animation:hype-pulse 2.4s ease-in-out infinite;}
+      @keyframes hype-pulse{0%,100%{box-shadow:0 6px 24px rgba(96,39,15,.35)}50%{box-shadow:0 10px 36px rgba(96,39,15,.55),0 0 0 6px rgba(196,154,10,.12)}}
+    </style>
   </div>
 </section>
 
@@ -535,13 +550,8 @@ p:last-child{margin-bottom:0}
           <div class="ev-fg"><label for="evLname">Last Name <em>*</em></label><input id="evLname" type="text" placeholder="Thompson" required></div>
         </div>
         <div class="ev-fg"><label for="evEmail">Email Address <em>*</em></label><input id="evEmail" type="email" placeholder="alex@yourfirm.com" required></div>
-        <div class="ev-frow">
-          <div class="ev-fg"><label for="evPhone">Phone <em>*</em></label><input id="evPhone" type="tel" placeholder="+1 (555) 000-0000" required></div>
-          <div class="ev-fg"><label for="evTitle">Job Title <em>*</em></label><input id="evTitle" type="text" placeholder="Managing Partner" required></div>
-        </div>
-        <div class="ev-fg"><label for="evFirm">Practice Name <em>*</em></label><input id="evFirm" type="text" placeholder="Your Law Firm, LLP" required></div>
-        <div class="ev-divider">Additional Info</div>
-        <div class="ev-fg"><label for="evQuestion">What question would you like the panel to address? <em>*</em></label><textarea id="evQuestion" placeholder="Share your question for the panelists…" required></textarea></div>
+        <div class="ev-fg"><label for="evPhone">Phone <em>*</em></label><input id="evPhone" type="tel" placeholder="+1 (555) 000-0000" required></div>
+        <p style="font-size:.72rem;color:#c0392b;font-weight:600;text-align:center;margin:4px 0 8px;letter-spacing:.01em;">⚠ Limited seats available — register now to secure your spot.</p>
         <button class="ev-submit" id="ev-submit-btn" onclick="dlSubmitEventReg()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Reserve My Spot — It's Free
@@ -591,7 +601,8 @@ p:last-child{margin-bottom:0}
 <section class="cta-section">
   <div class="container cta-inner">
     <h2>Register for Our Next Event</h2>
-    <p>Spots fill up fast. Register now to secure your place at the next Dominate Law panel event — and get early access to the recording and resources.</p>
+    <p>Seats are limited and fill up quickly. Register now to secure your place at the next Dominate Law panel event — and receive early access to the recording and resources.</p>
+    <p style="margin-top:12px;font-size:.82rem;color:rgba(255,255,255,.6);font-style:italic;">Registration closes once capacity is reached. No waitlist is offered.</p>
     <div class="cta-actions">
       <a href="/contact" class="btn btn-primary btn-lg">Register for Free →</a>
     </div>
@@ -757,11 +768,9 @@ async function dlSubmitEventReg() {
   const get = id => (document.getElementById(id)?.value || '').trim();
   const fields = {
     first_name: get('evFname'), last_name: get('evLname'),
-    email: get('evEmail'), phone: get('evPhone'),
-    job_title: get('evTitle'), practice_name: get('evFirm'),
-    panel_question: get('evQuestion')
+    email: get('evEmail'), phone: get('evPhone')
   };
-  const required = ['first_name','last_name','email','phone','job_title','practice_name','panel_question'];
+  const required = ['first_name','last_name','email','phone'];
   const missing = required.filter(k => !fields[k]);
   if (missing.length) {
     alert('Please fill in all required fields.');
