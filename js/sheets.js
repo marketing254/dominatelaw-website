@@ -17,7 +17,7 @@
 // ─────────────────────────────────────────────────────────────────
 
 const DL_SHEET_ID        = '1Kqtgrii6peL3DxEp7PO45zSYd3sSeTN-e1tHmkFdLpg';
-const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyvgEM5OryiVvaVVyJ9fDbTib3xYhLFKv_qSOOu6jrhM4TyjoBJzqwkU5FfmEDw9PV6/exec';
+const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyqB-AwFlFILYYUj-AVcc5-d85ZiM7RE_gRVgyRnciZXNSUhPXwTblf0jg0S8e7rSQJ/exec';
 
 // ── Fetch & parse a sheet tab ─────────────────────────────────────
 async function dlFetchSheet(sheetName) {
@@ -937,10 +937,36 @@ async function dlLoadEventsGrid() {
         </div>
       </div>`;
 
-    // Start countdown if upcoming
+    // Start countdown if upcoming — target in America/New_York time
     if (!isPast) {
-      const target = dlParseDate(featured.date_iso);
-      target.setHours(12, 0, 0, 0); // noon ET
+      // Parse start hour/min from event time field (e.g. "8.00 PM to 9.00 PM EST")
+      let evHour = 20, evMin = 0; // default 8 PM ET
+      if (featured.time) {
+        const m = featured.time.match(/(\d+)(?:[:.](\d+))?\s*(AM|PM)/i);
+        if (m) {
+          evHour = parseInt(m[1]);
+          evMin  = parseInt(m[2] || '0');
+          if (m[3].toUpperCase() === 'PM' && evHour !== 12) evHour += 12;
+          if (m[3].toUpperCase() === 'AM' && evHour === 12) evHour = 0;
+        }
+      }
+      // Use dlParseDate to safely handle both Date(YYYY,M,D) and ISO formats
+      const evDate = dlParseDate(featured.date_iso);
+      const y  = evDate.getFullYear();
+      const mo = String(evDate.getMonth() + 1).padStart(2, '0');
+      const d  = String(evDate.getDate()).padStart(2, '0');
+      const isoDate = `${y}-${mo}-${d}`;
+      // Probe: create a UTC timestamp at the desired clock hour, then ask
+      // Intl what hour that UTC time shows in New York. The difference
+      // tells us how many hours to shift to land on evHour ET.
+      const probeUTC = new Date(`${isoDate}T${String(evHour).padStart(2,'0')}:${String(evMin).padStart(2,'0')}:00Z`);
+      const nyHour   = parseInt(new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/New_York', hour: '2-digit', hour12: false
+      }).format(probeUTC)) % 24;
+      let shift = evHour - nyHour;
+      if (shift < -12) shift += 24;
+      if (shift >  12) shift -= 24;
+      const target = new Date(probeUTC.getTime() + shift * 3600000);
       if (typeof dlStartCountdown === 'function') dlStartCountdown(target);
     }
 

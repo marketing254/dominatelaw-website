@@ -551,6 +551,7 @@ p:last-child{margin-bottom:0}
         </div>
         <div class="ev-fg"><label for="evEmail">Email Address <em>*</em></label><input id="evEmail" type="email" placeholder="alex@yourfirm.com" required></div>
         <div class="ev-fg"><label for="evPhone">Phone <em>*</em></label><input id="evPhone" type="tel" placeholder="+1 (555) 000-0000" required></div>
+        <div class="ev-fg"><label for="evQuestion">What questions do you have?</label><textarea id="evQuestion" placeholder="Share any questions you'd like addressed during the event…" style="resize:vertical;min-height:80px"></textarea></div>
         <p style="font-size:.72rem;color:#c0392b;font-weight:600;text-align:center;margin:4px 0 8px;letter-spacing:.01em;">⚠ Limited seats available — register now to secure your spot.</p>
         <button class="ev-submit" id="ev-submit-btn" onclick="dlSubmitEventReg()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -768,7 +769,8 @@ async function dlSubmitEventReg() {
   const get = id => (document.getElementById(id)?.value || '').trim();
   const fields = {
     first_name: get('evFname'), last_name: get('evLname'),
-    email: get('evEmail'), phone: get('evPhone')
+    email: get('evEmail'), phone: get('evPhone'),
+    questions: get('evQuestion')
   };
   const required = ['first_name','last_name','email','phone'];
   const missing = required.filter(k => !fields[k]);
