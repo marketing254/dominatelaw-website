@@ -397,7 +397,11 @@ input, select, textarea { font: inherit; }
           <div class="gs-form-tag">📣 Apply Now — Open Spots Available</div>
           <h2>Apply as a Guest or Speaker</h2>
           <p>Tell us about yourself and what you'd like to share. We review all applications within 3 business days.</p>
-          <form class="gs-form" id="gsForm" novalidate>
+          <form class="gs-form" id="gsForm" novalidate style="position:relative">
+            <!-- Security: honeypot — must remain empty -->
+            <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+              <input class="dl-hp" type="text" name="website_url" tabindex="-1" autocomplete="new-password">
+            </div>
             <div class="gs-row">
               <div class="gs-field"><label for="gs-fname">First Name *</label><input type="text" id="gs-fname" placeholder="John" required></div>
               <div class="gs-field"><label for="gs-lname">Last Name *</label><input type="text" id="gs-lname" placeholder="Carter" required></div>
@@ -624,8 +628,33 @@ mobCls?.addEventListener('click',()=>openMenu(false));
 mobOvl?.addEventListener('click',()=>openMenu(false));
 document.querySelectorAll('.mob-acc-trigger').forEach(btn=>{btn.addEventListener('click',()=>{const p=document.getElementById(btn.id.replace('-trig','-panel'));if(!p)return;const o=p.classList.contains('open');document.querySelectorAll('.mob-acc-panel.open').forEach(x=>x.classList.remove('open'));document.querySelectorAll('.mob-acc-trigger.open').forEach(x=>x.classList.remove('open'));if(!o){p.classList.add('open');btn.classList.add('open');}});});
 var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbzL4GgFhxwak6VgGT5ibtvSmHirCFnppKKE7apK2PIZDpPc9z8YZjvEID0Qs6tx81Jw/exec';
-document.getElementById('gsForm')?.addEventListener('submit',function(e){e.preventDefault();const fn=document.getElementById('gs-fname').value.trim(),ln=document.getElementById('gs-lname').value.trim(),ti=document.getElementById('gs-title').value.trim(),org=document.getElementById('gs-org').value.trim(),em=document.getElementById('gs-email').value.trim(),ph=document.getElementById('gs-phone').value.trim(),ty=document.getElementById('gs-type').value,tp=document.getElementById('gs-topic').value,bio=document.getElementById('gs-bio').value.trim(),lk=document.getElementById('gs-links').value.trim();if(!fn||!ln||!ti||!org||!em){alert('Please fill in all required fields.');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Guest Speaker','First Name':fn,'Last Name':ln,'Title':ti,'Organization':org,'Email':em,'Phone':ph,'Type':ty,'Topic':tp,'Bio':bio,'Links':lk})});}catch(ex){}this.style.display='none';document.getElementById('gsSuccess').style.display='block';});
+document.getElementById('gsForm')?.addEventListener('submit',function(e){
+  e.preventDefault();
+  var S=window.DLSec;
+  if(S&&S.hpFilled(this)){return;}
+  if(S&&S.tooFast()){return;}
+  if(S&&!S.canSubmit('guest-speaker')){alert('You have already submitted an application. Please wait 24 hours before submitting again.');return;}
+  var fn=document.getElementById('gs-fname').value.trim(),
+      ln=document.getElementById('gs-lname').value.trim(),
+      ti=document.getElementById('gs-title').value.trim(),
+      org=document.getElementById('gs-org').value.trim(),
+      em=document.getElementById('gs-email').value.trim(),
+      ph=document.getElementById('gs-phone').value.trim(),
+      ty=document.getElementById('gs-type').value,
+      tp=document.getElementById('gs-topic').value,
+      bio=document.getElementById('gs-bio').value.trim(),
+      lk=document.getElementById('gs-links').value.trim();
+  if(!fn||!ln||!ti||!org||!em){alert('Please fill in all required fields.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}
+  if(S&&(S.isJunk(fn)||S.isJunk(ln)||S.isJunk(ti)||S.isJunk(org))){alert('Your submission looks invalid. Please check your details and try again.');return;}
+  if(ph&&S&&!S.validPhone(ph)){alert('Please enter a valid phone number (digits only).');return;}
+  try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Guest Speaker','First Name':fn,'Last Name':ln,'Title':ti,'Organization':org,'Email':em,'Phone':ph,'Type':ty,'Topic':tp,'Bio':bio,'Links':lk})});}catch(ex){}
+  if(S)S.markDone('guest-speaker');
+  this.style.display='none';
+  document.getElementById('gsSuccess').style.display='block';
+});
 </script>
+<script src="/js/form-security.js"></script>
 <script src="/js/sheets.js"></script>
 <script src="/js/cookie-consent.js"></script>
 </body>

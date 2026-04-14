@@ -31,7 +31,6 @@ async function dlFetchSheet(sheetName) {
   const jsonStr = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1];
   const json = JSON.parse(jsonStr);
   const cols = json.table.cols.map(c => c.label.trim());
-  console.log(`DL Sheets [${sheetName}] columns:`, cols);
   return json.table.rows
     .filter(row => row.c && row.c.some(cell => cell && cell.v !== null && cell.v !== ''))
     .map(row => {

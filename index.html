@@ -37,6 +37,8 @@
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="dns-prefetch" href="https://unpkg.com">
   <link rel="dns-prefetch" href="https://script.google.com">
+  <!-- Preload LCP hero image -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1485579149621-3123dd979885?auto=format&fit=crop&w=1600&q=80" fetchpriority="high">
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -1953,7 +1955,7 @@ function dlCloseHomePopup() {
   });
 })();
 </script>
-<script src="js/sheets.js"></script>
-<script src="js/cookie-consent.js"></script>
+<script src="js/sheets.js" defer></script>
+<script src="js/cookie-consent.js" defer></script>
 </body>
 </html>

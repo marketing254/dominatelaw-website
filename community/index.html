@@ -427,7 +427,11 @@ input, select, textarea { font: inherit; }
           <div class="join-card-tag">🎉 Free to Join</div>
           <h3>Join the Community</h3>
           <p>Instant access. No credit card. No spam.</p>
-          <form class="join-form" id="heroJoinForm" novalidate>
+          <form class="join-form" id="heroJoinForm" novalidate style="position:relative">
+            <!-- Security: honeypot -->
+            <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+              <input class="dl-hp" type="text" name="website_url" tabindex="-1" autocomplete="new-password">
+            </div>
             <div class="join-row">
               <div class="jf"><label for="hj-fname">First Name *</label><input type="text" id="hj-fname" placeholder="Alex" required></div>
               <div class="jf"><label for="hj-lname">Last Name *</label><input type="text" id="hj-lname" placeholder="Thompson" required></div>
@@ -609,7 +613,11 @@ input, select, textarea { font: inherit; }
           <div class="join-card-tag">🎉 Free to Join</div>
           <h2>Create Your Free Account</h2>
           <p>Instant access. No credit card required. Cancel anytime — though you won't want to.</p>
-          <form class="join-form" id="joinForm" novalidate>
+          <form class="join-form" id="joinForm" novalidate style="position:relative">
+            <!-- Security: honeypot -->
+            <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+              <input class="dl-hp" type="text" name="website_url" tabindex="-1" autocomplete="new-password">
+            </div>
             <div class="join-row">
               <div class="jf"><label for="j-fname">First Name *</label><input type="text" id="j-fname" placeholder="Alex" required></div>
               <div class="jf"><label for="j-lname">Last Name *</label><input type="text" id="j-lname" placeholder="Thompson" required></div>
@@ -715,9 +723,30 @@ mobOvl?.addEventListener('click',()=>openMenu(false));
 document.querySelectorAll('.mob-acc-trigger').forEach(btn=>{btn.addEventListener('click',()=>{const p=document.getElementById(btn.id.replace('-trig','-panel'));if(!p)return;const o=p.classList.contains('open');document.querySelectorAll('.mob-acc-panel.open').forEach(x=>x.classList.remove('open'));document.querySelectorAll('.mob-acc-trigger.open').forEach(x=>x.classList.remove('open'));if(!o){p.classList.add('open');btn.classList.add('open');}});});
 var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbzL4GgFhxwak6VgGT5ibtvSmHirCFnppKKE7apK2PIZDpPc9z8YZjvEID0Qs6tx81Jw/exec';
 function dlCommunitySheets(src,fn,ln,em,ro,area){try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Community Join','Source':src,'First Name':fn,'Last Name':ln,'Email':em,'Role':ro,'Practice Area':area||''})});}catch(e){}}
-document.getElementById('joinForm')?.addEventListener('submit',function(e){e.preventDefault();const fn=document.getElementById('j-fname').value.trim(),ln=document.getElementById('j-lname').value.trim(),em=document.getElementById('j-email').value.trim(),ro=document.getElementById('j-role').value,area=document.getElementById('j-area')?.value||'';if(!fn||!ln||!em||!ro){alert('Please fill in all required fields.');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}dlCommunitySheets('Main Form',fn,ln,em,ro,area);this.style.display='none';document.getElementById('joinSuccess').style.display='block';});
-document.getElementById('heroJoinForm')?.addEventListener('submit',function(e){e.preventDefault();const fn=document.getElementById('hj-fname').value.trim(),ln=document.getElementById('hj-lname').value.trim(),em=document.getElementById('hj-email').value.trim(),ro=document.getElementById('hj-role').value,area=document.getElementById('hj-area')?.value||'';if(!fn||!ln||!em||!ro){alert('Please fill in all required fields.');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}dlCommunitySheets('Hero Form',fn,ln,em,ro,area);this.style.display='none';document.getElementById('heroJoinSuccess').style.display='flex';document.getElementById('heroJoinSuccess').style.flexDirection='column';document.getElementById('heroJoinSuccess').style.alignItems='center';document.getElementById('heroJoinSuccess').style.gap='8px';document.getElementById('heroJoinSuccess').style.textAlign='center';});
+function dlCommunitySubmit(formEl,src,successId,successStyle){
+  var S=window.DLSec;
+  if(S&&S.hpFilled(formEl))return;
+  if(S&&S.tooFast())return;
+  if(S&&!S.canSubmit('community')){alert('You have already joined. Please wait 24 hours before submitting again.');return;}
+  var prefix=src==='Hero Form'?'hj-':'j-';
+  var fn=document.getElementById(prefix+'fname').value.trim(),
+      ln=document.getElementById(prefix+'lname').value.trim(),
+      em=document.getElementById(prefix+'email').value.trim(),
+      ro=document.getElementById(prefix+'role').value,
+      area=document.getElementById(prefix+'area')?.value||'';
+  if(!fn||!ln||!em||!ro){alert('Please fill in all required fields.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}
+  if(S&&(S.isJunk(fn)||S.isJunk(ln))){alert('Your details look invalid. Please check and try again.');return;}
+  dlCommunitySheets(src,fn,ln,em,ro,area);
+  if(S)S.markDone('community');
+  formEl.style.display='none';
+  var el=document.getElementById(successId);
+  if(el){el.style.display='flex';if(successStyle)Object.assign(el.style,successStyle);}
+}
+document.getElementById('joinForm')?.addEventListener('submit',function(e){e.preventDefault();dlCommunitySubmit(this,'Main Form','joinSuccess',null);});
+document.getElementById('heroJoinForm')?.addEventListener('submit',function(e){e.preventDefault();dlCommunitySubmit(this,'Hero Form','heroJoinSuccess',{flexDirection:'column',alignItems:'center',gap:'8px',textAlign:'center'});});
 </script>
+<script src="/js/form-security.js"></script>
 <script src="/js/sheets.js"></script>
 <script src="/js/cookie-consent.js"></script>
 </body>
