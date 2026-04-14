@@ -18,12 +18,12 @@ Disallow: /data/
 # Block utility/script files
 Disallow: /seo-inject.js
 
-# Block known AI scrapers that don't respect robots
+# AI crawlers — allow all for AI search visibility
 User-agent: GPTBot
-Disallow: /
+Allow: /
 
 User-agent: ChatGPT-User
-Disallow: /
+Allow: /
 
 User-agent: Google-Extended
 Allow: /

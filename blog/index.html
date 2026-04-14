@@ -307,6 +307,36 @@ p:last-child{margin-bottom:0}
 .blog-read:hover{color:var(--gold2)}
 .blog-meta{font-size:.72rem;color:var(--muted);margin-bottom:8px}
 
+/* ── BLOG COMING SOON ───────────────────────────────────── */
+.blog-cs{padding:80px 0 96px;background:var(--cream)}
+.blog-cs-wrap{max-width:720px;margin:0 auto;text-align:center}
+.blog-cs-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brown2);background:var(--cream2);border:1px solid var(--border);padding:6px 16px;border-radius:20px;margin-bottom:28px}
+.blog-cs-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block;animation:cs-pulse 2s ease-in-out infinite;flex-shrink:0}
+@keyframes cs-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.6)}}
+.blog-cs-icon{width:120px;height:120px;border-radius:50%;background:#fff;border:2px solid var(--border);box-shadow:0 8px 32px rgba(96,39,15,.1);display:flex;align-items:center;justify-content:center;margin:0 auto 32px}
+.blog-cs-heading{font-family:'Merriweather',serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--warm);line-height:1.2;margin-bottom:20px}
+.blog-cs-heading em{font-style:normal;color:var(--brown)}
+.blog-cs-sub{font-size:1rem;color:var(--muted);line-height:1.85;max-width:580px;margin:0 auto 40px}
+.blog-cs-divider{width:56px;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold3));border-radius:2px;margin:0 auto 36px}
+.blog-cs-coming-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);margin-bottom:16px}
+.blog-cs-topics{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:40px}
+.blog-cs-topics span{padding:7px 16px;border-radius:20px;background:#fff;color:var(--brown2);font-size:.78rem;font-weight:600;border:1px solid var(--border);transition:all .2s;cursor:default}
+.blog-cs-topics span:hover{background:var(--brown);color:var(--gold3);border-color:var(--brown)}
+.blog-cs-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.blog-cs-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;border-top:1px solid var(--border);padding-top:40px}
+.blog-cs-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:24px 16px;background:#fff;border-radius:14px;border:1px solid var(--border);text-decoration:none;transition:all .25s;color:inherit}
+.blog-cs-card:hover{border-color:var(--gold);box-shadow:0 8px 28px rgba(96,39,15,.1);transform:translateY(-3px)}
+.blog-cs-card-icon{font-size:1.8rem;line-height:1}
+.blog-cs-card strong{display:block;font-size:.88rem;font-weight:700;color:var(--warm);margin-bottom:4px}
+.blog-cs-card p{font-size:.75rem;color:var(--muted);line-height:1.5;margin:0}
+.blog-cs-card .blog-cs-avail{display:inline-block;margin-top:8px;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold2)}
+@media(max-width:640px){
+  .blog-cs{padding:56px 0 72px}
+  .blog-cs-heading{font-size:1.8rem}
+  .blog-cs-ctas{flex-direction:column;align-items:center}
+  .blog-cs-cards{grid-template-columns:1fr}
+}
+
 /* ── ACCORDION ──────────────────────────────────────────── */
 .accordion-item{border-bottom:1px solid var(--border);overflow:hidden}
 .accordion-header{padding:18px 0;font-weight:600;font-size:.92rem;color:var(--warm);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:color .2s;user-select:none}
@@ -432,95 +462,74 @@ p:last-child{margin-bottom:0}
   </div>
 </div>
 
-<section class="page-hero">
+<!-- BLOG — Coming Soon -->
+<section class="blog-cs">
   <div class="container">
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › Blog</nav>
-    <span class="label">Insights &amp; Strategy</span>
-    <h1>The Dominate Law Blog: Expert Marketing Strategies for Law Firms</h1>
-    <p>In-depth guides, data-backed strategies, and actionable playbooks written specifically for law firm owners and managing partners.</p>
-  </div>
-</section>
+    <div class="blog-cs-wrap">
 
-<section class="section" aria-labelledby="blog-list-heading">
-  <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;flex-wrap:wrap;gap:16px;">
-      <h2 id="blog-list-heading" style="font-size:1.3rem;">All Articles</h2>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <span class="tag tag-gold">All Topics</span>
-        <span class="tag">SEO</span>
-        <span class="tag">Social Media</span>
-        <span class="tag">Podcast</span>
-        <span class="tag">Email</span>
-        <span class="tag">Reviews</span>
+      <div class="blog-cs-eyebrow">
+        <span class="blog-cs-dot"></span>
+        Blog &amp; Insights by Dominate Law
       </div>
-    </div>
-    <div class="grid-3">
-      <article class="blog-card">
-        <div class="blog-card-img" style="position:relative"><img src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?auto=format&fit=crop&w=600&q=70" alt="Law Firm SEO Guide" loading="lazy"><span style="position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:4px;">Upcoming</span></div>
-        <div class="blog-card-body">
-          <div class="blog-category">SEO Strategy</div>
-          <h3>The Complete Law Firm SEO Guide for 2026: How to Rank #1 on Google</h3>
-          <p>Master local SEO for your law firm: keyword research, on-page optimization, Google Business Profile, link building, and more. The complete 2026 playbook for attorneys who want to dominate search.</p>
-          <div class="blog-meta"><span>📅 Coming Soon</span><span>⏱ 12 min read</span></div>
-        </div>
-      </article>
-      <article class="blog-card">
-        <div class="blog-card-img" style="position:relative"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&q=70" alt="Google Business Profile for Lawyers" loading="lazy"><span style="position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:4px;">Upcoming</span></div>
-        <div class="blog-card-body">
-          <div class="blog-category">Google Business Profile</div>
-          <h3>How to Optimize Your Google Business Profile as a Law Firm (2026 Complete Guide)</h3>
-          <p>Step-by-step instructions for setting up, optimizing, and actively managing your Google Business Profile to dominate local search results and attract more client calls.</p>
-          <div class="blog-meta"><span>📅 Coming Soon</span><span>⏱ 9 min read</span></div>
-        </div>
-      </article>
-      <article class="blog-card">
-        <div class="blog-card-img" style="position:relative"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=70" alt="Law Firm Social Media Strategy" loading="lazy"><span style="position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:4px;">Upcoming</span></div>
-        <div class="blog-card-body">
-          <div class="blog-category">Social Media</div>
-          <h3>Law Firm Social Media Strategy: What Actually Works in 2026</h3>
-          <p>The exact content mix, posting frequency, and engagement strategy that law firms use to generate referrals and reviews through social media — without spending hours a day on it.</p>
-          <div class="blog-meta"><span>📅 Coming Soon</span><span>⏱ 10 min read</span></div>
-        </div>
-      </article>
-      <article class="blog-card">
-        <div class="blog-card-img" style="position:relative"><img src="https://images.unsplash.com/photo-1484807352052-23338990c6c6?auto=format&fit=crop&w=600&q=70" alt="Law Firm Email Marketing" loading="lazy"><span style="position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:4px;">Upcoming</span></div>
-        <div class="blog-card-body">
-          <div class="blog-category">Email Marketing</div>
-          <h3>The 10-Email Nurture Sequence Every Law Firm Needs</h3>
-          <p>How to build an automated email campaign that turns cold leads into warm prospects and converts them to paying clients — without ever picking up the phone first.</p>
-          <div class="blog-meta"><span>📅 Coming Soon</span><span>⏱ 8 min read</span></div>
-        </div>
-      </article>
-      <article class="blog-card">
-        <div class="blog-card-img" style="position:relative"><img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&w=600&q=70" alt="Law Firm Podcast Guide" loading="lazy"><span style="position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:4px;">Upcoming</span></div>
-        <div class="blog-card-body">
-          <div class="blog-category">Podcasting</div>
-          <h3>How to Launch a Law Firm Podcast in 30 Days (With Zero Tech Experience)</h3>
-          <p>The complete step-by-step guide to launching a law firm podcast: equipment, recording, editing, publishing, and promoting your show to attract authority and clients.</p>
-          <div class="blog-meta"><span>📅 Coming Soon</span><span>⏱ 11 min read</span></div>
-        </div>
-      </article>
-      <article class="blog-card">
-        <div class="blog-card-img" style="position:relative"><img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=600&q=70" alt="Law Firm Review Strategy" loading="lazy"><span style="position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:4px;">Upcoming</span></div>
-        <div class="blog-card-body">
-          <div class="blog-category">Reputation</div>
-          <h3>The Law Firm Review Strategy: How to Go From 10 to 100+ Five-Star Reviews</h3>
-          <p>A systematic approach to generating a steady flow of 5-star Google reviews — including exactly when and how to ask, what to say, and how to respond to negative reviews professionally.</p>
-          <div class="blog-meta"><span>📅 Coming Soon</span><span>⏱ 7 min read</span></div>
-        </div>
-      </article></div>
-  </div>
-</section>
 
-<section class="section section-light" aria-label="Newsletter signup">
-  <div class="container cta-inner" style="background:var(--navy);border-radius:16px;padding:48px;">
-    <span class="label label-light">Stay Updated</span>
-    <h2 class="text-white">Get New Articles Delivered to Your Inbox</h2>
-    <p style="color:rgba(255,255,255,0.7);">Join 8,000+ law firm owners who get our weekly digest of the best strategies, case studies, and insights from Dominate Law.</p>
-    <form data-form="newsletter" style="display:flex;gap:12px;max-width:480px;margin:24px auto 0;flex-wrap:wrap;">
-      <input class="form-control" type="email" placeholder="your@lawfirm.com" style="flex:1;background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:white;" required>
-      <button type="submit" class="btn btn-primary">Subscribe Free →</button>
-    </form>
+      <div class="blog-cs-icon" aria-hidden="true">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="8" y="8" width="40" height="40" rx="5" stroke="var(--brown2)" stroke-width="1.8"/>
+          <path d="M16 20h24M16 28h18M16 36h12" stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="44" cy="44" r="10" fill="var(--brown3)" stroke="var(--gold3)" stroke-width="1.5"/>
+          <path d="M44 40v4.5l2.8 2.5" stroke="var(--gold3)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h1 class="blog-cs-heading">The Dominate Law Blog<br><em>Is Coming Soon</em></h1>
+
+      <p class="blog-cs-sub">We&rsquo;re crafting in-depth, data-backed articles and playbooks written exclusively for law firm owners and managing partners. Expert insights on every aspect of law firm growth &mdash; launching shortly.</p>
+
+      <div class="blog-cs-divider"></div>
+
+      <p class="blog-cs-coming-label">What we&rsquo;re writing about</p>
+      <div class="blog-cs-topics">
+        <span>Law Firm SEO</span>
+        <span>Google Business Profile</span>
+        <span>Social Media Strategy</span>
+        <span>Email Marketing</span>
+        <span>PPC &amp; Paid Ads</span>
+        <span>Legal Technology &amp; AI</span>
+        <span>Client Experience</span>
+        <span>Practice Management</span>
+        <span>Online Reviews</span>
+        <span>Attorney Wellness</span>
+        <span>Business Development</span>
+        <span>Finance &amp; Billing</span>
+      </div>
+
+      <div class="blog-cs-ctas">
+        <a href="/podcast" class="btn btn-primary">Listen to the Podcast &rarr;</a>
+        <a href="/resources" class="btn btn-outline">Browse Free Resources</a>
+      </div>
+
+      <div class="blog-cs-cards">
+        <a href="/podcast" class="blog-cs-card">
+          <div class="blog-cs-card-icon">🎙️</div>
+          <strong>Law Firm Growth Show</strong>
+          <p>Weekly podcast episodes with expert guests and actionable strategies for attorneys.</p>
+          <span class="blog-cs-avail">Available Now &rarr;</span>
+        </a>
+        <a href="/tools" class="blog-cs-card">
+          <div class="blog-cs-card-icon">⚖️</div>
+          <strong>Free Legal Calculators</strong>
+          <p>Practical tools built specifically for law firm owners — ROI, case value, and more.</p>
+          <span class="blog-cs-avail">Available Now &rarr;</span>
+        </a>
+        <a href="/events" class="blog-cs-card">
+          <div class="blog-cs-card-icon">📅</div>
+          <strong>Webinars &amp; Events</strong>
+          <p>Live sessions and on-demand recordings covering law firm marketing and growth.</p>
+          <span class="blog-cs-avail">Available Now &rarr;</span>
+        </a>
+      </div>
+
+    </div>
   </div>
 </section>
 

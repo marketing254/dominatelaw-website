@@ -1117,7 +1117,6 @@ document.getElementById('msmForm')?.addEventListener('submit', async function(e)
     document.getElementById('msmSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
 
   } catch (err) {
-    console.error('EmailJS error:', err);
     /* Restore button & show error message */
     btn.disabled = false;
     btn.classList.remove('loading');
