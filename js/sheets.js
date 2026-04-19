@@ -19,6 +19,41 @@
 const DL_SHEET_ID        = '1Kqtgrii6peL3DxEp7PO45zSYd3sSeTN-e1tHmkFdLpg';
 const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyqB-AwFlFILYYUj-AVcc5-d85ZiM7RE_gRVgyRnciZXNSUhPXwTblf0jg0S8e7rSQJ/exec';
 
+// ── SPAM PROTECTION ────────────────────────────────────────────────
+window.dlFormTs = Date.now(); // timestamp when page loaded
+
+// Detect random-looking strings (bot-generated names like "SXsakrnaGQFRNwzWCjLXp")
+function dlLooksSpam(text) {
+  if (!text) return false;
+  const s = text.trim();
+  if (s.length > 30) return true; // real names/firms rarely exceed 30 chars
+  // Check each word for suspicious mid-word uppercase chars
+  const words = s.split(/[\s\-']+/);
+  for (const w of words) {
+    if (w.length < 4) continue;
+    const midUpper = w.slice(1).replace(/[^a-zA-Z]/g, '')
+                      .split('').filter(c => c >= 'A' && c <= 'Z').length;
+    if (midUpper >= 3) return true; // 3+ uppercase mid-word = random casing = spam
+  }
+  // 7+ consecutive non-vowel chars (no real word has this)
+  if (/[^aeiouAEIOU\s\-']{7,}/.test(s)) return true;
+  return false;
+}
+
+// Main spam gate: call before any form submission
+// honeypotId = the hidden field id on that form
+function dlSpamBlock(honeypotId, firstName, lastName) {
+  // 1. Honeypot filled — bot
+  const hp = document.getElementById(honeypotId || 'dl_hp');
+  if (hp && hp.value.trim()) return true;
+  // 2. Submitted under 2 seconds from page load — bot
+  if (Date.now() - window.dlFormTs < 2000) return true;
+  // 3. Names look randomly generated
+  if (dlLooksSpam(firstName) || dlLooksSpam(lastName)) return true;
+  return false;
+}
+// ──────────────────────────────────────────────────────────────────
+
 // ── Fetch & parse a sheet tab ─────────────────────────────────────
 async function dlFetchSheet(sheetName) {
   if (!DL_SHEET_ID || DL_SHEET_ID === 'YOUR_SHEET_ID_HERE') {
