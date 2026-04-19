@@ -338,7 +338,7 @@ p:last-child{margin-bottom:0}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
   .announce{background:var(--brown3);text-align:center;padding:10px 0;font-size:.76rem;color:rgba(255,255,255,.75)}.announce strong{color:var(--gold3)}.announce a{color:var(--gold3);text-decoration:underline;font-weight:700}.a-pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold3);margin-right:8px;animation:ann-pulse 2s ease-in-out infinite;vertical-align:middle}@keyframes ann-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
-</style>
+.dl-hp{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;overflow:hidden;pointer-events:none}</style>
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LX7QLWPWSM"></script>
   <script>
@@ -400,7 +400,7 @@ p:last-child{margin-bottom:0}
     <div class="res-gate-eyebrow">Free Resources — Legal Professionals Only</div>
     <h2 id="dlResGateTitle">Unlock Your Free<br>Resource Library</h2>
     <p>Get instant, free access to all Dominate Law templates, guides, and checklists — built specifically for law firm owners and attorneys.</p>
-    <form class="res-gate-form" id="resGateForm" novalidate>
+    <form class="res-gate-form" id="resGateForm" novalidate><div class="dl-hp" aria-hidden="true"><input type="text" name="dl_hp" id="dl_hp" class="dl-hp" tabindex="-1" autocomplete="off" value=""></div>
       <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
         <div class="res-gate-field">
           <label for="dlrFirst">First Name <span style="color:#c0392b">*</span></label>
@@ -453,6 +453,10 @@ window.dlResGateSubmit=function(){
   var em=(document.getElementById('dlrEmail').value||'').trim();
   var fi=(document.getElementById('dlrFirm').value||'').trim();
   var ro=(document.getElementById('dlrRole').value||'').trim();
+  if(typeof dlSpamBlock==='function'&&dlSpamBlock('dl_hp',fn,ln)){return;}
+  var S=window.DLSec;
+  if(S&&(S.isJunk(fn)||S.isJunk(ln)||S.isJunk(em))){return;}
+  if(S&&S.tooFast()){return;}
   var ok=true;
   var show=function(id,v){document.getElementById(id).style.display=v?'block':'none'};
   if(!fn){show('dlrFirstErr',true);ok=false}else{show('dlrFirstErr',false)}
@@ -874,6 +878,7 @@ if (progressBar) {
   });
 }
 </script>
+<script src="/js/form-security.js"></script>
 <script src="/js/sheets.js"></script>
 <script src="/js/cookie-consent.js"></script>
 </body>

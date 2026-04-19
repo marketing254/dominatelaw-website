@@ -507,7 +507,7 @@ input, select, textarea { font: inherit; }
 .footer-bottom-links { display: flex; gap: 20px; }
 .footer-brand-t strong { display: block; font-size: .88rem; color: rgba(255,255,255,.8); }
 .footer-brand-t em { font-size: .67rem; color: rgba(255,255,255,.3); font-style: normal; }
-</style>
+.dl-hp{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;overflow:hidden;pointer-events:none}</style>
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LX7QLWPWSM"></script>
   <script>
@@ -539,7 +539,7 @@ input, select, textarea { font: inherit; }
     <div class="gate-eyebrow">Free Access — Legal Professionals Only</div>
     <h2 id="gateTitle">Unlock Your Free<br>Legal Toolkit</h2>
     <p>Get instant, free access to 8 specialized legal calculators — contingency fees, statute of limitations, settlement estimates, and more. Built for attorneys by attorneys.</p>
-    <form class="gate-form" id="gateForm" novalidate>
+    <form class="gate-form" id="gateForm" novalidate><div class="dl-hp" aria-hidden="true"><input type="text" name="dl_hp" id="dl_hp" class="dl-hp" tabindex="-1" autocomplete="off" value=""></div>
       <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
         <div class="gate-field">
           <label for="gFirstName">First Name <span style="color:var(--red)">*</span></label>
@@ -1241,6 +1241,10 @@ function dlGateSubmit() {
   var lastName  = (document.getElementById('gLastName').value  || '').trim();
   var email     = (document.getElementById('gEmail').value     || '').trim();
   var role      = (document.getElementById('gRole').value      || '').trim();
+  if (typeof dlSpamBlock === 'function' && dlSpamBlock('dl_hp', firstName, lastName)) { return; }
+  var S = window.DLSec;
+  if (S && (S.isJunk(firstName) || S.isJunk(lastName) || S.isJunk(email))) { return; }
+  if (S && S.tooFast()) { return; }
   var ok = true;
 
   var fnErr = document.getElementById('gFirstNameErr');
@@ -1594,6 +1598,7 @@ document.querySelectorAll('.mob-acc-trigger').forEach(btn => {
 });
 
 </script>
+<script src="/js/form-security.js"></script>
 <script src="/js/sheets.js"></script>
 <script src="/js/cookie-consent.js"></script>
 </body>

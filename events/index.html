@@ -418,7 +418,7 @@ p:last-child{margin-bottom:0}
 .footer-bottom-links { display: flex; gap: 20px; }
 .footer-brand-t strong { display: block; font-size: .88rem; color: rgba(255,255,255,.8); }
 .footer-brand-t em { font-size: .67rem; color: rgba(255,255,255,.3); font-style: normal; }
-</style>
+.dl-hp{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;overflow:hidden;pointer-events:none}</style>
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LX7QLWPWSM"></script>
   <script>
@@ -544,7 +544,7 @@ p:last-child{margin-bottom:0}
       <p id="ev-modal-subtitle">Free virtual event — seats are limited</p>
     </div>
     <div class="ev-modal-body">
-      <div id="ev-form-wrap">
+      <div id="ev-form-wrap"><div class="dl-hp" aria-hidden="true"><input type="text" name="dl_hp" id="dl_hp" class="dl-hp" tabindex="-1" autocomplete="off" value=""></div>
         <div class="ev-frow">
           <div class="ev-fg"><label for="evFname">First Name <em>*</em></label><input id="evFname" type="text" placeholder="Alex" required></div>
           <div class="ev-fg"><label for="evLname">Last Name <em>*</em></label><input id="evLname" type="text" placeholder="Thompson" required></div>
@@ -772,6 +772,10 @@ async function dlSubmitEventReg() {
     email: get('evEmail'), phone: get('evPhone'),
     questions: get('evQuestion')
   };
+  if (typeof dlSpamBlock === 'function' && dlSpamBlock('dl_hp', fields.first_name, fields.last_name)) { return; }
+  const S = window.DLSec;
+  if (S && (S.isJunk(fields.first_name) || S.isJunk(fields.last_name) || S.isJunk(fields.email))) { return; }
+  if (S && S.tooFast()) { return; }
   const required = ['first_name','last_name','email','phone'];
   const missing = required.filter(k => !fields[k]);
   if (missing.length) {
@@ -835,6 +839,7 @@ function dlStartCountdown(targetDate) {
   setInterval(tick, 1000);
 }
 </script>
+<script src="/js/form-security.js"></script>
 <script src="/js/cookie-consent.js"></script>
 </body>
 </html>
