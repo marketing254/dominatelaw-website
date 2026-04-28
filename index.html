@@ -1107,7 +1107,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 #home-popup {
   background: #fff;
   border-radius: 20px;
-  width: 100%; max-width: 720px;
+  width: 100%; max-width: 820px;
   box-shadow: 0 40px 100px rgba(0,0,0,.28);
   overflow: hidden;
   transform: translateY(28px) scale(.97);
@@ -1118,13 +1118,14 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 
 #home-popup-close {
   position: absolute; top: 14px; right: 14px;
-  width: 32px; height: 32px; border-radius: 50%;
-  background: rgba(0,0,0,.08); border: none; cursor: pointer;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255,255,255,.92); border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  font-size: .95rem; color: var(--muted);
-  transition: background .2s, color .2s; z-index: 2;
+  font-size: .95rem; color: var(--brown3);
+  transition: background .2s, color .2s, transform .2s; z-index: 5;
+  box-shadow: 0 4px 14px rgba(0,0,0,.18);
 }
-#home-popup-close:hover { background: var(--brown); color: #fff; }
+#home-popup-close:hover { background: var(--brown); color: #fff; transform: rotate(90deg); }
 
 .hp-header {
   background: linear-gradient(120deg, var(--brown3), var(--brown));
@@ -1141,38 +1142,84 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 }
 
 .hp-cards {
-  display: grid; grid-template-columns: 1fr 1fr;
+  display: grid; grid-template-columns: 1.15fr 1fr;
 }
 .hp-card {
-  padding: 24px 26px 28px;
+  padding: 22px 24px 26px;
+  display: flex; flex-direction: column;
 }
-.hp-card:first-child { border-right: 1px solid var(--border); }
+.hp-card:first-child { border-right: 1px solid var(--border); padding: 0 0 24px; }
 
 .hp-card-tag {
   font-size: .64rem; font-weight: 800; letter-spacing: .13em;
   text-transform: uppercase; margin-bottom: 12px; display: flex;
   align-items: center; gap: 6px;
 }
-.hp-card-tag.podcast { color: var(--brown); }
+.hp-card-tag.podcast { color: var(--brown); padding: 18px 24px 0; margin-bottom: 14px; }
 .hp-card-tag.event   { color: var(--gold2); }
 .hp-card-tag svg     { width: 13px; height: 13px; }
 
-.hp-pod-inner { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
-.hp-pod-photo {
-  width: 62px; height: 62px; border-radius: 50%; overflow: hidden;
-  flex-shrink: 0; border: 2px solid var(--gold3);
+/* ── Podcast card: banner-led design ─────────────────────────────── */
+.hp-pod-banner {
+  position: relative;
+  aspect-ratio: 16/9;
+  margin: 0 24px 14px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--brown), var(--brown3));
+  box-shadow: 0 10px 28px rgba(58,13,0,.18);
 }
-.hp-pod-photo img { width: 100%; height: 100%; object-fit: cover; }
-.hp-pod-ep {
-  font-size: .68rem; font-weight: 700; color: var(--muted);
-  text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px;
+.hp-pod-banner img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  display: block;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+.hp-pod-banner:hover img { transform: scale(1.04); }
+.hp-pod-banner::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.55) 100%);
+}
+.hp-pod-banner-fallback {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  color: var(--gold3); font-family: 'Merriweather', serif;
+  font-weight: 900; font-size: 2rem; letter-spacing: .04em;
+}
+.hp-pod-num {
+  position: absolute; left: 12px; bottom: 12px; z-index: 2;
+  font-size: .62rem; font-weight: 800; letter-spacing: .12em;
+  text-transform: uppercase; color: #fff;
+  background: rgba(58,13,0,.78); backdrop-filter: blur(6px);
+  border: 1px solid rgba(196,154,10,.5);
+  border-radius: 100px; padding: 5px 12px;
+}
+.hp-pod-flag {
+  position: absolute; right: 12px; top: 12px; z-index: 2;
+  font-size: .6rem; font-weight: 900; letter-spacing: .16em;
+  color: var(--brown3);
+  background: linear-gradient(135deg, var(--gold3), var(--gold));
+  border-radius: 4px; padding: 4px 10px;
+  box-shadow: 0 4px 14px rgba(196,154,10,.4);
+  text-transform: uppercase;
+  display: none;
+}
+.hp-pod-flag.visible { display: inline-block; }
+
+.hp-pod-meta {
+  font-size: .66rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gold2); margin: 0 24px 6px;
 }
 .hp-pod-title {
   font-family: 'Merriweather', serif;
-  font-size: .9rem; font-weight: 700; color: var(--brown3);
-  line-height: 1.45; margin: 0;
+  font-size: 1rem; font-weight: 800; color: var(--brown3);
+  line-height: 1.4; margin: 0 24px 16px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+.hp-pod-actions { margin: auto 24px 0; }
 
+/* ── Event card ──────────────────────────────────────────────────── */
 .hp-evt-date {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--cream); border-radius: 8px;
@@ -1187,23 +1234,27 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 }
 .hp-evt-desc {
   font-size: .78rem; color: var(--muted); line-height: 1.6; margin: 0 0 14px;
+  flex-grow: 1;
 }
 
 .hp-btn {
   display: inline-flex; align-items: center; gap: 6px;
-  padding: 10px 18px; border-radius: 6px;
-  font-size: .8rem; font-weight: 700; transition: all .2s;
+  padding: 11px 20px; border-radius: 6px;
+  font-size: .82rem; font-weight: 700; transition: all .2s;
   border: none; cursor: pointer; text-decoration: none;
 }
 .hp-btn-podcast  { background: var(--brown); color: #fff; }
-.hp-btn-podcast:hover { background: var(--brown3); transform: translateY(-1px); }
+.hp-btn-podcast:hover { background: var(--brown3); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(58,13,0,.25); }
 .hp-btn-event    { background: var(--gold); color: var(--brown3); }
 .hp-btn-event:hover { background: var(--gold2); transform: translateY(-1px); }
 
-@media (max-width: 580px) {
+@media (max-width: 720px) {
   .hp-cards { grid-template-columns: 1fr; }
-  .hp-card:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  .hp-card:first-child { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 22px; }
   #home-popup { max-width: 100%; border-radius: 16px; }
+  .hp-pod-banner { margin: 0 20px 14px; }
+  .hp-pod-meta, .hp-pod-title, .hp-pod-actions { margin-left: 20px; margin-right: 20px; }
+  .hp-card-tag.podcast { padding: 16px 20px 0; }
 }
 </style>
 <script type="application/ld+json">
@@ -1273,24 +1324,26 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
     <div class="hp-cards">
 
       <!-- Podcast card -->
-      <div class="hp-card">
+      <div class="hp-card hp-card-pod">
         <div class="hp-card-tag podcast">
           <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 8a5.5 5.5 0 1 1 11 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M1 8a7 7 0 1 1 14 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".4"/></svg>
           Latest Podcast
         </div>
-        <div class="hp-pod-inner">
-          <div class="hp-pod-photo">
-            <img id="hp-pod-img" src="" alt="Latest Dominate Law Podcast Episode" loading="lazy">
-          </div>
-          <div>
-            <div class="hp-pod-ep" id="hp-pod-ep">Loading...</div>
-            <p class="hp-pod-title" id="hp-pod-title"></p>
-          </div>
-        </div>
-        <a href="/podcast" id="hp-pod-link" class="hp-btn hp-btn-podcast" onclick="dlCloseHomePopup()">
-          <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><polygon points="5,3 13,8 5,13"/></svg>
-          Listen Now
+        <a href="/podcast-episode/" id="hp-pod-banner-link" class="hp-pod-banner" onclick="dlCloseHomePopup()" aria-label="Listen to latest episode">
+          <img id="hp-pod-img" src="" alt="Latest Dominate Law Podcast Episode" loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="hp-pod-banner-fallback" style="display:none">DL</div>
+          <span class="hp-pod-num" id="hp-pod-ep">Loading…</span>
+          <span class="hp-pod-flag" id="hp-pod-flag">NEW</span>
         </a>
+        <div class="hp-pod-meta" id="hp-pod-byline">Dominate Law Podcast</div>
+        <p class="hp-pod-title" id="hp-pod-title"></p>
+        <div class="hp-pod-actions">
+          <a href="/podcast" id="hp-pod-link" class="hp-btn hp-btn-podcast" onclick="dlCloseHomePopup()">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><polygon points="5,3 13,8 5,13"/></svg>
+            Listen Now
+          </a>
+        </div>
       </div>
 
       <!-- Event card -->
