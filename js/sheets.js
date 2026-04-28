@@ -281,15 +281,31 @@ async function dlLoadLatestPodcast() {
       `;
     }
 
-    // Popup — podcast card
-    const photoEl = document.querySelector('.hp-pod-photo img');
-    const epNumEl = document.querySelector('.hp-pod-ep');
-    const titleEl = document.querySelector('.hp-pod-title');
-    const listenBtn = document.querySelector('.hp-btn-podcast');
-    if (photoEl) { photoEl.src = dlDriveImg(ep.guest_photo_url); photoEl.alt = ep.guest_name; }
-    if (epNumEl) epNumEl.textContent = `Episode #${ep.episode}`;
-    if (titleEl) titleEl.textContent = ep.title;
-    if (listenBtn) listenBtn.href = `/podcast-episode/?ep=${ep.episode}`;
+    // Popup — podcast card (banner-led template)
+    const epNum         = parseInt(ep.episode, 10) || 0;
+    const speakerCount  = ep.speakers ? ep.speakers.split('|').map(s => s.trim()).filter(Boolean).length : 0;
+    const isPanel       = speakerCount > 1;
+    const photoEl       = document.getElementById('hp-pod-img');
+    const epNumEl       = document.getElementById('hp-pod-ep');
+    const flagEl        = document.getElementById('hp-pod-flag');
+    const bylineEl      = document.getElementById('hp-pod-byline');
+    const titleEl       = document.getElementById('hp-pod-title');
+    const bannerLinkEl  = document.getElementById('hp-pod-banner-link');
+    const listenBtn     = document.getElementById('hp-pod-link');
+    const epHref        = `/podcast-episode/?ep=${ep.episode}`;
+
+    if (photoEl) {
+      photoEl.src = dlDriveImg(ep.guest_photo_url, 'w800');
+      photoEl.alt = `Episode ${ep.episode}: ${ep.title}`;
+    }
+    if (epNumEl)      epNumEl.textContent  = `Episode ${ep.episode}`;
+    if (flagEl)       flagEl.classList.toggle('visible', epNum >= 21);
+    if (bylineEl)     bylineEl.textContent = isPanel
+      ? `Featuring a panel of ${speakerCount - 1}`
+      : (ep.guest_name ? `With ${ep.guest_name}` : 'Dominate Law Podcast');
+    if (titleEl)      titleEl.textContent  = ep.title;
+    if (bannerLinkEl) bannerLinkEl.href    = epHref;
+    if (listenBtn)    listenBtn.href       = epHref;
   } catch (e) {
     console.warn('DL Sheets: Could not load latest podcast', e);
   }
