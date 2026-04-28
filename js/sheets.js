@@ -8,7 +8,19 @@
 //  Required tabs in your Google Sheet:
 //    • podcasts  (columns: episode, title, guest_name, guest_photo_url, poster_image,
 //                          episode_url, category, duration, description,
-//                          contact_info, spotify_embed, spotify_url, apple_url, audio_source)
+//                          contact_info, spotify_embed, spotify_url, apple_url, audio_source,
+//                          transcript_url, speakers, speaker_photos)
+//
+//   Multi-speaker episodes (panel format, ep 21+):
+//     speakers       — pipe-separated, mark host with "(Host)" suffix.
+//                      Example: "Naren Raja (Host)|David Skinner|Maribel Rivera|Joseph Tiano|Lana Manganello"
+//                      Position N = transcript Speaker N (1-indexed).
+//     speaker_photos — pipe-separated photo URLs, same order as speakers (optional).
+//
+//   Audio source types auto-detected:
+//     • Libsyn embed iframe (html5-player.libsyn.com/embed/...)  → branded iframe (90px)
+//     • Direct .mp3 / .m4a / .wav (e.g. traffic.libsyn.com/...)  → native HTML5 audio card
+//     • Google Drive link                                        → Drive preview iframe (legacy)
 //    • reviews   (columns: reviewer_name, firm_name, rating, review_text, platform, photo_url)
 //    • events    (columns: date_iso, day, month_year, title, description, register_url)
 //    • leads     (auto-filled by Google Apps Script — do not edit manually)
@@ -206,6 +218,38 @@ function dlParseContact(str) {
   }).filter(c => c.value.length > 0);
 }
 
+// ── Helper: parse pipe-separated speakers list ───────────────────
+// Format: "Naren Raja (Host)|David Skinner|Maribel Rivera"
+// Position 0 = Speaker 1, position 1 = Speaker 2, etc.
+// Append "(Host)" / "(Co-Host)" / "(Moderator)" to mark host role.
+function dlParseSpeakers(str) {
+  if (!str) return [];
+  return str.split('|').map((raw, i) => {
+    const s = raw.trim();
+    if (!s) return null;
+    const m = s.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
+    if (m) {
+      const role = /host|moderator/i.test(m[2]) ? 'host' : 'guest';
+      return { speakerNum: i + 1, name: m[1].trim(), roleLabel: m[2].trim(), role };
+    }
+    return { speakerNum: i + 1, name: s, roleLabel: 'Speaker', role: 'guest' };
+  }).filter(Boolean);
+}
+
+// ── Helper: classify an audio_source URL ──────────────────────────
+// Returns: 'libsyn-embed' | 'audio-file' | 'drive' | 'other'
+function dlClassifyAudio(url) {
+  if (!url) return 'other';
+  const u = url.trim();
+  if (/html5-player\.libsyn\.com\/embed/i.test(u)) return 'libsyn-embed';
+  if (/\.(mp3|m4a|wav|ogg|aac)(\?|$)/i.test(u))   return 'audio-file';
+  if (/traffic\.libsyn\.com|libsynpro\.com/i.test(u)) return 'audio-file';
+  if (/drive\.google\.com/i.test(u))               return 'drive';
+  // Common embed iframe hosts (Spotify, Apple, etc) the user may paste here too
+  if (/\/embed\//i.test(u))                        return 'libsyn-embed';
+  return 'other';
+}
+
 // ── HOME PAGE: Load latest podcast into popup + announcement bar ──
 async function dlLoadLatestPodcast() {
   try {
@@ -291,6 +335,50 @@ async function dlLoadNextEvent() {
   }
 }
 
+// Episodes whose tightly-cropped headshots need top-anchored crop
+// (default 30%-down crop chops off foreheads on these specific photos).
+// Add more episode numbers here if other guests have the same issue.
+const DL_TOP_CROP_EPISODES = new Set([2, 4, 10]);
+
+// ── Build a single episode card (shared by home + podcast page) ──
+function dlBuildEpisodeCard(ep) {
+  const epNum    = parseInt(ep.episode, 10) || 0;
+  const isNew    = epNum >= 21;
+  const speakerCount = ep.speakers ? ep.speakers.split('|').map(s => s.trim()).filter(Boolean).length : 0;
+  const isPanel  = speakerCount > 1;
+  const photo    = ep.guest_photo_url ? dlDriveImg(ep.guest_photo_url, 'w800') : '';
+  const initials = dlInitials(ep.guest_name);
+  const byLine   = isPanel
+    ? `Panel of ${speakerCount - 1}`
+    : (ep.guest_name || 'Dominate Law');
+  const byIcon   = isPanel ? '👥' : '👤';
+  const meta     = [ep.category, ep.duration].filter(Boolean).join(' · ');
+  // Tightly-cropped square headshots: show the whole photo (contain) so the
+  // full face fits, with the brown gradient filling the remaining 16:9 area.
+  const imgStyle = DL_TOP_CROP_EPISODES.has(epNum)
+    ? ' style="object-fit:contain;object-position:center top;background:linear-gradient(135deg,var(--brown),var(--brown3))"'
+    : '';
+
+  return `
+    <a href="/podcast-episode/?ep=${ep.episode}" class="ep-photo-card${isNew ? ' is-new' : ''}" aria-label="Episode ${ep.episode}: ${ep.title}">
+      <div class="ep-photo-img">
+        ${photo
+          ? `<img src="${photo}" alt="${ep.title}" loading="lazy"${imgStyle}
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+          : ''}
+        <div class="ep-photo-fallback" style="${photo ? 'display:none' : ''}">${initials}</div>
+        <span class="ep-photo-num">Ep ${ep.episode}</span>
+        ${isNew ? '<span class="ep-photo-flag">NEW</span>' : ''}
+      </div>
+      <div class="ep-photo-body">
+        ${meta ? `<div class="ep-photo-meta">${meta}</div>` : ''}
+        <h3 class="ep-photo-title">${ep.title}</h3>
+        <div class="ep-photo-by"><span aria-hidden="true">${byIcon}</span>&nbsp;${byLine}</div>
+        <span class="ep-photo-cta">Listen Now <span aria-hidden="true">→</span></span>
+      </div>
+    </a>`;
+}
+
 // ── HOME PAGE: Load latest 6 episodes into homepage podcast grid ─
 async function dlLoadHomePodcastGrid() {
   const grid = document.getElementById('hp-pod-grid');
@@ -299,19 +387,7 @@ async function dlLoadHomePodcastGrid() {
     const episodes = await dlFetchSheet('podcasts');
     if (!episodes.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,.4);padding:32px">No episodes yet.</div>'; return; }
     const latest6 = episodes.slice().reverse().slice(0, 6);
-    grid.innerHTML = latest6.map(ep => {
-      const initials = dlInitials(ep.guest_name);
-      return `
-        <a href="/podcast-episode/?ep=${ep.episode}" class="ep-photo-card">
-          <span class="ep-badge">Episode #${ep.episode}</span>
-          <div class="ep-circle">
-            <img src="${dlDriveImg(ep.guest_photo_url)}" alt="${ep.guest_name}" loading="lazy"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.1rem">${initials}</div>
-          </div>
-          <p>${ep.title}</p>
-        </a>`;
-    }).join('');
+    grid.innerHTML = latest6.map(dlBuildEpisodeCard).join('');
   } catch (e) {
     console.warn('DL Sheets: Could not load home podcast grid', e);
   }
@@ -325,7 +401,7 @@ async function dlLoadPodcastGrid() {
     const episodes = await dlFetchSheet('podcasts');
     if (!episodes.length) { grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted)">No episodes found.</p>'; return; }
 
-    document.querySelectorAll('#ticker-ep-count').forEach(el => el.textContent = episodes.length);
+    document.querySelectorAll('#ticker-ep-count, #pod-count').forEach(el => el.textContent = episodes.length);
 
     const PAGE_SIZE = 10;
     const all = episodes.slice().reverse(); // newest first
@@ -345,18 +421,9 @@ async function dlLoadPodcastGrid() {
 
       const batch = all.slice(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE);
       batch.forEach(ep => {
-        const initials = dlInitials(ep.guest_name);
-        const card = document.createElement('a');
-        card.href = `/podcast-episode/?ep=${ep.episode}`;
-        card.className = 'ep-photo-card';
-        card.innerHTML = `
-          <span class="ep-badge">Episode #${ep.episode}</span>
-          <div class="ep-circle">
-            <img src="${dlDriveImg(ep.guest_photo_url)}" alt="${ep.guest_name}" loading="lazy"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.1rem">${initials}</div>
-          </div>
-          <p>${ep.title}</p>`;
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = dlBuildEpisodeCard(ep).trim();
+        const card = wrapper.firstElementChild;
         grid.insertBefore(card, paginationWrap);
       });
 
@@ -426,22 +493,56 @@ async function dlLoadEpisodePage() {
     const pageUrl   = encodeURIComponent(window.location.href);
     const pageTitle = encodeURIComponent(`Episode #${ep.episode}: ${ep.title} — Dominate Law`);
 
+    // ── Speakers (multi-speaker / panel episodes, ep 21+)
+    const speakers = dlParseSpeakers(ep.speakers);
+    const isPanel  = speakers.length > 1;
+
     // ── Page title + breadcrumb
     document.title = `Episode #${ep.episode}: ${ep.title} — Dominate Law`;
     if (crumbEl) crumbEl.textContent = `Episode #${ep.episode}`;
 
     // ── Hero
     if (heroEl) {
+      // Build the "featuring" tag — single guest or panelist count
+      const guestTag = isPanel
+        ? `<span class="ep-tag">👥 ${speakers.filter(s => s.role !== 'host').length} Panelists</span>`
+        : `<span class="ep-tag">👤 ${ep.guest_name}</span>`;
+
       heroEl.innerHTML = `
         <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(196,154,10,.15);border:1px solid rgba(196,154,10,.3);border-radius:100px;padding:6px 16px;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#E8C44A;margin-bottom:16px">
           Episode #${ep.episode}
         </div>
         <h1 class="ep-hero-title">${ep.title}</h1>
         <div class="ep-meta-tags">
-          <span class="ep-tag">👤 ${ep.guest_name}</span>
+          ${guestTag}
           ${ep.category ? `<span class="ep-tag">🎙️ ${ep.category}</span>` : ''}
           ${ep.duration  ? `<span class="ep-tag">⏱ ${ep.duration}</span>`  : ''}
         </div>`;
+    }
+
+    // ── Speaker grid (panel episodes only)
+    if (isPanel) {
+      const photoUrls = (ep.speaker_photos || '').split('|').map(s => s.trim());
+      const speakersSec  = document.getElementById('ep-speakers-section');
+      const speakersGrid = document.getElementById('ep-speakers-grid');
+      if (speakersSec && speakersGrid) {
+        speakersGrid.innerHTML = speakers.map((sp, i) => {
+          const photo    = photoUrls[i] ? dlDriveImg(photoUrls[i], 'w400') : '';
+          const initials = dlInitials(sp.name);
+          const roleCls  = sp.role === 'host' ? 'ep-spk-host' : 'ep-spk-guest';
+          return `
+            <div class="ep-spk-card ${roleCls}">
+              <div class="ep-spk-img">
+                ${photo ? `<img src="${photo}" alt="${sp.name}" loading="lazy"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` : ''}
+                <div class="ep-spk-fallback" style="${photo ? 'display:none' : ''}">${initials}</div>
+              </div>
+              <div class="ep-spk-role">${sp.roleLabel}</div>
+              <div class="ep-spk-name">${sp.name}</div>
+            </div>`;
+        }).join('');
+        speakersSec.style.display = 'block';
+      }
     }
 
     // ── Social share bar
@@ -456,18 +557,42 @@ async function dlLoadEpisodePage() {
       if (li) li.href = `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`;
     }
 
-    // ── Audio: Spotify embed takes priority, MP3 Drive as fallback
+    // ── Audio: spotify_embed > audio_source (Libsyn / MP3 / Drive)
     if (ep.spotify_embed) {
       const sec    = document.getElementById('ep-embed-section');
       const iframe = document.getElementById('ep-spotify-iframe');
       if (sec) sec.style.display = 'block';
-      if (iframe) iframe.src = ep.spotify_embed;
+      if (iframe) {
+        iframe.src    = ep.spotify_embed;
+        iframe.height = 152;
+      }
     } else if (ep.audio_source) {
-      const sec    = document.getElementById('ep-audio-section');
-      const player = document.getElementById('ep-audio-player');
-      if (sec) sec.style.display = 'block';
-      // Use Drive preview iframe — works reliably for publicly shared MP3s
-      if (player) player.src = dlDriveAudio(ep.audio_source);
+      const kind = dlClassifyAudio(ep.audio_source);
+
+      if (kind === 'audio-file') {
+        // Direct .mp3 (Libsyn traffic, etc) — branded native HTML5 audio card
+        const sec     = document.getElementById('ep-native-audio-section');
+        const audioEl = document.getElementById('ep-native-audio');
+        const titleEl = document.getElementById('ep-libsyn-title');
+        if (sec) sec.style.display = 'block';
+        if (audioEl) audioEl.src = ep.audio_source;
+        if (titleEl) titleEl.textContent = `Episode #${ep.episode}: ${ep.title}`;
+      } else if (kind === 'libsyn-embed') {
+        // Libsyn (or other) iframe embed — reuse the Spotify-style embed slot
+        const sec    = document.getElementById('ep-embed-section');
+        const iframe = document.getElementById('ep-spotify-iframe');
+        if (sec) sec.style.display = 'block';
+        if (iframe) {
+          iframe.src    = ep.audio_source;
+          iframe.height = ep.audio_source.includes('libsyn') ? 90 : 152;
+        }
+      } else {
+        // Legacy: Google Drive preview iframe
+        const sec    = document.getElementById('ep-audio-section');
+        const player = document.getElementById('ep-audio-player');
+        if (sec) sec.style.display = 'block';
+        if (player) player.src = dlDriveAudio(ep.audio_source);
+      }
     }
 
     // ── Poster image
@@ -491,7 +616,9 @@ async function dlLoadEpisodePage() {
     const bioHead = document.getElementById('ep-bio-heading');
     const bioList = document.getElementById('ep-bio-list');
     if (bio.length && bioWrap) {
-      if (bioHead) bioHead.textContent = `More About ${bioGuestName || ep.guest_name}`;
+      if (bioHead) bioHead.textContent = isPanel
+        ? 'Meet the Panelists'
+        : `More About ${bioGuestName || ep.guest_name}`;
       if (bioList) bioList.innerHTML = bio.map(b => `<li>${b}</li>`).join('');
       bioWrap.style.display = 'block';
     }
@@ -531,8 +658,11 @@ async function dlLoadEpisodePage() {
     const body = document.getElementById('ep-body');
     if (body) body.style.display = 'block';
 
-    // ── Transcript tab
-    dlLoadTranscript(ep.transcript_url, ep.title, ep.guest_name);
+    // ── Transcript tab (speakers array drives Speaker N → name mapping)
+    // Ep 21+ uses "new format": never falls back to "Naren" — unmapped speakers stay generic.
+    const epNumInt = parseInt(ep.episode, 10) || 0;
+    const isNewFormat = epNumInt >= 21;
+    dlLoadTranscript(ep.transcript_url, ep.title, ep.guest_name, speakers, isNewFormat);
 
     // ── Prev / Next
     const navSec   = document.getElementById('ep-nav-section');
@@ -563,7 +693,7 @@ async function dlLoadEpisodePage() {
 }
 
 // ── TRANSCRIPT: fetch .txt from Drive via Apps Script proxy ──────
-async function dlLoadTranscript(transcriptUrl, epTitle, guestName) {
+async function dlLoadTranscript(transcriptUrl, epTitle, guestName, speakers, isNewFormat) {
   const container = document.getElementById('ep-transcript-content');
   const tabBtn    = document.getElementById('ep-tab-transcript-btn');
   if (!container) return;
@@ -594,8 +724,9 @@ async function dlLoadTranscript(transcriptUrl, epTitle, guestName) {
 
     const text = data.content;
     // Pass guest name + default host name for speaker labelling
+    // For panel episodes, the speakers array overrides legacy 1=Intro/2=host/3+=guest mapping
     const hostName  = 'Naren Raja';
-    const html = dlFormatTranscript(text, guestName, hostName);
+    const html = dlFormatTranscript(text, guestName, hostName, speakers, isNewFormat);
     const wordCount = text.split(/\s+/).length;
     const readMins  = Math.max(1, Math.round(wordCount / 200));
 
@@ -666,9 +797,16 @@ async function dlLoadTranscript(transcriptUrl, epTitle, guestName) {
 
 // ── Format raw transcript text into styled HTML ────────────────────
 // Handles format: "Speaker N    HH:MM:SS    text content"
-function dlFormatTranscript(text, guestName, hostName) {
-  hostName  = (hostName  || 'Host').split(' ')[0];
-  guestName = (guestName || 'Guest').split(' ')[0];
+//
+// Mapping precedence for Speaker N:
+//   1. `speakers` array (panel format) → use speakers[N-1].name / role
+//   2. `isNewFormat` (ep 21+ with no speakers column) → generic "Speaker N", role=guest
+//      (NEVER assumes Naren/the host — user must populate speakers column to get names)
+//   3. Legacy (ep 1–20) → 1=Intro, 2=host (Naren), 3+=single guest
+function dlFormatTranscript(text, guestName, hostName, speakers, isNewFormat) {
+  const hostShort  = (hostName  || 'Host').split(' ')[0];
+  const guestShort = (guestName || 'Guest').split(' ')[0];
+  const usePanel = Array.isArray(speakers) && speakers.length > 0;
 
   // ── Parse each line ──────────────────────────────────────────────
   // Format: Speaker N    00:00:00    text  (4-space separated)
@@ -697,13 +835,25 @@ function dlFormatTranscript(text, guestName, hostName) {
 
     // Skip silences and empty
     if (!textContent || textContent === '<silence>' || textContent === '<silence>  ') continue;
+    if (speakerNum === 0) continue; // silence / noise
 
-    // Map speaker numbers to labels
+    // Map speaker number → label + role
     let label, role;
-    if (speakerNum === 0) continue;                // silence / noise
-    if (speakerNum === 1) { label = 'Intro'; role = 'intro'; }
-    else if (speakerNum === 2) { label = hostName; role = 'host'; }
-    else { label = guestName; role = 'guest'; }    // Speaker 3, 4, etc.
+    if (usePanel) {
+      const sp = speakers.find(s => s.speakerNum === speakerNum);
+      if (sp) { label = sp.name; role = sp.role; }
+      else    { label = `Speaker ${speakerNum}`; role = 'guest'; }
+    } else if (isNewFormat) {
+      // Ep 21+ with no speakers column populated — never assume host name.
+      // Render generic Speaker N labels until the speakers column is filled in.
+      label = `Speaker ${speakerNum}`;
+      role  = 'guest';
+    } else {
+      // Legacy mapping for episodes 1–20
+      if (speakerNum === 1)      { label = 'Intro';      role = 'intro'; }
+      else if (speakerNum === 2) { label = hostShort;    role = 'host';  }
+      else                       { label = guestShort;   role = 'guest'; }
+    }
 
     entries.push({ speakerNum, label, role, time, text: textContent });
   }
@@ -711,20 +861,26 @@ function dlFormatTranscript(text, guestName, hostName) {
   if (!entries.length) return '<div class="ep-transcript-para"><div class="ep-transcript-text">Transcript content could not be parsed.</div></div>';
 
   // ── Build HTML ───────────────────────────────────────────────────
+  // In panel/new-format mode, each speaker number gets a stable tint + per-turn badge
+  const perSpeakerTinting = usePanel || isNewFormat;
   let html = '';
-  let lastRole = null;
+  let lastSig = null;
 
   for (const e of entries) {
     const roleClass = e.role === 'host'  ? 'ep-ts-host'
                     : e.role === 'guest' ? 'ep-ts-guest'
                     : 'ep-ts-intro';
+    const spkClass = perSpeakerTinting && e.speakerNum > 0
+      ? `ep-ts-spk-${((e.speakerNum - 1) % 6) + 1}`
+      : '';
 
-    const showSpeaker = (e.role !== lastRole) || e.role === 'intro';
-    lastRole = e.role;
+    const sig = perSpeakerTinting ? `${e.role}#${e.speakerNum}` : e.role;
+    const showSpeaker = (sig !== lastSig) || e.role === 'intro';
+    lastSig = sig;
 
-    html += `<div class="ep-transcript-para ${roleClass}">
+    html += `<div class="ep-transcript-para ${roleClass} ${spkClass}">
       <div class="ep-ts-meta">
-        ${showSpeaker && e.label ? `<span class="ep-transcript-speaker ${roleClass}-badge">${e.label}</span>` : '<span></span>'}
+        ${showSpeaker && e.label ? `<span class="ep-transcript-speaker ${roleClass}-badge ${spkClass}-badge">${e.label}</span>` : '<span></span>'}
         ${e.time ? `<span class="ep-transcript-time">${e.time}</span>` : ''}
       </div>
       <div class="ep-transcript-text">${e.text}</div>

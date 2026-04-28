@@ -158,6 +158,57 @@ p:last-child{margin-bottom:0}
 #ep-audio-player{width:100%;display:block;accent-color:var(--brown);border-radius:8px}
 .ep-share-note{font-size:.8rem;color:var(--muted);text-align:center;margin-top:12px;font-style:italic;line-height:1.6}
 
+/* ── NATIVE AUDIO (Libsyn / direct MP3) ──────────────────── */
+.ep-native-audio-section{background:#fff;padding:28px 0;border-bottom:1px solid var(--border)}
+.ep-libsyn-card{background:linear-gradient(135deg,var(--brown) 0%,var(--brown3) 100%);border-radius:14px;padding:22px 24px;box-shadow:0 10px 36px rgba(58,13,0,.18);position:relative;overflow:hidden}
+.ep-libsyn-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(196,154,10,.18),transparent 70%);pointer-events:none}
+.ep-libsyn-meta{display:flex;align-items:center;gap:14px;margin-bottom:16px;position:relative;z-index:1}
+.ep-libsyn-icon{width:44px;height:44px;border-radius:10px;background:rgba(196,154,10,.18);border:1px solid rgba(196,154,10,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold3)}
+.ep-libsyn-info{min-width:0;flex:1}
+.ep-libsyn-label{font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold3);margin-bottom:3px}
+.ep-libsyn-title{font-size:.92rem;font-weight:700;color:#fff;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ep-native-audio{width:100%;height:42px;outline:none;display:block;border-radius:8px;position:relative;z-index:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.15))}
+#ep-native-audio::-webkit-media-controls-panel{background:rgba(255,255,255,.96)}
+#ep-native-audio::-webkit-media-controls-play-button,
+#ep-native-audio::-webkit-media-controls-mute-button{filter:hue-rotate(20deg)}
+@supports (-moz-appearance:none){#ep-native-audio{accent-color:var(--gold3)}}
+
+/* ── SPEAKERS GRID (panel episodes) ──────────────────────── */
+.ep-speakers-section{background:var(--cream);padding:36px 0;border-bottom:1px solid var(--border)}
+.ep-speakers-header{text-align:center;margin-bottom:22px}
+.ep-speakers-label{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2)}
+.ep-speakers-label::before,.ep-speakers-label::after{content:'';display:inline-block;width:24px;height:2px;background:var(--gold)}
+.ep-speakers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;max-width:1000px;margin:0 auto;padding:0 20px}
+.ep-spk-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px 14px 18px;text-align:center;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.ep-spk-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(58,13,0,.1)}
+.ep-spk-card.ep-spk-host{border-color:rgba(196,154,10,.45);background:linear-gradient(180deg,#fff 0%,#FFFAF0 100%)}
+.ep-spk-img{width:84px;height:84px;border-radius:50%;overflow:hidden;margin:0 auto 12px;background:var(--brown);position:relative;border:3px solid var(--cream2)}
+.ep-spk-card.ep-spk-host .ep-spk-img{border-color:var(--gold3)}
+.ep-spk-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ep-spk-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.2rem}
+.ep-spk-role{font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);margin-bottom:4px}
+.ep-spk-card.ep-spk-host .ep-spk-role{color:var(--gold)}
+.ep-spk-name{font-size:.86rem;font-weight:700;color:var(--warm);line-height:1.35}
+@media(max-width:600px){
+  .ep-speakers-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .ep-spk-card{padding:16px 10px 14px}
+  .ep-spk-img{width:68px;height:68px}
+}
+
+/* Per-speaker transcript tints (panel episodes) */
+.ep-ts-spk-1{border-left-color:var(--gold) !important}
+.ep-ts-spk-2{border-left-color:#7A3515 !important}
+.ep-ts-spk-3{border-left-color:#0F766E !important}
+.ep-ts-spk-4{border-left-color:#9333EA !important}
+.ep-ts-spk-5{border-left-color:#DC2626 !important}
+.ep-ts-spk-6{border-left-color:#475569 !important}
+.ep-ts-spk-1-badge{background:rgba(196,154,10,.12);color:var(--gold2);border:1px solid rgba(196,154,10,.3)}
+.ep-ts-spk-2-badge{background:rgba(122,53,21,.09);color:#7A3515;border:1px solid rgba(122,53,21,.25)}
+.ep-ts-spk-3-badge{background:rgba(15,118,110,.09);color:#0F766E;border:1px solid rgba(15,118,110,.25)}
+.ep-ts-spk-4-badge{background:rgba(147,51,234,.09);color:#7E22CE;border:1px solid rgba(147,51,234,.25)}
+.ep-ts-spk-5-badge{background:rgba(220,38,38,.09);color:#B91C1C;border:1px solid rgba(220,38,38,.25)}
+.ep-ts-spk-6-badge{background:rgba(71,85,105,.09);color:#475569;border:1px solid rgba(71,85,105,.25)}
+
 /* ── POSTER IMAGE ───────────────────────────────────────── */
 .ep-poster-section{background:var(--cream2);padding:40px 0}
 .ep-poster-img{width:100%;max-width:680px;margin:0 auto;display:block;border-radius:14px;box-shadow:0 10px 48px rgba(58,13,0,.15)}
@@ -437,7 +488,36 @@ p:last-child{margin-bottom:0}
   </div>
 </div>
 
-<!-- ═══ AUDIO PLAYER (Drive preview iframe — most reliable) ══════════ -->
+<!-- ═══ SPEAKERS GRID (panel episodes only — populated by sheets.js) ═ -->
+<section class="ep-speakers-section" id="ep-speakers-section" style="display:none" aria-labelledby="ep-speakers-label">
+  <div class="container">
+    <div class="ep-speakers-header">
+      <span class="ep-speakers-label" id="ep-speakers-label">Featuring</span>
+    </div>
+    <div class="ep-speakers-grid" id="ep-speakers-grid"></div>
+  </div>
+</section>
+
+<!-- ═══ NATIVE HTML5 AUDIO (Libsyn / direct MP3) ═════════════════════ -->
+<div class="ep-native-audio-section" id="ep-native-audio-section" style="display:none">
+  <div class="ep-audio-player-wrap">
+    <div class="ep-libsyn-card">
+      <div class="ep-libsyn-meta">
+        <div class="ep-libsyn-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+        </div>
+        <div class="ep-libsyn-info">
+          <div class="ep-libsyn-label">Now Playing</div>
+          <div class="ep-libsyn-title" id="ep-libsyn-title">Loading episode…</div>
+        </div>
+      </div>
+      <audio id="ep-native-audio" controls preload="metadata" controlslist="nodownload"></audio>
+    </div>
+    <p class="ep-share-note">Like this podcast? Share this idea with Dominate Law in your circle who you think might benefit from it.</p>
+  </div>
+</div>
+
+<!-- ═══ AUDIO PLAYER (Drive preview iframe — legacy fallback) ════════ -->
 <div class="ep-audio-section" id="ep-audio-section" style="display:none">
   <div class="ep-audio-player-wrap">
     <iframe id="ep-audio-player"
@@ -452,7 +532,7 @@ p:last-child{margin-bottom:0}
   </div>
 </div>
 
-<!-- ═══ SPOTIFY EMBED (if available) ════════════════════════════════ -->
+<!-- ═══ EMBED IFRAME (Spotify / Libsyn embed) ═══════════════════════ -->
 <div class="ep-audio-section" id="ep-embed-section" style="display:none">
   <div class="ep-audio-player-wrap">
     <iframe id="ep-spotify-iframe" src="" height="152" frameborder="0" allowtransparency="true"
