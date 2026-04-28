@@ -1161,6 +1161,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 
 /* ── Podcast card: banner-led design ─────────────────────────────── */
 .hp-pod-banner {
+  display: block;             /* anchors are inline by default — needed for aspect-ratio */
   position: relative;
   aspect-ratio: 16/9;
   margin: 0 24px 14px;
@@ -1168,6 +1169,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
   overflow: hidden;
   background: linear-gradient(135deg, var(--brown), var(--brown3));
   box-shadow: 0 10px 28px rgba(58,13,0,.18);
+  text-decoration: none;
 }
 .hp-pod-banner img {
   width: 100%; height: 100%;
@@ -1330,9 +1332,8 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
           Latest Podcast
         </div>
         <a href="/podcast-episode/" id="hp-pod-banner-link" class="hp-pod-banner" onclick="dlCloseHomePopup()" aria-label="Listen to latest episode">
-          <img id="hp-pod-img" src="" alt="Latest Dominate Law Podcast Episode" loading="lazy"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="hp-pod-banner-fallback" style="display:none">DL</div>
+          <img id="hp-pod-img" alt="Latest Dominate Law Podcast Episode" loading="lazy">
+          <div class="hp-pod-banner-fallback" id="hp-pod-fallback" style="display:none">DL</div>
           <span class="hp-pod-num" id="hp-pod-ep">Loading…</span>
           <span class="hp-pod-flag" id="hp-pod-flag">NEW</span>
         </a>

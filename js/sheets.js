@@ -294,9 +294,26 @@ async function dlLoadLatestPodcast() {
     const listenBtn     = document.getElementById('hp-pod-link');
     const epHref        = `/podcast-episode/?ep=${ep.episode}`;
 
+    const fallbackEl = document.getElementById('hp-pod-fallback');
     if (photoEl) {
-      photoEl.src = dlDriveImg(ep.guest_photo_url, 'w800');
-      photoEl.alt = `Episode ${ep.episode}: ${ep.title}`;
+      const photoUrl = ep.guest_photo_url ? dlDriveImg(ep.guest_photo_url, 'w800') : '';
+      // Reset any prior hidden state from a failed earlier load
+      photoEl.style.display = '';
+      if (fallbackEl) fallbackEl.style.display = 'none';
+
+      if (photoUrl) {
+        photoEl.alt = `Episode ${ep.episode}: ${ep.title}`;
+        // Attach onerror BEFORE setting src so failures are caught
+        photoEl.onerror = function () {
+          this.style.display = 'none';
+          if (fallbackEl) fallbackEl.style.display = 'flex';
+        };
+        photoEl.src = photoUrl;
+      } else {
+        // No photo URL on the sheet row — show the DL fallback
+        photoEl.style.display = 'none';
+        if (fallbackEl) fallbackEl.style.display = 'flex';
+      }
     }
     if (epNumEl)      epNumEl.textContent  = `Episode ${ep.episode}`;
     if (flagEl)       flagEl.classList.toggle('visible', epNum >= 21);
