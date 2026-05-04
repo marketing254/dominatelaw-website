@@ -9,7 +9,10 @@
 //    • podcasts  (columns: episode, title, guest_name, guest_photo_url, poster_image,
 //                          episode_url, category, duration, description,
 //                          contact_info, spotify_embed, spotify_url, apple_url, audio_source,
-//                          transcript_url, speakers, speaker_photos)
+//                          transcript_url, speakers, speaker_photos, date_published)
+//
+//   date_published — Google Sheets date cell OR plain ISO/text date.
+//                    Displayed as "Apr 21, 2026" wherever the episode appears.
 //
 //   Multi-speaker episodes (panel format, ep 21+):
 //     speakers       — pipe-separated, mark host with "(Host)" suffix.
@@ -96,9 +99,17 @@ function dlInitials(name) {
 // Google Sheets stores dates as Date(YYYY,M,D) in the GViz API (month is 0-indexed)
 function dlParseDate(str) {
   if (!str) return null;
-  const m = String(str).match(/^Date\((\d+),(\d+),(\d+)\)/);
+  const m = String(str).match(/^Date\((\d+),(\d+),(\d+)/);
   if (m) return new Date(parseInt(m[1]), parseInt(m[2]), parseInt(m[3]));
   return new Date(str);
+}
+
+// ── Helper: format a sheet date for display ──────────────────────
+// Returns "Apr 21, 2026" — empty string if input is missing/invalid.
+function dlFormatDate(str) {
+  const d = dlParseDate(str);
+  if (!d || isNaN(d.getTime())) return '';
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 // ── Helper: extract Drive file ID from ANY Drive URL format ──────────────
@@ -317,9 +328,13 @@ async function dlLoadLatestPodcast() {
     }
     if (epNumEl)      epNumEl.textContent  = `Episode ${ep.episode}`;
     if (flagEl)       flagEl.classList.toggle('visible', epNum >= 21);
-    if (bylineEl)     bylineEl.textContent = isPanel
-      ? `Featuring a panel of ${speakerCount - 1}`
-      : (ep.guest_name ? `With ${ep.guest_name}` : 'Dominate Law Podcast');
+    if (bylineEl) {
+      const baseByline = isPanel
+        ? `Featuring a panel of ${speakerCount - 1}`
+        : (ep.guest_name ? `With ${ep.guest_name}` : 'Dominate Law Podcast');
+      const dateStr = dlFormatDate(ep.date_published);
+      bylineEl.textContent = dateStr ? `${baseByline} · ${dateStr}` : baseByline;
+    }
     if (titleEl)      titleEl.textContent  = ep.title;
     if (bannerLinkEl) bannerLinkEl.href    = epHref;
     if (listenBtn)    listenBtn.href       = epHref;
@@ -385,7 +400,8 @@ function dlBuildEpisodeCard(ep) {
     ? `Panel of ${speakerCount - 1}`
     : (ep.guest_name || 'Dominate Law');
   const byIcon   = isPanel ? '👥' : '👤';
-  const meta     = [ep.category, ep.duration].filter(Boolean).join(' · ');
+  const dateStr  = dlFormatDate(ep.date_published);
+  const meta     = [dateStr, ep.category, ep.duration].filter(Boolean).join(' · ');
   // Tightly-cropped square headshots: show the whole photo (contain) so the
   // full face fits, with the brown gradient filling the remaining 16:9 area.
   const imgStyle = DL_TOP_CROP_EPISODES.has(epNum)
@@ -541,6 +557,7 @@ async function dlLoadEpisodePage() {
         ? `<span class="ep-tag">👥 ${speakers.filter(s => s.role !== 'host').length} Panelists</span>`
         : `<span class="ep-tag">👤 ${ep.guest_name}</span>`;
 
+      const heroDate = dlFormatDate(ep.date_published);
       heroEl.innerHTML = `
         <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(196,154,10,.15);border:1px solid rgba(196,154,10,.3);border-radius:100px;padding:6px 16px;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#E8C44A;margin-bottom:16px">
           Episode #${ep.episode}
@@ -548,6 +565,7 @@ async function dlLoadEpisodePage() {
         <h1 class="ep-hero-title">${ep.title}</h1>
         <div class="ep-meta-tags">
           ${guestTag}
+          ${heroDate ? `<span class="ep-tag">📅 ${heroDate}</span>` : ''}
           ${ep.category ? `<span class="ep-tag">🎙️ ${ep.category}</span>` : ''}
           ${ep.duration  ? `<span class="ep-tag">⏱ ${ep.duration}</span>`  : ''}
         </div>`;
