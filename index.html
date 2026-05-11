@@ -637,7 +637,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 .pod-stat-l { font-size: .7rem; color: rgba(255,255,255,.4); margin-top: 5px; display: block; text-transform: uppercase; letter-spacing: .07em; }
 .pod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 /* ─── Episode card (home podcast section, dark glass variant) ── */
-.ep-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ep-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start}
 .ep-photo-card{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:16px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease);position:relative}
 .ep-photo-card:hover{transform:translateY(-6px);box-shadow:0 22px 52px rgba(0,0,0,.4);border-color:rgba(196,154,10,.45);background:rgba(255,255,255,.1)}
 .ep-photo-card.is-new{border-color:rgba(196,154,10,.4)}
@@ -660,6 +660,23 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 .ep-photo-cta span{transition:transform .25s var(--ease)}
 .ep-photo-card:hover .ep-photo-cta{color:#fff}
 .ep-photo-card:hover .ep-photo-cta span{transform:translateX(4px)}
+/* gate sections — must be hidden by default on all pages */
+.ep-card-preview{display:flex;flex-direction:column;flex:1}
+.ep-card-gate{display:none;flex-direction:column;flex:1}
+.ep-card-gate.open{display:flex}
+.ep-gate-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.ep-gate-kicker{font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold3);opacity:.85}
+.ep-gate-back{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.55);background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;gap:3px}
+.ep-gate-back:hover{color:#fff}
+.cg-form{display:flex;flex-direction:column;gap:6px;flex:1}
+.cg-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.cg-form input{padding:8px 10px;border:1.5px solid rgba(255,255,255,.18);border-radius:7px;font-size:.73rem;color:#fff;width:100%;outline:none;background:rgba(255,255,255,.1);transition:border-color .2s}
+.cg-form input:focus{border-color:var(--gold3)}
+.cg-form input::placeholder{color:rgba(255,255,255,.45);font-size:.7rem}
+.cg-error{font-size:.67rem;color:#fca5a5;font-weight:700;min-height:13px;margin:0}
+.cg-form button{padding:10px;font-size:.78rem;font-weight:700;background:var(--gold);color:var(--brown3);border-radius:6px;width:100%;cursor:pointer;transition:background .2s;border:none;margin-top:auto}
+.cg-form button:hover{background:var(--gold2)}
+.cg-form button:disabled{opacity:.6;cursor:not-allowed}
 
 @media(max-width:900px){.ep-photo-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.ep-photo-grid{grid-template-columns:1fr}}
@@ -1240,8 +1257,8 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 }
 
 .hp-btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 11px 20px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; padding: 12px 20px; border-radius: 6px;
   font-size: .82rem; font-weight: 700; transition: all .2s;
   border: none; cursor: pointer; text-decoration: none;
 }

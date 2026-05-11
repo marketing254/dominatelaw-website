@@ -293,7 +293,7 @@ p:last-child{margin-bottom:0}
 .ep-play:hover{border-color:var(--brown);background:rgba(96,39,15,.13)}
 
 /* ── EPISODE PHOTO GRID ─────────────────────────────────── */
-.ep-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.ep-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
 .ep-photo-card{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);position:relative}
 .ep-photo-card:hover{transform:translateY(-6px);box-shadow:0 22px 48px rgba(58,13,0,.16);border-color:rgba(196,154,10,.35)}
 .ep-photo-card.is-new{border-color:rgba(196,154,10,.45);box-shadow:0 6px 18px rgba(196,154,10,.08)}
@@ -316,6 +316,35 @@ p:last-child{margin-bottom:0}
 .ep-photo-cta span{transition:transform .25s var(--ease)}
 .ep-photo-card:hover .ep-photo-cta{color:var(--gold2)}
 .ep-photo-card:hover .ep-photo-cta span{transform:translateX(4px)}
+/* ── Play / lock button on thumbnail (bottom-right) ── */
+.ep-play-btn{position:absolute;bottom:14px;right:14px;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.ep-photo-card:hover .ep-play-btn{transform:scale(1.1);background:#fff}
+.ep-play-btn svg{width:14px;height:14px;fill:var(--brown);margin-left:2px}
+.ep-play-btn.ep-lock-icon svg{width:15px;height:15px;margin-left:0;fill:var(--brown)}
+
+/* ── Locked card ── */
+.ep-photo-card.ep-card-locked{cursor:pointer}
+.ep-photo-card.ep-card-locked:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(58,13,0,.12);border-color:rgba(196,154,10,.3)}
+
+/* ── Card preview / gate sections ── */
+.ep-card-preview{display:flex;flex-direction:column;flex:1}
+.ep-card-gate{display:none;flex-direction:column;flex:1}
+.ep-card-gate.open{display:flex}
+.ep-gate-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ep-gate-kicker{font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2)}
+.ep-gate-back{font-size:.72rem;font-weight:700;color:var(--muted);background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;gap:3px;transition:color .15s}
+.ep-gate-back:hover{color:var(--brown)}
+
+/* ── Card-level gate form ── */
+.cg-form{display:flex;flex-direction:column;gap:7px;flex:1}
+.cg-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.cg-form input{padding:9px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:.75rem;color:var(--warm);width:100%;outline:none;transition:border-color .2s;background:#fff}
+.cg-form input:focus{border-color:var(--brown);box-shadow:0 0 0 3px rgba(96,39,15,.07)}
+.cg-form input::placeholder{color:var(--muted);font-size:.72rem}
+.cg-error{font-size:.68rem;color:#b42318;font-weight:700;min-height:13px;margin:0}
+.cg-form button{padding:10px;font-size:.8rem;font-weight:700;background:var(--brown);color:#fff;border-radius:6px;width:100%;cursor:pointer;transition:background .2s;border:none;margin-top:auto}
+.cg-form button:hover{background:var(--brown3)}
+.cg-form button:disabled{opacity:.6;cursor:not-allowed}
 
 @media(max-width:900px){.ep-photo-grid{grid-template-columns:repeat(2,1fr);gap:18px}}
 @media(max-width:520px){.ep-photo-grid{grid-template-columns:1fr}.ep-photo-body{padding:18px 18px 20px}}

@@ -32,7 +32,7 @@
 // ─────────────────────────────────────────────────────────────────
 
 const DL_SHEET_ID        = '1Kqtgrii6peL3DxEp7PO45zSYd3sSeTN-e1tHmkFdLpg';
-const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyqB-AwFlFILYYUj-AVcc5-d85ZiM7RE_gRVgyRnciZXNSUhPXwTblf0jg0S8e7rSQJ/exec';
+const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbymJUuFFz2lcpz231orJIPf10I9aqoOrp31CVCxX4jNyqyJ7nogwC63oNExXMnWZl9L/exec';
 
 // ── SPAM PROTECTION ────────────────────────────────────────────────
 window.dlFormTs = Date.now(); // timestamp when page loaded
@@ -261,6 +261,323 @@ function dlClassifyAudio(url) {
   return 'other';
 }
 
+function dlEsc(value) {
+  return String(value || '').replace(/[&<>"']/g, ch => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[ch]));
+}
+
+function dlPick(row, names) {
+  if (!row) return '';
+  const keys = Object.keys(row);
+  const norm = value => String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  for (const name of names) {
+    const direct = row[name];
+    if (direct !== undefined && direct !== null && String(direct).trim() !== '') return String(direct).trim();
+    const wanted = norm(name);
+    const key = keys.find(k => norm(k) === wanted);
+    if (key && row[key] !== undefined && row[key] !== null && String(row[key]).trim() !== '') return String(row[key]).trim();
+  }
+  return '';
+}
+
+function dlSlug(value) {
+  return String(value || 'item')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 72) || 'item';
+}
+
+// ── Helper: resolve or auto-generate a URL slug for a podcast episode ──
+// Reads the optional 'slug' column first; falls back to slugifying the title.
+// Numeric ep param (?ep=21) is still supported for backward compat.
+function dlEpisodeSlug(ep) {
+  if (ep.slug && ep.slug.trim()) return ep.slug.trim();
+  return dlSlug(ep.title);
+}
+
+function dlVimeoEmbed(url) {
+  if (!url) return '';
+  const raw = String(url).trim();
+  const idMatch = raw.match(/player\.vimeo\.com\/video\/(\d+)/i) || raw.match(/vimeo\.com\/(?:video\/)?(\d+)/i);
+  if (!idMatch) return raw;
+  const id = idMatch[1];
+  const hParam = raw.match(/[?&]h=([^&]+)/i);
+  const pathHash = raw.match(/vimeo\.com\/\d+\/([A-Za-z0-9]+)/i);
+  const hash = hParam ? hParam[1] : (pathHash ? pathHash[1] : '');
+  return `https://player.vimeo.com/video/${id}${hash ? `?h=${encodeURIComponent(hash)}` : ''}`;
+}
+
+function dlSplitKeynotes(text, titleFromSheet) {
+  const lines = String(text || '').split(/\r?\n/)
+    .map(line => line.trim().replace(/^(?:[-*]|\d+[.)])\s*/, ''))
+    .filter(Boolean);
+  if (!lines.length) return [];
+  if (titleFromSheet && lines[0].toLowerCase() === titleFromSheet.toLowerCase()) return lines.slice(1);
+  return lines;
+}
+
+function dlNormalizeWebinarReplay(row, index) {
+  const keynotesRaw   = dlPick(row, ['keymotes', 'keynotes', 'key notes', 'takeaways', 'description']);
+  const explicitTitle = dlPick(row, ['title', 'webinar title', 'replay title', 'name']);
+  const keyLines      = dlSplitKeynotes(keynotesRaw, '');
+  const title         = explicitTitle || keyLines[0] || `Webinar Replay ${index + 1}`;
+  const notes         = explicitTitle ? dlSplitKeynotes(keynotesRaw, explicitTitle) : keyLines.slice(1);
+  const dateRaw       = dlPick(row, ['date', 'date_iso', 'published date', 'date published']);
+  const vimeoLink     = dlPick(row, ['vimeo_url', 'vimeo links', 'vimeo link', 'vimeo', 'video link', 'video url', 'replay link', 'link', 'url']);
+  const thumbRaw      = dlPick(row, ['thumbnail_url', 'thumbnail', 'image', 'image_url', 'cover']);
+  const speakers      = dlPick(row, ['speakers', 'panelists', 'speaker', 'hosts']);
+  const duration      = dlPick(row, ['duration', 'length', 'runtime']);
+  const category      = dlPick(row, ['category', 'topic', 'type', 'tag']);
+  const id            = dlPick(row, ['id', 'slug', 'replay id', 'webinar id', 'webinarID']) || dlSlug(`${title}-${dateRaw || index + 1}`);
+  const embedUrl      = dlVimeoEmbed(vimeoLink);
+
+  // Extract Vimeo video ID for thumbnail auto-fetch
+  const vimeoIdMatch  = vimeoLink.match(/(?:vimeo\.com\/(?:video\/)?|player\.vimeo\.com\/video\/)(\d+)/i);
+  const vimeoId       = vimeoIdMatch ? vimeoIdMatch[1] : '';
+  const thumbnailUrl  = thumbRaw ? dlDriveImg(thumbRaw, 'w800') : '';
+
+  return {
+    id, index, title, notes, dateRaw,
+    dateLabel: dlFormatDate(dateRaw) || dateRaw,
+    vimeoLink, embedUrl, vimeoId, thumbnailUrl,
+    speakers, duration, category
+  };
+}
+
+function dlGateKey(type, id) {
+  return `dl_unlocked_${type}_${id || 'item'}`;
+}
+
+// Unlock is per-type (fill once = access all episodes/replays of that type).
+// 'id' is accepted for backwards compat but we always check/set the 'all' key.
+function dlIsUnlocked(type) {
+  try { return localStorage.getItem(dlGateKey(type, 'all')) === '1'; } catch (e) { return false; }
+}
+
+function dlMarkUnlocked(type) {
+  try { localStorage.setItem(dlGateKey(type, 'all'), '1'); } catch (e) {}
+}
+
+// ── Card-level gate form builder ─────────────────────────────────
+// Renders a compact gate form that lives directly inside the card.
+// All 5 fields are required. On submit calls dlCardGateSubmit().
+function dlCardGateHtml(type, id, redirectPath, title, vimeoLink) {
+  const formId   = `cg-${type}-${dlSlug(id)}`;
+  const btnLabel = type === 'podcast' ? '🎙️ Listen Now' : '▶ Watch Replay';
+  return `
+    <form class="cg-form" id="${dlEsc(formId)}"
+          data-type="${dlEsc(type)}" data-id="${dlEsc(id)}"
+          data-redirect="${dlEsc(redirectPath)}" data-title="${dlEsc(title)}"
+          ${vimeoLink ? `data-vimeo="${dlEsc(vimeoLink)}"` : ''}
+          onsubmit="dlCardGateSubmit(event)">
+      <div class="cg-row">
+        <input name="first" type="text"  placeholder="First Name *"  required autocomplete="given-name">
+        <input name="last"  type="text"  placeholder="Last Name *"   required autocomplete="family-name">
+      </div>
+      <div class="cg-row">
+        <input name="email" type="email" placeholder="Email *"       required autocomplete="email">
+        <input name="phone" type="tel"   placeholder="Phone *"       required autocomplete="tel">
+      </div>
+      <input name="firm" type="text" placeholder="Firm Name *" required autocomplete="organization">
+      <p class="cg-error" role="alert"></p>
+      <button type="submit">${btnLabel}</button>
+    </form>`;
+}
+
+// ── Card gate submit handler (global — called from inline onsubmit) ─
+async function dlCardGateSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const get  = name => (form.querySelector(`[name="${name}"]`)?.value || '').trim();
+
+  const first = get('first'), last = get('last');
+  const email = get('email'), phone = get('phone'), firm = get('firm');
+  const errEl = form.querySelector('.cg-error');
+  const btn   = form.querySelector('button[type="submit"]');
+
+  const setErr = msg => { if (errEl) errEl.textContent = msg; };
+  setErr('');
+
+  if (typeof dlSpamBlock === 'function' && dlSpamBlock('', first, last)) return;
+  if (!first || !last || !email || !phone || !firm) {
+    setErr('All fields are required.'); return;
+  }
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Unlocking…'; }
+
+  const type         = form.dataset.type;
+  const id           = form.dataset.id;
+  const redirectPath = form.dataset.redirect;
+
+  const payload = {
+    form:      type === 'podcast' ? 'podcast_gate' : 'webinar_replay_gate',
+    tab:       type === 'podcast' ? 'Podcast Gate' : 'Webinar Replay Gate',
+    first_name: first, last_name: last, email, phone, firm_name: firm,
+    page_url:  window.location.href,
+  };
+  if (type === 'podcast') {
+    payload.podcast_episode = id;
+    payload.podcast_title   = form.dataset.title || '';
+  } else {
+    payload.webinar_title   = form.dataset.title || '';
+    payload.replay_id       = id;
+    payload.vimeo_link      = form.dataset.vimeo || '';
+  }
+
+  try {
+    await dlSendGateLead(payload);
+    dlMarkUnlocked(type);          // unlock ALL episodes of this type
+    window.location.href = redirectPath;
+  } catch (e) {
+    setErr('Something went wrong. Please try again.');
+    if (btn) { btn.disabled = false; btn.textContent = type === 'podcast' ? '🎙️ Listen Now' : '▶ Watch Replay'; }
+  }
+}
+
+function dlSetGateMessage(id, message) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = message || '';
+}
+
+async function dlSendGateLead(payload) {
+  await fetch(DL_APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  });
+}
+
+function dlEnsurePodcastGateEl() {
+  let gate = document.getElementById('ep-gate-section');
+  if (gate) return gate;
+  const before = document.getElementById('ep-native-audio-section') || document.getElementById('ep-audio-section') || document.getElementById('ep-embed-section');
+  if (!before || !before.parentNode) return null;
+  gate = document.createElement('section');
+  gate.id = 'ep-gate-section';
+  gate.className = 'ep-gate-section';
+  gate.style.display = 'none';
+  before.parentNode.insertBefore(gate, before);
+  return gate;
+}
+
+function dlRenderPodcastGate(ep) {
+  const gate = dlEnsurePodcastGateEl();
+  if (!gate) return;
+  ['ep-native-audio-section', 'ep-audio-section', 'ep-embed-section'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  gate.style.display = 'block';
+  gate.innerHTML = `
+    <div class="ep-audio-player-wrap">
+      <form class="dl-gate-card" id="podcast-gate-form" onsubmit="dlSubmitPodcastGate(event)">
+        <div class="dl-hp" aria-hidden="true"><input type="text" id="podcast_dl_hp" tabindex="-1" autocomplete="off"></div>
+        <div class="dl-gate-kicker">Free Access</div>
+        <h2>Unlock This Podcast Episode</h2>
+        <p>Enter your details once to listen to this episode and help us share more practical law firm growth conversations.</p>
+        <div class="dl-gate-grid">
+          <label>First Name <input id="podGateFirst" type="text" autocomplete="given-name" required></label>
+          <label>Last Name <input id="podGateLast" type="text" autocomplete="family-name" required></label>
+        </div>
+        <div class="dl-gate-grid">
+          <label>Email <input id="podGateEmail" type="email" autocomplete="email" required></label>
+          <label>Phone <input id="podGatePhone" type="tel" autocomplete="tel" required></label>
+        </div>
+        <label>Firm Name <input id="podGateFirm" type="text" autocomplete="organization" required></label>
+        <div class="dl-gate-error" id="podGateError"></div>
+        <button class="btn btn-primary" type="submit">Unlock Episode</button>
+      </form>
+    </div>`;
+}
+
+function dlRenderPodcastAudio(ep) {
+  const gate = document.getElementById('ep-gate-section');
+  if (gate) gate.style.display = 'none';
+
+  ['ep-native-audio-section', 'ep-audio-section', 'ep-embed-section'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+
+  if (ep.spotify_embed) {
+    const sec    = document.getElementById('ep-embed-section');
+    const iframe = document.getElementById('ep-spotify-iframe');
+    if (sec) sec.style.display = 'block';
+    if (iframe) {
+      iframe.src    = ep.spotify_embed;
+      iframe.height = 152;
+    }
+  } else if (ep.audio_source) {
+    const kind = dlClassifyAudio(ep.audio_source);
+    if (kind === 'audio-file') {
+      const sec     = document.getElementById('ep-native-audio-section');
+      const audioEl = document.getElementById('ep-native-audio');
+      const titleEl = document.getElementById('ep-libsyn-title');
+      if (sec) sec.style.display = 'block';
+      if (audioEl) audioEl.src = ep.audio_source;
+      if (titleEl) titleEl.textContent = `Episode #${ep.episode}: ${ep.title}`;
+    } else if (kind === 'libsyn-embed') {
+      const sec    = document.getElementById('ep-embed-section');
+      const iframe = document.getElementById('ep-spotify-iframe');
+      if (sec) sec.style.display = 'block';
+      if (iframe) {
+        iframe.src    = ep.audio_source;
+        iframe.height = ep.audio_source.includes('libsyn') ? 90 : 152;
+      }
+    } else {
+      const sec    = document.getElementById('ep-audio-section');
+      const player = document.getElementById('ep-audio-player');
+      if (sec) sec.style.display = 'block';
+      if (player) player.src = dlDriveAudio(ep.audio_source);
+    }
+  }
+}
+
+async function dlSubmitPodcastGate(event) {
+  event.preventDefault();
+  const get = id => (document.getElementById(id)?.value || '').trim();
+  const first = get('podGateFirst');
+  const last  = get('podGateLast');
+  const email = get('podGateEmail');
+  const ep = window.dlCurrentPodcastEpisode || {};
+
+  const phone = get('podGatePhone');
+  const firm  = get('podGateFirm');
+  if (typeof dlSpamBlock === 'function' && dlSpamBlock('podcast_dl_hp', first, last)) return;
+  if (!first || !last || !email || !phone || !firm) {
+    dlSetGateMessage('podGateError', 'All fields are required.');
+    return;
+  }
+
+  const btn = event.target.querySelector('button[type="submit"]');
+  if (btn) { btn.disabled = true; btn.textContent = 'Unlocking...'; }
+
+  try {
+    await dlSendGateLead({
+      form: 'podcast_gate',
+      tab: 'Podcast Gate',
+      first_name: first,
+      last_name: last,
+      email: email,
+      phone: get('podGatePhone'),
+      firm_name: get('podGateFirm'),
+      podcast_episode: ep.episode || '',
+      podcast_title: ep.title || '',
+      page_url: window.location.href,
+      timestamp: new Date().toISOString()
+    });
+    dlMarkUnlocked('podcast');
+    dlRenderPodcastAudio(ep);
+  } catch (e) {
+    dlSetGateMessage('podGateError', 'Something went wrong. Please try again.');
+    if (btn) { btn.disabled = false; btn.textContent = 'Unlock Episode'; }
+  }
+}
+
 // ── HOME PAGE: Load latest podcast into popup + announcement bar ──
 async function dlLoadLatestPodcast() {
   try {
@@ -279,7 +596,7 @@ async function dlLoadLatestPodcast() {
     const announce = document.querySelector('.announce');
     if (announce) {
       const driveId  = dlDriveId(ep.audio_source);
-      const epHref   = `/podcast-episode/?ep=${ep.episode}`;
+      const epHref   = `/podcast-episode/?ep=${encodeURIComponent(dlEpisodeSlug(ep))}`;
       const epLabel  = `Ep #${ep.episode}: ${ep.title}`;
 
       announce.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:10px 16px;';
@@ -303,7 +620,7 @@ async function dlLoadLatestPodcast() {
     const titleEl       = document.getElementById('hp-pod-title');
     const bannerLinkEl  = document.getElementById('hp-pod-banner-link');
     const listenBtn     = document.getElementById('hp-pod-link');
-    const epHref        = `/podcast-episode/?ep=${ep.episode}`;
+    const epHref        = `/podcast-episode/?ep=${encodeURIComponent(dlEpisodeSlug(ep))}`;
 
     const fallbackEl = document.getElementById('hp-pod-fallback');
     if (photoEl) {
@@ -388,6 +705,33 @@ async function dlLoadNextEvent() {
 // Add more episode numbers here if other guests have the same issue.
 const DL_TOP_CROP_EPISODES = new Set([2, 4, 10]);
 
+// ── Card gate reveal/hide (click-inside-card form behaviour) ────────
+function dlRevealCardGate(cardEl) {
+  // Close every other card that already has a form open
+  document.querySelectorAll('.ep-card-gate.open').forEach(openGate => {
+    if (openGate.closest('.ep-photo-card, .wr-card') === cardEl) return;
+    openGate.classList.remove('open');
+    const sibling = openGate.closest('.ep-photo-card, .wr-card')?.querySelector('.ep-card-preview');
+    if (sibling) sibling.style.display = '';
+  });
+
+  const preview = cardEl.querySelector('.ep-card-preview');
+  const gate    = cardEl.querySelector('.ep-card-gate');
+  if (!gate || gate.classList.contains('open')) return;
+  if (preview) preview.style.display = 'none';
+  gate.classList.add('open');
+  setTimeout(() => cardEl.querySelector('.cg-form input')?.focus(), 50);
+}
+
+function dlHideCardGate(btn) {
+  const cardEl  = btn.closest('.ep-photo-card, .wr-card');
+  const preview = cardEl?.querySelector('.ep-card-preview');
+  const gate    = cardEl?.querySelector('.ep-card-gate');
+  if (!cardEl) return;
+  if (gate)    gate.classList.remove('open');
+  if (preview) preview.style.display = '';
+}
+
 // ── Build a single episode card (shared by home + podcast page) ──
 function dlBuildEpisodeCard(ep) {
   const epNum    = parseInt(ep.episode, 10) || 0;
@@ -396,36 +740,82 @@ function dlBuildEpisodeCard(ep) {
   const isPanel  = speakerCount > 1;
   const photo    = ep.guest_photo_url ? dlDriveImg(ep.guest_photo_url, 'w800') : '';
   const initials = dlInitials(ep.guest_name);
-  const byLine   = isPanel
-    ? `Panel of ${speakerCount - 1}`
-    : (ep.guest_name || 'Dominate Law');
+  const byLine   = isPanel ? `Panel of ${speakerCount - 1}` : (ep.guest_name || 'Dominate Law');
   const byIcon   = isPanel ? '👥' : '👤';
   const dateStr  = dlFormatDate(ep.date_published);
   const meta     = [dateStr, ep.category, ep.duration].filter(Boolean).join(' · ');
-  // Tightly-cropped square headshots: show the whole photo (contain) so the
-  // full face fits, with the brown gradient filling the remaining 16:9 area.
   const imgStyle = DL_TOP_CROP_EPISODES.has(epNum)
     ? ' style="object-fit:contain;object-position:center top;background:linear-gradient(135deg,var(--brown),var(--brown3))"'
     : '';
+  const unlocked = dlIsUnlocked('podcast');
+  const epHref   = `/podcast-episode/?ep=${encodeURIComponent(dlEpisodeSlug(ep))}`;
+
+  const thumbHtml = `
+    <div class="ep-photo-img">
+      ${photo ? `<img src="${photo}" alt="${ep.title}" loading="lazy"${imgStyle}
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` : ''}
+      <div class="ep-photo-fallback" style="${photo ? 'display:none' : ''}">${initials}</div>
+      <span class="ep-photo-num">Ep ${ep.episode}</span>
+      ${isNew ? '<span class="ep-photo-flag">NEW</span>' : ''}
+      <div class="ep-play-btn${unlocked ? '' : ' ep-lock-icon'}" aria-hidden="true">
+        ${unlocked
+          ? '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
+          : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>'}
+      </div>
+    </div>`;
+
+  if (unlocked) {
+    return `
+      <a href="${epHref}" class="ep-photo-card${isNew ? ' is-new' : ''}" aria-label="Ep ${ep.episode}: ${ep.title}">
+        ${thumbHtml}
+        <div class="ep-photo-body">
+          <div class="ep-card-preview">
+            ${meta ? `<div class="ep-photo-meta">${meta}</div>` : ''}
+            <h3 class="ep-photo-title">${ep.title}</h3>
+            <div class="ep-photo-by"><span>${byIcon}</span>&nbsp;${byLine}</div>
+            <span class="ep-photo-cta">Listen Now <span aria-hidden="true">→</span></span>
+          </div>
+        </div>
+      </a>`;
+  }
 
   return `
-    <a href="/podcast-episode/?ep=${ep.episode}" class="ep-photo-card${isNew ? ' is-new' : ''}" aria-label="Episode ${ep.episode}: ${ep.title}">
-      <div class="ep-photo-img">
-        ${photo
-          ? `<img src="${photo}" alt="${ep.title}" loading="lazy"${imgStyle}
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-          : ''}
-        <div class="ep-photo-fallback" style="${photo ? 'display:none' : ''}">${initials}</div>
-        <span class="ep-photo-num">Ep ${ep.episode}</span>
-        ${isNew ? '<span class="ep-photo-flag">NEW</span>' : ''}
-      </div>
+    <div class="ep-photo-card ep-card-locked${isNew ? ' is-new' : ''}"
+         onclick="dlRevealCardGate(this)" aria-label="Ep ${ep.episode}: ${ep.title}">
+      ${thumbHtml}
       <div class="ep-photo-body">
-        ${meta ? `<div class="ep-photo-meta">${meta}</div>` : ''}
-        <h3 class="ep-photo-title">${ep.title}</h3>
-        <div class="ep-photo-by"><span aria-hidden="true">${byIcon}</span>&nbsp;${byLine}</div>
-        <span class="ep-photo-cta">Listen Now <span aria-hidden="true">→</span></span>
+        <div class="ep-card-preview">
+          ${meta ? `<div class="ep-photo-meta">${meta}</div>` : ''}
+          <h3 class="ep-photo-title">${ep.title}</h3>
+          <div class="ep-photo-by"><span>${byIcon}</span>&nbsp;${byLine}</div>
+          <span class="ep-photo-cta">🔒 Click to Unlock</span>
+        </div>
+        <div class="ep-card-gate">
+          <div class="ep-gate-head">
+            <span class="ep-gate-kicker">Free Access</span>
+            <button class="ep-gate-back" onclick="event.stopPropagation();dlHideCardGate(this)" type="button">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M6 8L3 5l3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Back
+            </button>
+          </div>
+          <form class="cg-form"
+                data-type="podcast" data-id="${ep.episode}"
+                data-redirect="${epHref}" data-title="${dlEsc(ep.title)}"
+                onsubmit="event.stopPropagation();dlCardGateSubmit(event)">
+            <div class="cg-row">
+              <input name="first" type="text"  placeholder="First Name *"  required autocomplete="given-name">
+              <input name="last"  type="text"  placeholder="Last Name *"   required autocomplete="family-name">
+            </div>
+            <div class="cg-row">
+              <input name="email" type="email" placeholder="Email *"       required autocomplete="email">
+              <input name="phone" type="tel"   placeholder="Phone *"       required autocomplete="tel">
+            </div>
+            <input name="firm" type="text" placeholder="Firm Name *" required autocomplete="organization">
+            <p class="cg-error" role="alert"></p>
+            <button type="submit">🎙️ Listen Now</button>
+          </form>
+        </div>
       </div>
-    </a>`;
+    </div>`;
 }
 
 // ── HOME PAGE: Load latest 6 episodes into homepage podcast grid ─
@@ -517,12 +907,12 @@ async function dlLoadPodcastGrid() {
 // ── EPISODE DETAIL PAGE: Load single episode ─────────────────────
 async function dlLoadEpisodePage() {
   const params   = new URLSearchParams(window.location.search);
-  const epNum    = params.get('ep');
+  const epParam  = params.get('ep');          // slug or number
   const heroEl   = document.getElementById('ep-hero-content');
   const crumbEl  = document.getElementById('ep-breadcrumb');
 
-  if (!epNum) {
-    if (heroEl) heroEl.innerHTML = `<div class="ep-not-found"><h2>Episode Not Found</h2><p>No episode number provided.</p><a href="/podcast" class="btn btn-primary" style="margin-top:16px">Browse All Episodes →</a></div>`;
+  if (!epParam) {
+    if (heroEl) heroEl.innerHTML = `<div class="ep-not-found"><h2>Episode Not Found</h2><p>No episode provided.</p><a href="/podcast" class="btn btn-primary" style="margin-top:16px">Browse All Episodes →</a></div>`;
     return;
   }
 
@@ -530,17 +920,33 @@ async function dlLoadEpisodePage() {
     const episodes = await dlFetchSheet('podcasts');
     if (!episodes.length) { window.location.href = '/podcast'; return; }
 
-    const idx  = episodes.findIndex(e => String(e.episode) === String(epNum));
+    // Match by slug first, then by episode number (backwards compat with ?ep=21 links)
+    const idx = episodes.findIndex(e =>
+      dlEpisodeSlug(e) === epParam || String(e.episode) === epParam
+    );
     if (idx === -1) {
-      if (heroEl) heroEl.innerHTML = `<div class="ep-not-found"><h2>Episode #${epNum} Not Found</h2><p>This episode doesn't exist yet.</p><a href="/podcast" class="btn btn-primary" style="margin-top:16px">Browse All Episodes →</a></div>`;
+      if (heroEl) heroEl.innerHTML = `<div class="ep-not-found"><h2>Episode Not Found</h2><p>This episode doesn't exist yet.</p><a href="/podcast" class="btn btn-primary" style="margin-top:16px">Browse All Episodes →</a></div>`;
       return;
     }
 
-    const ep   = episodes[idx];
-    const prev = idx > 0 ? episodes[idx - 1] : null;
-    const next = idx < episodes.length - 1 ? episodes[idx + 1] : null;
-    const pageUrl   = encodeURIComponent(window.location.href);
-    const pageTitle = encodeURIComponent(`Episode #${ep.episode}: ${ep.title} — Dominate Law`);
+    const ep      = episodes[idx];
+    const epSlug  = dlEpisodeSlug(ep);
+    const prev    = idx > 0 ? episodes[idx - 1] : null;
+    const next    = idx < episodes.length - 1 ? episodes[idx + 1] : null;
+    const canonicalUrl = `https://dominatelaw.com/podcast-episode/?ep=${encodeURIComponent(epSlug)}`;
+    const pageUrl      = encodeURIComponent(canonicalUrl);
+    const pageTitle    = encodeURIComponent(`Episode #${ep.episode}: ${ep.title} — Dominate Law Podcast`);
+
+    // ── Dynamic SEO meta (canonical + description) ──────────────────
+    let canonicalEl = document.querySelector('link[rel="canonical"]');
+    if (!canonicalEl) { canonicalEl = document.createElement('link'); canonicalEl.rel = 'canonical'; document.head.appendChild(canonicalEl); }
+    canonicalEl.href = canonicalUrl;
+
+    let descEl = document.querySelector('meta[name="description"]');
+    if (!descEl) { descEl = document.createElement('meta'); descEl.name = 'description'; document.head.appendChild(descEl); }
+    const { keyPoints } = dlParseDescription(ep.description);
+    const descSnippet   = keyPoints[0] ? keyPoints[0].slice(0, 160) : `Episode #${ep.episode} of the Dominate Law Podcast — ${ep.title}.`;
+    descEl.content = descSnippet;
 
     // ── Speakers (multi-speaker / panel episodes, ep 21+)
     const speakers = dlParseSpeakers(ep.speakers);
@@ -608,42 +1014,10 @@ async function dlLoadEpisodePage() {
       if (li) li.href = `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`;
     }
 
-    // ── Audio: spotify_embed > audio_source (Libsyn / MP3 / Drive)
-    if (ep.spotify_embed) {
-      const sec    = document.getElementById('ep-embed-section');
-      const iframe = document.getElementById('ep-spotify-iframe');
-      if (sec) sec.style.display = 'block';
-      if (iframe) {
-        iframe.src    = ep.spotify_embed;
-        iframe.height = 152;
-      }
-    } else if (ep.audio_source) {
-      const kind = dlClassifyAudio(ep.audio_source);
-
-      if (kind === 'audio-file') {
-        // Direct .mp3 (Libsyn traffic, etc) — branded native HTML5 audio card
-        const sec     = document.getElementById('ep-native-audio-section');
-        const audioEl = document.getElementById('ep-native-audio');
-        const titleEl = document.getElementById('ep-libsyn-title');
-        if (sec) sec.style.display = 'block';
-        if (audioEl) audioEl.src = ep.audio_source;
-        if (titleEl) titleEl.textContent = `Episode #${ep.episode}: ${ep.title}`;
-      } else if (kind === 'libsyn-embed') {
-        // Libsyn (or other) iframe embed — reuse the Spotify-style embed slot
-        const sec    = document.getElementById('ep-embed-section');
-        const iframe = document.getElementById('ep-spotify-iframe');
-        if (sec) sec.style.display = 'block';
-        if (iframe) {
-          iframe.src    = ep.audio_source;
-          iframe.height = ep.audio_source.includes('libsyn') ? 90 : 152;
-        }
-      } else {
-        // Legacy: Google Drive preview iframe
-        const sec    = document.getElementById('ep-audio-section');
-        const player = document.getElementById('ep-audio-player');
-        if (sec) sec.style.display = 'block';
-        if (player) player.src = dlDriveAudio(ep.audio_source);
-      }
+    window.dlCurrentPodcastEpisode = ep;
+    if (ep.spotify_embed || ep.audio_source) {
+      if (dlIsUnlocked('podcast')) dlRenderPodcastAudio(ep);
+      else dlRenderPodcastGate(ep);
     }
 
     // ── Poster image
@@ -721,14 +1095,14 @@ async function dlLoadEpisodePage() {
     if (navSec) navSec.style.display = 'block';
     if (prevNext) {
       const prevCard = prev
-        ? `<a href="/podcast-episode/?ep=${prev.episode}" class="ep-nav-card">
+        ? `<a href="/podcast-episode/?ep=${encodeURIComponent(dlEpisodeSlug(prev))}" class="ep-nav-card">
              <div class="ep-nav-dir">← Previous Episode</div>
              <div class="ep-nav-ep">Episode #${prev.episode}</div>
              <div class="ep-nav-title">${prev.title}</div>
            </a>`
         : `<div class="ep-nav-card ep-nav-placeholder"><div class="ep-nav-dir">← Previous</div><div class="ep-nav-title">This is the first episode</div></div>`;
       const nextCard = next
-        ? `<a href="/podcast-episode/?ep=${next.episode}" class="ep-nav-card ep-nav-right">
+        ? `<a href="/podcast-episode/?ep=${encodeURIComponent(dlEpisodeSlug(next))}" class="ep-nav-card ep-nav-right">
              <div class="ep-nav-dir">Next Episode →</div>
              <div class="ep-nav-ep">Episode #${next.episode}</div>
              <div class="ep-nav-title">${next.title}</div>
@@ -1244,6 +1618,418 @@ async function dlLoadEventsGrid() {
   }
 }
 
+// Try fetching a sheet tab under several common name spellings
+async function dlFetchWebinarReplays() {
+  const candidates = [
+    'webinar-replays', 'webinar replays', 'Webinar Replays',
+    'webinar-replay',  'webinar replay',  'Webinar Replay',
+    'WebinarReplays',  'Webinars'
+  ];
+  for (const name of candidates) {
+    try {
+      const rows = await dlFetchSheet(name);
+      if (rows.length) { console.log('DL: loaded webinar replays from tab →', name); return rows; }
+    } catch (_) {}
+  }
+  return [];
+}
+
+async function dlLoadWebinarReplayGrid() {
+  const wrap = document.getElementById('wr-replays-wrap');
+  const grid = document.getElementById('wr-replays-grid');
+  if (!wrap || !grid) return;
+
+  // Show section immediately so errors are visible
+  wrap.style.display = 'block';
+  grid.innerHTML = '<p style="color:var(--muted);font-size:.85rem;padding:16px 0">Loading replays…</p>';
+
+  try {
+    const rows = await dlFetchWebinarReplays();
+
+    if (!rows.length) {
+      grid.innerHTML = '<p style="color:var(--muted);font-size:.85rem;padding:16px 0">No replays found. Check that your Google Sheet tab is named <strong>webinar-replays</strong> and is published.</p>';
+      return;
+    }
+
+    const replays = rows.map(dlNormalizeWebinarReplay)
+      .filter(item => item.title && item.vimeoLink)
+      .sort((a, b) => {
+        const da = dlParseDate(a.dateRaw);
+        const db = dlParseDate(b.dateRaw);
+        return (db && !isNaN(db) ? db.getTime() : 0) - (da && !isNaN(da) ? da.getTime() : 0);
+      });
+
+    if (!replays.length) {
+      grid.innerHTML = '<p style="color:var(--muted);font-size:.85rem;padding:16px 0">Replays loaded but no rows have a Vimeo URL yet. Add a <strong>vimeo_url</strong> column to your sheet.</p>';
+      return;
+    }
+
+    const wrUnlocked = dlIsUnlocked('webinar');
+
+    grid.innerHTML = replays.map(replay => {
+      const href       = `/webinar-replay/?replay=${encodeURIComponent(replay.id)}`;
+      const metaLine   = [replay.dateLabel, replay.category].filter(Boolean).join(' · ');
+      const thumbStyle = replay.thumbnailUrl
+        ? `background-image:url(${replay.thumbnailUrl});background-size:cover;background-position:center`
+        : '';
+
+      const thumbHtml = `
+        <div class="wr-thumb" style="${thumbStyle}"
+             ${replay.vimeoId && !replay.thumbnailUrl ? `data-vimeo-id="${replay.vimeoId}"` : ''}>
+          <div class="wr-thumb-overlay"></div>
+          <div class="ep-play-btn${wrUnlocked ? '' : ' ep-lock-icon'}" aria-hidden="true">
+            ${wrUnlocked
+              ? '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
+              : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>'}
+          </div>
+          <span>${dlEsc(replay.dateLabel || 'On Demand')}</span>
+        </div>`;
+
+      if (wrUnlocked) {
+        return `
+          <a class="wr-card" href="${href}" aria-label="Watch: ${dlEsc(replay.title)}">
+            ${thumbHtml}
+            <div class="wr-card-body">
+              <div class="ep-card-preview">
+                ${metaLine ? `<div class="wr-meta">${dlEsc(metaLine)}</div>` : ''}
+                <h3>${dlEsc(replay.title)}</h3>
+                <span class="ep-photo-cta">Watch Replay <span>→</span></span>
+              </div>
+            </div>
+          </a>`;
+      }
+
+      return `
+        <div class="wr-card ep-card-locked" onclick="dlRevealCardGate(this)"
+             aria-label="Watch: ${dlEsc(replay.title)}">
+          ${thumbHtml}
+          <div class="wr-card-body">
+            <div class="ep-card-preview">
+              ${metaLine ? `<div class="wr-meta">${dlEsc(metaLine)}</div>` : ''}
+              <h3>${dlEsc(replay.title)}</h3>
+              <span class="ep-photo-cta">🔒 Click to Unlock</span>
+            </div>
+            <div class="ep-card-gate">
+              <div class="ep-gate-head">
+                <span class="ep-gate-kicker">Free Access</span>
+                <button class="ep-gate-back" type="button" onclick="event.stopPropagation();dlHideCardGate(this)">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M6 8L3 5l3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Back
+                </button>
+              </div>
+              <form class="cg-form"
+                    data-type="webinar" data-id="${dlEsc(replay.id)}"
+                    data-redirect="${href}" data-title="${dlEsc(replay.title)}"
+                    data-vimeo="${dlEsc(replay.vimeoLink)}"
+                    onsubmit="event.stopPropagation();dlCardGateSubmit(event)">
+                <div class="cg-row">
+                  <input name="first" type="text"  placeholder="First Name *"  required autocomplete="given-name">
+                  <input name="last"  type="text"  placeholder="Last Name *"   required autocomplete="family-name">
+                </div>
+                <div class="cg-row">
+                  <input name="email" type="email" placeholder="Email *"       required autocomplete="email">
+                  <input name="phone" type="tel"   placeholder="Phone *"       required autocomplete="tel">
+                </div>
+                <input name="firm" type="text" placeholder="Firm Name *" required autocomplete="organization">
+                <p class="cg-error" role="alert"></p>
+                <button type="submit">▶ Watch Replay</button>
+              </form>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+
+    wrap.style.display = '';
+
+    // Async-fetch Vimeo thumbnails for cards that don't have a Drive image
+    grid.querySelectorAll('.wr-thumb[data-vimeo-id]').forEach(async el => {
+      if (el.style.backgroundImage) return; // already has a thumbnail
+      const vid = el.dataset.vimeoId;
+      try {
+        const res  = await fetch(`https://vimeo.com/api/v2/video/${vid}.json`);
+        const data = await res.json();
+        const url  = data[0]?.thumbnail_large || data[0]?.thumbnail_medium || '';
+        if (url) {
+          el.style.backgroundImage = `url(${url})`;
+          el.style.backgroundSize  = 'cover';
+          el.style.backgroundPosition = 'center';
+          const bg = el.querySelector('.wr-thumb-bg');
+          if (bg) bg.style.display = 'none';
+        }
+      } catch (_) { /* silently fall back to gradient */ }
+    });
+
+  } catch (e) {
+    console.warn('DL Sheets: Could not load webinar replays', e);
+    grid.innerHTML = `<p style="color:#b42318;font-size:.85rem;padding:16px 0">Error loading replays: ${e.message || e}. Check the browser console for details.</p>`;
+  }
+}
+
+async function dlLoadWebinarReplayPage() {
+  const params      = new URLSearchParams(window.location.search);
+  const replayParam = params.get('replay') || params.get('id') || '';
+  const hero        = document.getElementById('wr-hero-content');
+  const crumb       = document.getElementById('wr-breadcrumb-current');
+  const videoWrap   = document.getElementById('wr-video-wrap');
+  const gateWrap    = document.getElementById('wr-gate-wrap');
+  const navSec      = document.getElementById('wr-nav-section');
+  const prevNext    = document.getElementById('wr-prev-next');
+  const sharebar    = document.getElementById('wr-share-bar');
+  const contentBody = document.getElementById('wr-content-body');
+  const kpList      = document.getElementById('wr-keypoints-list');
+
+  try {
+    const rows = await dlFetchSheet('webinar-replays');
+    const replays = rows.map(dlNormalizeWebinarReplay)
+      .filter(item => item.title)
+      .sort((a, b) => {
+        const da = dlParseDate(a.dateRaw);
+        const db = dlParseDate(b.dateRaw);
+        return (db && !isNaN(db) ? db.getTime() : 0) - (da && !isNaN(da) ? da.getTime() : 0);
+      });
+
+    if (!replays.length) {
+      if (hero) hero.innerHTML = '<div class="wr-not-found"><h2>No Replays Found</h2><p>Check back soon for on-demand sessions.</p><a href="/events" class="btn btn-primary" style="margin-top:16px">Back to Events →</a></div>';
+      return;
+    }
+
+    const foundIndex = replayParam
+      ? replays.findIndex(r => r.id === replayParam || String(r.index + 1) === replayParam)
+      : 0;
+    const idx    = foundIndex >= 0 ? foundIndex : 0;
+    const replay = replays[idx];
+    window.dlCurrentWebinarReplay = replay;
+
+    // Page meta
+    document.title = `${replay.title} | Webinar Replay | Dominate Law`;
+    if (crumb) crumb.textContent = replay.title;
+
+    // Hero
+    if (hero) {
+      const metaTags = [
+        replay.dateLabel ? `<span class="ep-tag">📅 ${dlEsc(replay.dateLabel)}</span>` : '',
+        replay.duration  ? `<span class="ep-tag">⏱ ${dlEsc(replay.duration)}</span>`  : '',
+        replay.category  ? `<span class="ep-tag">🎙️ ${dlEsc(replay.category)}</span>`  : '',
+        '<span class="ep-tag">Free Replay</span>',
+      ].filter(Boolean).join('');
+      hero.innerHTML = `
+        <div class="wr-kicker">On-Demand Webinar</div>
+        <h1 class="wr-hero-title">${dlEsc(replay.title)}</h1>
+        <div class="ep-meta-tags">${metaTags}</div>`;
+    }
+
+    // Share bar
+    if (sharebar) {
+      const pageUrl   = encodeURIComponent(window.location.href);
+      const pageTitle = encodeURIComponent(`${replay.title} — Dominate Law Webinar Replay`);
+      sharebar.style.display = 'block';
+      const fb = document.getElementById('wr-share-fb');
+      const tw = document.getElementById('wr-share-tw');
+      const li = document.getElementById('wr-share-li');
+      if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+      if (tw) tw.href = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
+      if (li) li.href = `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`;
+    }
+
+    // Speakers grid
+    if (replay.speakers) {
+      const speakersList = replay.speakers.split('|').map(s => s.trim()).filter(Boolean);
+      if (speakersList.length > 1) {
+        const spSec  = document.getElementById('wr-speakers-section');
+        const spGrid = document.getElementById('wr-speakers-grid');
+        if (spSec && spGrid) {
+          spGrid.innerHTML = speakersList.map(name => {
+            const initials = dlInitials(name.replace(/\([^)]+\)/g, '').trim());
+            return `<div class="ep-spk-card">
+              <div class="ep-spk-img"><div class="ep-spk-fallback">${initials}</div></div>
+              <div class="ep-spk-name">${dlEsc(name)}</div>
+            </div>`;
+          }).join('');
+          spSec.style.display = 'block';
+        }
+      }
+    }
+
+    // Gate / video
+    if (dlIsUnlocked('webinar')) {
+      dlRenderWebinarVideo(replay);
+    } else {
+      if (videoWrap) videoWrap.style.display = 'none';
+      if (gateWrap) {
+        gateWrap.style.display = 'block';
+        gateWrap.querySelector('.wr-video-wrap-inner').innerHTML = `
+          <form class="dl-gate-card" id="webinar-gate-form" onsubmit="dlSubmitWebinarReplayGate(event)" style="max-width:620px;margin:0 auto">
+            <div class="dl-hp" aria-hidden="true"><input type="text" id="webinar_dl_hp" tabindex="-1" autocomplete="off"></div>
+            <div class="dl-gate-kicker">Free Replay Access</div>
+            <h2>Unlock the Webinar Replay</h2>
+            <p>Enter your details once to watch this on-demand training session. It's completely free.</p>
+            <div class="dl-gate-grid">
+              <label>First Name <input id="wrGateFirst" type="text" autocomplete="given-name" required placeholder="Alex"></label>
+              <label>Last Name  <input id="wrGateLast"  type="text" autocomplete="family-name" required placeholder="Thompson"></label>
+            </div>
+            <div class="dl-gate-grid">
+              <label>Email <input id="wrGateEmail" type="email" autocomplete="email" required placeholder="alex@yourfirm.com"></label>
+              <label>Phone <input id="wrGatePhone" type="tel"   autocomplete="tel"   placeholder="+1 (555) 000-0000"></label>
+            </div>
+            <label style="display:block;margin-bottom:12px">Firm Name <input id="wrGateFirm" type="text" autocomplete="organization" placeholder="Thompson &amp; Associates"></label>
+            <div class="dl-gate-error" id="wrGateError"></div>
+            <button class="btn btn-primary" type="submit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              Watch Replay Now
+            </button>
+          </form>`;
+      }
+    }
+
+    // Key Takeaways
+    if (contentBody) {
+      contentBody.style.display = 'block';
+      if (kpList) {
+        kpList.innerHTML = replay.notes.length
+          ? replay.notes.map(n => `<li>${dlEsc(n)}</li>`).join('')
+          : '<li style="color:var(--muted);font-style:italic">Key takeaways coming soon.</li>';
+      }
+    }
+
+    // Prev / Next
+    const prev = replays[idx + 1];
+    const next = replays[idx - 1];
+    if (navSec) navSec.style.display = 'block';
+    if (prevNext) {
+      prevNext.innerHTML = `
+        ${prev
+          ? `<a href="/webinar-replay/?replay=${encodeURIComponent(prev.id)}" class="ep-nav-card">
+               <div class="ep-nav-dir">← Previous Replay</div>
+               <div class="ep-nav-title">${dlEsc(prev.title)}</div>
+             </a>`
+          : '<div class="ep-nav-card ep-nav-placeholder"><div class="ep-nav-dir">← Previous</div><div class="ep-nav-title">This is the first replay</div></div>'}
+        ${next
+          ? `<a href="/webinar-replay/?replay=${encodeURIComponent(next.id)}" class="ep-nav-card ep-nav-right">
+               <div class="ep-nav-dir">Next Replay →</div>
+               <div class="ep-nav-title">${dlEsc(next.title)}</div>
+             </a>`
+          : '<div class="ep-nav-card ep-nav-right ep-nav-placeholder"><div class="ep-nav-dir">Next →</div><div class="ep-nav-title">This is the latest replay</div></div>'}`;
+    }
+
+  } catch (e) {
+    console.warn('DL Sheets: Could not load webinar replay page', e);
+    if (hero) hero.innerHTML = '<div class="wr-not-found"><h2>Could Not Load Replay</h2><p>Please try again from the events page.</p><a href="/events" class="btn btn-primary" style="margin-top:16px">Back to Events →</a></div>';
+  }
+}
+
+function dlRenderWebinarVideo(replay) {
+  const gateWrap  = document.getElementById('wr-gate-wrap');
+  const videoWrap = document.getElementById('wr-video-wrap');
+  const iframe    = document.getElementById('wr-video-frame');
+  if (gateWrap)  gateWrap.style.display  = 'none';
+  if (videoWrap) videoWrap.style.display = 'block';
+  if (iframe && replay.embedUrl) {
+    iframe.src   = replay.embedUrl;
+    iframe.title = replay.title || 'Webinar Replay';
+  }
+}
+
+async function dlSubmitWebinarReplayGate(event) {
+  event.preventDefault();
+  const get = id => (document.getElementById(id)?.value || '').trim();
+  const first = get('wrGateFirst');
+  const last  = get('wrGateLast');
+  const email = get('wrGateEmail');
+  const replay = window.dlCurrentWebinarReplay || {};
+
+  const phone = get('wrGatePhone');
+  const firm  = get('wrGateFirm');
+  if (typeof dlSpamBlock === 'function' && dlSpamBlock('webinar_dl_hp', first, last)) return;
+  if (!first || !last || !email || !phone || !firm) {
+    dlSetGateMessage('wrGateError', 'All fields are required.');
+    return;
+  }
+
+  const btn = event.target.querySelector('button[type="submit"]');
+  if (btn) { btn.disabled = true; btn.textContent = 'Unlocking...'; }
+
+  try {
+    await dlSendGateLead({
+      form: 'webinar_replay_gate',
+      tab: 'Webinar Replay Gate',
+      first_name: first,
+      last_name: last,
+      email: email,
+      phone: get('wrGatePhone'),
+      firm_name: get('wrGateFirm'),
+      webinar_title: replay.title || '',
+      webinar_date: replay.dateLabel || replay.dateRaw || '',
+      replay_id: replay.id || '',
+      vimeo_link: replay.vimeoLink || '',
+      page_url: window.location.href,
+      timestamp: new Date().toISOString()
+    });
+    dlMarkUnlocked('webinar');
+    dlRenderWebinarVideo(replay);
+  } catch (e) {
+    dlSetGateMessage('wrGateError', 'Something went wrong. Please try again.');
+    if (btn) { btn.disabled = false; btn.textContent = 'Watch Replay'; }
+  }
+}
+
+// ── Webinar replay gate modal (events page) ───────────────────────
+function dlOpenWrGateModal(replayId, title, redirectPath, vimeoLink) {
+  const bg = document.getElementById('wr-gate-modal-bg');
+  if (!bg) return;
+  document.getElementById('wr-gm-replay-id').value   = replayId;
+  document.getElementById('wr-gm-redirect').value    = redirectPath;
+  document.getElementById('wr-gm-vimeo').value       = vimeoLink;
+  document.getElementById('wr-gm-title').textContent = title;
+  document.getElementById('wr-gm-error').textContent = '';
+  document.getElementById('wr-gm-form').reset();
+  bg.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('wr-gm-first').focus();
+}
+
+function dlCloseWrGateModal() {
+  const bg = document.getElementById('wr-gate-modal-bg');
+  if (bg) bg.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function dlSubmitWrGateModal(event) {
+  event.preventDefault();
+  const form   = event.target;
+  const get    = id => (document.getElementById(id)?.value || '').trim();
+  const first  = get('wr-gm-first');
+  const last   = get('wr-gm-last');
+  const email  = get('wr-gm-email');
+  const phone  = get('wr-gm-phone');
+  const firm   = get('wr-gm-firm');
+  const id     = get('wr-gm-replay-id');
+  const redir  = get('wr-gm-redirect');
+  const vimeo  = get('wr-gm-vimeo');
+  const title  = document.getElementById('wr-gm-title')?.textContent || '';
+  const errEl  = document.getElementById('wr-gm-error');
+  const btn    = form.querySelector('button[type="submit"]');
+
+  if (typeof dlSpamBlock === 'function' && dlSpamBlock('', first, last)) return;
+  if (!first || !last || !email || !phone || !firm) {
+    if (errEl) errEl.textContent = 'All fields are required.'; return;
+  }
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Unlocking…'; }
+
+  try {
+    await dlSendGateLead({
+      form: 'webinar_replay_gate', tab: 'Webinar Replay Gate',
+      first_name: first, last_name: last, email, phone, firm_name: firm,
+      webinar_title: title, replay_id: id, vimeo_link: vimeo,
+      page_url: window.location.href
+    });
+    dlMarkUnlocked('webinar');
+    window.location.href = redir;
+  } catch (e) {
+    if (errEl) errEl.textContent = 'Something went wrong. Please try again.';
+    if (btn) { btn.disabled = false; btn.textContent = 'Watch Replay →'; }
+  }
+}
+
 // ── Auto-init based on current page ──────────────────────────────
 (function () {
   const path = window.location.pathname;
@@ -1253,7 +2039,9 @@ async function dlLoadEventsGrid() {
     dlLoadLatestPodcast();
   }
 
-  if (path.includes('podcast-episode')) {
+  if (path.includes('webinar-replay')) {
+    dlLoadWebinarReplayPage();
+  } else if (path.includes('podcast-episode')) {
     dlLoadEpisodePage();
   } else if (path.includes('podcast')) {
     dlLoadPodcastGrid();
@@ -1261,6 +2049,7 @@ async function dlLoadEventsGrid() {
     dlLoadReviewsGrid();
   } else if (path.includes('events')) {
     dlLoadEventsGrid();
+    dlLoadWebinarReplayGrid();
   } else if (path.endsWith('/') || path === '') {
     // Home page — load event popup + podcast grid
     dlLoadNextEvent();

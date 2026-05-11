@@ -1265,7 +1265,7 @@ function dlGateSubmit() {
 
   if (!ok) return;
 
-  var DL_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzL4GgFhxwak6VgGT5ibtvSmHirCFnppKKE7apK2PIZDpPc9z8YZjvEID0Qs6tx81Jw/exec';
+  var DL_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbymJUuFFz2lcpz231orJIPf10I9aqoOrp31CVCxX4jNyqyJ7nogwC63oNExXMnWZl9L/exec';
   dlSaveSubmission({ firstName: firstName, lastName: lastName, email: email, role: role, ts: Date.now() });
   try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Legal Tools Gate','First Name':firstName,'Last Name':lastName,'Email':email,'Role':role})});}catch(ex){}
   dlDismissGate();

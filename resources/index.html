@@ -443,7 +443,7 @@ p:last-child{margin-bottom:0}
   </div>
 </div>
 <script>
-var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbzL4GgFhxwak6VgGT5ibtvSmHirCFnppKKE7apK2PIZDpPc9z8YZjvEID0Qs6tx81Jw/exec';
+var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbymJUuFFz2lcpz231orJIPf10I9aqoOrp31CVCxX4jNyqyJ7nogwC63oNExXMnWZl9L/exec';
 var RES_KEY='dl_res_gate_v2';
 function resSubmitted(){try{if(localStorage.getItem(RES_KEY))return true;}catch(e){}return document.cookie.indexOf(RES_KEY+'=1')>-1;}
 function resSave(d){try{localStorage.setItem(RES_KEY,JSON.stringify(d));}catch(e){}try{document.cookie=RES_KEY+'=1;max-age=31536000;path=/'}catch(e){}}
@@ -792,7 +792,7 @@ async function handleLeadForm(e) {
   btn.disabled = true;
 
   try {
-    await fetch('https://script.google.com/macros/s/AKfycbzL4GgFhxwak6VgGT5ibtvSmHirCFnppKKE7apK2PIZDpPc9z8YZjvEID0Qs6tx81Jw/exec', {
+    await fetch('https://script.google.com/macros/s/AKfycbymJUuFFz2lcpz231orJIPf10I9aqoOrp31CVCxX4jNyqyJ7nogwC63oNExXMnWZl9L/exec', {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain' },
