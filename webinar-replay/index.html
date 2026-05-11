@@ -1,0 +1,381 @@
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webinar Replay | Dominate Law</title>
+  <meta name="description" content="Watch Dominate Law webinar replays — on-demand legal marketing training for law firm owners and attorneys.">
+  <link rel="canonical" href="https://dominatelaw.com/webinar-replay/">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='white'/%3E%3Cpath d='M16 3 L28 7 L28 17 C28 23 22 28 16 30 C10 28 4 23 4 17 L4 7 Z' fill='%233A0D00' stroke='%23C9A84C' stroke-width='1'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,sans-serif;color:#1a0800;background:#fff;overflow-x:hidden}
+img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-style:none}
+button{border:none;background:none;cursor:pointer;font:inherit}input,select,textarea{font:inherit}
+:root{
+  --brown:#60270F;--brown2:#7A3515;--brown3:#3A0D00;
+  --gold:#C49A0A;--gold2:#9E7C08;--gold3:#E8C44A;
+  --cream:#FBF7F4;--cream2:#F0E8E0;--warm:#2A1200;
+  --muted:#6b5040;--border:#e8ddd6;--max:1280px;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#C49A0A,#E8C44A);z-index:9999;transition:width .08s linear}
+.wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 40px}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 40px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:4px;font-weight:700;font-size:.9rem;letter-spacing:.02em;transition:all .25s var(--ease);cursor:pointer;border:2px solid transparent;white-space:nowrap}
+.btn-primary{background:var(--brown);color:#fff}.btn-primary:hover{background:var(--brown3);transform:translateY(-3px);box-shadow:0 12px 32px rgba(58,13,0,.3)}
+.btn-secondary{background:transparent;color:var(--brown);border-color:var(--brown)}.btn-secondary:hover{background:var(--brown);color:#fff;transform:translateY(-2px)}
+.btn-sm{padding:9px 18px;font-size:.82rem}
+
+/* ── ANNOUNCE ── */
+.announce{background:var(--brown3);color:rgba(255,255,255,.75);font-size:.76rem;padding:9px 20px;text-align:center;position:relative;z-index:900}
+.announce strong{color:#E8C44A}.announce a{color:#E8C44A;font-weight:600;margin-left:4px}
+.a-pulse{display:inline-block;width:7px;height:7px;background:#E8C44A;border-radius:50%;margin-right:8px;animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+/* ── NAV ── */
+.nav{position:sticky;top:0;z-index:800;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;gap:0;height:72px;max-width:var(--max);margin:0 auto;padding:0 40px}
+.nav-logo{display:flex;align-items:center;gap:10px;margin-right:auto;flex-shrink:0}
+.nav-logo img{height:60px;width:auto}
+.nav-logo-fb{display:none;align-items:center;gap:8px}.nav-logo-fb.show{display:flex}
+.nav-mark{width:36px;height:36px;background:var(--brown);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Merriweather',serif;font-weight:900;font-size:.85rem;color:var(--gold3);flex-shrink:0}
+.nav-brand strong{display:block;font-size:.88rem;color:var(--warm)}.nav-brand em{font-size:.67rem;color:var(--muted);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-item>a{display:flex;align-items:center;gap:3px;padding:6px 9px;border-radius:4px;font-size:.78rem;font-weight:500;color:var(--muted);transition:color .15s,background .15s}
+.nav-item>a:hover,.nav-item>a.active{color:var(--brown);background:rgba(96,39,15,.13)}
+.nav-cta-btn{font-size:.78rem;padding:9px 18px;margin-left:10px;flex-shrink:0}
+.burger{display:none;flex-direction:column;gap:5px;padding:8px;border-radius:4px;cursor:pointer;margin-left:8px}
+.burger span{display:block;width:22px;height:2px;background:var(--brown);border-radius:2px;transition:all .3s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:1024px){.nav-links{display:none}.burger{display:flex}}
+
+/* ── MOBILE MENU ── */
+.mob-overlay{position:fixed;inset:0;background:rgba(58,13,0,.5);z-index:810;opacity:0;pointer-events:none;transition:opacity .3s}
+.mob-overlay.open{opacity:1;pointer-events:auto}
+.mob-menu{position:fixed;top:0;left:-100%;width:min(320px,90vw);height:100dvh;background:#fff;z-index:820;overflow-y:auto;transition:left .35s var(--ease);box-shadow:8px 0 40px rgba(58,13,0,.18)}
+.mob-menu.open{left:0}
+.mob-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.mob-close{font-size:1.1rem;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:4px}
+.mob-body{padding:12px 0 40px}
+.mob-link{display:block;padding:12px 20px;font-size:.88rem;font-weight:500;color:var(--warm);transition:background .15s,color .15s}
+.mob-link:hover,.mob-link.active{background:var(--cream);color:var(--brown)}
+.mob-sep{height:1px;background:var(--border);margin:6px 20px}
+.mob-cta-wrap{padding:16px 20px 0}.mob-cta-wrap .btn{width:100%;justify-content:center}
+
+/* ── HERO ── */
+.page-hero{background:var(--brown3);padding:56px 0 48px;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1600&q=55') center/cover;opacity:.07;pointer-events:none}
+.page-hero .container{position:relative;z-index:2}
+.breadcrumb{font-size:.75rem;color:rgba(255,255,255,.35);margin-bottom:18px}
+.breadcrumb a{color:rgba(255,255,255,.35)}.breadcrumb a:hover{color:var(--gold3)}.breadcrumb span{color:rgba(255,255,255,.55)}
+.wr-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(196,154,10,.15);border:1px solid rgba(196,154,10,.3);border-radius:100px;padding:6px 16px;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold3);margin-bottom:16px}
+.wr-hero-title{font-family:'Merriweather',serif;font-size:clamp(1.5rem,3.5vw,2.5rem);font-weight:900;color:#fff;line-height:1.22;margin-bottom:18px}
+.ep-meta-tags{display:flex;flex-wrap:wrap;gap:8px}
+.ep-tag{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:100px;border:1px solid rgba(255,255,255,.15);font-size:.73rem;font-weight:600;color:rgba(255,255,255,.7)}
+
+/* ── SHARE BAR ── */
+.ep-share-bar{background:#fff;border-bottom:1px solid var(--border);padding:14px 0}
+.ep-share-inner{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.ep-share-label{font-size:.82rem;font-weight:600;color:var(--warm);margin-right:6px}
+.ep-soc{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:6px;font-weight:800;font-size:.78rem;color:#fff;transition:opacity .2s,transform .2s}
+.ep-soc:hover{opacity:.8;transform:translateY(-2px)}
+.ep-soc-fb{background:#1877F2}.ep-soc-tw{background:#000}.ep-soc-li{background:#0A66C2}
+
+/* ── VIDEO SECTION ── */
+.wr-video-section{background:#fff;padding:28px 0;border-bottom:1px solid var(--border)}
+.wr-video-wrap-inner{max-width:860px;margin:0 auto;padding:0 40px}
+.wr-video-frame{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,var(--brown),var(--brown3));border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(58,13,0,.16)}
+.wr-video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:14px}
+.ep-share-note{font-size:.8rem;color:var(--muted);text-align:center;margin-top:12px;font-style:italic;line-height:1.6}
+
+/* ── GATE FORM ── */
+.wr-gate-section{background:#fff;padding:28px 0;border-bottom:1px solid var(--border)}
+.dl-gate-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;padding:32px;box-shadow:0 12px 34px rgba(58,13,0,.08)}
+.dl-gate-kicker{font-size:.66rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);margin-bottom:8px}
+.dl-gate-card h2{font-family:'Merriweather',serif;font-size:1.3rem;font-weight:900;color:var(--brown3);margin:0 0 8px}
+.dl-gate-card p{font-size:.88rem;color:var(--muted);line-height:1.65;margin:0 0 20px}
+.dl-gate-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.dl-gate-card label{display:block;font-size:.74rem;font-weight:700;color:var(--warm)}
+.dl-gate-card input{width:100%;margin-top:6px;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;background:#fff;color:var(--warm);outline:none;transition:border-color .2s,box-shadow .2s;font-size:.9rem}
+.dl-gate-card input:focus{border-color:var(--brown);box-shadow:0 0 0 3px rgba(96,39,15,.08)}
+.dl-gate-card button{width:100%;justify-content:center;margin-top:6px;padding:14px 20px;font-size:.92rem}
+.dl-gate-error{min-height:18px;color:#b42318;font-size:.75rem;font-weight:700;margin:6px 0}
+.dl-hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;pointer-events:none}
+
+/* ── SPEAKERS GRID ── */
+.ep-speakers-section{background:var(--cream);padding:32px 0;border-bottom:1px solid var(--border)}
+.ep-speakers-header{text-align:center;margin-bottom:20px}
+.ep-speakers-label{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2)}
+.ep-speakers-label::before,.ep-speakers-label::after{content:'';display:inline-block;width:24px;height:2px;background:var(--gold)}
+.ep-speakers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;max-width:900px;margin:0 auto;padding:0 20px}
+.ep-spk-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 12px 16px;text-align:center;transition:transform .25s,box-shadow .25s}
+.ep-spk-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(58,13,0,.1)}
+.ep-spk-img{width:76px;height:76px;border-radius:50%;overflow:hidden;margin:0 auto 10px;background:var(--brown);border:3px solid var(--cream2)}
+.ep-spk-img img{width:100%;height:100%;object-fit:cover}
+.ep-spk-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.1rem}
+.ep-spk-role{font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);margin-bottom:3px}
+.ep-spk-name{font-size:.84rem;font-weight:700;color:var(--warm);line-height:1.35}
+
+/* ── CONTENT AREA ── */
+.ep-content-area{max-width:860px;margin:0 auto;padding:48px 40px}
+.ep-content-heading{font-family:'Merriweather',serif;font-size:1.05rem;font-weight:900;color:var(--brown3);margin:32px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--cream2)}
+.ep-content-heading:first-child{margin-top:0}
+.ep-content-list{list-style:disc;padding-left:22px;margin:0}
+.ep-content-list li{font-size:.9rem;line-height:1.8;color:var(--warm);padding:3px 0}
+
+/* ── PREV / NEXT ── */
+.ep-nav-section{padding:40px 0;background:rgba(96,39,15,.06)}
+.ep-prev-next{display:flex;justify-content:space-between;align-items:stretch;gap:20px}
+.ep-nav-card{flex:1;display:flex;flex-direction:column;gap:6px;padding:20px 24px;background:#fff;border:1px solid var(--border);border-radius:14px;transition:box-shadow .2s,transform .2s;text-decoration:none}
+.ep-nav-card:hover{box-shadow:0 8px 28px rgba(58,13,0,.1);transform:translateY(-3px)}
+.ep-nav-card.ep-nav-right{text-align:right}
+.ep-nav-dir{font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:4px}
+.ep-nav-title{font-size:.86rem;font-weight:700;color:var(--warm);line-height:1.4}
+.ep-nav-placeholder{opacity:.35;pointer-events:none}
+
+/* ── CTA ── */
+.cta-section{background:var(--brown3);padding:72px 0;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'LAW';position:absolute;right:-20px;bottom:-24px;font-family:'Merriweather',serif;font-size:clamp(6rem,18vw,14rem);font-weight:900;color:rgba(255,255,255,.04);line-height:1;pointer-events:none}
+.cta-inner{position:relative;z-index:2}
+.cta-inner h2{font-family:'Merriweather',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:#fff;line-height:1.25;margin-bottom:14px}
+.cta-inner p{color:rgba(255,255,255,.6);max-width:560px;margin:0 auto 32px;font-size:.95rem;line-height:1.75}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-actions .btn-primary{background:var(--gold);color:#fff}.cta-actions .btn-primary:hover{background:var(--gold2)}
+.cta-actions .btn-secondary{border-color:rgba(255,255,255,.4);color:#fff}.cta-actions .btn-secondary:hover{background:rgba(255,255,255,.12);border-color:#fff}
+
+/* ── FOOTER ── */
+.footer{background:var(--brown3);padding:40px 0 0;border-top:1px solid rgba(255,255,255,.07)}
+.footer-simple{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;padding-bottom:28px}
+.footer-simple-logo{display:flex;align-items:center;gap:10px}
+.footer-simple-links{display:flex;gap:18px;flex-wrap:wrap}
+.footer-simple-links a{font-size:.8rem;color:rgba(255,255,255,.38);transition:color .2s}
+.footer-simple-links a:hover{color:var(--gold3)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding:18px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.74rem;color:rgba(255,255,255,.3)}
+.footer-bottom a{color:rgba(255,255,255,.22)}.footer-bottom a:hover{color:rgba(255,255,255,.5)}
+.footer-bottom-links{display:flex;gap:20px}
+.footer-brand-t strong{display:block;font-size:.88rem;color:rgba(255,255,255,.8)}
+.footer-brand-t em{font-size:.67rem;color:rgba(255,255,255,.3);font-style:normal}
+
+/* ── LOADING / ERROR ── */
+.wr-loading{min-height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+.wr-spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.2);border-top-color:var(--gold3);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.wr-not-found{text-align:center;padding:48px 0}
+.wr-not-found h2{font-family:'Merriweather',serif;color:#fff;margin-bottom:10px}
+.wr-not-found p{color:rgba(255,255,255,.55);margin-bottom:22px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .wr-video-wrap-inner,.ep-content-area{padding-left:20px;padding-right:20px}
+  .ep-prev-next{flex-direction:column}
+  .dl-gate-grid{grid-template-columns:1fr}
+  .dl-gate-card{padding:24px}
+}
+@media(max-width:600px){
+  .container,.wrap{padding:0 20px}
+  .page-hero{padding:44px 0 36px}
+  .ep-speakers-grid{grid-template-columns:repeat(2,1fr)}
+}
+  </style>
+  <!-- Route protection: must have filled the webinar gate form -->
+  <script>
+    (function(){
+      try { if(localStorage.getItem('dl_unlocked_webinar_all')!=='1') window.location.replace('/events/'); }
+      catch(e){}
+    })();
+  </script>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LX7QLWPWSM"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-LX7QLWPWSM');</script>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- Announce -->
+<div class="announce">
+  <span class="a-pulse"></span>
+  <strong>ON DEMAND:</strong> Legal marketing training available now &nbsp;&middot;&nbsp;
+  <a href="/events">Browse All Events →</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/images/logo.png" alt="Dominate Law" onerror="this.style.display='none';document.getElementById('nav-fb').classList.add('show')">
+      <div class="nav-logo-fb" id="nav-fb"><div class="nav-mark">DL</div><div class="nav-brand"><strong>Dominate Law</strong><em>by Ekwa</em></div></div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <div class="nav-item"><a href="/about">About Us</a></div>
+      <div class="nav-item"><a href="/events" class="active">Events</a></div>
+      <div class="nav-item"><a href="/podcast">Podcast</a></div>
+      <div class="nav-item"><a href="/reviews">Reviews</a></div>
+      <div class="nav-item"><a href="/blog">Blog</a></div>
+      <div class="nav-item"><a href="/resources">Resources</a></div>
+      <div class="nav-item"><a href="/tools">Legal Tools</a></div>
+      <div class="nav-item"><a href="/community">Community</a></div>
+      <div class="nav-item"><a href="/msm">Marketing</a></div>
+    </div>
+    <a href="/contact" class="btn btn-primary nav-cta-btn">Contact Us</a>
+    <button class="burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mob-overlay" id="mob-overlay"></div>
+<div class="mob-menu" id="mob-menu">
+  <div class="mob-header"><div class="nav-mark">DL</div><button class="mob-close" id="mob-close">✕</button></div>
+  <div class="mob-body">
+    <a href="/" class="mob-link">Home</a>
+    <a href="/about" class="mob-link">About Us</a>
+    <a href="/events" class="mob-link active">Events</a>
+    <a href="/podcast" class="mob-link">Podcast</a>
+    <a href="/reviews" class="mob-link">Reviews</a>
+    <a href="/blog" class="mob-link">Blog</a>
+    <a href="/resources" class="mob-link">Resources</a>
+    <a href="/tools" class="mob-link">Legal Tools</a>
+    <a href="/community" class="mob-link">Community</a>
+    <a href="/msm" class="mob-link">Marketing</a>
+    <div class="mob-sep"></div>
+    <div class="mob-cta-wrap"><a href="/contact" class="btn btn-primary">Contact Us →</a></div>
+  </div>
+</div>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════════ -->
+<section class="page-hero" id="wr-hero">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a> › <a href="/events">Events</a> › <span id="wr-breadcrumb-current">Webinar Replay</span>
+    </nav>
+    <div id="wr-hero-content">
+      <div class="wr-loading">
+        <div class="wr-spinner"></div>
+        <p style="color:rgba(255,255,255,.45);font-size:.85rem">Loading replay…</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SHARE BAR ═══════════════════════════════════════════════════ -->
+<div class="ep-share-bar" id="wr-share-bar" style="display:none">
+  <div class="container">
+    <div class="ep-share-inner">
+      <span class="ep-share-label">Share this replay</span>
+      <a id="wr-share-fb" href="#" target="_blank" rel="noopener" class="ep-soc ep-soc-fb" title="Share on Facebook">f</a>
+      <a id="wr-share-tw" href="#" target="_blank" rel="noopener" class="ep-soc ep-soc-tw" title="Share on X">𝕏</a>
+      <a id="wr-share-li" href="#" target="_blank" rel="noopener" class="ep-soc ep-soc-li" title="Share on LinkedIn">in</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SPEAKERS GRID (panel webinars) ════════════════════════════ -->
+<section class="ep-speakers-section" id="wr-speakers-section" style="display:none">
+  <div class="container">
+    <div class="ep-speakers-header">
+      <span class="ep-speakers-label">Featuring</span>
+    </div>
+    <div class="ep-speakers-grid" id="wr-speakers-grid"></div>
+  </div>
+</section>
+
+<!-- ═══ GATE FORM (shown when locked) ════════════════════════════ -->
+<div class="wr-gate-section" id="wr-gate-wrap" style="display:none">
+  <div class="wr-video-wrap-inner"></div>
+</div>
+
+<!-- ═══ VIDEO PLAYER (shown when unlocked) ════════════════════════ -->
+<div class="wr-video-section" id="wr-video-wrap" style="display:none">
+  <div class="wr-video-wrap-inner">
+    <div class="wr-video-frame">
+      <iframe id="wr-video-frame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Webinar Replay"></iframe>
+    </div>
+    <p class="ep-share-note">Found this valuable? Share it with an attorney who would benefit.</p>
+  </div>
+</div>
+
+<!-- ═══ KEY TAKEAWAYS ══════════════════════════════════════════════ -->
+<div id="wr-content-body" style="display:none">
+  <div class="ep-content-area">
+    <h2 class="ep-content-heading">Key Takeaways</h2>
+    <ul class="ep-content-list" id="wr-keypoints-list"></ul>
+  </div>
+</div>
+
+<!-- ═══ PREV / NEXT ═══════════════════════════════════════════════ -->
+<section class="ep-nav-section" id="wr-nav-section" style="display:none">
+  <div class="container">
+    <div class="ep-prev-next" id="wr-prev-next"></div>
+  </div>
+</section>
+
+<!-- ═══ CTA ════════════════════════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="container cta-inner">
+    <h2>Want to Turn Training Into Real Growth?</h2>
+    <p>Book a free strategy session and get a custom roadmap for attracting better-fit clients to your practice.</p>
+    <div class="cta-actions">
+      <a href="/msm" class="btn btn-primary">Book Free Strategy Session →</a>
+      <a href="/events" class="btn btn-secondary">Browse All Replays</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-simple">
+      <div class="footer-simple-logo">
+        <img src="/images/footer-logo.jpg" alt="Dominate Law" style="height:48px" loading="lazy" onerror="this.style.display='none'">
+        <div class="footer-brand-t"><strong>Dominate Law</strong><em>by Ekwa Marketing</em></div>
+      </div>
+      <div class="footer-simple-links">
+        <a href="/">Home</a><a href="/events">Events</a><a href="/podcast">Podcast</a>
+        <a href="/tools">Legal Tools</a><a href="/community">Community</a><a href="/contact">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Dominate Law by Ekwa Marketing. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="/privacy-policy">Privacy Policy</a><a href="/contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Scroll progress */
+const progressBar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  if (progressBar) progressBar.style.width = pct + '%';
+});
+
+/* Mobile menu */
+const burger  = document.getElementById('burger');
+const mobMenu = document.getElementById('mob-menu');
+const mobOvl  = document.getElementById('mob-overlay');
+const mobCls  = document.getElementById('mob-close');
+const openMenu = open => {
+  mobMenu.classList.toggle('open', open);
+  mobOvl.classList.toggle('open', open);
+  burger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+};
+burger?.addEventListener('click', () => openMenu(!mobMenu.classList.contains('open')));
+mobCls?.addEventListener('click',  () => openMenu(false));
+mobOvl?.addEventListener('click',  () => openMenu(false));
+</script>
+<script src="/js/form-security.js"></script>
+<script src="/js/sheets.js"></script>
+<script src="/js/cookie-consent.js"></script>
+</body>
+</html>

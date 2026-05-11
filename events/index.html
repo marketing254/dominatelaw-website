@@ -307,10 +307,80 @@ p:last-child{margin-bottom:0}
 .ev-success-icon{font-size:3.2rem;margin-bottom:14px}
 .ev-success h3{font-family:'Merriweather',serif;font-size:1.25rem;color:var(--brown3);margin-bottom:8px}
 .ev-success p{font-size:.87rem;color:var(--muted);line-height:1.72}
-/* old card styles kept for fallback */
+.wr-replays-wrap{margin-top:52px;padding-top:44px;border-top:1px solid var(--border)}
+.wr-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}
+.wr-section-head h2{margin:0;font-size:clamp(1.35rem,2.5vw,2rem)}
+.wr-section-head p{max-width:520px;margin:6px 0 0;color:var(--muted);font-size:.86rem}
+.wr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+.wr-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .25s,transform .25s,border-color .25s}
+.wr-card:hover{box-shadow:0 16px 42px rgba(58,13,0,.12);transform:translateY(-4px);border-color:rgba(196,154,10,.38)}
+.wr-thumb{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,var(--brown3),var(--brown));display:flex;align-items:center;justify-content:center;overflow:hidden;text-decoration:none}
+.wr-thumb-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(58,13,0,.18) 0%,rgba(58,13,0,.62) 100%);pointer-events:none}
+/* gradient overlay on top of thumbnail */
+.wr-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.58) 100%);pointer-events:none;z-index:1}
+.wr-thumb>span{position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(58,13,0,.78);backdrop-filter:blur(6px);border:1px solid rgba(196,154,10,.45);border-radius:100px;padding:5px 11px;color:#fff;font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.wr-play{position:relative;z-index:2;width:52px;height:52px;border-radius:50%;background:var(--gold);color:var(--brown3);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.28);transition:transform .25s,box-shadow .25s}
+.wr-card:hover .wr-play{transform:scale(1.1);box-shadow:0 12px 32px rgba(196,154,10,.4)}
+.wr-play svg{width:22px;height:22px;margin-left:3px}
+.wr-card-body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.wr-meta{font-size:.63rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2)}
+.wr-card h3{font-family:'Merriweather',serif;font-size:.96rem;font-weight:900;margin:0;color:var(--brown3);line-height:1.38}
+.wr-speakers{font-size:.76rem;color:var(--muted);font-weight:500}
+.wr-card ul{margin:4px 0 4px 18px;color:var(--muted);font-size:.79rem;line-height:1.6}
+.wr-card p{font-size:.82rem;color:var(--muted);margin:0 0 4px}
+.wr-card .btn{align-self:flex-start;margin-top:auto}
 .btn-closed{background:var(--border)!important;color:var(--muted)!important;border-color:var(--border)!important;cursor:not-allowed!important;transform:none!important;box-shadow:none!important;pointer-events:none;opacity:.7}
+/* ── Play / lock button on webinar card thumbnail ── */
+.ep-play-btn{position:absolute;bottom:14px;right:14px;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.wr-card:hover .ep-play-btn{transform:scale(1.1);background:#fff}
+.ep-play-btn svg{width:14px;height:14px;fill:var(--brown);margin-left:2px}
+.ep-play-btn.ep-lock-icon svg{width:15px;height:15px;margin-left:0;fill:var(--brown)}
+/* ── Locked webinar card ── */
+.wr-card.ep-card-locked{cursor:pointer}
+/* ── Card preview / gate sections ── */
+.ep-card-preview{display:flex;flex-direction:column;flex:1}
+.ep-card-gate{display:none;flex-direction:column;flex:1}
+.ep-card-gate.open{display:flex}
+.ep-gate-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.ep-gate-kicker{font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2)}
+.ep-gate-back{font-size:.72rem;font-weight:700;color:var(--muted);background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;gap:3px;transition:color .15s}
+.ep-gate-back:hover{color:var(--brown)}
+.ep-photo-cta{font-size:.78rem;font-weight:700;color:var(--brown);padding-top:10px;border-top:1px solid var(--border);display:inline-flex;align-items:center;gap:5px;margin-top:auto}
+/* ── Inline card gate form ── */
+.cg-form{display:flex;flex-direction:column;gap:7px;flex:1}
+.cg-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.cg-form input{padding:9px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:.75rem;color:var(--warm);width:100%;outline:none;transition:border-color .2s;background:#fff}
+.cg-form input:focus{border-color:var(--brown);box-shadow:0 0 0 3px rgba(96,39,15,.07)}
+.cg-form input::placeholder{color:var(--muted);font-size:.72rem}
+.cg-error{font-size:.68rem;color:#b42318;font-weight:700;min-height:13px;margin:0}
+.cg-form button{padding:10px;font-size:.8rem;font-weight:700;background:var(--brown);color:#fff;border-radius:6px;width:100%;cursor:pointer;transition:background .2s;border:none;margin-top:auto}
+.cg-form button:hover{background:var(--brown3)}
+.cg-form button:disabled{opacity:.6;cursor:not-allowed}
+/* ── Webinar gate modal ── */
+.wr-gate-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease)}
+.wr-gate-modal-bg.open{opacity:1;pointer-events:auto}
+.wr-gate-modal{background:#fff;border-radius:18px;width:100%;max-width:480px;padding:36px;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.32);transform:translateY(20px) scale(.97);transition:transform .28s var(--ease)}
+.wr-gate-modal-bg.open .wr-gate-modal{transform:none}
+.wr-gm-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;background:var(--cream2);border:none;cursor:pointer;font-size:1rem;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s}
+.wr-gm-close:hover{background:var(--brown);color:#fff}
+.wr-gm-kicker{font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);margin-bottom:6px}
+.wr-gm-heading{font-family:'Merriweather',serif;font-size:1.15rem;font-weight:900;color:var(--brown3);line-height:1.3;margin-bottom:4px}
+.wr-gm-sub{font-size:.82rem;color:var(--muted);margin-bottom:18px;line-height:1.55}
+.wr-gm-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.wr-gm-field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.wr-gm-field label{font-size:.73rem;font-weight:700;color:var(--warm)}
+.wr-gm-field input{padding:11px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:.88rem;color:var(--warm);outline:none;transition:border-color .2s,box-shadow .2s;background:#fff}
+.wr-gm-field input:focus{border-color:var(--brown);box-shadow:0 0 0 3px rgba(96,39,15,.08)}
+.wr-gm-field input::placeholder{color:var(--muted);font-size:.82rem}
+.wr-gm-error{font-size:.75rem;color:#b42318;font-weight:700;min-height:18px;margin:4px 0 8px}
+.wr-gm-submit{width:100%;padding:13px;background:var(--brown);color:#fff;border:none;border-radius:8px;font-size:.92rem;font-weight:700;cursor:pointer;transition:background .2s,transform .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.wr-gm-submit:hover{background:var(--brown3);transform:translateY(-1px)}
+.wr-gm-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.wr-gm-note{font-size:.7rem;color:var(--muted);text-align:center;margin-top:10px}
+@media(max-width:520px){.wr-gm-row{grid-template-columns:1fr}.wr-gate-modal{padding:24px}}
 @media(max-width:900px){.ev-hero-inner{grid-template-columns:1fr}.ev-sidebar{border-left:none;border-top:1px solid rgba(255,255,255,.07);padding:26px}.ev-hero-content{padding:36px 24px 28px}.ev-countdown{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:560px){.ev-frow{grid-template-columns:1fr}.ev-modal-body{padding:20px 20px 28px}.ev-countdown{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.wr-grid{grid-template-columns:repeat(2,1fr)}.wr-section-head{align-items:flex-start;flex-direction:column}}
+@media(max-width:560px){.ev-frow{grid-template-columns:1fr}.ev-modal-body{padding:20px 20px 28px}.ev-countdown{grid-template-columns:repeat(2,1fr)}.wr-grid{grid-template-columns:1fr}}
 
 /* ── CTA SECTION ────────────────────────────────────────── */
 .cta-section{background:var(--brown3);padding:80px 0;text-align:center;position:relative;overflow:hidden}
@@ -531,6 +601,16 @@ p:last-child{margin-bottom:0}
     <div id="ev-upcoming-wrap" style="display:none">
       <p class="ev-upcoming-title">More Upcoming Events</p>
       <div id="ev-upcoming-list"></div>
+    </div>
+    <div class="wr-replays-wrap" id="wr-replays-wrap" style="display:none">
+      <div class="wr-section-head">
+        <div>
+          <span class="label">Webinar Replays</span>
+          <h2>Watch Past Training Sessions</h2>
+        </div>
+        <p>On-demand webinar recordings for law firm owners who want practical growth ideas without waiting for the next live event.</p>
+      </div>
+      <div class="wr-grid" id="wr-replays-grid"></div>
     </div>
   </div>
 </section>
@@ -787,11 +867,13 @@ async function dlSubmitEventReg() {
   btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity=".3"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg> Registering…';
 
   const payload = {
+    tab: 'Event Registrations',
     ...fields,
     webinar_id: _evCurrent.webinarID || '',
     event_title: _evCurrent.title || '',
     event_date: _evCurrent.month_year ? `${_evCurrent.day} ${_evCurrent.month_year}` : '',
-    zoom_account: _evCurrent.zoom_account || '',
+    zoom_account: _evCurrent.zoom_account || _evCurrent.Account || _evCurrent.account || '',
+    page_url: window.location.href,
     timestamp: new Date().toISOString(),
     form: 'event_registration'
   };
@@ -800,7 +882,7 @@ async function dlSubmitEventReg() {
     await fetch(DL_APPS_SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     });
     const regKey = 'dl_reg_' + (_evCurrent.webinarID || _evCurrent.title || 'event');
@@ -838,7 +920,59 @@ function dlStartCountdown(targetDate) {
   tick();
   setInterval(tick, 1000);
 }
+
+// Close webinar modal on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') dlCloseWrGateModal();
+});
 </script>
+<!-- ═══ WEBINAR REPLAY GATE MODAL ════════════════════════════════ -->
+<div class="wr-gate-modal-bg" id="wr-gate-modal-bg"
+     onclick="if(event.target===this)dlCloseWrGateModal()"
+     role="dialog" aria-modal="true" aria-labelledby="wr-gm-heading">
+  <div class="wr-gate-modal">
+    <button class="wr-gm-close" onclick="dlCloseWrGateModal()" aria-label="Close">✕</button>
+    <div class="wr-gm-kicker">Free Replay Access</div>
+    <h3 class="wr-gm-heading" id="wr-gm-title">Webinar Replay</h3>
+    <p class="wr-gm-sub">Fill in your details to watch this on-demand session. It's completely free.</p>
+    <form id="wr-gm-form" onsubmit="dlSubmitWrGateModal(event)">
+      <input type="hidden" id="wr-gm-replay-id" value="">
+      <input type="hidden" id="wr-gm-redirect"  value="">
+      <input type="hidden" id="wr-gm-vimeo"     value="">
+      <div class="wr-gm-row">
+        <div class="wr-gm-field">
+          <label for="wr-gm-first">First Name *</label>
+          <input id="wr-gm-first" type="text" placeholder="Alex" required autocomplete="given-name">
+        </div>
+        <div class="wr-gm-field">
+          <label for="wr-gm-last">Last Name *</label>
+          <input id="wr-gm-last" type="text" placeholder="Thompson" required autocomplete="family-name">
+        </div>
+      </div>
+      <div class="wr-gm-row">
+        <div class="wr-gm-field">
+          <label for="wr-gm-email">Email *</label>
+          <input id="wr-gm-email" type="email" placeholder="alex@yourfirm.com" required autocomplete="email">
+        </div>
+        <div class="wr-gm-field">
+          <label for="wr-gm-phone">Phone *</label>
+          <input id="wr-gm-phone" type="tel" placeholder="+1 (555) 000-0000" required autocomplete="tel">
+        </div>
+      </div>
+      <div class="wr-gm-field">
+        <label for="wr-gm-firm">Firm Name *</label>
+        <input id="wr-gm-firm" type="text" placeholder="Thompson &amp; Associates" required autocomplete="organization">
+      </div>
+      <p class="wr-gm-error" id="wr-gm-error" role="alert"></p>
+      <button type="submit" class="wr-gm-submit">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Watch Replay Now
+      </button>
+      <p class="wr-gm-note">No spam. Your details are kept private.</p>
+    </form>
+  </div>
+</div>
+
 <script src="/js/form-security.js"></script>
 <script src="/js/cookie-consent.js"></script>
 </body>
