@@ -322,9 +322,11 @@ function dlSplitKeynotes(text, titleFromSheet) {
 function dlNormalizeWebinarReplay(row, index) {
   const keynotesRaw   = dlPick(row, ['keymotes', 'keynotes', 'key notes', 'takeaways', 'description']);
   const explicitTitle = dlPick(row, ['title', 'webinar title', 'replay title', 'name']);
-  const keyLines      = dlSplitKeynotes(keynotesRaw, '');
-  const title         = explicitTitle || keyLines[0] || `Webinar Replay ${index + 1}`;
-  const notes         = explicitTitle ? dlSplitKeynotes(keynotesRaw, explicitTitle) : keyLines.slice(1);
+  // Reuse the podcast-style parser — strips "Key points"/"About …" headers AND every bullet
+  // character (•, *, -, –, —, >) so we never get double bullets on the page.
+  const parsedNotes   = dlParseDescription(keynotesRaw);
+  const title         = explicitTitle || parsedNotes.keyPoints[0] || `Webinar Replay ${index + 1}`;
+  const notes         = explicitTitle ? parsedNotes.keyPoints : parsedNotes.keyPoints.slice(1);
   const dateRaw       = dlPick(row, ['date', 'date_iso', 'published date', 'date published']);
   const vimeoLink     = dlPick(row, ['vimeo_url', 'vimeo links', 'vimeo link', 'vimeo', 'video link', 'video url', 'replay link', 'link', 'url']);
   const thumbRaw      = dlPick(row, ['thumbnail_url', 'thumbnail', 'image', 'image_url', 'cover']);
