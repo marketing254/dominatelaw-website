@@ -48,8 +48,14 @@
     <loc>https://dominatelaw.com/podcast-episode/?ep=redesigning-your-law-firm-for-2026-systems-pricing-and-tech-that-scale</loc>
     <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-03-31</lastmod>
   </url>
-  <!-- Add ep 22 here once you know its title — replace SLUG with the auto-generated value -->
-  <!-- <url><loc>https://dominatelaw.com/podcast-episode/?ep=SLUG-FOR-EP-22</loc><changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-04-XX</lastmod></url> -->
+  <url>
+    <loc>https://dominatelaw.com/podcast-episode/?ep=ai-vs-lawyers-how-artificial-intelligence-is-reshaping-legal-practice</loc>
+    <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-04-15</lastmod>
+  </url>
+  <url>
+    <loc>https://dominatelaw.com/podcast-episode/?ep=building-a-law-firm-with-control-clarity-confidence</loc>
+    <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-05-15</lastmod>
+  </url>
   <url>
     <loc>https://dominatelaw.com/podcast-episode/?ep=preparing-clients-for-a-better-deposition-in-the-courtroom</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-12-01</lastmod>
@@ -135,7 +141,38 @@
     <loc>https://dominatelaw.com/events/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-05-12</lastmod>
+  </url>
+
+  <!-- Webinar replays — add a new <url> block each time a replay goes live -->
+  <!-- URL pattern: /webinar-replay/?replay={replay_id from sheet} -->
+  <url>
+    <loc>https://dominatelaw.com/webinar-replay/?replay=law-firm-control-clarity-apr-2026</loc>
+    <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-04-09</lastmod>
+  </url>
+  <url>
+    <loc>https://dominatelaw.com/webinar-replay/?replay=law-firm-systems-pricing-mar-2026</loc>
+    <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://dominatelaw.com/webinar-replay/?replay=ai-era-law-firm-mar-2026</loc>
+    <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-03-04</lastmod>
+  </url>
+  <url>
+    <loc>https://dominatelaw.com/webinar-replay/?replay=future-ready-family-law-feb-2026</loc>
+    <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2026-02-26</lastmod>
+  </url>
+  <url>
+    <loc>https://dominatelaw.com/webinar-replay/?replay=ai-vs-lawyers-feb-2026</loc>
+    <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://dominatelaw.com/webinar-replay/?replay=leadership-psychological-safety-jan-2026</loc>
+    <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2026-01-28</lastmod>
+  </url>
+  <url>
+    <loc>https://dominatelaw.com/webinar-replay/?replay=bridging-gaps-domestic-violence-jan-2026</loc>
+    <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2026-01-14</lastmod>
   </url>
 
   <url>
