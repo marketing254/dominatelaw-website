@@ -944,8 +944,11 @@ async function dlLoadEpisodePage() {
 
     let descEl = document.querySelector('meta[name="description"]');
     if (!descEl) { descEl = document.createElement('meta'); descEl.name = 'description'; document.head.appendChild(descEl); }
-    const { keyPoints } = dlParseDescription(ep.description);
-    const descSnippet   = keyPoints[0] ? keyPoints[0].slice(0, 160) : `Episode #${ep.episode} of the Dominate Law Podcast — ${ep.title}.`;
+    // Parse description once here — reused later for Key Points + bio rendering
+    const parsedDescription = dlParseDescription(ep.description);
+    const descSnippet = parsedDescription.keyPoints[0]
+      ? parsedDescription.keyPoints[0].slice(0, 160)
+      : `Episode #${ep.episode} of the Dominate Law Podcast — ${ep.title}.`;
     descEl.content = descSnippet;
 
     // ── Speakers (multi-speaker / panel episodes, ep 21+)
@@ -1030,8 +1033,8 @@ async function dlLoadEpisodePage() {
       if (posterSec) posterSec.style.display = 'block';
     }
 
-    // ── Parse description into key points + bio
-    const { keyPoints, bioGuestName, bio } = dlParseDescription(ep.description);
+    // ── Key points + bio (already parsed above into `parsedDescription`)
+    const { keyPoints, bioGuestName, bio } = parsedDescription;
     const kpList = document.getElementById('ep-keypoints-list');
     if (kpList) kpList.innerHTML = keyPoints.length
       ? keyPoints.map(pt => `<li>${pt}</li>`).join('')
