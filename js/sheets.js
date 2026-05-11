@@ -290,10 +290,27 @@ function dlSlug(value) {
     .slice(0, 72) || 'item';
 }
 
+// ── Custom episode slug overrides (managed here, not in the sheet) ──
+// Use this to give long-titled episodes clean, short, SEO-friendly slugs
+// without needing a 'slug' column in the Google Sheet.
+// Whenever you add a new entry here, also update sitemap.xml to match.
+const DL_EPISODE_SLUGS = {
+  23: 'building-a-law-firm-with-control-clarity-confidence',
+  // 3:  'how-to-build-and-grow-a-law-practice-gary-bennett',
+  // 11: 'mindfulness-and-lawyer-wellbeing-jeena-cho',
+  // 16: 'always-look-from-the-other-perspective-daniel-forouzan',
+  // …add more episode-number → slug entries as needed
+};
+
 // ── Helper: resolve or auto-generate a URL slug for a podcast episode ──
-// Reads the optional 'slug' column first; falls back to slugifying the title.
-// Numeric ep param (?ep=21) is still supported for backward compat.
+// Precedence:
+//   1. Manual override from DL_EPISODE_SLUGS (in this file)
+//   2. 'slug' column on the sheet (if you ever decide to use it)
+//   3. Auto-generated from ep.title (capped at 72 chars)
+// Numeric ?ep=21 URLs still work for backward compat.
 function dlEpisodeSlug(ep) {
+  const epNum = parseInt(ep.episode, 10);
+  if (DL_EPISODE_SLUGS[epNum]) return DL_EPISODE_SLUGS[epNum];
   if (ep.slug && ep.slug.trim()) return ep.slug.trim();
   return dlSlug(ep.title);
 }
