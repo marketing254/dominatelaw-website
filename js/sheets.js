@@ -944,8 +944,11 @@ async function dlLoadEpisodePage() {
 
     let descEl = document.querySelector('meta[name="description"]');
     if (!descEl) { descEl = document.createElement('meta'); descEl.name = 'description'; document.head.appendChild(descEl); }
-    const { keyPoints } = dlParseDescription(ep.description);
-    const descSnippet   = keyPoints[0] ? keyPoints[0].slice(0, 160) : `Episode #${ep.episode} of the Dominate Law Podcast — ${ep.title}.`;
+    // Parse description once here — reused later for Key Points + bio rendering
+    const parsedDescription = dlParseDescription(ep.description);
+    const descSnippet = parsedDescription.keyPoints[0]
+      ? parsedDescription.keyPoints[0].slice(0, 160)
+      : `Episode #${ep.episode} of the Dominate Law Podcast — ${ep.title}.`;
     descEl.content = descSnippet;
 
     // ── Speakers (multi-speaker / panel episodes, ep 21+)
@@ -1030,8 +1033,8 @@ async function dlLoadEpisodePage() {
       if (posterSec) posterSec.style.display = 'block';
     }
 
-    // ── Parse description into key points + bio
-    const { keyPoints, bioGuestName, bio } = dlParseDescription(ep.description);
+    // ── Key points + bio (already parsed above into `parsedDescription`)
+    const { keyPoints, bioGuestName, bio } = parsedDescription;
     const kpList = document.getElementById('ep-keypoints-list');
     if (kpList) kpList.innerHTML = keyPoints.length
       ? keyPoints.map(pt => `<li>${pt}</li>`).join('')
@@ -1221,73 +1224,96 @@ async function dlLoadTranscript(transcriptUrl, epTitle, guestName, speakers, isN
 }
 
 // ── Format raw transcript text into styled HTML ────────────────────
-// Handles format: "Speaker N    HH:MM:SS    text content"
+// Handles TWO line formats automatically:
+//   1. "Speaker N    HH:MM:SS    text"           (otter.ai / generic)
+//   2. "Naren Raja    HH:MM:SS    text"          (already-named transcripts)
 //
-// Mapping precedence for Speaker N:
-//   1. `speakers` array (panel format) → use speakers[N-1].name / role
-//   2. `isNewFormat` (ep 21+ with no speakers column) → generic "Speaker N", role=guest
-//      (NEVER assumes Naren/the host — user must populate speakers column to get names)
-//   3. Legacy (ep 1–20) → 1=Intro, 2=host (Naren), 3+=single guest
+// When a name is in the transcript directly, that name is used as-is.
+// If the speakers column also has roles (e.g. "Naren Raja (Host)"),
+// matching names get the correct host/guest styling.
 function dlFormatTranscript(text, guestName, hostName, speakers, isNewFormat) {
   const hostShort  = (hostName  || 'Host').split(' ')[0];
   const guestShort = (guestName || 'Guest').split(' ')[0];
-  const usePanel = Array.isArray(speakers) && speakers.length > 0;
+  const usePanel   = Array.isArray(speakers) && speakers.length > 0;
 
-  // ── Parse each line ──────────────────────────────────────────────
-  // Format: Speaker N    00:00:00    text  (4-space separated)
-  const lineRe = /^(Speaker\s+(\d+))\s{2,}(\d{1,2}:\d{2}(?::\d{2})?)\s{2,}(.+)$/;
+  // Build a quick lookup: lowercased name → role (from the speakers column)
+  const nameToRole = {};
+  if (usePanel) {
+    speakers.forEach(s => { nameToRole[s.name.toLowerCase()] = s.role; });
+  }
 
-  const lines = text.split(/\r?\n/);
+  // ── Two line patterns ───────────────────────────────────────────
+  // Format A: "Speaker N    00:00:00    text"
+  const reNumbered = /^(Speaker\s+(\d+))\s{2,}(\d{1,2}:\d{2}(?::\d{2})?)\s{2,}(.+)$/;
+  // Format B: "<Name>    00:00:00    text" — name is letters/space/dot/apostrophe/hyphen, 2-60 chars
+  const reNamed    = /^([A-Za-z][A-Za-z .'\-]{0,58}[A-Za-z.])\s{2,}(\d{1,2}:\d{2}(?::\d{2})?)\s{2,}(.+)$/;
+
+  const lines   = text.split(/\r?\n/);
   const entries = [];
 
   for (const raw of lines) {
     const line = raw.trim();
     if (!line) continue;
 
-    const m = line.match(lineRe);
-    if (!m) {
-      // Fallback: plain line with no structure
-      const t = line.trim();
-      if (t && t !== '<silence>') {
-        entries.push({ speakerNum: -1, label: '', time: '', text: t });
+    // Try Speaker N first
+    let mNum = line.match(reNumbered);
+    if (mNum) {
+      const speakerNum  = parseInt(mNum[2], 10);
+      const time        = mNum[3];
+      const textContent = mNum[4].trim();
+      if (!textContent || textContent === '<silence>') continue;
+      if (speakerNum === 0) continue;
+
+      let label, role;
+      if (usePanel) {
+        const sp = speakers.find(s => s.speakerNum === speakerNum);
+        if (sp) { label = sp.name; role = sp.role; }
+        else    { label = `Speaker ${speakerNum}`; role = 'guest'; }
+      } else if (isNewFormat) {
+        label = `Speaker ${speakerNum}`; role = 'guest';
+      } else {
+        if (speakerNum === 1)      { label = 'Intro';   role = 'intro'; }
+        else if (speakerNum === 2) { label = hostShort; role = 'host';  }
+        else                       { label = guestShort; role = 'guest'; }
       }
+      entries.push({ speakerKey: `n${speakerNum}`, label, role, time, text: textContent });
       continue;
     }
 
-    const speakerNum = parseInt(m[2], 10);
-    const time       = m[3];
-    const textContent = m[4].trim();
+    // Try named-speaker format
+    let mName = line.match(reNamed);
+    if (mName) {
+      const nameRaw     = mName[1].trim();
+      const time        = mName[2];
+      const textContent = mName[3].trim();
+      if (!textContent || textContent === '<silence>') continue;
 
-    // Skip silences and empty
-    if (!textContent || textContent === '<silence>' || textContent === '<silence>  ') continue;
-    if (speakerNum === 0) continue; // silence / noise
-
-    // Map speaker number → label + role
-    let label, role;
-    if (usePanel) {
-      const sp = speakers.find(s => s.speakerNum === speakerNum);
-      if (sp) { label = sp.name; role = sp.role; }
-      else    { label = `Speaker ${speakerNum}`; role = 'guest'; }
-    } else if (isNewFormat) {
-      // Ep 21+ with no speakers column populated — never assume host name.
-      // Render generic Speaker N labels until the speakers column is filled in.
-      label = `Speaker ${speakerNum}`;
-      role  = 'guest';
-    } else {
-      // Legacy mapping for episodes 1–20
-      if (speakerNum === 1)      { label = 'Intro';      role = 'intro'; }
-      else if (speakerNum === 2) { label = hostShort;    role = 'host';  }
-      else                       { label = guestShort;   role = 'guest'; }
+      // Use the transcript's own name. Derive role from speakers column if a match exists.
+      const label = nameRaw;
+      const role  = nameToRole[nameRaw.toLowerCase()]
+                 || (/intro/i.test(nameRaw) ? 'intro' : 'guest');
+      entries.push({ speakerKey: 'name:' + nameRaw.toLowerCase(), label, role, time, text: textContent });
+      continue;
     }
 
-    entries.push({ speakerNum, label, role, time, text: textContent });
+    // Plain line with no structure — keep it as floating text
+    if (line && line !== '<silence>') {
+      entries.push({ speakerKey: 'plain', label: '', role: 'intro', time: '', text: line });
+    }
   }
 
   if (!entries.length) return '<div class="ep-transcript-para"><div class="ep-transcript-text">Transcript content could not be parsed.</div></div>';
 
+  // Assign a stable per-speaker color index (1-6, cycles) based on first appearance
+  const keyToIdx = new Map();
+  let nextIdx = 1;
+  entries.forEach(e => {
+    if (!keyToIdx.has(e.speakerKey)) keyToIdx.set(e.speakerKey, nextIdx++);
+    e.colorIdx = keyToIdx.get(e.speakerKey);
+  });
+
   // ── Build HTML ───────────────────────────────────────────────────
-  // In panel/new-format mode, each speaker number gets a stable tint + per-turn badge
-  const perSpeakerTinting = usePanel || isNewFormat;
+  const perSpeakerTinting = usePanel || isNewFormat || keyToIdx.size > 2;
   let html = '';
   let lastSig = null;
 
@@ -1295,11 +1321,11 @@ function dlFormatTranscript(text, guestName, hostName, speakers, isNewFormat) {
     const roleClass = e.role === 'host'  ? 'ep-ts-host'
                     : e.role === 'guest' ? 'ep-ts-guest'
                     : 'ep-ts-intro';
-    const spkClass = perSpeakerTinting && e.speakerNum > 0
-      ? `ep-ts-spk-${((e.speakerNum - 1) % 6) + 1}`
+    const spkClass = perSpeakerTinting && e.colorIdx > 0
+      ? `ep-ts-spk-${((e.colorIdx - 1) % 6) + 1}`
       : '';
 
-    const sig = perSpeakerTinting ? `${e.role}#${e.speakerNum}` : e.role;
+    const sig = perSpeakerTinting ? `${e.role}#${e.speakerKey}` : e.role;
     const showSpeaker = (sig !== lastSig) || e.role === 'intro';
     lastSig = sig;
 
