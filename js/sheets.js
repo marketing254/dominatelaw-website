@@ -952,7 +952,7 @@ async function dlLoadEpisodePage() {
     const epSlug  = dlEpisodeSlug(ep);
     const prev    = idx > 0 ? episodes[idx - 1] : null;
     const next    = idx < episodes.length - 1 ? episodes[idx + 1] : null;
-    const canonicalUrl = `https://dominatelaw.com/podcast-episode/?ep=${encodeURIComponent(epSlug)}`;
+    const canonicalUrl = `https://www.dominatelaw.com/podcast-episode/?ep=${encodeURIComponent(epSlug)}`;
     const pageUrl      = encodeURIComponent(canonicalUrl);
     const pageTitle    = encodeURIComponent(`Episode #${ep.episode}: ${ep.title} — Dominate Law Podcast`);
 

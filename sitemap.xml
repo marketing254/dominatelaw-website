@@ -6,7 +6,7 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://dominatelaw.com/</loc>
+    <loc>https://www.dominatelaw.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <lastmod>2026-04-06</lastmod>
@@ -14,21 +14,21 @@
 
   <!-- Core pages -->
   <url>
-    <loc>https://dominatelaw.com/about/</loc>
+    <loc>https://www.dominatelaw.com/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/contact/</loc>
+    <loc>https://www.dominatelaw.com/contact/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/reviews/</loc>
+    <loc>https://www.dominatelaw.com/reviews/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <lastmod>2026-04-06</lastmod>
@@ -36,7 +36,7 @@
 
   <!-- Content hub -->
   <url>
-    <loc>https://dominatelaw.com/podcast/</loc>
+    <loc>https://www.dominatelaw.com/podcast/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <lastmod>2026-05-10</lastmod>
@@ -45,100 +45,100 @@
   <!-- Podcast episodes — add a new <url> block each time a new episode is published -->
   <!-- URL pattern: /podcast-episode/?ep={slug} (slug = sheet 'slug' col OR auto-generated from title) -->
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=redesigning-your-law-firm-for-2026-systems-pricing-and-tech-that-scale</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=redesigning-your-law-firm-for-2026-systems-pricing-and-tech-that-scale</loc>
     <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-03-31</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=ai-vs-lawyers-how-artificial-intelligence-is-reshaping-legal-practice</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=ai-vs-lawyers-how-artificial-intelligence-is-reshaping-legal-practice</loc>
     <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-04-15</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=building-a-law-firm-with-control-clarity-confidence</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=building-a-law-firm-with-control-clarity-confidence</loc>
     <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-05-15</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=preparing-clients-for-a-better-deposition-in-the-courtroom</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=preparing-clients-for-a-better-deposition-in-the-courtroom</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-12-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=my-journey-to-finding-happiness-in-the-area-of-law-with-nicole-abboud</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=my-journey-to-finding-happiness-in-the-area-of-law-with-nicole-abboud</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-11-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=pursuing-your-passions-and-carving-your-own-path-with-joey-vitale</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=pursuing-your-passions-and-carving-your-own-path-with-joey-vitale</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-10-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=working-with-gen-y-clients-with-karima-gulick</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=working-with-gen-y-clients-with-karima-gulick</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-09-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=always-look-from-the-other-perspective-and-provide-value-in-the-work-you</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=always-look-from-the-other-perspective-and-provide-value-in-the-work-you</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-08-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=entrepreneurship-and-leadership-as-a-lawyer-with-somya-kaushik</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=entrepreneurship-and-leadership-as-a-lawyer-with-somya-kaushik</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-07-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=making-time-and-putting-yourself-first-with-ilya-elena-lerma</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=making-time-and-putting-yourself-first-with-ilya-elena-lerma</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-06-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=the-purpose-and-impacts-of-being-a-divorce-lawyer-with-kelly-chang-ricke</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=the-purpose-and-impacts-of-being-a-divorce-lawyer-with-kelly-chang-ricke</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-05-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=making-time-personally-and-professionally-with-lisa-maki</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=making-time-personally-and-professionally-with-lisa-maki</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-04-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=mindfulness-how-it-s-linked-to-a-lawyer-s-well-being-and-why-lawyers-sho</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=mindfulness-how-it-s-linked-to-a-lawyer-s-well-being-and-why-lawyers-sho</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-03-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=how-to-build-relationships-in-the-digital-age-with-mitch-jackson</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=how-to-build-relationships-in-the-digital-age-with-mitch-jackson</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-02-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=finding-peace-meaning-and-integrity-as-a-lawyer-in-today-s-society-with-</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=finding-peace-meaning-and-integrity-as-a-lawyer-in-today-s-society-with-</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2025-01-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=serving-your-community-ethically-and-compassionately-with-mary-ann-escal</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=serving-your-community-ethically-and-compassionately-with-mary-ann-escal</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2024-12-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=the-importance-of-specialization-in-your-law-firm-with-dan-minutillo</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=the-importance-of-specialization-in-your-law-firm-with-dan-minutillo</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2024-11-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=mexican-law-across-the-world-with-oscar-valdez</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=mexican-law-across-the-world-with-oscar-valdez</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2024-10-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=be-the-voice-for-those-who-need-justice-with-marilynn-mika-spencer</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=be-the-voice-for-those-who-need-justice-with-marilynn-mika-spencer</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2024-09-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=the-business-side-of-a-law-firm-with-larry-organ</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=the-business-side-of-a-law-firm-with-larry-organ</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2024-08-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=the-nuts-and-bolts-of-how-to-build-and-grow-a-law-practice-with-gary-ben</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=the-nuts-and-bolts-of-how-to-build-and-grow-a-law-practice-with-gary-ben</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2024-07-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=using-your-passion-to-help-people-get-justice-with-james-desimone</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=using-your-passion-to-help-people-get-justice-with-james-desimone</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2024-06-01</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/podcast-episode/?ep=the-journey-and-experiences-of-being-a-lawyer-with-gary-bennett</loc>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=the-journey-and-experiences-of-being-a-lawyer-with-gary-bennett</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2024-05-01</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/events/</loc>
+    <loc>https://www.dominatelaw.com/events/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <lastmod>2026-05-12</lastmod>
@@ -147,36 +147,36 @@
   <!-- Webinar replays — add a new <url> block each time a replay goes live -->
   <!-- URL pattern: /webinar-replay/?replay={replay_id from sheet} -->
   <url>
-    <loc>https://dominatelaw.com/webinar-replay/?replay=law-firm-control-clarity-apr-2026</loc>
+    <loc>https://www.dominatelaw.com/webinar-replay/?replay=law-firm-control-clarity-apr-2026</loc>
     <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-04-09</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/webinar-replay/?replay=law-firm-systems-pricing-mar-2026</loc>
+    <loc>https://www.dominatelaw.com/webinar-replay/?replay=law-firm-systems-pricing-mar-2026</loc>
     <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-03-31</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/webinar-replay/?replay=ai-era-law-firm-mar-2026</loc>
+    <loc>https://www.dominatelaw.com/webinar-replay/?replay=ai-era-law-firm-mar-2026</loc>
     <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-03-04</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/webinar-replay/?replay=future-ready-family-law-feb-2026</loc>
+    <loc>https://www.dominatelaw.com/webinar-replay/?replay=future-ready-family-law-feb-2026</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2026-02-26</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/webinar-replay/?replay=ai-vs-lawyers-feb-2026</loc>
+    <loc>https://www.dominatelaw.com/webinar-replay/?replay=ai-vs-lawyers-feb-2026</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2026-02-11</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/webinar-replay/?replay=leadership-psychological-safety-jan-2026</loc>
+    <loc>https://www.dominatelaw.com/webinar-replay/?replay=leadership-psychological-safety-jan-2026</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2026-01-28</lastmod>
   </url>
   <url>
-    <loc>https://dominatelaw.com/webinar-replay/?replay=bridging-gaps-domestic-violence-jan-2026</loc>
+    <loc>https://www.dominatelaw.com/webinar-replay/?replay=bridging-gaps-domestic-violence-jan-2026</loc>
     <changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2026-01-14</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/blog/</loc>
+    <loc>https://www.dominatelaw.com/blog/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <lastmod>2026-04-06</lastmod>
@@ -184,14 +184,14 @@
 
   <!-- Tools & Resources -->
   <url>
-    <loc>https://dominatelaw.com/resources/</loc>
+    <loc>https://www.dominatelaw.com/resources/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/tools/</loc>
+    <loc>https://www.dominatelaw.com/tools/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <lastmod>2026-04-06</lastmod>
@@ -199,21 +199,21 @@
 
   <!-- Community & CTAs -->
   <url>
-    <loc>https://dominatelaw.com/community/</loc>
+    <loc>https://www.dominatelaw.com/community/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/msm/</loc>
+    <loc>https://www.dominatelaw.com/msm/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/guest-speaker/</loc>
+    <loc>https://www.dominatelaw.com/guest-speaker/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <lastmod>2026-04-06</lastmod>
@@ -221,63 +221,63 @@
 
   <!-- Blog posts -->
   <url>
-    <loc>https://dominatelaw.com/blog/law-firm-seo-guide-2026/</loc>
+    <loc>https://www.dominatelaw.com/blog/law-firm-seo-guide-2026/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/blog/google-business-profile-lawyers/</loc>
+    <loc>https://www.dominatelaw.com/blog/google-business-profile-lawyers/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/blog/law-firm-social-media-strategy/</loc>
+    <loc>https://www.dominatelaw.com/blog/law-firm-social-media-strategy/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/blog/ai-for-law-firms-guide-2026/</loc>
+    <loc>https://www.dominatelaw.com/blog/ai-for-law-firms-guide-2026/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/blog/law-firm-client-experience-guide/</loc>
+    <loc>https://www.dominatelaw.com/blog/law-firm-client-experience-guide/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/blog/law-firm-email-marketing-guide/</loc>
+    <loc>https://www.dominatelaw.com/blog/law-firm-email-marketing-guide/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/blog/law-firm-ppc-guide-2026/</loc>
+    <loc>https://www.dominatelaw.com/blog/law-firm-ppc-guide-2026/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/blog/law-firm-practice-management-guide/</loc>
+    <loc>https://www.dominatelaw.com/blog/law-firm-practice-management-guide/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
 
   <url>
-    <loc>https://dominatelaw.com/blog/legal-technology-guide-2026/</loc>
+    <loc>https://www.dominatelaw.com/blog/legal-technology-guide-2026/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2026-04-06</lastmod>
@@ -285,7 +285,7 @@
 
   <!-- Legal -->
   <url>
-    <loc>https://dominatelaw.com/privacy-policy/</loc>
+    <loc>https://www.dominatelaw.com/privacy-policy/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
     <lastmod>2026-04-06</lastmod>
