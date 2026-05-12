@@ -994,7 +994,7 @@ async function dlLoadEpisodePage() {
       if (!el) { el = document.createElement('meta'); el.setAttribute('property', prop); document.head.appendChild(el); }
       el.content = val;
     };
-    setOg('og:title',       `Episode #${ep.episode}: ${ep.title} — Dominate Law Podcast`);
+    setOg('og:title',       ep.title.length > 50 ? ep.title : `${ep.title} | Dominate Law Podcast`);
     setOg('og:description', descSnippet);
     setOg('og:url',         canonicalUrl);
     if (ep.poster_image)         setOg('og:image', dlDriveImg(ep.poster_image, 'w1200'));
@@ -1005,7 +1005,7 @@ async function dlLoadEpisodePage() {
     const isPanel  = speakers.length > 1;
 
     // ── Page title + breadcrumb
-    document.title = `Episode #${ep.episode}: ${ep.title} — Dominate Law`;
+    document.title = ep.title.length > 50 ? ep.title : `${ep.title} | Dominate Law`;
     if (crumbEl) crumbEl.textContent = `Episode #${ep.episode}`;
 
     // ── Hero
@@ -1875,7 +1875,7 @@ async function dlLoadWebinarReplayPage() {
     window.dlCurrentWebinarReplay = replay;
 
     // Page meta
-    document.title = `${replay.title} | Webinar Replay | Dominate Law`;
+    document.title = replay.title.length > 45 ? `${replay.title} | Webinar Replay` : `${replay.title} | Webinar Replay | Dominate Law`;
     if (crumb) crumb.textContent = replay.title;
 
     // Hero
