@@ -18,17 +18,38 @@ Disallow: /data/
 # Block utility/script files
 Disallow: /seo-inject.js
 
-# AI crawlers — allow all for AI search visibility
+# ── AI crawlers — explicit allow for citation discoverability ───────
 User-agent: GPTBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 User-agent: Google-Extended
 Allow: /
 
-# Sitemap
-Sitemap: https://dominatelaw.com/sitemap.xml
+User-agent: cohere-ai
+Allow: /
 
-# Dominate Law | dominatelaw.com | Powered by Ekwa Marketing
+User-agent: Applebot-Extended
+Allow: /
+
+# Sitemap (matches canonical www domain)
+Sitemap: https://www.dominatelaw.com/sitemap.xml
+
+# Dominate Law | www.dominatelaw.com | Powered by Ekwa Marketing

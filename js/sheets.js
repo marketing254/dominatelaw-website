@@ -952,7 +952,7 @@ async function dlLoadEpisodePage() {
     const epSlug  = dlEpisodeSlug(ep);
     const prev    = idx > 0 ? episodes[idx - 1] : null;
     const next    = idx < episodes.length - 1 ? episodes[idx + 1] : null;
-    const canonicalUrl = `https://dominatelaw.com/podcast-episode/?ep=${encodeURIComponent(epSlug)}`;
+    const canonicalUrl = `https://www.dominatelaw.com/podcast-episode/?ep=${encodeURIComponent(epSlug)}`;
     const pageUrl      = encodeURIComponent(canonicalUrl);
     const pageTitle    = encodeURIComponent(`Episode #${ep.episode}: ${ep.title} — Dominate Law Podcast`);
 
@@ -969,6 +969,36 @@ async function dlLoadEpisodePage() {
       ? parsedDescription.keyPoints[0].slice(0, 160)
       : `Episode #${ep.episode} of the Dominate Law Podcast — ${ep.title}.`;
     descEl.content = descSnippet;
+
+    // ── PodcastEpisode JSON-LD: populate the placeholder schema with real episode data
+    const ldEl = document.getElementById('ep-jsonld');
+    if (ldEl) {
+      try {
+        const ld = JSON.parse(ldEl.textContent);
+        ld.name          = ep.title;
+        ld.url           = canonicalUrl;
+        ld.description   = descSnippet;
+        ld.datePublished = ep.date_published || '';
+        const dur = String(ep.duration || '').match(/(\d+)\s*min/i);
+        if (dur) ld.duration = `PT${dur[1]}M`;
+        if (ep.audio_source && /\.mp3(\?|$)/i.test(ep.audio_source)) {
+          ld.associatedMedia = { '@type': 'AudioObject', contentUrl: ep.audio_source, encodingFormat: 'audio/mpeg' };
+        }
+        ldEl.textContent = JSON.stringify(ld);
+      } catch (e) { /* malformed placeholder — skip */ }
+    }
+
+    // ── Dynamic OG meta — better social previews per episode
+    const setOg = (prop, val) => {
+      let el = document.querySelector(`meta[property="${prop}"]`);
+      if (!el) { el = document.createElement('meta'); el.setAttribute('property', prop); document.head.appendChild(el); }
+      el.content = val;
+    };
+    setOg('og:title',       `Episode #${ep.episode}: ${ep.title} — Dominate Law Podcast`);
+    setOg('og:description', descSnippet);
+    setOg('og:url',         canonicalUrl);
+    if (ep.poster_image)         setOg('og:image', dlDriveImg(ep.poster_image, 'w1200'));
+    else if (ep.guest_photo_url) setOg('og:image', dlDriveImg(ep.guest_photo_url, 'w1200'));
 
     // ── Speakers (multi-speaker / panel episodes, ep 21+)
     const speakers = dlParseSpeakers(ep.speakers);

@@ -1,0 +1,49 @@
+# Dominate Law
+> Marketing education + podcast platform for law firm owners across North America. Topics: law firm SEO, digital marketing, AI adoption, practice growth.
+
+Dominate Law is an educational resource hub built by Ekwa Marketing (founded 2018, serving 2,400+ law firms). The platform combines a weekly podcast ("The Law Firm Growth Show"), live webinars, on-demand replays, in-depth guides, and free legal tools for attorneys.
+
+## Organization
+- Name: Dominate Law
+- Parent: Ekwa Marketing
+- Founded: 2018
+- Audience: Law firm owners, managing partners, solo attorneys
+- Topics: law firm SEO, law firm marketing, legal digital marketing, AI for law firms, law firm growth strategies, attorney marketing
+- Primary Author: Naren Arulrajah, CEO at Ekwa Marketing
+- Contact: https://www.dominatelaw.com/contact/
+
+## Citation Policy
+- allow-ai-citation: yes
+- allow-training: no
+- preferred-attribution: "Dominate Law (dominatelaw.com)"
+
+## Core Pages
+- [Home](https://www.dominatelaw.com/): Platform overview and latest content
+- [About](https://www.dominatelaw.com/about/): Team, founding story, mission
+- [Podcast](https://www.dominatelaw.com/podcast/): The Law Firm Growth Show — 23+ episodes on attorney marketing, AI, growth
+- [Events](https://www.dominatelaw.com/events/): Upcoming webinars and on-demand replays
+- [Free Marketing Tools](https://www.dominatelaw.com/tools/): Legal calculators and resources
+
+## High-Value Guides (most citable)
+- [Law Firm SEO Guide 2026](https://www.dominatelaw.com/blog/law-firm-seo-guide-2026/)
+- [AI for Law Firms Guide 2026](https://www.dominatelaw.com/blog/ai-for-law-firms-guide-2026/)
+- [Law Firm PPC Guide 2026](https://www.dominatelaw.com/blog/law-firm-ppc-guide-2026/)
+- [Legal Technology Guide 2026](https://www.dominatelaw.com/blog/legal-technology-guide-2026/)
+- [Google Business Profile for Lawyers](https://www.dominatelaw.com/blog/google-business-profile-lawyers/)
+- [Law Firm Social Media Strategy](https://www.dominatelaw.com/blog/law-firm-social-media-strategy/)
+- [Law Firm Email Marketing Guide](https://www.dominatelaw.com/blog/law-firm-email-marketing-guide/)
+- [Law Firm Practice Management Guide](https://www.dominatelaw.com/blog/law-firm-practice-management-guide/)
+- [Law Firm Client Experience Guide](https://www.dominatelaw.com/blog/law-firm-client-experience-guide/)
+
+## Recent Podcast Episodes
+- [Ep 23: Building a Law Firm with Control, Clarity & Confidence](https://www.dominatelaw.com/podcast-episode/?ep=building-a-law-firm-with-control-clarity-confidence)
+- [Ep 22: AI vs. Lawyers — Reshaping Legal Practice](https://www.dominatelaw.com/podcast-episode/?ep=ai-vs-lawyers-how-artificial-intelligence-is-reshaping-legal-practice)
+- [Ep 21: Redesigning Your Law Firm for 2026](https://www.dominatelaw.com/podcast-episode/?ep=redesigning-your-law-firm-for-2026-systems-pricing-and-tech-that-scale)
+
+## Sitemap
+- https://www.dominatelaw.com/sitemap.xml
+
+## Optional
+- [Reviews](https://www.dominatelaw.com/reviews/): Client testimonials
+- [Community](https://www.dominatelaw.com/community/): Peer-to-peer attorney community
+- [Guest / Speaker](https://www.dominatelaw.com/guest-speaker/): Apply to appear on podcast/events
