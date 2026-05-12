@@ -52,10 +52,25 @@
       "url": "https://www.dominatelaw.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.dominatelaw.com/images/logo.png"
+        "url": "https://www.dominatelaw.com/images/logo.png",
+        "width": 512,
+        "height": 512
       },
       "description": "The complete growth platform for law firm owners — marketing tools, events, podcast, and peer community.",
       "foundingDate": "2018",
+      "email": "info@dominatelaw.com",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "info@dominatelaw.com",
+        "availableLanguage": "English",
+        "areaServed": ["US", "CA"]
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/dominatelaw/",
+        "https://www.facebook.com/DominateLawPodcast",
+        "https://www.instagram.com/dominatelawpodcast/"
+      ],
       "parentOrganization": {
         "@type": "Organization",
         "name": "Ekwa Marketing",
@@ -95,13 +110,14 @@
    RESET & BASE
 ═══════════════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: clip; }
 body {
   font-family: 'Inter', system-ui, sans-serif;
   color: #1a0800;
   background: #fff;
-  overflow-x: hidden;
+  overflow-x: clip;
   cursor: auto;
+  max-width: 100vw;
 }
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
