@@ -188,34 +188,55 @@ function dlDriveAudioUrls(url) {
 //   • Bio sentence one
 //   • Bio sentence two
 function dlParseDescription(desc) {
-  if (!desc) return { keyPoints: [], bioGuestName: '', bio: [] };
+  if (!desc) return { keyPoints: [], keyPointGroups: [], bioGuestName: '', bio: [] };
 
-  const lines      = desc.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-  let keyPoints    = [];
-  let bio          = [];
-  let bioGuestName = '';
-  let section      = '';
+  const lines          = desc.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  let keyPoints        = [];
+  let keyPointGroups   = [];
+  let currentGroup     = null;
+  let bio              = [];
+  let bioGuestName     = '';
+  let section          = '';
 
   for (const line of lines) {
-    if (/^key\s*points/i.test(line)) { section = 'kp'; continue; }
+    // Section header: "Key Points" / "Key Discussion Points" / "Key Takeaways"
+    if (/^key\s+(?:discussion\s+|takeaway?s?\s*$|points?\s*$)/i.test(line) || /^key\s*points?$/i.test(line)) {
+      section = 'kp';
+      currentGroup = null;
+      continue;
+    }
 
-    const moreMatch = line.match(/^(?:More\s+about|About)\s+(.+)/i);
-    if (moreMatch) { section = 'bio'; bioGuestName = moreMatch[1].trim(); continue; }
+    // Section header: "About X" / "More about X" / "About the Panel" / "Meet the Panelists"
+    const moreMatch = line.match(/^(?:More\s+about|About|Meet\s+the)\s+(.+)/i);
+    if (moreMatch) { section = 'bio'; bioGuestName = moreMatch[1].trim(); currentGroup = null; continue; }
 
+    // Numbered topic header within KP section (e.g. "1. The Biggest Legal Risks…")
+    const topicMatch = line.match(/^(\d+)[.)]\s+(.+)/);
+    if (section === 'kp' && topicMatch && !/^[•*\-–—>]/.test(line)) {
+      const topic = topicMatch[2].replace(/\.\s*$/, '').trim();
+      currentGroup = { topic, bullets: [] };
+      keyPointGroups.push(currentGroup);
+      continue;
+    }
+
+    // Bulleted line
     if (/^[•*\-–—>]/.test(line)) {
       const text = line.replace(/^[•*\-–—>]\s*/, '').replace(/\.\s*$/, '').trim();
       if (!text) continue;
-      if (section === 'kp')  keyPoints.push(text);
+      if (section === 'kp') {
+        keyPoints.push(text);
+        if (currentGroup) currentGroup.bullets.push(text);
+      }
       if (section === 'bio') bio.push(text);
     }
   }
 
   // ── Fallback: plain text split on periods
-  if (keyPoints.length === 0) {
+  if (keyPoints.length === 0 && keyPointGroups.length === 0) {
     keyPoints = desc.split(/\.\s+/).map(s => s.trim()).filter(s => s.length > 1);
   }
 
-  return { keyPoints, bioGuestName, bio };
+  return { keyPoints, keyPointGroups, bioGuestName, bio };
 }
 
 // ── Helper: parse pipe-separated contact_info string ──────────────
@@ -295,6 +316,7 @@ function dlSlug(value) {
 // without needing a 'slug' column in the Google Sheet.
 // Whenever you add a new entry here, also update sitemap.xml to match.
 const DL_EPISODE_SLUGS = {
+  24: 'family-law-2026-new-risks-clients-and-growth-opportunities',
   23: 'building-a-law-firm-with-control-clarity-confidence',
   // 3:  'how-to-build-and-grow-a-law-practice-gary-bennett',
   // 11: 'mindfulness-and-lawyer-wellbeing-jeena-cho',
@@ -344,6 +366,7 @@ function dlNormalizeWebinarReplay(row, index) {
   const parsedNotes   = dlParseDescription(keynotesRaw);
   const title         = explicitTitle || parsedNotes.keyPoints[0] || `Webinar Replay ${index + 1}`;
   const notes         = explicitTitle ? parsedNotes.keyPoints : parsedNotes.keyPoints.slice(1);
+  const noteGroups    = parsedNotes.keyPointGroups || [];
   const dateRaw       = dlPick(row, ['date', 'date_iso', 'published date', 'date published']);
   const vimeoLink     = dlPick(row, ['vimeo_url', 'vimeo links', 'vimeo link', 'vimeo', 'video link', 'video url', 'replay link', 'link', 'url']);
   const thumbRaw      = dlPick(row, ['thumbnail_url', 'thumbnail', 'image', 'image_url', 'cover']);
@@ -359,7 +382,7 @@ function dlNormalizeWebinarReplay(row, index) {
   const thumbnailUrl  = thumbRaw ? dlDriveImg(thumbRaw, 'w800') : '';
 
   return {
-    id, index, title, notes, dateRaw,
+    id, index, title, notes, noteGroups, dateRaw,
     dateLabel: dlFormatDate(dateRaw) || dateRaw,
     vimeoLink, embedUrl, vimeoId, thumbnailUrl,
     speakers, duration, category
@@ -1083,11 +1106,24 @@ async function dlLoadEpisodePage() {
     }
 
     // ── Key points + bio (already parsed above into `parsedDescription`)
-    const { keyPoints, bioGuestName, bio } = parsedDescription;
+    const { keyPoints, keyPointGroups, bioGuestName, bio } = parsedDescription;
     const kpList = document.getElementById('ep-keypoints-list');
-    if (kpList) kpList.innerHTML = keyPoints.length
-      ? keyPoints.map(pt => `<li>${pt}</li>`).join('')
-      : '<li style="color:var(--muted);font-style:italic">Episode notes coming soon.</li>';
+    if (kpList) {
+      if (keyPointGroups.length) {
+        // Grouped format: numbered topic headers with sub-bullets
+        kpList.classList.add('ep-kp-grouped');
+        kpList.innerHTML = keyPointGroups.map((g, i) => `
+          <li class="ep-kp-group">
+            <h3 class="ep-kp-topic">${i + 1}. ${dlEsc(g.topic)}</h3>
+            ${g.bullets.length ? `<ul class="ep-kp-sublist">${g.bullets.map(b => `<li>${dlEsc(b)}</li>`).join('')}</ul>` : ''}
+          </li>`).join('');
+      } else {
+        kpList.classList.remove('ep-kp-grouped');
+        kpList.innerHTML = keyPoints.length
+          ? keyPoints.map(pt => `<li>${dlEsc(pt)}</li>`).join('')
+          : '<li style="color:var(--muted);font-style:italic">Episode notes coming soon.</li>';
+      }
+    }
 
     const bioWrap = document.getElementById('ep-bio-wrap');
     const bioHead = document.getElementById('ep-bio-heading');
@@ -1959,9 +1995,19 @@ async function dlLoadWebinarReplayPage() {
     if (contentBody) {
       contentBody.style.display = 'block';
       if (kpList) {
-        kpList.innerHTML = replay.notes.length
-          ? replay.notes.map(n => `<li>${dlEsc(n)}</li>`).join('')
-          : '<li style="color:var(--muted);font-style:italic">Key takeaways coming soon.</li>';
+        if (replay.noteGroups && replay.noteGroups.length) {
+          kpList.classList.add('ep-kp-grouped');
+          kpList.innerHTML = replay.noteGroups.map((g, i) => `
+            <li class="ep-kp-group">
+              <h3 class="ep-kp-topic">${i + 1}. ${dlEsc(g.topic)}</h3>
+              ${g.bullets.length ? `<ul class="ep-kp-sublist">${g.bullets.map(b => `<li>${dlEsc(b)}</li>`).join('')}</ul>` : ''}
+            </li>`).join('');
+        } else {
+          kpList.classList.remove('ep-kp-grouped');
+          kpList.innerHTML = replay.notes.length
+            ? replay.notes.map(n => `<li>${dlEsc(n)}</li>`).join('')
+            : '<li style="color:var(--muted);font-style:italic">Key takeaways coming soon.</li>';
+        }
       }
     }
 
