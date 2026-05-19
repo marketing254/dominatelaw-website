@@ -45,6 +45,10 @@
   <!-- Podcast episodes — add a new <url> block each time a new episode is published -->
   <!-- URL pattern: /podcast-episode/?ep={slug} (slug = sheet 'slug' col OR auto-generated from title) -->
   <url>
+    <loc>https://www.dominatelaw.com/podcast-episode/?ep=family-law-2026-new-risks-clients-and-growth-opportunities</loc>
+    <changefreq>monthly</changefreq><priority>0.9</priority><lastmod>2026-05-19</lastmod>
+  </url>
+  <url>
     <loc>https://www.dominatelaw.com/podcast-episode/?ep=redesigning-your-law-firm-for-2026-systems-pricing-and-tech-that-scale</loc>
     <changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-03-31</lastmod>
   </url>
