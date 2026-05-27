@@ -1,7 +1,7 @@
 # Dominate Law
 > Marketing education + podcast platform for law firm owners across North America. Topics: law firm SEO, digital marketing, AI adoption, practice growth.
 
-Dominate Law is an educational resource hub built by Ekwa Marketing (founded 2018, serving 2,400+ law firms). The platform combines a weekly podcast ("The Law Firm Growth Show"), live webinars, on-demand replays, in-depth guides, and free legal tools for attorneys.
+Dominate Law is an educational resource hub built by Ekwa Marketing (founded 2018, serving 2,400+ law firms). The platform combines a weekly podcast ("The Law Firm Growth Show", 25+ episodes), live webinars, on-demand replays, in-depth guides, and free legal tools for attorneys.
 
 ## Organization
 - Name: Dominate Law
@@ -20,7 +20,7 @@ Dominate Law is an educational resource hub built by Ekwa Marketing (founded 201
 ## Core Pages
 - [Home](https://www.dominatelaw.com/): Platform overview and latest content
 - [About](https://www.dominatelaw.com/about/): Team, founding story, mission
-- [Podcast](https://www.dominatelaw.com/podcast/): The Law Firm Growth Show — 23+ episodes on attorney marketing, AI, growth
+- [Podcast](https://www.dominatelaw.com/podcast/): The Law Firm Growth Show — 25+ episodes on attorney marketing, AI, growth
 - [Events](https://www.dominatelaw.com/events/): Upcoming webinars and on-demand replays
 - [Free Marketing Tools](https://www.dominatelaw.com/tools/): Legal calculators and resources
 
@@ -36,6 +36,8 @@ Dominate Law is an educational resource hub built by Ekwa Marketing (founded 201
 - [Law Firm Client Experience Guide](https://www.dominatelaw.com/blog/law-firm-client-experience-guide/)
 
 ## Recent Podcast Episodes
+- [Ep 25: Leadership, Psychological Safety & Law Firm Wellbeing](https://www.dominatelaw.com/podcast-episode/?ep=leadership-psychological-safety-and-law-firm-wellbeing)
+- [Ep 24: Family Law in 2026 — New Risks, Clients & Growth Opportunities](https://www.dominatelaw.com/podcast-episode/?ep=family-law-2026-new-risks-clients-and-growth-opportunities)
 - [Ep 23: Building a Law Firm with Control, Clarity & Confidence](https://www.dominatelaw.com/podcast-episode/?ep=building-a-law-firm-with-control-clarity-confidence)
 - [Ep 22: AI vs. Lawyers — Reshaping Legal Practice](https://www.dominatelaw.com/podcast-episode/?ep=ai-vs-lawyers-how-artificial-intelligence-is-reshaping-legal-practice)
 - [Ep 21: Redesigning Your Law Firm for 2026](https://www.dominatelaw.com/podcast-episode/?ep=redesigning-your-law-firm-for-2026-systems-pricing-and-tech-that-scale)
