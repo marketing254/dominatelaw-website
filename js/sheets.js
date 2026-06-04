@@ -485,7 +485,40 @@ function dlSetGateMessage(id, message) {
   if (el) el.textContent = message || '';
 }
 
+// Kit form IDs per gate type (Pattern A: parallel client-side submit to Kit)
+// Add a new entry as the Kit team creates each form, then it's auto-wired.
+const DL_KIT_FORM_IDS = {
+  podcast_gate:        '9522885',  // Podcast Gate (Kit form 51cb0d002c)
+  webinar_replay_gate: '',          // not set up in Kit yet
+};
+
+function dlPushToKit(formId, payload) {
+  const p = new URLSearchParams();
+  p.append('email_address', payload.email || '');
+  if (payload.first_name)    p.append('fields[first_name]', payload.first_name);
+  if (payload.last_name)     p.append('fields[last_name]',  payload.last_name);
+  if (payload.phone)         p.append('fields[phone]',      payload.phone);
+  if (payload.firm_name)     p.append('fields[firm_name]',  payload.firm_name);
+  if (payload.form)          p.append('fields[source]',     payload.form);
+  if (payload.podcast_title) p.append('fields[episode]',    payload.podcast_title);
+  if (payload.webinar_title) p.append('fields[episode]',    payload.webinar_title);
+  if (payload.page_url)      p.append('fields[page_url]',   payload.page_url);
+
+  return fetch(`https://app.kit.com/forms/${formId}/subscriptions`, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: p.toString()
+  });
+}
+
 async function dlSendGateLead(payload) {
+  // Fire-and-forget Kit submit (never blocks the user flow or throws to caller)
+  const kitFormId = DL_KIT_FORM_IDS[payload.form];
+  if (kitFormId) {
+    dlPushToKit(kitFormId, payload).catch(e => console.warn('Kit push failed:', e));
+  }
+  // Apps Script (Sheet write) is the critical path — await it
   await fetch(DL_APPS_SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
