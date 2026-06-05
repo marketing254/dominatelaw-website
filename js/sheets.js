@@ -32,7 +32,7 @@
 // ─────────────────────────────────────────────────────────────────
 
 const DL_SHEET_ID        = '1Kqtgrii6peL3DxEp7PO45zSYd3sSeTN-e1tHmkFdLpg';
-const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbymJUuFFz2lcpz231orJIPf10I9aqoOrp31CVCxX4jNyqyJ7nogwC63oNExXMnWZl9L/exec';
+const DL_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwslGsQm3MyqmI-64flX_m33A1QU5PCu3V721fnoQmp4PQraCMlPgIKFmMMgXkbrja8/exec';
 
 // ── SPAM PROTECTION ────────────────────────────────────────────────
 window.dlFormTs = Date.now(); // timestamp when page loaded
