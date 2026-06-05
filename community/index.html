@@ -723,6 +723,7 @@ mobOvl?.addEventListener('click',()=>openMenu(false));
 document.querySelectorAll('.mob-acc-trigger').forEach(btn=>{btn.addEventListener('click',()=>{const p=document.getElementById(btn.id.replace('-trig','-panel'));if(!p)return;const o=p.classList.contains('open');document.querySelectorAll('.mob-acc-panel.open').forEach(x=>x.classList.remove('open'));document.querySelectorAll('.mob-acc-trigger.open').forEach(x=>x.classList.remove('open'));if(!o){p.classList.add('open');btn.classList.add('open');}});});
 var DL_SHEETS_URL='https://script.google.com/macros/s/AKfycbymJUuFFz2lcpz231orJIPf10I9aqoOrp31CVCxX4jNyqyJ7nogwC63oNExXMnWZl9L/exec';
 function dlCommunitySheets(src,fn,ln,em,ro,area){try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Community Join','Source':src,'First Name':fn,'Last Name':ln,'Email':em,'Role':ro,'Practice Area':area||''})});}catch(e){}}
+function dlCommunityKit(fn,ln,em,ro,area){try{var p=new URLSearchParams();p.append('email_address',em);p.append('fields[first_name]',fn);p.append('fields[last_name]',ln);p.append('fields[role]',ro||'');p.append('fields[practice_area]',area||'');p.append('fields[source]','community_join');p.append('fields[page_url]',window.location.href);fetch('https://app.kit.com/forms/9525713/subscriptions',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:p.toString()});}catch(e){console.warn('Kit push failed:',e);}}
 function dlCommunitySubmit(formEl,src,successId,successStyle){
   var S=window.DLSec;
   if(S&&S.hpFilled(formEl))return;
@@ -738,6 +739,7 @@ function dlCommunitySubmit(formEl,src,successId,successStyle){
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}
   if(S&&(S.isJunk(fn)||S.isJunk(ln))){alert('Your details look invalid. Please check and try again.');return;}
   dlCommunitySheets(src,fn,ln,em,ro,area);
+  dlCommunityKit(fn,ln,em,ro,area);
   if(S)S.markDone('community');
   formEl.style.display='none';
   var el=document.getElementById(successId);

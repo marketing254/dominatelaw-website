@@ -488,8 +488,13 @@ function dlSetGateMessage(id, message) {
 // Kit form IDs per gate type (Pattern A: parallel client-side submit to Kit)
 // Add a new entry as the Kit team creates each form, then it's auto-wired.
 const DL_KIT_FORM_IDS = {
-  podcast_gate:        '9522885',  // Podcast Gate (Kit form 51cb0d002c)
+  podcast_gate:        '9522885',  // Podcast Gate     (Kit form 51cb0d002c)
+  community_join:      '9525713',  // Community Join   (Kit form 64b2d371a8)
   webinar_replay_gate: '',          // not set up in Kit yet
+  contact_us:          '',          // not set up in Kit yet
+  free_downloads:      '',          // not set up in Kit yet
+  legal_tools:         '',          // not set up in Kit yet
+  guest_speaker:       '',          // not set up in Kit yet
 };
 
 function dlPushToKit(formId, payload) {
