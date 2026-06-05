@@ -49,10 +49,17 @@
   /* Time check — form must be open at least 3 seconds before submission */
   function tooFast(ts){return Date.now()-(ts||w.DLSec.t0)<3000;}
 
-  /* Honeypot — hidden field must remain empty; bots fill it automatically */
+  /* Honeypot — hidden field must remain empty; bots fill it automatically.
+     Defensive: .dl-hp can match wrapper divs that have no .value property,
+     so we check every honeypot candidate and skip anything without a string .value. */
   function hpFilled(form){
-    var f=form&&form.querySelector('.dl-hp');
-    return f&&f.value.length>0;
+    if(!form)return false;
+    var els=form.querySelectorAll('.dl-hp, input[name="dl_hp"], input[name="website_url"]');
+    for(var i=0;i<els.length;i++){
+      var v=els[i].value;
+      if(typeof v==='string'&&v.length>0)return true;
+    }
+    return false;
   }
 
   w.DLSec={

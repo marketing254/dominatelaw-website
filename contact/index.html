@@ -575,7 +575,6 @@ input,select,textarea{font:inherit}
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 
 /* ── SCROLL PROGRESS ────────────────────────────────────────── */
@@ -635,22 +634,9 @@ document.querySelectorAll('.cf-pill').forEach(pill => {
   });
 });
 
-/* ── EMAILJS SETUP ──────────────────────────────────────────────
-   One-time setup (5 minutes):
-   1. Go to https://www.emailjs.com — create a free account.
-   2. Add an Email Service (Gmail) → copy your SERVICE_ID.
-   3. Create a template; set To = info@dominatelaw.com,
-      CC = marketing.ekwa@gmail.com, contact@ekwa.com.
-      Template variables: {{from_name}}, {{reply_to}}, {{phone}},
-      {{subject}}, {{message}}.
-   4. Copy your Public Key from Account → API Keys.
-   5. Replace the three placeholder strings below.
-   ─────────────────────────────────────────────────────────────── */
-const CJ_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
-const CJ_SERVICE_ID  = 'YOUR_SERVICE_ID';
-const CJ_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-emailjs.init({ publicKey: CJ_PUBLIC_KEY });
-
+/* Email delivery (info@dominatelaw.com + cc marketing.ekwa, contact@ekwa) is handled by
+   Apps Script's Contact Us branch — forwards the message with reply-to set to the customer.
+   See data/google-apps-script.js for the email template. */
 var DL_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbymJUuFFz2lcpz231orJIPf10I9aqoOrp31CVCxX4jNyqyJ7nogwC63oNExXMnWZl9L/exec';
 
 /* ── FORM SUBMIT ────────────────────────────────────────────── */
@@ -693,24 +679,10 @@ document.getElementById('contactForm')?.addEventListener('submit', async functio
   spinner.style.display = 'block';
   sendErr.classList.remove('visible');
 
-  const templateParams = {
-    from_name  : fname + (lname ? ' ' + lname : ''),
-    reply_to   : email,
-    phone      : phone,
-    subject    : selectedSubject,
-    message    : message,
-    to_email   : 'info@dominatelaw.com',
-    cc_emails  : 'marketing.ekwa@gmail.com, contact@ekwa.com'
-  };
-
   try {
-    /* Send to Google Sheets (always) */
+    /* Google Sheets — Apps Script handles Sheet write, team notification,
+       AND forwarding the message to info@dominatelaw.com (cc marketing/contact) */
     try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Contact Us','First Name':fname,'Last Name':lname,'Email':email,'Phone':phone,'Subject':selectedSubject,'Message':message})});}catch(ex){}
-
-    /* Send via EmailJS only if credentials are configured */
-    if (CJ_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' && CJ_SERVICE_ID !== 'YOUR_SERVICE_ID') {
-      try { await emailjs.send(CJ_SERVICE_ID, CJ_TEMPLATE_ID, templateParams); } catch(ejErr) {}
-    }
 
     if(S)S.markDone('contact');
     this.style.display = 'none';
