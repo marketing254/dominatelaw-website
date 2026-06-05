@@ -316,6 +316,7 @@ function dlSlug(value) {
 // without needing a 'slug' column in the Google Sheet.
 // Whenever you add a new entry here, also update sitemap.xml to match.
 const DL_EPISODE_SLUGS = {
+  26: 'rebuilding-a-law-firm-in-the-ai-era',
   25: 'leadership-psychological-safety-and-law-firm-wellbeing',
   24: 'family-law-2026-new-risks-clients-and-growth-opportunities',
   23: 'building-a-law-firm-with-control-clarity-confidence',
