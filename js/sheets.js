@@ -496,6 +496,7 @@ const DL_KIT_FORM_IDS = {
   free_downloads:      '9534993',  // Free Downloads Gate  (Kit form 51c7d42f84)
   legal_tools:         '9534984',  // Legal Tools Gate     (Kit form 5c220ad8d4)
   guest_speaker:       '9534968',  // Guest Speaker        (Kit form 252784d3a4)
+  newsletter_signup:   '9536290',  // Newsletter Signup    (Kit form 44a4824f67)
 };
 
 function dlPushToKit(formId, payload) {
@@ -2192,6 +2193,201 @@ async function dlSubmitWrGateModal(event) {
   }
 }
 
+// ─── NEWSLETTER SIGNUP POPUP ─────────────────────────────────────
+// Site-wide popup that triggers after 30s OR on exit-intent.
+// Skips: homepage (own popup), submitted users (forever), recently dismissed (3 days).
+const DL_NL_FORM_ID    = '9536290';
+const DL_NL_SUBMITTED  = 'dl_nl_submitted';
+const DL_NL_DISMISSED  = 'dl_nl_dismissed';
+const DL_NL_DELAY_MS   = 30000;
+const DL_NL_REDISPLAY  = 1000 * 60 * 60 * 24 * 3; // 3 days
+
+function dlNlShouldShow() {
+  try {
+    if (localStorage.getItem(DL_NL_SUBMITTED)) return false;
+    const dismissedAt = parseInt(localStorage.getItem(DL_NL_DISMISSED) || '0', 10);
+    if (dismissedAt && Date.now() - dismissedAt < DL_NL_REDISPLAY) return false;
+  } catch(e) {}
+  return true;
+}
+
+function dlNlInject() {
+  if (document.getElementById('dlNlStyles')) return;
+  const style = document.createElement('style');
+  style.id = 'dlNlStyles';
+  style.textContent = `
+    .dl-nl-bg{position:fixed;inset:0;background:rgba(20,5,0,.55);backdrop-filter:blur(4px);z-index:9700;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .35s ease}
+    .dl-nl-bg.open{opacity:1;pointer-events:auto}
+    .dl-nl-modal{position:relative;background:#fff;border-radius:20px;width:100%;max-width:460px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.28);transform:translateY(28px) scale(.97);transition:transform .38s cubic-bezier(.4,0,.2,1);font-family:'Inter',system-ui,-apple-system,sans-serif}
+    .dl-nl-bg.open .dl-nl-modal{transform:none}
+    .dl-nl-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:#3A0D00;transition:background .2s,color .2s,transform .2s;z-index:5;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+    .dl-nl-close:hover{background:#60270F;color:#fff;transform:rotate(90deg)}
+    .dl-nl-header{background:linear-gradient(120deg,#3A0D00,#60270F);padding:28px 32px 24px;color:#fff;position:relative;overflow:hidden}
+    .dl-nl-header::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(232,196,74,.22),transparent 70%);pointer-events:none}
+    .dl-nl-kicker{display:inline-flex;align-items:center;gap:8px;font-size:.66rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#E8C44A;margin-bottom:10px;position:relative}
+    .dl-nl-kicker-dot{width:6px;height:6px;border-radius:50%;background:#E8C44A;animation:dlNlPulse 1.8s ease-in-out infinite}
+    @keyframes dlNlPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+    .dl-nl-title{font-family:'Merriweather',Georgia,serif;font-size:1.4rem;font-weight:900;line-height:1.25;color:#fff;margin-bottom:8px;position:relative}
+    .dl-nl-sub{font-size:.82rem;color:rgba(255,255,255,.78);line-height:1.55;position:relative}
+    .dl-nl-body{padding:24px 32px 28px;background:#fff}
+    .dl-nl-form{display:flex;flex-direction:column;gap:12px}
+    .dl-nl-field{display:flex;flex-direction:column;gap:6px}
+    .dl-nl-label{font-size:.72rem;font-weight:700;color:#2A1200;letter-spacing:.04em;text-transform:uppercase}
+    .dl-nl-input{width:100%;padding:11px 14px;border:1.5px solid #e8ddd6;border-radius:6px;font-size:.9rem;font-family:inherit;color:#2A1200;background:#FBF7F4;transition:border-color .2s,background .2s,box-shadow .2s}
+    .dl-nl-input:focus{outline:none;border-color:#C49A0A;background:#fff;box-shadow:0 0 0 3px rgba(196,154,10,.12)}
+    .dl-nl-consent{display:flex;gap:10px;font-size:.74rem;color:#6b5040;line-height:1.55;cursor:pointer;align-items:flex-start;padding:8px 2px 2px;margin-top:2px}
+    .dl-nl-consent input[type=checkbox]{margin-top:2px;flex-shrink:0;width:14px;height:14px;accent-color:#60270F;cursor:pointer}
+    .dl-nl-consent a{color:#60270F;text-decoration:underline;font-weight:600}
+    .dl-nl-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#60270F;color:#fff;font-weight:700;font-size:.9rem;letter-spacing:.02em;padding:13px 22px;border-radius:6px;border:2px solid transparent;cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);margin-top:6px;font-family:inherit}
+    .dl-nl-btn:hover:not(:disabled){background:#3A0D00;transform:translateY(-2px);box-shadow:0 12px 32px rgba(58,13,0,.3)}
+    .dl-nl-btn:disabled{opacity:.6;cursor:not-allowed}
+    .dl-nl-error{color:#C0392B;font-size:.78rem;min-height:16px;text-align:center;font-weight:500}
+    .dl-nl-tiny{text-align:center;font-size:.7rem;color:#9c8474;margin-top:2px;letter-spacing:.03em}
+    .dl-nl-success{text-align:center;padding:36px 32px 40px;display:none}
+    .dl-nl-success.show{display:block}
+    .dl-nl-form-wrap.hide{display:none}
+    .dl-nl-success-icon{width:64px;height:64px;border-radius:50%;background:linear-gradient(140deg,rgba(196,154,10,.18),rgba(232,196,74,.08));color:#9E7C08;font-size:30px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;border:1.5px solid rgba(196,154,10,.35)}
+    .dl-nl-success h3{font-family:'Merriweather',Georgia,serif;font-size:1.3rem;font-weight:900;color:#3A0D00;margin-bottom:8px}
+    .dl-nl-success p{font-size:.85rem;color:#6b5040;line-height:1.55;max-width:300px;margin:0 auto}
+    @media(max-width:520px){.dl-nl-modal{border-radius:16px}.dl-nl-header{padding:24px 24px 20px}.dl-nl-title{font-size:1.2rem}.dl-nl-body{padding:22px 24px 24px}}
+  `;
+  document.head.appendChild(style);
+
+  const bg = document.createElement('div');
+  bg.id = 'dlNlBg';
+  bg.className = 'dl-nl-bg';
+  bg.innerHTML = `
+    <div class="dl-nl-modal" role="dialog" aria-modal="true" aria-labelledby="dlNlTitle">
+      <button class="dl-nl-close" type="button" onclick="dlNlClose()" aria-label="Close">✕</button>
+      <div class="dl-nl-header">
+        <div class="dl-nl-kicker"><span class="dl-nl-kicker-dot"></span>Dominate Law Newsletter</div>
+        <h2 class="dl-nl-title" id="dlNlTitle">Growth strategies for law firm owners</h2>
+        <p class="dl-nl-sub">Weekly podcast drops, fresh marketing guides, and insights built for attorneys — straight to your inbox.</p>
+      </div>
+      <div class="dl-nl-body">
+        <div class="dl-nl-form-wrap" id="dlNlFormWrap">
+          <form class="dl-nl-form" id="dlNlForm" novalidate>
+            <div class="dl-nl-field">
+              <label class="dl-nl-label" for="dlNlFirst">First Name</label>
+              <input class="dl-nl-input" type="text" id="dlNlFirst" placeholder="Alex" required autocomplete="given-name" maxlength="50">
+            </div>
+            <div class="dl-nl-field">
+              <label class="dl-nl-label" for="dlNlEmail">Email Address</label>
+              <input class="dl-nl-input" type="email" id="dlNlEmail" placeholder="alex@yourfirm.com" required autocomplete="email" maxlength="120">
+            </div>
+            <label class="dl-nl-consent">
+              <input type="checkbox" id="dlNlConsent" required>
+              <span>I agree to receive marketing emails from Dominate Law. Unsubscribe anytime. <a href="/privacy-policy/" target="_blank" rel="noopener">Privacy policy</a></span>
+            </label>
+            <button type="submit" class="dl-nl-btn" id="dlNlBtn">Subscribe →</button>
+            <div class="dl-nl-error" id="dlNlError"></div>
+            <div class="dl-nl-tiny">No spam. Unsubscribe anytime.</div>
+          </form>
+        </div>
+        <div class="dl-nl-success" id="dlNlSuccess">
+          <div class="dl-nl-success-icon">✓</div>
+          <h3>You're in!</h3>
+          <p>Check your inbox to confirm your subscription.</p>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(bg);
+
+  // Close on backdrop click
+  bg.addEventListener('click', e => { if (e.target === bg) dlNlClose(); });
+  // Close on ESC
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && bg.classList.contains('open')) dlNlClose(); });
+  // Submit handler
+  document.getElementById('dlNlForm').addEventListener('submit', dlNlSubmit);
+}
+
+function dlNlShow() {
+  if (!dlNlShouldShow()) return;
+  dlNlInject();
+  const bg = document.getElementById('dlNlBg');
+  if (bg) requestAnimationFrame(() => bg.classList.add('open'));
+}
+
+function dlNlClose() {
+  const bg = document.getElementById('dlNlBg');
+  if (bg) bg.classList.remove('open');
+  try { localStorage.setItem(DL_NL_DISMISSED, String(Date.now())); } catch(e) {}
+}
+
+async function dlNlSubmit(e) {
+  e.preventDefault();
+  const first   = (document.getElementById('dlNlFirst').value || '').trim();
+  const email   = (document.getElementById('dlNlEmail').value || '').trim();
+  const consent = document.getElementById('dlNlConsent').checked;
+  const errEl   = document.getElementById('dlNlError');
+  const btn     = document.getElementById('dlNlBtn');
+
+  errEl.textContent = '';
+  if (!first || !email) { errEl.textContent = 'Please fill in both fields.'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Please enter a valid email.'; return; }
+  if (!consent) { errEl.textContent = 'Please tick the consent box to subscribe.'; return; }
+  const S = window.DLSec;
+  if (S && S.isJunk(first)) { errEl.textContent = 'Please enter a valid first name.'; return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Subscribing…';
+
+  // Fire-and-forget Kit submission (Pattern A)
+  try {
+    const kp = new URLSearchParams();
+    kp.append('email_address', email);
+    kp.append('fields[first_name]', first);
+    kp.append('fields[consent]', 'yes');
+    kp.append('fields[source]', 'newsletter_signup');
+    kp.append('fields[page_url]', window.location.href);
+    fetch(`https://app.kit.com/forms/${DL_NL_FORM_ID}/subscriptions`, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: kp.toString()
+    });
+  } catch(kitErr) { console.warn('Kit push failed:', kitErr); }
+
+  // Apps Script (Sheet write) — single source of truth for consent record
+  try {
+    await fetch(DL_APPS_SCRIPT_URL, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        tab: 'Newsletter Signup',
+        'First Name': first,
+        'Email': email,
+        'Consent': consent ? 'yes' : 'no',
+        'Page URL': window.location.href
+      })
+    });
+  } catch(shErr) { console.warn('Sheet save failed:', shErr); }
+
+  try { localStorage.setItem(DL_NL_SUBMITTED, String(Date.now())); } catch(e) {}
+
+  // Show success state
+  document.getElementById('dlNlFormWrap').classList.add('hide');
+  document.getElementById('dlNlSuccess').classList.add('show');
+  setTimeout(dlNlClose, 4000);
+}
+
+function dlNlSetupTriggers() {
+  if (!dlNlShouldShow()) return;
+  // Trigger 1: 30-second timer
+  const timer = setTimeout(dlNlShow, DL_NL_DELAY_MS);
+  // Trigger 2: exit intent (mouse moves toward top of viewport)
+  let armed = false;
+  setTimeout(() => { armed = true; }, 4000); // arm after 4s so it doesn't fire immediately
+  const onExit = e => {
+    if (!armed) return;
+    if (e.clientY > 0) return;
+    clearTimeout(timer);
+    document.removeEventListener('mouseout', onExit);
+    dlNlShow();
+  };
+  document.addEventListener('mouseout', onExit);
+}
+
 // ── Auto-init based on current page ──────────────────────────────
 (function () {
   const path = window.location.pathname;
@@ -2217,4 +2413,10 @@ async function dlSubmitWrGateModal(event) {
     dlLoadNextEvent();
     dlLoadHomePodcastGrid();
   }
+
+  // Newsletter signup popup — skip homepage (own popup) and gate pages (own forms)
+  const skipNl = path === '/' || path === '' ||
+                 path.includes('podcast-episode') || path.includes('webinar-replay') ||
+                 path.includes('tools') || path.includes('resources');
+  if (!skipNl) dlNlSetupTriggers();
 })();
