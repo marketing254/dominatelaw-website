@@ -854,7 +854,7 @@ async function dlSubmitEventReg() {
   };
   if (typeof dlSpamBlock === 'function' && dlSpamBlock('dl_hp', fields.first_name, fields.last_name)) { return; }
   const S = window.DLSec;
-  if (S && (S.isJunk(fields.first_name) || S.isJunk(fields.last_name) || S.isJunk(fields.email))) { return; }
+  if (S && (S.isJunk(fields.first_name) || S.isJunk(fields.last_name))) { return; }
   if (S && S.tooFast()) { return; }
   const required = ['first_name','last_name','email','phone'];
   const missing = required.filter(k => !fields[k]);
