@@ -489,26 +489,27 @@ function dlSetGateMessage(id, message) {
 // Kit form IDs per gate type (Pattern A: parallel client-side submit to Kit)
 // Add a new entry as the Kit team creates each form, then it's auto-wired.
 const DL_KIT_FORM_IDS = {
-  podcast_gate:        '9522885',  // Podcast Gate     (Kit form 51cb0d002c)
-  community_join:      '9525713',  // Community Join   (Kit form 64b2d371a8)
-  webinar_replay_gate: '',          // not set up in Kit yet
-  contact_us:          '',          // not set up in Kit yet
-  free_downloads:      '',          // not set up in Kit yet
-  legal_tools:         '',          // not set up in Kit yet
-  guest_speaker:       '',          // not set up in Kit yet
+  podcast_gate:        '9522885',  // Podcast Gate         (Kit form 51cb0d002c)
+  community_join:      '9525713',  // Community Join       (Kit form 64b2d371a8)
+  webinar_replay_gate: '9535001',  // Webinar Replay Gate  (Kit form 08886a0f03)
+  contact_us:          '9525833',  // Contact Us           (Kit form f95e3109e4)
+  free_downloads:      '9534993',  // Free Downloads Gate  (Kit form 51c7d42f84)
+  legal_tools:         '9534984',  // Legal Tools Gate     (Kit form 5c220ad8d4)
+  guest_speaker:       '9534968',  // Guest Speaker        (Kit form 252784d3a4)
 };
 
 function dlPushToKit(formId, payload) {
   const p = new URLSearchParams();
   p.append('email_address', payload.email || '');
-  if (payload.first_name)    p.append('fields[first_name]', payload.first_name);
-  if (payload.last_name)     p.append('fields[last_name]',  payload.last_name);
-  if (payload.phone)         p.append('fields[phone]',      payload.phone);
-  if (payload.firm_name)     p.append('fields[firm_name]',  payload.firm_name);
-  if (payload.form)          p.append('fields[source]',     payload.form);
-  if (payload.podcast_title) p.append('fields[episode]',    payload.podcast_title);
-  if (payload.webinar_title) p.append('fields[episode]',    payload.webinar_title);
-  if (payload.page_url)      p.append('fields[page_url]',   payload.page_url);
+  if (payload.first_name)    p.append('fields[first_name]',    payload.first_name);
+  if (payload.last_name)     p.append('fields[last_name]',     payload.last_name);
+  if (payload.phone)         p.append('fields[phone]',         payload.phone);
+  if (payload.firm_name)     p.append('fields[firm_name]',     payload.firm_name);
+  if (payload.form)          p.append('fields[source]',        payload.form);
+  if (payload.podcast_title) p.append('fields[episode]',       payload.podcast_title);
+  if (payload.webinar_title) p.append('fields[webinar_title]', payload.webinar_title);
+  if (payload.replay_id)     p.append('fields[replay_id]',     payload.replay_id);
+  if (payload.page_url)      p.append('fields[page_url]',      payload.page_url);
 
   return fetch(`https://app.kit.com/forms/${formId}/subscriptions`, {
     method: 'POST',

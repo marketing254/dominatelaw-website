@@ -649,6 +649,8 @@ document.getElementById('gsForm')?.addEventListener('submit',function(e){
   if(S&&(S.isJunk(fn)||S.isJunk(ln)||S.isJunk(ti)||S.isJunk(org))){alert('Your submission looks invalid. Please check your details and try again.');return;}
   if(ph&&S&&!S.validPhone(ph)){alert('Please enter a valid phone number (digits only).');return;}
   try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Guest Speaker','First Name':fn,'Last Name':ln,'Title':ti,'Organization':org,'Email':em,'Phone':ph,'Type':ty,'Topic':tp,'Bio':bio,'Links':lk})});}catch(ex){}
+  /* Kit — Pattern A (bio/links excluded — long-form content not used for marketing automation) */
+  try{var kp=new URLSearchParams();kp.append('email_address',em);kp.append('fields[first_name]',fn);kp.append('fields[last_name]',ln||'');kp.append('fields[phone]',ph||'');kp.append('fields[title]',ti||'');kp.append('fields[organization]',org||'');kp.append('fields[application_type]',ty||'');kp.append('fields[topic]',tp||'');kp.append('fields[source]','guest_speaker');kp.append('fields[page_url]',window.location.href);fetch('https://app.kit.com/forms/9534968/subscriptions',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:kp.toString()});}catch(e){console.warn('Kit push failed:',e);}
   if(S)S.markDone('guest-speaker');
   this.style.display='none';
   document.getElementById('gsSuccess').style.display='block';

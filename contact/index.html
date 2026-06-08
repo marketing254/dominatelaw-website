@@ -680,9 +680,12 @@ document.getElementById('contactForm')?.addEventListener('submit', async functio
   sendErr.classList.remove('visible');
 
   try {
-    /* Google Sheets — Apps Script handles Sheet write, team notification,
-       AND forwarding the message to info@dominatelaw.com (cc marketing/contact) */
+    /* 1. Google Sheets — Apps Script handles Sheet write AND forwarding the
+          full message to info@dominatelaw.com (cc team) via sendContactToInfo */
     try{fetch(DL_SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tab:'Contact Us','First Name':fname,'Last Name':lname,'Email':email,'Phone':phone,'Subject':selectedSubject,'Message':message})});}catch(ex){}
+
+    /* 2. Kit — Pattern A, message excluded (lives in email + Sheet, not needed for marketing automation) */
+    try{var kp=new URLSearchParams();kp.append('email_address',email);kp.append('fields[first_name]',fname);kp.append('fields[last_name]',lname||'');kp.append('fields[phone]',phone||'');kp.append('fields[subject]',selectedSubject||'');kp.append('fields[source]','contact_us');kp.append('fields[page_url]',window.location.href);fetch('https://app.kit.com/forms/9525833/subscriptions',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:kp.toString()});}catch(e){console.warn('Kit push failed:',e);}
 
     if(S)S.markDone('contact');
     this.style.display = 'none';
