@@ -1243,7 +1243,7 @@ function dlGateSubmit() {
   var role      = (document.getElementById('gRole').value      || '').trim();
   if (typeof dlSpamBlock === 'function' && dlSpamBlock('dl_hp', firstName, lastName)) { return; }
   var S = window.DLSec;
-  if (S && (S.isJunk(firstName) || S.isJunk(lastName) || S.isJunk(email))) { return; }
+  if (S && (S.isJunk(firstName) || S.isJunk(lastName))) { return; }
   if (S && S.tooFast()) { return; }
   var ok = true;
 

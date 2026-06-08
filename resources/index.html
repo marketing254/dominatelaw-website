@@ -455,7 +455,7 @@ window.dlResGateSubmit=function(){
   var ro=(document.getElementById('dlrRole').value||'').trim();
   if(typeof dlSpamBlock==='function'&&dlSpamBlock('dl_hp',fn,ln)){return;}
   var S=window.DLSec;
-  if(S&&(S.isJunk(fn)||S.isJunk(ln)||S.isJunk(em))){return;}
+  if(S&&(S.isJunk(fn)||S.isJunk(ln))){return;}
   if(S&&S.tooFast()){return;}
   var ok=true;
   var show=function(id,v){document.getElementById(id).style.display=v?'block':'none'};
