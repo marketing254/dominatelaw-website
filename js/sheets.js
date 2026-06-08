@@ -2199,8 +2199,8 @@ async function dlSubmitWrGateModal(event) {
 const DL_NL_FORM_ID    = '9536290';
 const DL_NL_SUBMITTED  = 'dl_nl_submitted';
 const DL_NL_DISMISSED  = 'dl_nl_dismissed';
-const DL_NL_DELAY_MS   = 30000;
-const DL_NL_REDISPLAY  = 1000 * 60 * 60 * 24 * 3; // 3 days
+const DL_NL_DELAY_MS   = 10000;                    // 10s — feels responsive without being intrusive
+const DL_NL_REDISPLAY  = 1000 * 60 * 60 * 24 * 3;  // 3 days suppression after dismiss
 
 function dlNlShouldShow() {
   try {
