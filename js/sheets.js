@@ -316,6 +316,12 @@ function dlSlug(value) {
 // without needing a 'slug' column in the Google Sheet.
 // Whenever you add a new entry here, also update sitemap.xml to match.
 const DL_EPISODE_SLUGS = {
+  32: 'why-your-law-firm-is-invisible-to-ai',
+  31: 'hidden-legal-mistakes-in-domestic-violence-cases',
+  30: 'the-ai-enabled-lawyer-what-modern-legal-practice-demands',
+  29: 'how-law-firms-can-better-support-domestic-violence-clients',
+  28: 'future-proof-law-firm-staying-profitable',
+  27: 'the-future-ready-law-firm',
   26: 'rebuilding-a-law-firm-in-the-ai-era',
   25: 'leadership-psychological-safety-and-law-firm-wellbeing',
   24: 'family-law-2026-new-risks-clients-and-growth-opportunities',
@@ -326,6 +332,24 @@ const DL_EPISODE_SLUGS = {
   // …add more episode-number → slug entries as needed
 };
 
+// ── Helper: parse episode number robustly ──────────────────────────
+// Sheet rows sometimes contain "EP 28" instead of "28" — strip non-digits
+// so parseInt never returns NaN for a valid row.
+function dlEpNum(episodeVal) {
+  return parseInt(String(episodeVal == null ? '' : episodeVal).replace(/[^\d]/g, ''), 10) || 0;
+}
+
+// ── Fetch podcast episodes with the episode number normalized ──────
+// ("EP 28" → "28") so every display/compare site can use ep.episode raw.
+async function dlFetchEpisodes() {
+  const episodes = await dlFetchSheet('podcasts');
+  episodes.forEach(ep => {
+    const n = dlEpNum(ep.episode);
+    if (n) ep.episode = String(n);
+  });
+  return episodes;
+}
+
 // ── Helper: resolve or auto-generate a URL slug for a podcast episode ──
 // Precedence:
 //   1. Manual override from DL_EPISODE_SLUGS (in this file)
@@ -333,7 +357,7 @@ const DL_EPISODE_SLUGS = {
 //   3. Auto-generated from ep.title (capped at 72 chars)
 // Numeric ?ep=21 URLs still work for backward compat.
 function dlEpisodeSlug(ep) {
-  const epNum = parseInt(ep.episode, 10);
+  const epNum = dlEpNum(ep.episode);
   if (DL_EPISODE_SLUGS[epNum]) return DL_EPISODE_SLUGS[epNum];
   if (ep.slug && ep.slug.trim()) return ep.slug.trim();
   return dlSlug(ep.title);
@@ -665,7 +689,7 @@ async function dlSubmitPodcastGate(event) {
 // ── HOME PAGE: Load latest podcast into popup + announcement bar ──
 async function dlLoadLatestPodcast() {
   try {
-    const episodes = await dlFetchSheet('podcasts');
+    const episodes = await dlFetchEpisodes();
     if (!episodes.length) return;
     const ep = episodes[episodes.length - 1]; // last row = newest
 
@@ -694,7 +718,7 @@ async function dlLoadLatestPodcast() {
     }
 
     // Popup — podcast card (banner-led template)
-    const epNum         = parseInt(ep.episode, 10) || 0;
+    const epNum         = dlEpNum(ep.episode);
     const speakerCount  = ep.speakers ? ep.speakers.split('|').map(s => s.trim()).filter(Boolean).length : 0;
     const isPanel       = speakerCount > 1;
     const photoEl       = document.getElementById('hp-pod-img');
@@ -818,7 +842,7 @@ function dlHideCardGate(btn) {
 
 // ── Build a single episode card (shared by home + podcast page) ──
 function dlBuildEpisodeCard(ep) {
-  const epNum    = parseInt(ep.episode, 10) || 0;
+  const epNum    = dlEpNum(ep.episode);
   const isNew    = epNum >= 21;
   const speakerCount = ep.speakers ? ep.speakers.split('|').map(s => s.trim()).filter(Boolean).length : 0;
   const isPanel  = speakerCount > 1;
@@ -907,7 +931,7 @@ async function dlLoadHomePodcastGrid() {
   const grid = document.getElementById('hp-pod-grid');
   if (!grid) return;
   try {
-    const episodes = await dlFetchSheet('podcasts');
+    const episodes = await dlFetchEpisodes();
     if (!episodes.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,.4);padding:32px">No episodes yet.</div>'; return; }
     const latest6 = episodes.slice().reverse().slice(0, 6);
     grid.innerHTML = latest6.map(dlBuildEpisodeCard).join('');
@@ -921,7 +945,7 @@ async function dlLoadPodcastGrid() {
   const grid = document.getElementById('episodes-grid');
   if (!grid) return;
   try {
-    const episodes = await dlFetchSheet('podcasts');
+    const episodes = await dlFetchEpisodes();
     if (!episodes.length) { grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted)">No episodes found.</p>'; return; }
 
     document.querySelectorAll('#ticker-ep-count, #pod-count').forEach(el => el.textContent = episodes.length);
@@ -1001,7 +1025,7 @@ async function dlLoadEpisodePage() {
   }
 
   try {
-    const episodes = await dlFetchSheet('podcasts');
+    const episodes = await dlFetchEpisodes();
     if (!episodes.length) { window.location.href = '/podcast'; return; }
 
     // Match by slug first, then by episode number (backwards compat with ?ep=21 links)
@@ -1215,7 +1239,7 @@ async function dlLoadEpisodePage() {
 
     // ── Transcript tab (speakers array drives Speaker N → name mapping)
     // Ep 21+ uses "new format": never falls back to "Naren" — unmapped speakers stay generic.
-    const epNumInt = parseInt(ep.episode, 10) || 0;
+    const epNumInt = dlEpNum(ep.episode);
     const isNewFormat = epNumInt >= 21;
     dlLoadTranscript(ep.transcript_url, ep.title, ep.guest_name, speakers, isNewFormat);
 
