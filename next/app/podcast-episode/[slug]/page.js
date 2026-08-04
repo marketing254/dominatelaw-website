@@ -89,20 +89,32 @@ export default async function EpisodePage({ params }) {
         <div className="container">
           <div className="ep-layout">
             <div>
-              {/* Player (gated) */}
+              {/* Player (gated).
+                  Routing: /embed/ links load as-is; directory.libsyn.com links
+                  (which carry /id/NNN) build the Libsyn embed; direct MP3s
+                  (traffic.libsyn.com or any .mp3) use the native audio player. */}
               <GateForm type="podcast" meta={{ episode: ep.episode, title: ep.title }}>
-                {ep.audio_source?.includes('libsyn') ? (
-                  <iframe
-                    title={`Listen: ${ep.title}`}
-                    src={ep.audio_source.includes('/embed/') ? ep.audio_source : `https://play.libsyn.com/embed/episode/id/${(ep.audio_source.match(/id\/(\d+)/) || [])[1] || ''}/height/90/theme/custom/thumbnail/no/direction/backward/render-playlist/no/custom-color/60270F`}
-                    style={{ width: '100%', height: 90, border: 0, borderRadius: 12 }}
-                    loading="lazy"
-                  />
-                ) : ep.audio_source ? (
-                  <audio controls preload="none" style={{ width: '100%' }} src={ep.audio_source} />
-                ) : (
-                  <p style={{ color: 'var(--muted)', fontStyle: 'italic' }}>Audio coming soon.</p>
-                )}
+                {(() => {
+                  const audio = ep.audio_source || '';
+                  const libsynId = (audio.match(/\/id\/(\d+)/) || [])[1];
+                  const isEmbed = audio.includes('/embed/');
+                  const isDirectFile = /\.mp3(\?|$)/i.test(audio) || audio.includes('traffic.libsyn.com');
+                  if (!audio) return <p style={{ color: 'var(--muted)', fontStyle: 'italic' }}>Audio coming soon.</p>;
+                  if (isEmbed || (libsynId && !isDirectFile)) {
+                    const src = isEmbed
+                      ? audio
+                      : `https://play.libsyn.com/embed/episode/id/${libsynId}/height/90/theme/custom/thumbnail/no/direction/backward/render-playlist/no/custom-color/60270F`;
+                    return (
+                      <iframe
+                        title={`Listen: ${ep.title}`}
+                        src={src}
+                        style={{ width: '100%', height: 90, border: 0, borderRadius: 12 }}
+                        loading="lazy"
+                      />
+                    );
+                  }
+                  return <audio controls preload="none" style={{ width: '100%' }} src={audio} />;
+                })()}
               </GateForm>
 
               {/* Key points */}

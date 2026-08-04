@@ -19,7 +19,7 @@ export default function GateForm({ type, meta, poster, children }) {
     setReady(true);
   }, [storageKey]);
 
-  async function submit(e) {
+  function submit(e) {
     e.preventDefault();
     const f = e.target;
     const val = n => (f.elements[n]?.value || '').trim();
@@ -35,36 +35,35 @@ export default function GateForm({ type, meta, poster, children }) {
       : { form: 'webinar_replay_gate', tab: 'Webinar Replay Gate', first_name: first, last_name: last, email, phone, firm_name: firm,
           webinar_title: meta.title, webinar_date: meta.dateLabel || '', replay_id: meta.slug, vimeo_link: meta.vimeoLink || '', page_url: window.location.href };
 
-    try {
-      const kitId = KIT_FORM_IDS[type];
-      if (kitId) {
-        const kp = new URLSearchParams();
-        kp.append('email_address', email);
-        kp.append('fields[first_name]', first);
-        kp.append('fields[last_name]', last);
-        kp.append('fields[phone]', phone);
-        kp.append('fields[firm_name]', firm);
-        kp.append('fields[source]', payload.form);
-        kp.append('fields[page_url]', window.location.href);
-        if (type === 'podcast') kp.append('fields[episode]', meta.title);
-        else { kp.append('fields[webinar_title]', meta.title); kp.append('fields[replay_id]', meta.slug); }
-        fetch(`https://app.kit.com/forms/${kitId}/subscriptions`, {
-          method: 'POST', mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: kp.toString(),
-        }).catch(() => {});
-      }
-      await fetch(APPS_SCRIPT_URL, {
-        method: 'POST', mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload),
-      });
-      try { localStorage.setItem(storageKey, String(Date.now())); } catch {}
-      setUnlocked(true);
-    } catch {
-      setErr('Something went wrong. Please try again.');
-      setBusy(false);
+    // Fire both submissions in the background — don't make the user wait for
+    // Apps Script cold starts. keepalive lets the requests survive navigation.
+    const kitId = KIT_FORM_IDS[type];
+    if (kitId) {
+      const kp = new URLSearchParams();
+      kp.append('email_address', email);
+      kp.append('fields[first_name]', first);
+      kp.append('fields[last_name]', last);
+      kp.append('fields[phone]', phone);
+      kp.append('fields[firm_name]', firm);
+      kp.append('fields[source]', payload.form);
+      kp.append('fields[page_url]', window.location.href);
+      if (type === 'podcast') kp.append('fields[episode]', meta.title);
+      else { kp.append('fields[webinar_title]', meta.title); kp.append('fields[replay_id]', meta.slug); }
+      fetch(`https://app.kit.com/forms/${kitId}/subscriptions`, {
+        method: 'POST', mode: 'no-cors', keepalive: true,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: kp.toString(),
+      }).catch(() => {});
     }
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST', mode: 'no-cors', keepalive: true,
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+    }).catch(() => {});
+
+    // Optimistic unlock — instant.
+    try { localStorage.setItem(storageKey, String(Date.now())); } catch {}
+    setUnlocked(true);
   }
 
   if (!ready) return null;
