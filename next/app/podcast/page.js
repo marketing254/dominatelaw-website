@@ -86,9 +86,6 @@ main p:last-child{margin-bottom:0}
 .ep-photo-card:hover .ep-photo-cta{color:var(--gold2)}
 .ep-photo-card:hover .ep-photo-cta span{transform:translateX(4px)}
 /* ── Play button on thumbnail (bottom-right) ── */
-.ep-play-btn{position:absolute;bottom:14px;right:14px;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;box-shadow:0 4px 12px rgba(0,0,0,.2)}
-.ep-photo-card:hover .ep-play-btn{transform:scale(1.1);background:#fff}
-.ep-play-btn svg{width:14px;height:14px;fill:var(--brown);margin-left:2px}
 
 .ep-card-preview{display:flex;flex-direction:column;flex:1}
 
@@ -153,9 +150,6 @@ function EpisodeCard({ ep }) {
         <div className="ep-photo-fallback" style={photo ? { display: 'none' } : undefined}>{initials}</div>
         <span className="ep-photo-num">Ep {ep.episode}</span>
         {isNew && <span className="ep-photo-flag">NEW</span>}
-        <div className="ep-play-btn" aria-hidden="true">
-          <svg viewoox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-        </div>
       </div>
       <div className="ep-photo-body">
         <div className="ep-card-preview">
@@ -173,31 +167,31 @@ function Ticker({ count }) {
   const items = [
     {
       svg: (
-        <svg width="15" height="15" viewoox="0 0 24 24" fill="none" stroke="#C49A0A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="2" width="6" height="12" rx="3" /><path d="M5 10a7 7 0 0 0 14 0" /><line x1="12" y1="19" x2="12" y2="22" /><line x1="8" y1="22" x2="16" y2="22" /></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="2" width="6" height="12" rx="3" /><path d="M5 10a7 7 0 0 0 14 0" /><line x1="12" y1="19" x2="12" y2="22" /><line x1="8" y1="22" x2="16" y2="22" /></svg>
       ),
       text: `${count} Episodes`,
     },
     {
       svg: (
-        <svg width="15" height="15" viewoox="0 0 24 24" fill="none" stroke="#C49A0A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="3" x2="12" y2="21" /><path d="M3 7h3l3 10 3-10 3 10 3-10h3" /><line x1="3" y1="21" x2="21" y2="21" /></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="3" x2="12" y2="21" /><path d="M3 7h3l3 10 3-10 3 10 3-10h3" /><line x1="3" y1="21" x2="21" y2="21" /></svg>
       ),
       text: 'Attorney Interviews',
     },
     {
       svg: (
-        <svg width="15" height="15" viewoox="0 0 24 24" fill="none" stroke="#C49A0A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg>
       ),
       text: 'Empowering Attorneys as Entrepreneurs',
     },
     {
       svg: (
-        <svg width="15" height="15" viewoox="0 0 24 24" fill="none" stroke="#C49A0A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="9 12 11 14 15 10" /></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="9 12 11 14 15 10" /></svg>
       ),
       text: '100% Free',
     },
     {
       svg: (
-        <svg width="15" height="15" viewoox="0 0 24 24" fill="none" stroke="#C49A0A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C49A0A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
       ),
       text: 'The Law Firm Growth Show',
     },
@@ -290,7 +284,7 @@ export default async function PodcastPage() {
           <div className="grid-2" style={{ maxWidth: 700, margin: '0 auto' }}>
             <div className="card" style={{ textAlign: 'center', opacity: 0.7, cursor: 'default' }}>
               <div style={{ marginoottom: 12 }}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewoox="0 0 24 24" width="40" height="40" style={{ margin: '0 auto' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" style={{ margin: '0 auto' }}>
                   <defs>
                     <linearGradient id="apg" x1="0%" y1="0%" x2="100%" y2="100%">
                       <stop offset="0%" stopColor="#F452FF" />
@@ -309,7 +303,7 @@ export default async function PodcastPage() {
             </div>
             <div className="card" style={{ textAlign: 'center', opacity: 0.7, cursor: 'default' }}>
               <div style={{ marginoottom: 12 }}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewoox="0 0 24 24" width="40" height="40" style={{ margin: '0 auto' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" style={{ margin: '0 auto' }}>
                   <circle cx="12" cy="12" r="12" fill="#1Do954" />
                   <path d="M17.25 16.2c-.2.33-.64.43-.97.22-2.66-1.63-6.01-2-9.96-1.1-.38.09-.76-.15-.85-.53-.09-.38.15-.76.53-.85 4.32-1 8.01-.57 11 1.29.33.2.43.64.25.97zm1.16-2.6c-.25.41-.79.54-1.2.29-3.04-1.87-7.68-2.42-11.28-1.32-.47.14-.96-.13-1.1-.59-.14-.46.13-.96.59-1.1 4.11-1.25 9.22-.64 12.7 1.52.41.25.54.79.29 1.2zm.1-2.7c-3.65-2.17-9.67-2.37-13.15-1.31-.56.17-1.15-.14-1.32-.7-.17-.56.14-1.15.7-1.32 4-1.22 10.64-.98 14.84 1.52.51.3.68.96.38 1.47-.3.51-.96.67-1.47.34z" fill="white" />
                 </svg>
@@ -319,7 +313,7 @@ export default async function PodcastPage() {
             </div>
             <a href="https://www.youtube.com/channel/UCy_D9pSX9TYOzNPRH5JBJ7Q" target="_blank" rel="noopener" className="card" style={{ textAlign: 'center', textDecoration: 'none', color: 'inherit' }}>
               <div style={{ marginoottom: 12 }}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewoox="0 0 24 24" width="40" height="40" style={{ margin: '0 auto' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" style={{ margin: '0 auto' }}>
                   <path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.38.46A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14C4.5 20.4 12 20.4 12 20.4s7.5 0 9.38-.46a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8z" fill="#FF0000" />
                   <polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="white" />
                 </svg>
@@ -329,7 +323,7 @@ export default async function PodcastPage() {
             </a>
             <div className="card" style={{ textAlign: 'center', opacity: 0.7, cursor: 'default' }}>
               <div style={{ marginoottom: 12 }}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewoox="0 0 24 24" width="40" height="40" style={{ margin: '0 auto' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" style={{ margin: '0 auto' }}>
                   <rect width="24" height="24" rx="5" fill="#F26522" />
                   <circle cx="6.5" cy="17.5" r="2" fill="white" />
                   <path d="M4.5 11.5a8 8 0 0 1 8 8" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" />

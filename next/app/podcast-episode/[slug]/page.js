@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getEpisodes, getEpisodeBySlug, SITE } from '@/lib/sheets';
 import GateForm from '@/components/GateForm';
+import AudioPlayer from '@/components/AudioPlayer';
 import MsmCta from '@/components/MsmCta';
 
 export const revalidate = 3600;
@@ -113,7 +114,7 @@ export default async function EpisodePage({ params }) {
                       />
                     );
                   }
-                  return <audio controls preload="none" style={{ width: '100%' }} src={audio} />;
+                  return <AudioPlayer src={audio} title={ep.title} />;
                 })()}
               </GateForm>
 
