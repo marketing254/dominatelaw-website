@@ -31,6 +31,8 @@ const nextConfig = {
 
   async redirects() {
     return [
+      // Browsers request /favicon.ico by convention — serve the shield SVG
+      { source: '/favicon.ico', destination: '/icon.svg', permanent: true },
       // Old query-param episode URLs → clean paths (301, preserves rankings)
       {
         source: '/podcast-episode',

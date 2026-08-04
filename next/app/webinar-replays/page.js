@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import { getReplays, SITE } from '@/lib/sheets';
+import PaginatedGrid from '@/components/PaginatedGrid';
 
 export const revalidate = 3600;
+
+const PAGE_SIZE = 9; // 3 rows of 3 cards per page
 
 export const metadata = {
   title: 'Webinar Replays — On-Demand Law Firm Marketing Training',
@@ -39,9 +42,9 @@ export default async function ReplaysPage() {
 
       <section className="section">
         <div className="container">
-          <div className="grid-3">
-            {replays.map(r => (
-              <Link href={`/webinar-replays/${r.slug}`} className="card" key={r.slug}>
+          <PaginatedGrid totalPages={Math.ceil(replays.length / PAGE_SIZE)}>
+            {replays.map((r, i) => (
+              <Link href={`/webinar-replays/${r.slug}`} className="card" key={r.slug} data-pg={Math.floor(i / PAGE_SIZE) + 1}>
                 <div className="media-card-thumb">
                   {r.thumbnailUrl
                     ? <img src={r.thumbnailUrl} alt={r.title} loading="lazy" />
@@ -60,7 +63,7 @@ export default async function ReplaysPage() {
                 </div>
               </Link>
             ))}
-          </div>
+          </PaginatedGrid>
           {replays.length === 0 && (
             <p style={{ color: 'var(--muted)', textAlign: 'center' }}>Replays are being prepared — check back soon.</p>
           )}
