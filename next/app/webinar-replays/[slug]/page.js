@@ -3,8 +3,10 @@ import { notFound } from 'next/navigation';
 import { getReplays, getReplayBySlug, SITE } from '@/lib/sheets';
 import GateForm from '@/components/GateForm';
 import MsmCta from '@/components/MsmCta';
+import Transcript from '@/components/Transcript';
+import { fetchTranscript, parseTranscript } from '@/lib/transcript';
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const replays = await getReplays();
@@ -32,6 +34,15 @@ export default async function ReplayPage({ params }) {
 
   const replays = await getReplays();
   const related = replays.filter(x => x.slug !== r.slug).slice(0, 3);
+
+  // Transcript — server-rendered when the sheet has a transcript_url for this replay
+  let transcript = null;
+  if (r.transcriptUrl) {
+    const raw = await fetchTranscript(r.transcriptUrl);
+    if (raw) {
+      transcript = parseTranscript(raw, { speakers: r.speakersList, isNewFormat: true });
+    }
+  }
 
   const schema = {
     '@context': 'https://schema.org',
@@ -93,6 +104,8 @@ export default async function ReplayPage({ params }) {
                   )}
                 </>
               )}
+
+              <Transcript parsed={transcript} transcriptUrl={r.transcriptUrl} />
 
               <MsmCta context="this webinar" />
             </div>

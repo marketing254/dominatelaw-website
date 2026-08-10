@@ -4,8 +4,10 @@ import { getEpisodes, getEpisodeBySlug, SITE } from '@/lib/sheets';
 import GateForm from '@/components/GateForm';
 import AudioPlayer from '@/components/AudioPlayer';
 import MsmCta from '@/components/MsmCta';
+import Transcript from '@/components/Transcript';
+import { fetchTranscript, parseTranscript } from '@/lib/transcript';
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const episodes = await getEpisodes();
@@ -41,6 +43,19 @@ export default async function EpisodePage({ params }) {
   const isPanel = ep.speakersList.length > 1;
   const episodes = await getEpisodes();
   const related = episodes.filter(e => e.slug !== ep.slug).slice(0, 3);
+
+  // Transcript — fetched server-side so the full text is in the HTML (SEO/AI indexable)
+  let transcript = null;
+  if (ep.transcript_url) {
+    const raw = await fetchTranscript(ep.transcript_url);
+    if (raw) {
+      transcript = parseTranscript(raw, {
+        guestName: ep.guest_name,
+        speakers: ep.speakersList,
+        isNewFormat: ep.number >= 21,
+      });
+    }
+  }
 
   const schema = {
     '@context': 'https://schema.org',
@@ -144,6 +159,8 @@ export default async function EpisodePage({ params }) {
                   <ul className="flat-list">{bio.map((b, i) => <li key={i}>{b}</li>)}</ul>
                 </>
               )}
+
+              <Transcript parsed={transcript} transcriptUrl={ep.transcript_url} />
 
               <MsmCta context={`Episode ${ep.episode}`} />
             </div>

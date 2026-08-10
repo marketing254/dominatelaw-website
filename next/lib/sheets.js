@@ -1,12 +1,12 @@
 // ─────────────────────────────────────────────────────────────────
 // Server-side Google Sheets data layer (ported from js/sheets.js).
 // Fetched at build time / ISR — episodes ship as real HTML, fully
-// visible to Google, Bing, and AI crawlers. Revalidates hourly, so
+// visible to Google, Bing, and AI crawlers. Revalidates every 5 minutes, so
 // new sheet rows appear without a redeploy.
 // ─────────────────────────────────────────────────────────────────
 
 const SHEET_ID = '1Kqtgrii6peL3DxEp7PO45zSYd3sSeTN-e1tHmkFdLpg';
-const REVALIDATE_SECONDS = 3600;
+const REVALIDATE_SECONDS = 300;
 
 export const SITE = {
   url: 'https://www.dominatelaw.com',
@@ -230,11 +230,13 @@ export async function getReplays() {
       const dateRaw = r.date || r.date_iso || r.published_date || r.date_published || '';
       const id = (r.id || r.slug || r.replay_id || '').trim() || slugify(`${title}-${formatDate(dateRaw) || index + 1}`);
       const vimeoIdMatch = vimeoLink.match(/(?:vimeo\.com\/(?:video\/)?|player\.vimeo\.com\/video\/)(\d+)/i);
+      const transcriptUrl = (r.transcript_url || r.transcript || '').trim();
       return {
         ...r,
         index,
         id,
         slug: id,
+        transcriptUrl,
         title,
         notes,
         noteGroups: parsed.keyPointGroups || [],

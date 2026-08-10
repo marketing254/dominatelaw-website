@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { SITE, parseGvizDate, driveImg } from '@/lib/sheets';
 import EventsBoard from './EventsBoard';
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 export const metadata = {
   title: 'Free Law Firm Marketing Webinars & Events 2026',
@@ -24,7 +24,7 @@ const SHEET_ID = '1Kqtgrii6peL3DxEp7PO45zSYd3sSeTN-e1tHmkFdLpg';
 // ── Server-side GViz fetch of the 'events' tab (ISR-cached hourly) ──
 async function fetchEventsSheet() {
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=events`;
-  const res = await fetch(url, { next: { revalidate: 3600 } });
+  const res = await fetch(url, { next: { revalidate: 300 } });
   if (!res.ok) throw new Error(`events sheet fetch failed (${res.status})`);
   const text = await res.text();
   const json = JSON.parse(text.replace(/^[^{]+\(/, '').replace(/\);?\s*$/, ''));

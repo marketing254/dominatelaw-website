@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 export const metadata = {
   title: 'Law Firm Marketing Reviews & Success Stories',
@@ -16,7 +16,7 @@ const SHEET_ID = '1Kqtgrii6peL3DxEp7PO45zSYd3sSeTN-e1tHmkFdLpg';
 async function getReviews() {
   try {
     const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=reviews`;
-    const res = await fetch(url, { next: { revalidate: 3600 } });
+    const res = await fetch(url, { next: { revalidate: 300 } });
     if (!res.ok) return [];
     const text = await res.text();
     const json = JSON.parse(text.replace(/^[^{]+\(/, '').replace(/\);?\s*$/, ''));
