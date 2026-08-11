@@ -5,6 +5,8 @@ import GateForm from '@/components/GateForm';
 import AudioPlayer from '@/components/AudioPlayer';
 import MsmCta from '@/components/MsmCta';
 import Transcript from '@/components/Transcript';
+import ContentTabs from '@/components/ContentTabs';
+import { Calendar, Tag, Mic, User, Users } from '@/components/Icons';
 import { fetchTranscript, parseTranscript } from '@/lib/transcript';
 
 export const revalidate = 300;
@@ -91,12 +93,12 @@ export default async function EpisodePage({ params }) {
           </div>
           <h1>{ep.title}</h1>
           <div className="tags">
-            <span className="ep-tag">🎙️ Episode {ep.episode}</span>
-            {ep.dateLabel && <span className="ep-tag">📅 {ep.dateLabel}</span>}
+            <span className="ep-tag"><Mic /> Episode {ep.episode}</span>
+            {ep.dateLabel && <span className="ep-tag"><Calendar /> {ep.dateLabel}</span>}
             {isPanel
-              ? <span className="ep-tag">👥 {ep.speakersList.filter(s => s.role !== 'host').length} Panelists</span>
-              : ep.guest_name && <span className="ep-tag">👤 {ep.guest_name}</span>}
-            {ep.category && <span className="ep-tag">🏷️ {ep.category}</span>}
+              ? <span className="ep-tag"><Users /> {ep.speakersList.filter(s => s.role !== 'host').length} Panelists</span>
+              : ep.guest_name && <span className="ep-tag"><User /> {ep.guest_name}</span>}
+            {ep.category && <span className="ep-tag"><Tag /> {ep.category}</span>}
           </div>
         </div>
       </section>
@@ -133,34 +135,50 @@ export default async function EpisodePage({ params }) {
                 })()}
               </GateForm>
 
-              {/* Key points */}
-              {(keyPointGroups.length > 0 || keyPoints.length > 0) && (
-                <>
-                  <h2 className="ep-content-heading">Key Discussion Points</h2>
-                  {keyPointGroups.length > 0 ? (
-                    keyPointGroups.map((g, i) => (
-                      <div className="kp-group" key={i}>
-                        <h3 className="kp-topic">{i + 1}. {g.topic}</h3>
-                        {g.bullets.length > 0 && (
-                          <ul className="kp-sublist">{g.bullets.map((b, j) => <li key={j}>{b}</li>)}</ul>
+              {/* Key Notes / Transcript — tabbed when a transcript exists */}
+              {(() => {
+                const keyNotesPanel = (
+                  <div>
+                    {(keyPointGroups.length > 0 || keyPoints.length > 0) && (
+                      <>
+                        <h2 className="ep-content-heading">Key Discussion Points</h2>
+                        {keyPointGroups.length > 0 ? (
+                          keyPointGroups.map((g, i) => (
+                            <div className="kp-group" key={i}>
+                              <h3 className="kp-topic">{i + 1}. {g.topic}</h3>
+                              {g.bullets.length > 0 && (
+                                <ul className="kp-sublist">{g.bullets.map((b, j) => <li key={j}>{b}</li>)}</ul>
+                              )}
+                            </div>
+                          ))
+                        ) : (
+                          <ul className="flat-list">{keyPoints.map((p, i) => <li key={i}>{p}</li>)}</ul>
                         )}
-                      </div>
-                    ))
-                  ) : (
-                    <ul className="flat-list">{keyPoints.map((p, i) => <li key={i}>{p}</li>)}</ul>
-                  )}
-                </>
-              )}
+                      </>
+                    )}
+                    {bio.length > 0 && (
+                      <>
+                        <h2 className="ep-content-heading">{isPanel ? 'Meet the Panel' : `More About ${bioGuestName || ep.guest_name}`}</h2>
+                        <ul className="flat-list">{bio.map((b, i) => <li key={i}>{b}</li>)}</ul>
+                      </>
+                    )}
+                  </div>
+                );
 
-              {/* Bio */}
-              {bio.length > 0 && (
-                <>
-                  <h2 className="ep-content-heading">{isPanel ? 'Meet the Panel' : `More About ${bioGuestName || ep.guest_name}`}</h2>
-                  <ul className="flat-list">{bio.map((b, i) => <li key={i}>{b}</li>)}</ul>
-                </>
-              )}
+                if (!transcript) return <div style={{ marginTop: 34 }}>{keyNotesPanel}</div>;
 
-              <Transcript parsed={transcript} transcriptUrl={ep.transcript_url} />
+                return (
+                  <div style={{ marginTop: 34 }}>
+                    <ContentTabs tabs={[
+                      { label: '📝 Key Notes' },
+                      { label: '📄 Transcript', meta: `${transcript.readMins} min read` },
+                    ]}>
+                      {keyNotesPanel}
+                      <Transcript parsed={transcript} transcriptUrl={ep.transcript_url} />
+                    </ContentTabs>
+                  </div>
+                );
+              })()}
 
               <MsmCta context={`Episode ${ep.episode}`} />
             </div>

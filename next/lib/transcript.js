@@ -27,13 +27,94 @@ export async function fetchTranscript(transcriptUrl) {
   }
 }
 
+// ── WebVTT support ─────────────────────────────────────────────────
+// Newer transcripts (ep 35+) are TurboScribe .vtt subtitle files: numbered
+// cues of 3–8 word fragments with millisecond timings and no speaker labels.
+// We strip watermarks, honour <v Name> voice tags when present, and stitch
+// fragments into readable timestamped paragraphs.
+const WATERMARK_RE = /\(Transcribed by TurboScribe\.[^)]*\)\s*/g;
+
+function vttSeconds(ts) {
+  const m = String(ts).trim().match(/(?:(\d+):)?(\d+):(\d+)(?:[.,](\d+))?/);
+  if (!m) return 0;
+  return (+(m[1] || 0)) * 3600 + (+m[2]) * 60 + (+m[3]);
+}
+
+function vttLabelTime(sec) {
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = Math.floor(sec % 60);
+  return h > 0
+    ? `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+    : `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function parseVtt(text) {
+  const blocks = String(text).replace(/^\uFEFF/, '').split(/\r?\n\r?\n+/);
+  const cues = [];
+  for (const block of blocks) {
+    const lines = block.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    if (!lines.length) continue;
+    if (/^(WEBVTT|NOTE|STYLE|REGION)/.test(lines[0]) && !lines.some(l => l.includes('-->'))) continue;
+    const timingIdx = lines.findIndex(l => l.includes('-->'));
+    if (timingIdx === -1) continue;
+    // NB: trim before taking the first token — '--> ' leaves a leading space
+    // which made end-times parse as 0 and broke paragraph stitching.
+    const [startRaw, endRaw] = lines[timingIdx].split('-->').map(s => s.trim());
+    let cueText = lines.slice(timingIdx + 1).join(' ');
+    let speaker = '';
+    const vTag = cueText.match(/<v\s+([^>]+)>/);
+    if (vTag) speaker = vTag[1].trim();
+    cueText = cueText.replace(/<[^>]+>/g, '').replace(WATERMARK_RE, '').trim();
+    if (!cueText) continue;
+    cues.push({ start: vttSeconds(startRaw), end: vttSeconds((endRaw || '').split(/\s+/)[0]), text: cueText, speaker });
+  }
+  if (!cues.length) return null;
+
+  // Stitch fragments → paragraphs. New paragraph on: speaker change,
+  // a silence gap > 2.5s, or ~sentence end once the paragraph is long enough.
+  const paras = [];
+  let cur = null;
+  for (const c of cues) {
+    const gap = cur ? c.start - cur.end : 0;
+    const sentenceDone = cur && cur.text.length > 420 && /[.?!]["']?$/.test(cur.text);
+    if (!cur || c.speaker !== cur.speaker || gap > 2.5 || sentenceDone || cur.text.length > 900) {
+      if (cur) paras.push(cur);
+      cur = { start: c.start, end: c.end, text: c.text, speaker: c.speaker };
+    } else {
+      cur.text += ' ' + c.text;
+      cur.end = c.end;
+    }
+  }
+  if (cur) paras.push(cur);
+
+  const entries = paras.map(p => ({
+    speakerKey: p.speaker ? `name:${p.speaker.toLowerCase()}` : 'vtt',
+    label: p.speaker,
+    role: 'guest',
+    time: vttLabelTime(p.start),
+    text: p.text,
+  }));
+
+  const hasSpeakers = entries.some(e => e.label);
+  entries.forEach((e, i) => {
+    e.colorIdx = 1;
+    e.showSpeaker = hasSpeakers && e.label && (i === 0 || entries[i - 1].label !== e.label);
+  });
+
+  const wordCount = entries.reduce((n, e) => n + e.text.split(/\s+/).length, 0);
+  return { entries, wordCount, readMins: Math.max(1, Math.round(wordCount / 200)) };
+}
+
 // Parse raw transcript text → entries with speaker labels, roles, timestamps.
-// Supports both formats:
+// Supports three formats:
 //   A: "Speaker N    00:00:00    text"   (numbered)
 //   B: "Full Name    00:00:00    text"   (named)
+//   C: WebVTT subtitle files (ep 35+)
 // Legacy numbered mapping (pre-ep21): 1=Intro, 2=host, 3+=guest.
 // Panels: the speakers column maps Speaker N → real names.
 export function parseTranscript(text, { guestName = '', hostName = 'Naren Raja', speakers = [], isNewFormat = false } = {}) {
+  if (/^\uFEFF?WEBVTT/.test(String(text).trimStart())) return parseVtt(text);
   const hostShort = (hostName || 'Host').split(' ')[0];
   const guestShort = (guestName || 'Guest').split(' ')[0];
   const usePanel = Array.isArray(speakers) && speakers.length > 0;

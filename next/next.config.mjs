@@ -6,6 +6,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   outputFileTracingRoot: __dirname,
+
+  // Single build worker — this dev machine is often RAM-constrained and
+  // parallel workers were dying with native OOM. Vercel's builders are fine
+  // either way; this only slows local builds slightly.
+  experimental: { cpus: 1, workerThreads: false },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'drive.google.com' },
