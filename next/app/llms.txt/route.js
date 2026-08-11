@@ -1,6 +1,6 @@
 import { getEpisodes, SITE } from '@/lib/sheets';
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 // llms.txt is generated from live data — episode count and recent list
 // always current, no manual maintenance.

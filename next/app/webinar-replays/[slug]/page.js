@@ -3,8 +3,12 @@ import { notFound } from 'next/navigation';
 import { getReplays, getReplayBySlug, SITE } from '@/lib/sheets';
 import GateForm from '@/components/GateForm';
 import MsmCta from '@/components/MsmCta';
+import Transcript from '@/components/Transcript';
+import ContentTabs from '@/components/ContentTabs';
+import { Calendar, Clock, Tag } from '@/components/Icons';
+import { fetchTranscript, parseTranscript } from '@/lib/transcript';
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const replays = await getReplays();
@@ -33,6 +37,15 @@ export default async function ReplayPage({ params }) {
   const replays = await getReplays();
   const related = replays.filter(x => x.slug !== r.slug).slice(0, 3);
 
+  // Transcript — server-rendered when the sheet has a transcript_url for this replay
+  let transcript = null;
+  if (r.transcriptUrl) {
+    const raw = await fetchTranscript(r.transcriptUrl);
+    if (raw) {
+      transcript = parseTranscript(raw, { speakers: r.speakersList, isNewFormat: true });
+    }
+  }
+
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
@@ -55,9 +68,9 @@ export default async function ReplayPage({ params }) {
           </div>
           <h1>{r.title}</h1>
           <div className="tags">
-            {r.dateLabel && <span className="ep-tag">📅 {r.dateLabel}</span>}
-            {r.duration && <span className="ep-tag">⏱ {r.duration}</span>}
-            {r.category && <span className="ep-tag">🏷️ {r.category}</span>}
+            {r.dateLabel && <span className="ep-tag"><Calendar /> {r.dateLabel}</span>}
+            {r.duration && <span className="ep-tag"><Clock /> {r.duration}</span>}
+            {r.category && <span className="ep-tag"><Tag /> {r.category}</span>}
           </div>
         </div>
       </section>
@@ -76,23 +89,44 @@ export default async function ReplayPage({ params }) {
                 </div>
               </GateForm>
 
-              {(r.noteGroups.length > 0 || r.notes.length > 0) && (
-                <>
-                  <h2 className="ep-content-heading">Key Takeaways</h2>
-                  {r.noteGroups.length > 0 ? (
-                    r.noteGroups.map((g, i) => (
-                      <div className="kp-group" key={i}>
-                        <h3 className="kp-topic">{i + 1}. {g.topic}</h3>
-                        {g.bullets.length > 0 && (
-                          <ul className="kp-sublist">{g.bullets.map((b, j) => <li key={j}>{b}</li>)}</ul>
+              {/* Key Takeaways / Transcript — tabbed when a transcript exists */}
+              {(() => {
+                const takeawaysPanel = (
+                  <div>
+                    {(r.noteGroups.length > 0 || r.notes.length > 0) && (
+                      <>
+                        <h2 className="ep-content-heading">Key Takeaways</h2>
+                        {r.noteGroups.length > 0 ? (
+                          r.noteGroups.map((g, i) => (
+                            <div className="kp-group" key={i}>
+                              <h3 className="kp-topic">{i + 1}. {g.topic}</h3>
+                              {g.bullets.length > 0 && (
+                                <ul className="kp-sublist">{g.bullets.map((b, j) => <li key={j}>{b}</li>)}</ul>
+                              )}
+                            </div>
+                          ))
+                        ) : (
+                          <ul className="flat-list">{r.notes.map((n, i) => <li key={i}>{n}</li>)}</ul>
                         )}
-                      </div>
-                    ))
-                  ) : (
-                    <ul className="flat-list">{r.notes.map((n, i) => <li key={i}>{n}</li>)}</ul>
-                  )}
-                </>
-              )}
+                      </>
+                    )}
+                  </div>
+                );
+
+                if (!transcript) return <div style={{ marginTop: 34 }}>{takeawaysPanel}</div>;
+
+                return (
+                  <div style={{ marginTop: 34 }}>
+                    <ContentTabs tabs={[
+                      { label: '📝 Key Takeaways' },
+                      { label: '📄 Transcript', meta: `${transcript.readMins} min read` },
+                    ]}>
+                      {takeawaysPanel}
+                      <Transcript parsed={transcript} transcriptUrl={r.transcriptUrl} />
+                    </ContentTabs>
+                  </div>
+                );
+              })()}
 
               <MsmCta context="this webinar" />
             </div>

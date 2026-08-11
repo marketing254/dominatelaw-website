@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import { Fragment } from 'react';
 import { getEpisodes, SITE } from '@/lib/sheets';
+import PaginatedGrid from '@/components/PaginatedGrid';
 
-export const revalidate = 3600;
+const PAGE_SIZE = 9; // 3 rows of 3 cards per page
+
+export const revalidate = 300;
 
 export const metadata = {
   title: 'The Law Firm Growth Show | Free Marketing Podcast',
@@ -126,7 +129,7 @@ textarea.g-input{resize:vertical;min-height:100px}
 .ticker-sep{color:var(--gold);opacity:.5;font-size:.65rem;padding:0 4px;align-self:center}
 `;
 
-function EpisodeCard({ ep }) {
+function EpisodeCard({ ep, page }) {
   const isNew = ep.number >= 21;
   const speakerCount = ep.speakersList.length;
   const isPanel = speakerCount > 1;
@@ -144,6 +147,7 @@ function EpisodeCard({ ep }) {
       href={`/podcast-episode/${ep.slug}`}
       className={`ep-photo-card${isNew ? ' is-new' : ''}`}
       aria-label={`Ep ${ep.episode}: ${ep.title}`}
+      data-pg={page}
     >
       <div className="ep-photo-img">
         {photo && <img src={photo} alt={ep.title} loading="lazy" style={imgStyle} />}
@@ -265,11 +269,13 @@ export default async function PodcastPage() {
             <h2 id="episodes-heading">Dominate Law Podcast Show</h2>
             <p>{episodes.length} episodes featuring attorneys, entrepreneurs, and legal industry leaders — sharing their stories, strategies, and insights on building a dominant law practice.</p>
           </div>
-          <div className="ep-photo-grid" id="episodes-grid">
+          <div id="episodes-grid">
+            <PaginatedGrid totalPages={Math.ceil(episodes.length / PAGE_SIZE)} gridClass="ep-photo-grid">
+              {episodes.map((ep, i) => <EpisodeCard ep={ep} page={Math.floor(i / PAGE_SIZE) + 1} key={ep.slug} />)}
+            </PaginatedGrid>
             {episodes.length === 0 && (
-              <p style={{ gridColumn: '1/-1', textAlign: 'center', color: 'var(--muted)' }}>No episodes found.</p>
+              <p style={{ textAlign: 'center', color: 'var(--muted)' }}>No episodes found.</p>
             )}
-            {episodes.map(ep => <EpisodeCard ep={ep} key={ep.slug} />)}
           </div>
         </div>
       </section>

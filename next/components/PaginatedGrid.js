@@ -20,7 +20,8 @@ export default function PaginatedGrid({ totalPages, gridClass = 'grid-3', childr
 
   return (
     <div ref={wrapRef} style={{ scrollMarginTop: 110 }}>
-      <style>{`.dl-pgw [data-pg]{display:none}.dl-pgw [data-pg="${page}"]{display:block}`}</style>
+      {/* Only hide non-active pages — active items keep their own display value */}
+      <style>{`.dl-pgw [data-pg]:not([data-pg="${page}"]){display:none}`}</style>
       <div className={`${gridClass} dl-pgw`}>{children}</div>
 
       <nav aria-label="Pagination" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, marginTop: 44 }}>

@@ -3,7 +3,7 @@ import { getEpisodes } from '@/lib/sheets';
 import HomePopup from '@/components/HomePopup';
 import HomeExtras from '@/components/HomeExtras';
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 export const metadata = {
   title: 'Law Firm Marketing Resources, Tools & Community | Dominate Law',

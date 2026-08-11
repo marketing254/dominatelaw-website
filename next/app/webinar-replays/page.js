@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { getReplays, SITE } from '@/lib/sheets';
 import PaginatedGrid from '@/components/PaginatedGrid';
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 const PAGE_SIZE = 9; // 3 rows of 3 cards per page
 
