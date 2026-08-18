@@ -406,7 +406,6 @@ h1,h2,h3{font-family:var(--font-serif),Georgia,serif;color:var(--brown3);line-he
 .card:hover .media-card-play{opacity:1}
 .media-card-play span{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;color:var(--brown);font-size:1.2rem;box-shadow:0 8px 30px rgba(0,0,0,.3)}
 .media-card-ribbon{position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:100px}
-.media-card-date{position:absolute;right:12px;bottom:12px;z-index:2;font-size:.62rem;font-weight:700;letter-spacing:.04em;color:#fff;background:rgba(58,13,0,.78);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);border-radius:100px;padding:4px 11px}
 .media-card-body{padding:20px 22px 24px}
 .media-card-meta{display:flex;align-items:center;gap:10px;font-size:.7rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
 .media-card-title{font-family:var(--font-serif),Georgia,serif;font-size:1.02rem;font-weight:800;color:var(--brown3);line-height:1.4;margin-bottom:8px}
