@@ -80,7 +80,7 @@ export function parseGvizDate(val) {
 export function formatDate(val) {
   const d = parseGvizDate(val);
   if (!d) return '';
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 export function isoDate(val) {
@@ -171,6 +171,33 @@ export function episodeSlug(ep) {
   return slugify(ep.title);
 }
 
+// The team enters panels as multiple names on separate lines in guest_name
+// (no dedicated speakers column). Derive a speakers list from those lines so
+// panels display correctly ("N Panelists", speaker sidebar) without changing
+// how the sheet is filled in. A pipe-separated `speakers` column still wins
+// when present.
+function deriveSpeakers(r) {
+  const fromColumn = parseSpeakers(r.speakers);
+  if (fromColumn.length) return fromColumn;
+  const names = String(r.guest_name || '').split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+  if (names.length <= 1) return [];
+  return names.map((name, i) => ({ speakerNum: i + 1, name, roleLabel: 'Guest', role: 'guest' }));
+}
+
+// The team types dates day-first (DD/MM/YYYY) but the sheet's locale is US
+// (month-first), so e.g. "10/08/2026" (10 Aug) gets stored as Oct 8. Episodes
+// are never future-dated — when a parsed date lands in the future and swapping
+// day/month gives a plausible past date, the swap is the intended date.
+function fixSwappedDate(d) {
+  if (!d) return null;
+  const now = new Date();
+  if (d.getTime() <= now.getTime() + 86400000) return d; // past/today — trust it
+  const day = d.getDate();
+  if (day > 12) return d; // day can't be a month — no swap possible
+  const swapped = new Date(d.getFullYear(), day - 1, d.getMonth() + 1);
+  return swapped.getTime() <= now.getTime() + 86400000 ? swapped : d;
+}
+
 export async function getEpisodes() {
   const rows = await fetchSheet('podcasts');
   return rows
@@ -178,15 +205,16 @@ export async function getEpisodes() {
     .map(r => {
       const n = epNum(r.episode);
       const parsed = parseDescription(r.description);
+      const d = fixSwappedDate(parseGvizDate(r.date_published));
       return {
         ...r,
         episode: String(n || r.episode),
         number: n,
         slug: episodeSlug({ ...r, episode: n }),
-        speakersList: parseSpeakers(r.speakers),
+        speakersList: deriveSpeakers(r),
         parsed,
-        dateLabel: formatDate(r.date_published),
-        dateIso: isoDate(r.date_published),
+        dateLabel: d ? d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '',
+        dateIso: d ? d.toISOString().split('T')[0] : '',
         posterUrl: driveImg(r.poster_image || r.guest_photo_url, 'w1200'),
         photoUrl: driveImg(r.guest_photo_url, 'w800'),
       };
@@ -231,6 +259,7 @@ export async function getReplays() {
       const id = (r.id || r.slug || r.replay_id || '').trim() || slugify(`${title}-${formatDate(dateRaw) || index + 1}`);
       const vimeoIdMatch = vimeoLink.match(/(?:vimeo\.com\/(?:video\/)?|player\.vimeo\.com\/video\/)(\d+)/i);
       const transcriptUrl = (r.transcript_url || r.transcript || '').trim();
+      const rd = fixSwappedDate(parseGvizDate(dateRaw));
       return {
         ...r,
         index,
@@ -240,8 +269,8 @@ export async function getReplays() {
         title,
         notes,
         noteGroups: parsed.keyPointGroups || [],
-        dateLabel: formatDate(dateRaw) || dateRaw,
-        dateIso: isoDate(dateRaw),
+        dateLabel: rd ? rd.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : (dateRaw || ''),
+        dateIso: rd ? rd.toISOString().split('T')[0] : '',
         vimeoLink,
         embedUrl: vimeoEmbed(vimeoLink),
         vimeoId: vimeoIdMatch ? vimeoIdMatch[1] : '',

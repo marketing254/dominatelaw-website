@@ -255,7 +255,7 @@ function SolCalc() {
       borderColor = GREEN;
     }
     setRes({
-      value: deadline.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+      value: deadline.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
       sub,
       borderColor,
     });
