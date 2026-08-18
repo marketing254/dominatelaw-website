@@ -49,12 +49,12 @@ export default async function ReplaysPage() {
                   {r.thumbnailUrl
                     ? <img src={r.thumbnailUrl} alt={r.title} loading="lazy" />
                     : r.vimeoId && <img src={`https://vumbnail.com/${r.vimeoId}.jpg`} alt={r.title} loading="lazy" />}
-                  {r.dateLabel && <span className="media-card-date">{r.dateLabel}</span>}
                   <div className="media-card-play"><span>▶</span></div>
                 </div>
                 <div className="media-card-body">
                   <div className="media-card-meta">
                     <span>Replay</span>
+                    {r.dateLabel && <span>· {r.dateLabel}</span>}
                     {r.duration && <span>· {r.duration}</span>}
                   </div>
                   <h3 className="media-card-title">{r.title}</h3>

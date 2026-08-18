@@ -57,7 +57,7 @@ function EpisodeCard({ ep }) {
     ? `Panel of ${ep.speakersList.filter(s => s.role !== 'host').length}`
     : (ep.guest_name || 'Dominate Law');
   const byIcon = isPanel ? '👥' : '👤';
-  const meta = [ep.category, ep.duration].filter(Boolean).join(' · '); // date now shown on the thumbnail
+  const meta = [ep.category, ep.dateLabel, ep.duration].filter(Boolean).join(' · ');
   const imgStyle = TOP_CROP_EPISODES.has(n)
     ? { objectFit: 'contain', objectPosition: 'center top', background: 'linear-gradient(135deg,var(--brown),var(--brown3))' }
     : undefined;
@@ -76,7 +76,6 @@ function EpisodeCard({ ep }) {
           <div className="ep-photo-fallback">{initials(ep.guest_name)}</div>
         )}
         <span className="ep-photo-num">Ep {ep.episode}</span>
-        {ep.dateLabel && <span className="ep-photo-date">{ep.dateLabel}</span>}
         {isNew && <span className="ep-photo-flag">NEW</span>}
       </div>
       <div className="ep-photo-body">
@@ -687,7 +686,6 @@ const PAGE_CSS = `
 .ep-photo-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.55) 100%);pointer-events:none}
 .ep-photo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--gold3);font-family:var(--font-serif),'Merriweather',Georgia,serif;font-weight:900;font-size:2.2rem}
 .ep-photo-num{position:absolute;left:12px;bottom:11px;z-index:2;font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);border:1px solid rgba(196,154,10,.45);border-radius:100px;padding:4px 11px}
-.ep-photo-date{position:absolute;right:12px;bottom:11px;z-index:2;font-size:.6rem;font-weight:700;letter-spacing:.04em;color:#fff;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);border-radius:100px;padding:4px 10px}
 .ep-photo-flag{position:absolute;right:11px;top:11px;z-index:2;font-size:.58rem;font-weight:900;letter-spacing:.16em;color:#3A0D00;background:linear-gradient(135deg,#E8C44A,#C49A0A);border-radius:4px;padding:3px 9px;box-shadow:0 4px 14px rgba(196,154,10,.45);text-transform:uppercase}
 .ep-photo-body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1;position:relative;z-index:2}
 .ep-photo-meta{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold3);margin-bottom:7px;opacity:.85}
