@@ -364,23 +364,6 @@ export default function MsmPage() {
                     <p>A real breakdown of what the top-ranked firms in your market are doing — and how to beat them.</p>
                   </div>
                 </div>
-                <div className="learn-item">
-                  <div className="learn-item-check"><CheckSvg /></div>
-                  <div>
-                    <strong>Your 90-Day Quick-Win Plan</strong>
-                    <p>
-                      Three to five specific actions you can take in the next 90 days to start generating more
-                      qualified leads.
-                    </p>
-                  </div>
-                </div>
-                <div className="learn-item">
-                  <div className="learn-item-check"><CheckSvg /></div>
-                  <div>
-                    <strong>Long-Term Growth Strategy</strong>
-                    <p>A 12-month marketing roadmap that builds sustainable lead flow and firm authority in your market.</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
